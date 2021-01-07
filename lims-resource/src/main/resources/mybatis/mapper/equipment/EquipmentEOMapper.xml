@@ -1,0 +1,1257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.equipment.dao.EquipmentEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.equipment.entity.EquipmentEO" >
+    <id column="id" property="id" />
+    <result column="del_flag" property="delFlag" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="create_time" property="createTime" />
+    <result column="create_by" property="createBy" />
+    <result column="eq_remark" property="eqRemark" />
+    <result column="eq_use_status" property="eqUseStatus" />
+    <result column="eq_status" property="eqStatus" />
+    <result column="eq_parent_id" property="eqParentId" />
+    <result column="eq_parent_name" property="eqParentName" />
+    <result column="eq_sort" property="eqSort" />
+    <result column="eq_period_arrival_date" property="eqPeriodArrivalDate" />
+    <result column="eq_termination_date" property="eqTerminationDate" />
+    <result column="eq_acceptance_date" property="eqAcceptanceDate" />
+    <result column="eq_opening_date" property="eqOpeningDate" />
+    <result column="eq_storage_location" property="eqStorageLocation" />
+    <result column="eq_importance" property="eqImportance" />
+    <result column="eq_company" property="eqCompany" />
+    <result column="eq_supplier" property="eqSupplier" />
+    <result column="eq_manager_org" property="eqManagerOrg" />
+    <result column="eq_manager" property="eqManager" />
+    <result column="eq_user_org" property="eqUserOrg" />
+    <result column="eq_user" property="eqUser" />
+    <result column="eq_specification" property="eqSpecification" />
+    <result column="eq_plant_no" property="eqPlantNo" />
+    <result column="eq_assets_no" property="eqAssetsNo" />
+    <result column="eq_type" property="eqType" />
+    <result column="eq_name" property="eqName" />
+    <result column="eq_no" property="eqNo" />
+    <result column="eq_file_id_1" property="eqFileId1" />
+    <result column="eq_file_id_2" property="eqFileId2" />
+    <result column="eq_file_id_3" property="eqFileId3" />
+    <result column="eq_file_id_4" property="eqFileId4" />
+    <result column="eq_file_id_5" property="eqFileId5" />
+    <result column="eq_file_id_6" property="eqFileId6" />
+    <result column="eq_file_id_7" property="eqFileId7" />
+    <result column="eq_file_id_8" property="eqFileId8" />
+    <result column="eq_file_id_9" property="eqFileId9" />
+    <result column="eq_file_name_1" property="eqFileName1" />
+    <result column="eq_file_name_2" property="eqFileName2" />
+    <result column="eq_file_name_3" property="eqFileName3" />
+    <result column="eq_file_name_4" property="eqFileName4" />
+    <result column="eq_file_name_5" property="eqFileName5" />
+    <result column="eq_file_name_6" property="eqFileName6" />
+    <result column="eq_file_name_7" property="eqFileName7" />
+    <result column="eq_file_name_8" property="eqFileName8" />
+    <result column="eq_file_name_9" property="eqFileName9" />
+    <result column="eq_procedure_state" property="eqProcedureState" />
+    <result column="eq_main_purpose" property="eqMainPurpose" />
+    <result column="eq_main_parameter" property="eqMainParameter" />
+    <result column="eq_resolution" property="eqResolution" />
+    <result column="eq_error_requirement" property="eqErrorRequirement" />
+    <result column="eq_original_value" property="eqOriginalValue" />
+    <result column="eq_contract_number" property="eqContractNumber" />
+  </resultMap>
+  <!-- EquipmentVO -->
+  <resultMap id="VOResultMap" type="com.adc.da.equipment.VO.EquipmentVO" >
+    <id column="id" property="id" />
+    <result column="del_flag" property="delFlag" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="create_time" property="createTime" />
+    <result column="create_by" property="createBy" />
+    <result column="eq_remark" property="eqRemark" />
+    <result column="eq_use_status" property="eqUseStatus" />
+    <result column="eq_status" property="eqStatus" />
+    <result column="eq_parent_id" property="eqParentId" />
+    <result column="eq_parent_name" property="eqParentName" />
+    <result column="eq_sort" property="eqSort" />
+    <result column="eq_period_arrival_date" property="eqPeriodArrivalDate" />
+    <result column="eq_termination_date" property="eqTerminationDate" />
+    <result column="eq_acceptance_date" property="eqAcceptanceDate" />
+    <result column="eq_opening_date" property="eqOpeningDate" />
+    <result column="eq_storage_location" property="eqStorageLocation" />
+    <result column="eq_importance" property="eqImportance" />
+    <result column="eq_company" property="eqCompany" />
+    <result column="eq_supplier" property="eqSupplier" />
+    <result column="eq_manager_org" property="eqManagerOrg" />
+    <result column="eq_manager" property="eqManager" />
+    <result column="eq_user_org" property="eqUserOrg" />
+    <result column="eq_user" property="eqUser" />
+    <result column="eq_specification" property="eqSpecification" />
+    <result column="eq_plant_no" property="eqPlantNo" />
+    <result column="eq_assets_no" property="eqAssetsNo" />
+    <result column="eq_type" property="eqType" />
+    <result column="eq_name" property="eqName" />
+    <result column="eq_no" property="eqNo" />
+    <result column="eq_file_id_1" property="eqFileId1" />
+    <result column="eq_file_id_2" property="eqFileId2" />
+    <result column="eq_file_id_3" property="eqFileId3" />
+    <result column="eq_file_id_4" property="eqFileId4" />
+    <result column="eq_file_id_5" property="eqFileId5" />
+    <result column="eq_file_id_6" property="eqFileId6" />
+    <result column="eq_file_id_7" property="eqFileId7" />
+    <result column="eq_file_id_8" property="eqFileId8" />
+    <result column="eq_file_id_9" property="eqFileId9" />
+    <result column="eq_file_name_1" property="eqFileName1" />
+    <result column="eq_file_name_2" property="eqFileName2" />
+    <result column="eq_file_name_3" property="eqFileName3" />
+    <result column="eq_file_name_4" property="eqFileName4" />
+    <result column="eq_file_name_5" property="eqFileName5" />
+    <result column="eq_file_name_6" property="eqFileName6" />
+    <result column="eq_file_name_7" property="eqFileName7" />
+    <result column="eq_file_name_8" property="eqFileName8" />
+    <result column="eq_file_name_9" property="eqFileName9" />
+    <result column="eq_procedure_state" property="eqProcedureState" />
+    <result column="eq_main_purpose" property="eqMainPurpose" />
+    <result column="eq_main_parameter" property="eqMainParameter" />
+    <result column="eq_resolution" property="eqResolution" />
+    <result column="eq_error_requirement" property="eqErrorRequirement" />
+    <result column="eq_original_value" property="eqOriginalValue" />
+    <result column="eq_contract_number" property="eqContractNumber" />
+  </resultMap>
+  <resultMap id="CkeckRecordMap" type="com.adc.da.equipment.entity.EquipmentEO" >
+    <id column="id" property="id" />
+    <result column="eq_name" property="eqName" />
+    <result column="eq_no" property="eqNo" />
+    <collection property="equipmentCheckList" ofType="com.adc.da.equipment.entity.EquipmentCheckEO">
+        <id column="id" property="id" />
+        <result column="ck_id" property="ckId" />
+        <result column="eq_ck_amount" property="eqCkAmount" />
+        <result column="eq_ck_check_time_plan" property="eqCkCheckTimePlan" />
+        <result column="eq_ck_org_tel" property="eqCkOrgTel" />
+        <result column="eq_ck_org_address" property="eqCkOrgAddress" />
+        <result column="eq_ck_org" property="eqCkOrg" />
+        <result column="eq_ck_cycle_unit" property="eqCkCycleUnit" />
+        <result column="eq_ck_cycle" property="eqCkCycle" />
+        <result column="eq_ck_type" property="eqCkType" />
+        <result column="eq_ck_plan_owner" property="eqCkPlanOwner" />
+        <result column="eq_ck_check_time_actual" property="eqCkCheckTimeActual" />
+        <result column="eq_ck_remark" property="eqCkRemark" />
+    </collection>
+  </resultMap>
+  <resultMap id="UseLogMap" type="com.adc.da.equipment.entity.EquipmentEO" >
+    <result column="eq_name" property="eqName" />
+    <result column="eq_no" property="eqNo" />
+    <collection property="equipmentUseLogList" ofType="com.adc.da.equipment.entity.EquipmentUseLogEO">
+        <result column="EQ_UL_STATUS" property="eqUlStatus" />
+        <result column="EQ_UL_START_TIME" property="eqUlStartTime" />
+        <result column="EQ_UL_END_TIME" property="eqUlEndTime" />
+        <result column="EQ_UL_RESPONSIBLE_PEOPLE" property="eqUlResponsiblePeople" />
+        <result column="EQ_UL_RESPONSIBLE_PEOPLE_ORG" property="eqUlResponsiblePeopleOrg" />
+        <result column="EQ_UL_REMARK" property="eqUlRemark" />
+    </collection>
+  </resultMap>
+  <!--查询设备的全部借用记录-->  
+  <resultMap id="BorrowRecordMap" type="com.adc.da.equipment.entity.EquipmentEO"  >
+      <result column="eq_name" property="eqName" />
+      <result column="eq_no" property="eqNo" />
+      <collection property="BorrowRecordList" ofType="com.adc.da.equipment.entity.EquipmentBorrowRecordEO">
+          <result column="brw_return_time" property="brwReturnTime" />
+          <result column="brw_borrower_time" property="brwBorrowerTime" />
+          <result column="brw_borrower_name" property="brwBorrowerName" />
+      </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+  	 del_flag, 
+     update_time, 
+     update_by, 
+     create_time, 
+     create_by, 
+     eq_remark, 
+     eq_use_status, 
+     eq_status, 
+     eq_parent_id, 
+     eq_parent_name, 
+     eq_sort, 
+     eq_period_arrival_date, 
+     eq_termination_date, 
+     eq_acceptance_date, 
+     eq_opening_date, 
+     eq_storage_location, 
+     eq_importance, 
+     eq_company, 
+     eq_supplier, 
+     eq_manager_org, 
+     eq_manager, 
+     eq_user_org, 
+     eq_user, 
+     eq_specification, 
+     eq_plant_no, 
+     eq_assets_no, 
+     eq_type, 
+     eq_name, 
+     eq_no, 
+     id,
+     eq_file_id_1,
+     eq_file_id_2,
+     eq_file_id_3,
+     eq_file_id_4,
+     eq_file_id_5,
+     eq_file_id_6,
+     eq_file_id_7,
+     eq_file_id_8,
+     eq_file_id_9,
+     eq_file_name_1,
+     eq_file_name_2,
+     eq_file_name_3,
+     eq_file_name_4,
+     eq_file_name_5,
+     eq_file_name_6,
+     eq_file_name_7,
+     eq_file_name_8,
+     eq_file_name_9,
+     eq_procedure_state,
+     eq_main_purpose,
+     eq_main_parameter,
+     eq_resolution,
+     eq_error_requirement,
+     eq_original_value,
+     eq_contract_number
+  </sql>
+
+  <!-- 列表查询和详情展示字段 -->
+  <sql id="Detail_Column_List">
+     del_flag, 
+     update_time, 
+     update_by, 
+     create_time, 
+     create_by, 
+     eq_remark, 
+     eq_use_status, 
+     eq_status, 
+     eq_parent_id, 
+     eq_parent_name, 
+     eq_sort, 
+     eq_period_arrival_date, 
+     eq_termination_date, 
+     eq_acceptance_date, 
+     eq_opening_date, 
+     eq_storage_location, 
+     eq_importance, 
+     eq_company, 
+     eq_supplier, 
+     eq_manager_org, 
+     eq_manager, 
+     eq_user_org, 
+     eq_user, 
+     eq_specification, 
+     eq_plant_no, 
+     eq_assets_no, 
+     eq_type, 
+     eq_name, 
+     eq_no, 
+     id,
+     eq_file_id_1,
+     eq_file_id_2,
+     eq_file_id_3,
+     eq_file_id_4,
+     eq_file_id_5,
+     eq_file_id_6,
+     eq_file_id_7,
+     eq_file_id_8,
+     eq_file_id_9,
+     eq_file_name_1,
+     eq_file_name_2,
+     eq_file_name_3,
+     eq_file_name_4,
+     eq_file_name_5,
+     eq_file_name_6,
+     eq_file_name_7,
+     eq_file_name_8,
+     eq_file_name_9,
+     eq_procedure_state,
+     eq_main_purpose,
+     eq_main_parameter,
+     eq_resolution,
+     eq_error_requirement,
+     eq_original_value,
+     eq_contract_number,
+     <!-- 设备状态 -->
+     (select type_.dic_type_name from ts_dictype type_
+     	left join ts_dictionary dic_ on type_.dic_id = dic_.id
+     	where dic_.dictionary_code = 'equipmentStatus'
+   		and type_.dic_type_code = eq.eq_status
+   		and type_.del_flag = 0
+   		and dic_.del_flag = 0
+     ) eqStatusStr,
+     <!-- 设备使用状态 -->
+     (select type_.dic_type_name from ts_dictype type_
+     	left join ts_dictionary dic_ on type_.dic_id = dic_.id
+     	where dic_.dictionary_code = 'equipmentUseStatus'
+   		and type_.dic_type_code = eq.eq_use_status
+   		and type_.del_flag = 0
+   		and dic_.del_flag = 0
+     ) eqUseStatusStr,
+     <!-- 类别 -->
+     (select type_.dic_type_name from ts_dictype type_
+     	left join ts_dictionary dic_ on type_.dic_id = dic_.id
+     	where dic_.dictionary_code = 'equipmentSort'
+   		and type_.dic_type_code = eq.eq_sort
+   		and type_.del_flag = 0
+   		and dic_.del_flag = 0
+     ) eqSortStr,
+     <!-- 重要度 -->
+     (select type_.dic_type_name from ts_dictype type_
+     	left join ts_dictionary dic_ on type_.dic_id = dic_.id
+     	where dic_.dictionary_code = 'equipmentImportance'
+   		and type_.dic_type_code = eq.eq_importance
+   		and type_.del_flag = 0
+   		and dic_.del_flag = 0
+     ) eqImportanceStr,
+     <!-- 点检完成日期 -->
+     (select cc.eq_ck_check_time_actual 
+		from (select * from RES_EQUIPMENT_CHECK ck order by CK.eq_ck_check_time_actual desc nulls last) cc
+		where cc.del_flag='0' and cc.EQ_ID=eq.id and cc.EQ_CK_TYPE='1' and rownum=1
+     ) pointCompleteDate,
+     <!-- 点检有效期 -->
+     (select concat(cc.EQ_CK_CYCLE,cc.EQ_CK_CYCLE_UNIT) 
+		from (select * from RES_EQUIPMENT_CHECK ck order by CK.eq_ck_check_time_actual desc nulls last) cc
+		where cc.del_flag='0' and cc.EQ_ID=eq.id and cc.EQ_CK_TYPE='1' and rownum=1
+     ) pointValidDate,
+     <!-- 核查完成日期 -->
+     (select cc.eq_ck_check_time_actual 
+		from (select * from RES_EQUIPMENT_CHECK ck order by CK.eq_ck_check_time_actual desc nulls last) cc
+		where cc.del_flag='0' and cc.EQ_ID=eq.id and cc.EQ_CK_TYPE='2' and rownum=1
+     ) checkCompleteDate,
+     <!-- 核查有效期 -->
+     (select concat(cc.EQ_CK_CYCLE,cc.EQ_CK_CYCLE_UNIT) 
+		from (select * from RES_EQUIPMENT_CHECK ck order by CK.eq_ck_check_time_actual desc nulls last) cc
+		where cc.del_flag='0' and cc.EQ_ID=eq.id and cc.EQ_CK_TYPE='2' and rownum=1
+     ) checkValidDate,
+     <!-- 校准完成日期 -->
+     (select cc.eq_ck_check_time_actual 
+		from (select * from RES_EQUIPMENT_CHECK ck order by CK.eq_ck_check_time_actual desc nulls last) cc
+		where cc.del_flag='0' and cc.EQ_ID=eq.id and cc.EQ_CK_TYPE='3' and rownum=1
+     ) calibrateCompleteDate,
+     <!-- 校准有效期 -->
+     (select concat(cc.EQ_CK_CYCLE,cc.EQ_CK_CYCLE_UNIT) 
+		from (select * from RES_EQUIPMENT_CHECK ck order by CK.eq_ck_check_time_actual desc nulls last) cc
+		where cc.del_flag='0' and cc.EQ_ID=eq.id and cc.EQ_CK_TYPE='3' and rownum=1
+     ) calibrateValidDate,
+     <!-- 维护保养完成日期 -->
+     (select cc.eq_ck_check_time_actual 
+		from (select * from RES_EQUIPMENT_CHECK ck order by CK.eq_ck_check_time_actual desc nulls last) cc
+		where cc.del_flag='0' and cc.EQ_ID=eq.id and cc.EQ_CK_TYPE='4' and rownum=1
+     ) maintainCompleteDate,
+     <!-- 维护保养有效期 -->
+     (select concat(cc.EQ_CK_CYCLE,cc.EQ_CK_CYCLE_UNIT) 
+		from (select * from RES_EQUIPMENT_CHECK ck order by CK.eq_ck_check_time_actual desc nulls last) cc
+		where cc.del_flag='0' and cc.EQ_ID=eq.id and cc.EQ_CK_TYPE='4' and rownum=1
+     ) maintainValidDate,
+     <!-- 是否使用中 0-否  1-是 -->
+     case when (select uu.eq_ul_start_time
+			from (select * from RES_EQUIPMENT_USE_LOG ul order by ul.CREATE_TIME desc) uu
+			where uu.EQ_ID=eq.id and rownum=1
+	     ) is not null
+	  and (select uu.eq_ul_end_time
+			from (select * from RES_EQUIPMENT_USE_LOG ul order by ul.CREATE_TIME desc) uu
+			where uu.EQ_ID=eq.id and rownum=1
+	     ) is null
+	  then '1'
+	  else '0' end ifUsing
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where eq.DEL_FLAG = '0'
+    <choose>
+    	<when test="searchMap != null">
+    		<foreach collection="searchMap" item="searchItem">
+    			and (
+    				lower(eq.EQ_NO) like lower('%'||#{searchItem.search}||'%')
+    				or lower(eq.EQ_NAME) like lower('%'||#{searchItem.search}||'%')
+    				or lower(eq.EQ_TYPE) like lower('%'||#{searchItem.search}||'%')
+    				or lower(eq.eq_manager_org) like lower('%'||#{searchItem.search}||'%')
+    				or lower(eq.eq_user) like lower('%'||#{searchItem.search}||'%')
+    				<if test="searchItem.useStatusKeys != null">
+    					<foreach collection="searchItem.useStatusKeys" item="code">
+    						or eq.EQ_USE_STATUS = #{code,jdbcType=VARCHAR}
+    					</foreach>
+    				</if>
+    				<if test="searchItem.statusKeys != null">
+    					<foreach collection="searchItem.statusKeys" item="code">
+    						or eq.EQ_STATUS = #{code,jdbcType=VARCHAR}
+    					</foreach>
+    				</if>
+    				<if test="searchItem.sortKeys != null">
+    					<foreach collection="searchItem.sortKeys" item="code">
+    						or eq.EQ_SORT = #{code,jdbcType=VARCHAR}
+    					</foreach>
+    				</if>
+    			)
+    		</foreach>
+    	</when>
+    	<otherwise>
+    		<if test="eqNo != null and eqNo != ''">
+    			and lower(eq.EQ_NO) like lower('%'||#{eqNo}||'%')
+    		</if>
+    		<if test="eqName != null and eqName != ''">
+    			and lower(eq.EQ_NAME) like lower('%'||#{eqName}||'%')
+    		</if>
+    		<if test="eqType != null and eqType != ''">
+    			and lower(eq.EQ_TYPE) like lower('%'||#{eqType}||'%')
+    		</if>
+    		<if test="eqUseStatus != null and eqUseStatus != ''">
+    			and eq.EQ_USE_STATUS = #{eqUseStatus,jdbcType=VARCHAR}
+    		</if>
+    		<if test="eqStatus != null and eqStatus != ''">
+    			and eq.EQ_STATUS = #{eqStatus,jdbcType=VARCHAR}
+    		</if>
+    		<if test="eqManagerOrg != null and eqManagerOrg != ''">
+    			and lower(eq.eq_manager_org) like lower('%'||#{eqManagerOrg}||'%')
+    		</if>
+    		<if test="eqUser != null and eqUser != ''">
+    			and lower(eq.eq_user) like lower('%'||#{eqUser}||'%')
+    		</if>
+    		<if test="eqSort != null and eqSort != ''">
+    			and eq.EQ_SORT = #{eqSort,jdbcType=VARCHAR}
+    		</if>
+    	</otherwise>
+    </choose>
+    <!-- 设备新增时查询符合条件的子设备：该设备非父设备或子设备 -->
+    <if test="checkChild == &quot;y&quot; and id == null">
+    	and eq.eq_parent_id is null
+    	and (select count(1) from res_equipment where del_flag = '0' and eq_parent_id = eq.id) = 0
+    </if>
+    <!-- 设备修改时查询符合条件的子设备：该设备不是当前设备，并且非父设备或子设备 -->
+    <if test="checkChild == &quot;y&quot; and id != null">
+    	and eq.id != #{id}
+    	and eq.eq_parent_id is null
+    	and (select count(1) from res_equipment where del_flag = '0' and eq_parent_id = eq.id) = 0
+    </if>
+    <!-- 只查询不是子设备的设备 -->
+    <if test="checkChild != &quot;y&quot; and id == null">
+    	and eq.eq_parent_id is null
+    </if>
+    <!-- 只查询当前设备的子设备 -->
+    <if test="checkChild != &quot;y&quot; and id != null">
+    	and eq.eq_parent_id = #{id}
+    </if>
+  </sql>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.equipment.entity.EquipmentEO" >
+        insert into RES_EQUIPMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="updateTime != null" >update_time,</if>
+                <if test="updateBy != null" >update_by,</if>
+                <if test="createTime != null" >create_time,</if>
+                <if test="createBy != null" >create_by,</if>
+                <if test="eqRemark != null" >eq_remark,</if>
+                <if test="eqUseStatus != null" >eq_use_status,</if>
+                <if test="eqStatus != null" >eq_status,</if>
+                <if test="eqParentId != null" >eq_parent_id,</if>
+                <if test="eqParentName != null" >eq_parent_name,</if>
+                <if test="eqSort != null" >eq_sort,</if>
+                <if test="eqPeriodArrivalDate != null" >eq_period_arrival_date,</if>
+                <if test="eqTerminationDate != null" >eq_termination_date,</if>
+                <if test="eqAcceptanceDate != null" >eq_acceptance_date,</if>
+                <if test="eqOpeningDate != null" >eq_opening_date,</if>
+                <if test="eqStorageLocation != null" >eq_storage_location,</if>
+                <if test="eqImportance != null" >eq_importance,</if>
+                <if test="eqCompany != null" >eq_company,</if>
+                <if test="eqSupplier != null" >eq_supplier,</if>
+                <if test="eqManagerOrg != null" >eq_manager_org,</if>
+                <if test="eqManager != null" >eq_manager,</if>
+                <if test="eqUserOrg != null" >eq_user_org,</if>
+                <if test="eqUser != null" >eq_user,</if>
+                <if test="eqSpecification != null" >eq_specification,</if>
+                <if test="eqPlantNo != null" >eq_plant_no,</if>
+                <if test="eqAssetsNo != null" >eq_assets_no,</if>
+                <if test="eqType != null" >eq_type,</if>
+                <if test="eqName != null" >eq_name,</if>
+                <if test="eqNo != null" >eq_no,</if>
+                <if test="id != null" >id,</if>
+                <if test="eqFileId1 != null" >eq_file_id_1,</if>
+                <if test="eqFileId2 != null" >eq_file_id_2,</if>
+                <if test="eqFileId3 != null" >eq_file_id_3,</if>
+                <if test="eqFileId4 != null" >eq_file_id_4,</if>
+                <if test="eqFileId5 != null" >eq_file_id_5,</if>
+                <if test="eqFileId6 != null" >eq_file_id_6,</if>
+                <if test="eqFileId7 != null" >eq_file_id_7,</if>
+                <if test="eqFileId8 != null" >eq_file_id_8,</if>
+                <if test="eqFileId9 != null" >eq_file_id_9,</if>
+                <if test="eqFileName1 != null" >eq_file_name_1,</if>
+                <if test="eqFileName2 != null" >eq_file_name_2,</if>
+                <if test="eqFileName3 != null" >eq_file_name_3,</if>
+                <if test="eqFileName4 != null" >eq_file_name_4,</if>
+                <if test="eqFileName5 != null" >eq_file_name_5,</if>
+                <if test="eqFileName6 != null" >eq_file_name_6,</if>
+                <if test="eqFileName7 != null" >eq_file_name_7,</if>
+                <if test="eqFileName8 != null" >eq_file_name_8,</if>
+                <if test="eqFileName9 != null" >eq_file_name_9,</if>
+                <if test="eqProcedureState != null" >eq_procedure_state,</if>
+                <if test="eqMainPurpose != null" >eq_main_purpose,</if>
+                <if test="eqMainParameter != null" >eq_main_parameter,</if>
+                <if test="eqResolution != null" >eq_resolution,</if>
+                <if test="eqErrorRequirement != null" >eq_error_requirement,</if>
+                <if test="eqOriginalValue != null" >eq_original_value,</if>
+                <if test="eqContractNumber != null" >eq_contract_number,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="updateTime != null" >#{updateTime, jdbcType=VARCHAR},</if>
+                <if test="updateBy != null" >#{updateBy, jdbcType=VARCHAR},</if>
+                <if test="createTime != null" >#{createTime, jdbcType=VARCHAR},</if>
+                <if test="createBy != null" >#{createBy, jdbcType=VARCHAR},</if>
+                <if test="eqRemark != null" >#{eqRemark, jdbcType=VARCHAR},</if>
+                <if test="eqUseStatus != null" >#{eqUseStatus, jdbcType=VARCHAR},</if>
+                <if test="eqStatus != null" >#{eqStatus, jdbcType=VARCHAR},</if>
+                <if test="eqParentId != null" >#{eqParentId, jdbcType=VARCHAR},</if>
+                <if test="eqParentName != null" >#{eqParentName, jdbcType=VARCHAR},</if>
+                <if test="eqSort != null" >#{eqSort, jdbcType=VARCHAR},</if>
+                <if test="eqPeriodArrivalDate != null" >#{eqPeriodArrivalDate, jdbcType=VARCHAR},</if>
+                <if test="eqTerminationDate != null" >#{eqTerminationDate, jdbcType=VARCHAR},</if>
+                <if test="eqAcceptanceDate != null" >#{eqAcceptanceDate, jdbcType=VARCHAR},</if>
+                <if test="eqOpeningDate != null" >#{eqOpeningDate, jdbcType=VARCHAR},</if>
+                <if test="eqStorageLocation != null" >#{eqStorageLocation, jdbcType=VARCHAR},</if>
+                <if test="eqImportance != null" >#{eqImportance, jdbcType=VARCHAR},</if>
+                <if test="eqCompany != null" >#{eqCompany, jdbcType=VARCHAR},</if>
+                <if test="eqSupplier != null" >#{eqSupplier, jdbcType=VARCHAR},</if>
+                <if test="eqManagerOrg != null" >#{eqManagerOrg, jdbcType=VARCHAR},</if>
+                <if test="eqManager != null" >#{eqManager, jdbcType=VARCHAR},</if>
+                <if test="eqUserOrg != null" >#{eqUserOrg, jdbcType=VARCHAR},</if>
+                <if test="eqUser != null" >#{eqUser, jdbcType=VARCHAR},</if>
+                <if test="eqSpecification != null" >#{eqSpecification, jdbcType=VARCHAR},</if>
+                <if test="eqPlantNo != null" >#{eqPlantNo, jdbcType=VARCHAR},</if>
+                <if test="eqAssetsNo != null" >#{eqAssetsNo, jdbcType=VARCHAR},</if>
+                <if test="eqType != null" >#{eqType, jdbcType=VARCHAR},</if>
+                <if test="eqName != null" >#{eqName, jdbcType=VARCHAR},</if>
+                <if test="eqNo != null" >#{eqNo, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="eqFileId1 != null" >#{eqFileId1, jdbcType=VARCHAR},</if>
+                <if test="eqFileId2 != null" >#{eqFileId2, jdbcType=VARCHAR},</if>
+                <if test="eqFileId3 != null" >#{eqFileId3, jdbcType=VARCHAR},</if>
+                <if test="eqFileId4 != null" >#{eqFileId4, jdbcType=VARCHAR},</if>
+                <if test="eqFileId5 != null" >#{eqFileId5, jdbcType=VARCHAR},</if>
+                <if test="eqFileId6 != null" >#{eqFileId6, jdbcType=VARCHAR},</if>
+                <if test="eqFileId7 != null" >#{eqFileId7, jdbcType=VARCHAR},</if>
+                <if test="eqFileId8 != null" >#{eqFileId8, jdbcType=VARCHAR},</if>
+                <if test="eqFileId9 != null" >#{eqFileId9, jdbcType=VARCHAR},</if>
+                <if test="eqFileName1 != null" >#{eqFileName1, jdbcType=VARCHAR},</if>
+                <if test="eqFileName2 != null" >#{eqFileName2, jdbcType=VARCHAR},</if>
+                <if test="eqFileName3 != null" >#{eqFileName3, jdbcType=VARCHAR},</if>
+                <if test="eqFileName4 != null" >#{eqFileName4, jdbcType=VARCHAR},</if>
+                <if test="eqFileName5 != null" >#{eqFileName5, jdbcType=VARCHAR},</if>
+                <if test="eqFileName6 != null" >#{eqFileName6, jdbcType=VARCHAR},</if>
+                <if test="eqFileName7 != null" >#{eqFileName7, jdbcType=VARCHAR},</if>
+                <if test="eqFileName8 != null" >#{eqFileName8, jdbcType=VARCHAR},</if>
+                <if test="eqFileName9 != null" >#{eqFileName9, jdbcType=VARCHAR},</if>
+                <if test="eqProcedureState != null" >#{eqProcedureState, jdbcType=VARCHAR},</if>
+                <if test="eqMainPurpose != null" >#{eqMainPurpose, jdbcType=VARCHAR},</if>
+                <if test="eqMainParameter != null" >#{eqMainParameter, jdbcType=VARCHAR},</if>
+                <if test="eqResolution != null" >#{eqResolution, jdbcType=VARCHAR},</if>
+                <if test="eqErrorRequirement != null" >#{eqErrorRequirement, jdbcType=VARCHAR},</if>
+                <if test="eqOriginalValue != null" >#{eqOriginalValue, jdbcType=VARCHAR},</if>
+                <if test="eqContractNumber != null" >#{eqContractNumber, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.equipment.entity.EquipmentEO" >
+    update RES_EQUIPMENT
+       set  del_flag = #{delFlag, jdbcType=VARCHAR},
+            update_time = #{updateTime, jdbcType=VARCHAR},
+            update_by = #{updateBy, jdbcType=VARCHAR},
+            create_time = #{createTime, jdbcType=VARCHAR},
+            create_by = #{createBy, jdbcType=VARCHAR},
+            eq_remark = #{eqRemark, jdbcType=VARCHAR},
+            eq_use_status = #{eqUseStatus, jdbcType=VARCHAR},
+            eq_status = #{eqStatus, jdbcType=VARCHAR},
+            eq_parent_id = #{eqParentId, jdbcType=VARCHAR},
+            eq_parent_name = #{eqParentName, jdbcType=VARCHAR},
+            eq_sort = #{eqSort, jdbcType=VARCHAR},
+            eq_period_arrival_date = #{eqPeriodArrivalDate, jdbcType=VARCHAR},
+            eq_termination_date = #{eqTerminationDate, jdbcType=VARCHAR},
+            eq_acceptance_date = #{eqAcceptanceDate, jdbcType=VARCHAR},
+            eq_opening_date = #{eqOpeningDate, jdbcType=VARCHAR},
+            eq_storage_location = #{eqStorageLocation, jdbcType=VARCHAR},
+            eq_importance = #{eqImportance, jdbcType=VARCHAR},
+            eq_company = #{eqCompany, jdbcType=VARCHAR},
+            eq_supplier = #{eqSupplier, jdbcType=VARCHAR},
+            eq_manager_org = #{eqManagerOrg, jdbcType=VARCHAR},
+            eq_manager = #{eqManager, jdbcType=VARCHAR},
+            eq_user_org = #{eqUserOrg, jdbcType=VARCHAR},
+            eq_user = #{eqUser, jdbcType=VARCHAR},
+            eq_specification = #{eqSpecification, jdbcType=VARCHAR},
+            eq_plant_no = #{eqPlantNo, jdbcType=VARCHAR},
+            eq_assets_no = #{eqAssetsNo, jdbcType=VARCHAR},
+            eq_type = #{eqType, jdbcType=VARCHAR},
+            eq_name = #{eqName, jdbcType=VARCHAR},
+            eq_no = #{eqNo, jdbcType=VARCHAR},
+            eq_file_id_1 = #{eqFileId1, jdbcType=VARCHAR},
+            eq_file_id_2 = #{eqFileId2, jdbcType=VARCHAR},
+            eq_file_id_3 = #{eqFileId3, jdbcType=VARCHAR},
+            eq_file_id_4 = #{eqFileId4, jdbcType=VARCHAR},
+            eq_file_id_5 = #{eqFileId5, jdbcType=VARCHAR},
+            eq_file_id_6 = #{eqFileId6, jdbcType=VARCHAR},
+            eq_file_id_7 = #{eqFileId7, jdbcType=VARCHAR},
+            eq_file_id_8 = #{eqFileId8, jdbcType=VARCHAR},
+            eq_file_id_9 = #{eqFileId9, jdbcType=VARCHAR},
+            eq_file_name_1 = #{eqFileName1, jdbcType=VARCHAR},
+            eq_file_name_2 = #{eqFileName2, jdbcType=VARCHAR},
+            eq_file_name_3 = #{eqFileName3, jdbcType=VARCHAR},
+            eq_file_name_4 = #{eqFileName4, jdbcType=VARCHAR},
+            eq_file_name_5 = #{eqFileName5, jdbcType=VARCHAR},
+            eq_file_name_6 = #{eqFileName6, jdbcType=VARCHAR},
+            eq_file_name_7 = #{eqFileName7, jdbcType=VARCHAR},
+            eq_file_name_8 = #{eqFileName8, jdbcType=VARCHAR},
+            eq_file_name_9 = #{eqFileName9, jdbcType=VARCHAR},
+            eq_procedure_state = #{eqProcedureState, jdbcType=VARCHAR},
+            eq_main_purpose = #{eqMainPurpose, jdbcType=VARCHAR},
+            eq_main_parameter = #{eqMainParameter, jdbcType=VARCHAR},
+            eq_resolution = #{eqResolution, jdbcType=VARCHAR},
+            eq_error_requirement = #{eqErrorRequirement, jdbcType=VARCHAR},
+            eq_original_value = #{eqOriginalValue, jdbcType=VARCHAR},
+            eq_contract_number = #{eqContractNumber, jdbcType=VARCHAR}
+     where  id = #{id, jdbcType=VARCHAR}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.equipment.entity.EquipmentEO" >
+    update RES_EQUIPMENT
+    <set >
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy},
+      </if>
+      <if test="eqRemark != null" >
+        eq_remark = #{eqRemark},
+      </if>
+      <if test="eqUseStatus != null" >
+        eq_use_status = #{eqUseStatus},
+      </if>
+      <if test="eqStatus != null" >
+        eq_status = #{eqStatus},
+      </if>
+      <if test="eqParentId != null" >
+        eq_parent_id = #{eqParentId},
+      </if>
+      <if test="eqParentName != null" >
+        eq_parent_name = #{eqParentName},
+      </if>
+      <if test="eqSort != null" >
+        eq_sort = #{eqSort},
+      </if>
+      <if test="eqPeriodArrivalDate != null" >
+        eq_period_arrival_date = #{eqPeriodArrivalDate},
+      </if>
+      <if test="eqTerminationDate != null" >
+        eq_termination_date = #{eqTerminationDate},
+      </if>
+      <if test="eqAcceptanceDate != null" >
+        eq_acceptance_date = #{eqAcceptanceDate},
+      </if>
+      <if test="eqOpeningDate != null" >
+        eq_opening_date = #{eqOpeningDate},
+      </if>
+      <if test="eqStorageLocation != null" >
+        eq_storage_location = #{eqStorageLocation},
+      </if>
+      <if test="eqImportance != null" >
+        eq_importance = #{eqImportance},
+      </if>
+      <if test="eqCompany != null" >
+        eq_company = #{eqCompany},
+      </if>
+      <if test="eqSupplier != null" >
+        eq_supplier = #{eqSupplier},
+      </if>
+      <if test="eqManagerOrg != null" >
+        eq_manager_org = #{eqManagerOrg},
+      </if>
+      <if test="eqManager != null" >
+        eq_manager = #{eqManager},
+      </if>
+      <if test="eqUserOrg != null" >
+        eq_user_org = #{eqUserOrg},
+      </if>
+      <if test="eqUser != null" >
+        eq_user = #{eqUser},
+      </if>
+      <if test="eqSpecification != null" >
+        eq_specification = #{eqSpecification},
+      </if>
+      <if test="eqPlantNo != null" >
+        eq_plant_no = #{eqPlantNo},
+      </if>
+      <if test="eqAssetsNo != null" >
+        eq_assets_no = #{eqAssetsNo},
+      </if>
+      <if test="eqType != null" >
+        eq_type = #{eqType},
+      </if>
+      <if test="eqName != null" >
+        eq_name = #{eqName},
+      </if>
+      <if test="eqNo != null" >
+        eq_no = #{eqNo},
+      </if>
+      <if test="eqFileId1 != null" >
+        eq_file_id_1 = #{eqFileId1},
+      </if>
+      <if test="eqFileId2 != null" >
+        eq_file_id_2 = #{eqFileId2},
+      </if>
+      <if test="eqFileId3 != null" >
+        eq_file_id_3 = #{eqFileId3},
+      </if>
+      <if test="eqFileId4 != null" >
+        eq_file_id_4 = #{eqFileId4},
+      </if>
+      <if test="eqFileId5 != null" >
+        eq_file_id_5 = #{eqFileId5},
+      </if>
+      <if test="eqFileId6 != null" >
+        eq_file_id_6 = #{eqFileId6},
+      </if>
+      <if test="eqFileId7 != null" >
+        eq_file_id_7 = #{eqFileId7},
+      </if>
+      <if test="eqFileId8 != null" >
+        eq_file_id_8 = #{eqFileId8},
+      </if>
+      <if test="eqFileId9 != null" >
+        eq_file_id_9 = #{eqFileId9},
+      </if>
+      <if test="eqFileName1 != null" >
+        eq_file_name_1 = #{eqFileName1},
+      </if>
+      <if test="eqFileName2 != null" >
+        eq_file_name_2 = #{eqFileName2},
+      </if>
+      <if test="eqFileName3 != null" >
+        eq_file_name_3 = #{eqFileName3},
+      </if>
+      <if test="eqFileName4 != null" >
+        eq_file_name_4 = #{eqFileName4},
+      </if>
+      <if test="eqFileName5 != null" >
+        eq_file_name_5 = #{eqFileName5},
+      </if>
+      <if test="eqFileName6 != null" >
+        eq_file_name_6 = #{eqFileName6},
+      </if>
+      <if test="eqFileName7 != null" >
+        eq_file_name_7 = #{eqFileName7},
+      </if>
+      <if test="eqFileName8 != null" >
+        eq_file_name_8 = #{eqFileName8},
+      </if>
+      <if test="eqFileName9 != null" >
+        eq_file_name_9 = #{eqFileName9},
+      </if>
+      <if test="eqProcedureState != null" >
+        eq_procedure_state = #{eqProcedureState},
+      </if>
+      <if test="eqMainPurpose != null" >
+        eq_main_purpose = #{eqMainPurpose},
+      </if>
+      <if test="eqMainParameter != null" >
+        eq_main_parameter = #{eqMainParameter},
+      </if>
+      <if test="eqResolution != null" >
+        eq_resolution = #{eqResolution},
+      </if>
+      <if test="eqErrorRequirement != null" >
+        eq_error_requirement = #{eqErrorRequirement},
+      </if>
+      <if test="eqOriginalValue != null" >
+        eq_original_value = #{eqOriginalValue},
+      </if>
+      <if test="eqContractNumber != null" >
+        eq_contract_number = #{eqContractNumber},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 设备VO -->
+  <select id="selectByPrimaryKey" resultMap="VOResultMap" parameterType="java.lang.String">
+    select <include refid="Detail_Column_List" /> 
+      from RES_EQUIPMENT eq
+     where id = #{value}
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    UPDATE RES_EQUIPMENT
+    SET del_flag = '1'
+    WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <!-- 设备 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from RES_EQUIPMENT eq
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询设备分页列表 -->
+  <select id="queryByPage" resultMap="VOResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select * from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Detail_Column_List" /> from res_equipment eq
+			 <include refid="Base_Where_Clause"/>
+			 order by eq.create_time desc
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <!-- 查询设备列表 -->
+  <select id="queryByList" resultMap="VOResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Detail_Column_List"/> from res_equipment eq
+    <include refid="Base_Where_Clause"/>
+    order by eq.create_time desc
+  </select>
+  
+  <!-- 校验设备编号是否唯一 -->
+  <select id="checkNo" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from res_equipment eq
+  		where eq.del_flag = '0'
+  		and eq.eq_no=#{param,jdbcType=VARCHAR}
+  		<if test="id != null and id != ''">
+  			and eq.id != #{id,jdbcType=VARCHAR}
+  		</if>
+  </select>
+
+    <!-- 根据设备编号查询 RES_EQUIPMENT -->
+    <select id="selectByNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List" />
+        from RES_EQUIPMENT
+        WHERE RES_EQUIPMENT.del_flag = '0'
+        AND RES_EQUIPMENT.eq_no = #{0, jdbcType=VARCHAR}
+    </select>
+    <!-- 根据设备id查询设备的副设备 -->
+    <select id="getViceEqList" parameterType="java.lang.String" resultType="java.lang.String">
+        select id
+        from RES_EQUIPMENT
+        WHERE RES_EQUIPMENT.del_flag = '0'
+        AND RES_EQUIPMENT.eq_parent_id = #{0, jdbcType=VARCHAR}
+    </select>
+    <!--批量删除设备-->
+    <delete id="deleteByIdS" >
+        UPDATE RES_EQUIPMENT
+        SET del_flag = '1'
+        WHERE id IN
+        <foreach collection="idS" item="deleteId" open="(" close=")" separator=",">
+            #{deleteId}
+        </foreach>
+    </delete>
+    <!--获取核检记录信息-->
+    <select id="getCheckList" resultMap="CkeckRecordMap">
+      SELECT eq.eq_no,eq.eq_name,eqCheck.eq_ck_type,eqCheck.eq_ck_cycle,eqCheck.eq_ck_cycle_unit,eqCheck.eq_ck_org,
+        eqCheck.eq_ck_org_address,eqCheck.eq_ck_org_tel,eqCheck.eq_ck_check_time_plan,eqCheck.eq_ck_amount,eqCheck.eq_ck_plan_owner,
+        eqCheck.eq_ck_check_time_actual,eqCheck.eq_ck_remark
+      FROM RES_EQUIPMENT EQ
+      INNER JOIN RES_EQUIPMENT_CHECK eqCheck
+      ON EQ.id = eqCheck.eq_id
+      where EQ.id IN
+      <foreach collection="array" item="checkId" open="(" close=")" separator=",">
+        #{checkId}
+      </foreach>
+      AND eqCheck.IS_FINISH_FLAG = '1'
+      AND eqCheck.DEL_FLAG = '0'
+      ORDER BY eqCheck.eq_ck_check_time_plan DESC
+    </select>
+    
+    <!-- 新增设备配件 -->
+    <insert id="addParts" parameterType="com.adc.da.equipment.entity.EquipmentPartsEO">
+    	insert into res_equipment_parts
+    	<trim prefix="(" suffix=")" suffixOverrides=",">
+    		<if test="id != null">id,</if>
+    		<if test="eqId != null">EQ_ID,</if>
+    		<if test="eqPartsName != null">EQ_PARTS_NAME,</if>
+    		<if test="eqPartsNumber != null">EQ_PARTS_NUMBER,</if>
+    		<if test="eqPartsFileId != null">EQ_PARTS_FILE_ID,</if>
+    		<if test="eqPartsFileName != null">EQ_PARTS_FILE_NAME,</if>
+    	</trim>
+    	<trim prefix="values (" suffix=")" suffixOverrides=",">
+    		<if test="id != null">#{id, jdbcType=VARCHAR},</if>
+    		<if test="eqId != null">#{eqId, jdbcType=VARCHAR},</if>
+    		<if test="eqPartsName != null">#{eqPartsName, jdbcType=VARCHAR},</if>
+    		<if test="eqPartsNumber != null">#{eqPartsNumber, jdbcType=VARCHAR},</if>
+    		<if test="eqPartsFileId != null">#{eqPartsFileId, jdbcType=VARCHAR},</if>
+    		<if test="eqPartsFileName != null">#{eqPartsFileName, jdbcType=VARCHAR},</if>
+    	</trim>
+    </insert>
+    
+    <!-- 根据设备id获取配件列表 -->
+    <select id="getPartsByEqId" resultType="com.adc.da.equipment.entity.EquipmentPartsEO" parameterType="java.lang.String">
+    	select ID id,
+    		   EQ_ID eqId,
+    		   EQ_PARTS_NAME eqPartsName,
+    		   EQ_PARTS_NUMBER eqPartsNumber,
+    		   EQ_PARTS_FILE_ID eqPartsFileId,
+    		   EQ_PARTS_FILE_NAME eqPartsFileName
+    		from res_equipment_parts where EQ_ID = #{value}
+    </select>
+    
+    <!-- 批量删除设备配件 -->
+    <delete id="deletePartsList" parameterType="java.util.List">
+    	delete from res_equipment_parts where id in
+    	<foreach collection="list" item="parts" open="(" close=")" separator=",">
+    		#{parts.id}
+    	</foreach>
+    </delete>
+    
+    <!-- 根据id获取所有子设备id列表 -->
+    <select id="getChildrenByParentId" resultMap="VOResultMap" parameterType="java.lang.String">
+        select <include refid="Detail_Column_List" />
+        from res_equipment eq
+        where eq.del_flag = '0'
+        and eq.eq_parent_id = #{value}
+    </select>
+
+    <!--根据id获取二维码的导出信息-->
+    <select id="selectEqBarCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+       SELECT RES_EQUIPMENT.eq_no,RES_EQUIPMENT.eq_name,RES_EQUIPMENT.eq_assets_no,RES_EQUIPMENT.eq_supplier
+       FROM RES_EQUIPMENT
+       WHERE RES_EQUIPMENT.del_flag = '0'
+       AND RES_EQUIPMENT.id = #{0, jdbcType=VARCHAR}
+    </select>
+
+    <!--获取使用日志信息-->
+    <select id="getUseLogList" resultMap="UseLogMap">
+        SELECT eq.eq_no,eq.eq_name,uselog.EQ_UL_STATUS,uselog.EQ_UL_START_TIME,uselog.EQ_UL_END_TIME,uselog.EQ_UL_RESPONSIBLE_PEOPLE,
+        uselog.EQ_UL_REMARK,uselog.EQ_UL_RESPONSIBLE_PEOPLE_ORG
+        FROM RES_EQUIPMENT EQ
+        INNER JOIN RES_EQUIPMENT_USE_LOG uselog
+        ON EQ.id = uselog.eq_id
+        where EQ.id IN
+        <foreach collection="array" item="useId" open="(" close=")" separator=",">
+            #{useId}
+        </foreach>
+        ORDER BY EQ.create_time DESC
+    </select>
+    <!--获取用户所属组织结构-->
+    <select id="getOrgNameByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT org.ORG_NAME
+        FROM TS_ORG org
+        LEFT JOIN TR_USER_ORG userOrg
+        ON org.id = userOrg.ORG_ID
+        where userOrg.USER_ID = #{0,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 新增设备使用记录 -->
+    <insert id="addUseLog" parameterType="com.adc.da.equipment.entity.EquipmentUseLogEO">
+    	insert into res_equipment_use_log
+    		(ID,
+    		 EQ_ID,
+    		 EQ_UL_STATUS,
+    		 EQ_UL_START_TIME,
+    		 EQ_UL_END_TIME,
+    		 EQ_UL_RESPONSIBLE_PEOPLE,
+    		 EQ_UL_RESPONSIBLE_PEOPLE_ORG,
+    		 EQ_UL_REMARK,
+    		 CREATE_BY,
+    		 CREATE_TIME)
+    		values (
+    			#{id, jdbcType=VARCHAR},
+    			#{eqId, jdbcType=VARCHAR},
+    			#{eqUlStatus, jdbcType=VARCHAR},
+    			#{eqUlStartTime, jdbcType=VARCHAR},
+    			#{eqUlEndTime, jdbcType=VARCHAR},
+    			#{eqUlResponsiblePeople, jdbcType=VARCHAR},
+    			#{eqUlResponsiblePeopleOrg, jdbcType=VARCHAR},
+    			#{eqUlRemark, jdbcType=VARCHAR},
+    			#{createBy, jdbcType=VARCHAR},
+    			#{createTime, jdbcType=VARCHAR}
+    		)
+    </insert>
+    
+    <!-- 更新设备使用记录 -->
+    <update id="updateUseLog" parameterType="com.adc.da.equipment.entity.EquipmentUseLogEO">
+    	update res_equipment_use_log
+    		set EQ_ID = #{eqId, jdbcType=VARCHAR},
+	    		EQ_UL_STATUS = #{eqUlStatus, jdbcType=VARCHAR},
+	    		EQ_UL_START_TIME = #{eqUlStartTime, jdbcType=VARCHAR},
+	    		EQ_UL_END_TIME = #{eqUlEndTime, jdbcType=VARCHAR},
+	    		EQ_UL_RESPONSIBLE_PEOPLE = #{eqUlResponsiblePeople, jdbcType=VARCHAR},
+	    		EQ_UL_RESPONSIBLE_PEOPLE_ORG = #{eqUlResponsiblePeopleOrg, jdbcType=VARCHAR},
+	    		EQ_UL_REMARK = #{eqUlRemark, jdbcType=VARCHAR},
+	    		CREATE_BY = #{createBy, jdbcType=VARCHAR},
+	    		CREATE_TIME = #{createTime, jdbcType=VARCHAR}
+	    	where id = #{id, jdbcType=VARCHAR}
+    </update>
+    
+    <!-- 设备使用日志分页查询 -->
+    <select id="getUseLogPage" resultType="com.adc.da.equipment.entity.EquipmentUseLogEO" parameterType="com.adc.da.base.page.BasePage">
+		select * from
+			(select tmp_tb.* , rownum rn from
+				(select id id,
+						eq_id eqId,
+						eq_ul_status eqUlStatus,
+						eq_ul_start_time eqUlStartTime,
+						eq_ul_end_time eqUlEndTime,
+						eq_ul_responsible_people eqUlResponsiblePeople,
+						eq_ul_responsible_people_org eqUlResponsiblePeopleOrg,
+						eq_ul_remark eqUlRemark,
+						create_by createBy,
+						create_time createTime
+					from res_equipment_use_log
+				 where 1=1
+				 <if test="eqId != null">
+				 	and eq_id = #{eqId}
+				 </if>
+				 <if test="eqUlStatus != null">
+				 	and eq_ul_status = #{eqUlStatus}
+				 </if>
+				 <if test="eqUlStartTimeStart != null">
+				 	and eq_ul_status &gt;= #{eqUlStartTimeStart}
+				 </if>
+				 <if test="eqUlStartTimeEnd != null">
+				 	and eq_ul_status &lt;= #{eqUlStartTimeEnd}
+				 </if>
+				 <if test="eqUlEndTimeStart != null">
+				 	and eqUlEndTimeEnd &gt;= #{eqUlEndTimeStart}
+				 </if>
+				 <if test="eqUlEndTimeEnd != null">
+				 	and eq_ul_status &lt;= #{eqUlEndTimeEnd}
+				 </if>
+				 <if test="eqUlResponsiblePeople != null">
+				 	and eq_ul_status like '%'||#{eqUlResponsiblePeople}||'%'
+				 </if>
+				 order by create_time desc
+				) tmp_tb where rownum &lt;= ${pager.endIndex})
+				where rn &gt;= ${pager.startIndex}
+  	</select>
+    
+    <!-- 设备使用日志查询总数 -->
+    <select id="getUseLogCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+	    select count(1)
+			from res_equipment_use_log
+		 where 1=1
+		 <if test="eqId != null">
+		 	and eq_id = #{eqId}
+		 </if>
+		 <if test="eqUlStatus != null">
+		 	and eq_ul_status = #{eqUlStatus}
+		 </if>
+		 <if test="eqUlStartTimeStart != null">
+		 	and eq_ul_status &gt;= #{eqUlStartTimeStart}
+		 </if>
+		 <if test="eqUlStartTimeEnd != null">
+		 	and eq_ul_status &lt;= #{eqUlStartTimeEnd}
+		 </if>
+		 <if test="eqUlEndTimeStart != null">
+		 	and eqUlEndTimeEnd &gt;= #{eqUlEndTimeStart}
+		 </if>
+		 <if test="eqUlEndTimeEnd != null">
+		 	and eq_ul_status &lt;= #{eqUlEndTimeEnd}
+		 </if>
+		 <if test="eqUlResponsiblePeople != null">
+		 	and eq_ul_status like '%'||#{eqUlResponsiblePeople}||'%'
+		 </if>
+  </select>
+  
+  <!-- 新增、修改时选择管理人分页查询（选择范围为当前登录用户所属部门下的设备管理员） -->
+  <select id="getManagerPage" resultType="com.adc.da.sys.entity.UserEO" parameterType="com.adc.da.base.page.BasePage">
+        select
+        usid, account,usname,userCode,officePhone,cellPhoneNumber,homeAddress,email,usposition,extInfo5,orgname,rolename,roleCode
+        from(
+        select tmp_tb.* , rownum rn
+        from(select * from (select tu.usid usid,
+        tu. ACCOUNT account,
+        tu.usname usname,
+        tu.user_code userCode,
+        tu.office_phone officePhone,
+        tu.CELLPHONE_NUMBER cellPhoneNumber,
+        tu.HOME_ADDRESS homeAddress,
+        tu.EMAIL email,
+        tu.USPOSITION usposition,
+        tu.extInfo5 extInfo5,
+        to1.org_name orgname,
+        wm_concat (tr.name) roleName,
+        wm_concat (tr.role_code) roleCode
+        FROM
+        TS_USER tu
+        LEFT JOIN TR_USER_ROLE tur ON TUR.USER_ID = TU.usid
+        LEFT JOIN TS_ROLE tr ON tr. ID = tur.role_id
+        LEFT JOIN TR_USER_ORG tuo ON tuo.user_id = tu.usid
+        LEFT JOIN TS_ORG to1 ON TO1. ID = tuo.org_id
+        where tu.del_flag != 1 and tr.del_flag != 1 and to1.del_flag != 1
+        <if test="orgIds != null and orgIds.size() &gt; 0">
+	        and to1.id in
+	        <foreach collection="orgIds" item="id" open="(" separator="," close=")" >
+	            #{id}
+	        </foreach>
+        </if>
+        and tr.role_code = 'Equipment_Manager'
+        GROUP BY
+        tu.usid,tu. ACCOUNT,tu.usname,tu.user_code,tu.office_phone,tu.CELLPHONE_NUMBER,tu.HOME_ADDRESS,tu.EMAIL,tu.USPOSITION,tu.extInfo5,to1.org_name) ur_
+        	where  1=1
+            <if test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="phrase" >
+                    and(ur_.account like '%${phrase}%'
+	                    or ur_.orgname like '%${phrase}%'
+	                    or ur_.usname like '%${phrase}%'
+	                    or ur_.rolename like '%${phrase}%'
+	                    or ur_.userCode like '%${phrase}%'
+	                    or ur_.usposition like '%${phrase}%'
+	                    or ur_.email like '%${phrase}%'
+	                    or ur_.cellPhoneNumber like '%${phrase}%'
+	                 )
+                </foreach>
+            </if>
+            <if test="searchPhrase == null">
+                <if test="account != null">
+                    and ur_.account like '%'||#{account}||'%'
+                </if>
+                <if test="orgName!=null">
+                    and ur_.orgname like '%'||#{orgName}||'%'
+                </if>
+                <if test="usname != null">
+                    and ur_.usname like '%'||#{usname}||'%'
+                </if>
+                <if test="roleName !=null">
+                    and ur_.rolename like '%'||#{roleName}||'%'
+                </if>
+                <if test="userCode!=null">
+                    and ur_.userCode like '%'||#{userCode}||'%'
+                </if>
+                <if test="usposition!=null">
+                    and ur_.usposition like '%'||#{usposition}||'%'
+                </if>
+                <if test="email!=null">
+                    and ur_.email like '%'||#{email}||'%'
+                </if>
+                <if test="cellPhoneNumber!=null">
+                    and ur_.cellPhoneNumber like '%'||#{cellPhoneNumber}||'%'
+                </if>
+            </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex}
+        ) u
+        where rn &gt;= ${pager.startIndex}
+    </select>
+  <!-- 新增、修改时选择管理人查询总数（选择范围为当前登录用户所属部门下的设备管理员） -->
+  <select id="getManagerCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from (select tu.usid usid,
+        tu. ACCOUNT account,
+        tu.usname usname,
+        tu.user_code userCode,
+        tu.office_phone officePhone,
+        tu.CELLPHONE_NUMBER cellPhoneNumber,
+        tu.HOME_ADDRESS homeAddress,
+        tu.EMAIL email,
+        tu.USPOSITION usposition,
+        tu.extInfo5 extInfo5,
+        to1.org_name orgname,
+        wm_concat (tr.name) rolename,
+        wm_concat (tr.role_code) roleCode
+        FROM
+        TS_USER tu
+        LEFT JOIN TR_USER_ROLE tur ON TUR.USER_ID = TU.usid
+        LEFT JOIN TS_ROLE tr ON tr. ID = tur.role_id
+        LEFT JOIN TR_USER_ORG tuo ON tuo.user_id = tu.usid
+        LEFT JOIN TS_ORG to1 ON TO1. ID = tuo.org_id
+        where tu.del_flag != 1 and tr.del_flag != 1 and to1.del_flag != 1
+        <if test="orgIds != null and orgIds.size() &gt; 0">
+	        and to1.id in
+	        <foreach collection="orgIds" item="id" open="(" separator="," close=")" >
+	            #{id}
+	        </foreach>
+        </if>
+        and tr.role_code = 'Equipment_Manager'
+        GROUP BY
+        tu.usid,tu. ACCOUNT,tu.usname,tu.user_code,tu.office_phone,tu.CELLPHONE_NUMBER,tu.HOME_ADDRESS,tu.EMAIL,tu.USPOSITION,tu.extInfo5,to1.org_name) ur_
+        	where  1=1
+            <if test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="phrase" >
+                    and(ur_.account like '%${phrase}%'
+	                    or ur_.orgname like '%${phrase}%'
+	                    or ur_.usname like '%${phrase}%'
+	                    or ur_.rolename like '%${phrase}%'
+	                    or ur_.userCode like '%${phrase}%'
+	                    or ur_.usposition like '%${phrase}%'
+	                    or ur_.email like '%${phrase}%'
+	                    or ur_.cellPhoneNumber like '%${phrase}%'
+	                 )
+                </foreach>
+            </if>
+            <if test="searchPhrase == null">
+                <if test="account != null">
+                    and ur_.account like '%'||#{account}||'%'
+                </if>
+                <if test="orgName!=null">
+                    and ur_.orgname like '%'||#{orgName}||'%'
+                </if>
+                <if test="usname != null">
+                    and ur_.usname like '%'||#{usname}||'%'
+                </if>
+                <if test="roleName !=null">
+                    and ur_.rolename like '%'||#{roleName}||'%'
+                </if>
+                <if test="userCode!=null">
+                    and ur_.userCode like '%'||#{userCode}||'%'
+                </if>
+                <if test="usposition!=null">
+                    and ur_.usposition like '%'||#{usposition}||'%'
+                </if>
+                <if test="email!=null">
+                    and ur_.email like '%'||#{email}||'%'
+                </if>
+                <if test="cellPhoneNumber!=null">
+                    and ur_.cellPhoneNumber like '%'||#{cellPhoneNumber}||'%'
+                </if>
+            </if>
+    </select>
+  
+	<!-- 查询今天超期未检的设备，修改其设备状态为超期未检 -->
+	<update id="changeStateOfOverdueEquipment">
+		update RES_EQUIPMENT
+        set EQ_STATUS = '3'
+		where DEL_FLAG = 0
+		and ID in ( select EQ_ID from RES_EQUIPMENT_CHECK 
+					where DEL_FLAG = 0 and IS_FINISH_FLAG = 0 and EQ_CK_CHECK_TIME_PLAN &lt; to_char(SYSDATE,'yyyy-MM-dd hh24:mi:ss') )
+	</update>
+
+	<!-- 获取最近的一条设备使用记录 -->
+	<select id="getLastUseLog" resultType="com.adc.da.equipment.entity.EquipmentUseLogEO" parameterType="java.lang.String">
+		select * from
+			(select id id,
+					eq_id eqId,
+					eq_ul_status eqUlStatus,
+					eq_ul_start_time eqUlStartTime,
+					eq_ul_end_time eqUlEndTime,
+					eq_ul_responsible_people eqUlResponsiblePeople,
+					eq_ul_responsible_people_org eqUlResponsiblePeopleOrg,
+					eq_ul_remark eqUlRemark,
+					create_by createBy,
+					create_time createTime
+				from res_equipment_use_log
+			 where eq_id = #{id}
+			 order by create_time desc)
+		where rownum = 1
+  	</select>
+
+    <!--获取所有设备的借用记录-->
+    <select id="getBorrowRecord" resultMap="BorrowRecordMap">
+      select RES_EQUIPMENT.EQ_NO,RES_EQUIPMENT.EQ_NAME,a.BRW_BORROWER_NAME,a.BRW_BORROWER_TIME,a.BRW_RETURN_TIME
+      FROM RES_EQUIPMENT
+      right join RES_EQUIPMENT_BORROW_RECORD a
+      on RES_EQUIPMENT.ID = a.EQ_ID
+      where RES_EQUIPMENT.DEL_FLAG = 0
+      and a.BRW_ISBRW = 0
+      ORDER BY RES_EQUIPMENT.EQ_NO desc
+    </select>
+</mapper>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.agent.dao.AgentEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.agent.entity.AgentEO" >
+    <id column="id" property="id" />
+    <result column="create_by_id" property="createById" />
+      <result column="create_by_name" property="createByName" />
+    <result column="org_id" property="orgId" />
+    <result column="agent_id" property="agentId" />
+    <result column="create_date" property="createDate" />
+    <result column="del_flag" property="delFlag" />
+    <result column="end_date" property="endDate" />
+    <result column="start_date" property="startDate" />
+    <result column="agent_name" property="agentName" />
+  </resultMap>
+
+  <!-- TP_AGENT table all fields -->
+  <sql id="Base_Column_List" >
+     id, create_by_id, org_id, agent_id, create_date, del_flag, end_date, start_date, agent_name, create_by_name
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where del_flag = 0
+      <choose>
+          <when test="searchPhrase!=null">
+              <foreach collection="searchPhrase" item="search">
+                  and (
+                  start_date like '%${search}%' or
+                  end_date like '%${search}%' or
+                  agent_name like '%${search}%' or
+                  create_by_name  like '%${search}%'
+                  )
+              </foreach>
+          </when>
+          <otherwise>
+    <trim suffixOverrides="," >
+      <if test="endDate1 != null" >
+        and end_date &gt;= #{endDate1}
+      </if>
+      <if test="endDate2 != null" >
+        and end_date &lt;= #{endDate2}
+      </if>
+      <if test="startDate1 != null" >
+        and start_date &gt;= #{startDate1}
+      </if>
+      <if test="startDate2 != null" >
+        and start_date &lt;= #{startDate2}
+      </if>
+      <if test="agentName != null" >
+        and agent_name like '%${agentName}%'
+      </if>
+        <if test="createByName != null" >
+            and create_by_name like '%${createByName}%'
+        </if>
+    </trim>
+          </otherwise>
+      </choose>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.agent.entity.AgentEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_TP_AGENT.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into TP_AGENT(<include refid="Base_Column_List" />)
+    values (#{id, jdbcType=VARCHAR}, #{createById, jdbcType=VARCHAR}, #{orgId, jdbcType=VARCHAR}, #{agentId, jdbcType=VARCHAR}, #{createDate, jdbcType=TIMESTAMP}, #{delFlag, jdbcType=VARCHAR}, #{endDate, jdbcType=TIMESTAMP}, #{startDate, jdbcType=TIMESTAMP}, #{agentName, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.agent.entity.AgentEO" >
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            select sys_guid() from dual
+    </selectKey>
+        insert into TP_AGENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="createById != null" >create_by_id,</if>
+                <if test="createByName != null" >create_by_name,</if>
+                <if test="orgId != null" >org_id,</if>
+                <if test="agentId != null" >agent_id,</if>
+                <if test="createDate != null" >create_date,</if>
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="endDate != null" >end_date,</if>
+                <if test="startDate != null" >start_date,</if>
+                <if test="agentName != null" >agent_name,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="createById != null" >#{createById, jdbcType=VARCHAR},</if>
+                <if test="createByName != null" >#{createByName, jdbcType=VARCHAR},</if>
+                <if test="orgId != null" >#{orgId, jdbcType=VARCHAR},</if>
+                <if test="agentId != null" >#{agentId, jdbcType=VARCHAR},</if>
+                <if test="createDate != null" >#{createDate, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="endDate != null" >#{endDate, jdbcType=VARCHAR},</if>
+                <if test="startDate != null" >#{startDate, jdbcType=VARCHAR},</if>
+                <if test="agentName != null" >#{agentName, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.agent.entity.AgentEO" >
+    update TP_AGENT
+       set  create_by_id = #{createById},
+       create_by_Name = #{createByName},
+            org_id = #{orgId},
+            agent_id = #{agentId},
+            create_date = #{createDate},
+            del_flag = #{delFlag},
+            end_date = #{endDate},
+            start_date = #{startDate},
+            agent_name = #{agentName}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.agent.entity.AgentEO" >
+    update TP_AGENT
+    <set >
+      <if test="createById != null" >
+        create_by_id = #{createById},
+      </if>
+        <if test="createById != null" >
+            create_by_Name = #{createByName},
+        </if>
+      <if test="orgId != null" >
+        org_id = #{orgId},
+      </if>
+      <if test="agentId != null" >
+        agent_id = #{agentId},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate},
+      </if>
+      <if test="agentName != null" >
+        agent_name = #{agentName},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 TP_AGENT -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from TP_AGENT
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TP_AGENT
+     where id = #{value}
+  </delete>
+
+  <!-- TP_AGENT 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from TP_AGENT
+    <include refid="Base_Where_Clause"/>
+      and create_by_id = #{createById}
+  </select>
+    <!--代理人查看可以代理谁登陆-->
+    <select id="queryByCount2" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from TP_AGENT
+        <include refid="Base_Where_Clause"/>
+        and agent_id = #{createById}
+    </select>
+
+  <!-- 查询TP_AGENT列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from TP_AGENT
+			 <include refid="Base_Where_Clause"/>
+             and create_by_id = #{createById}
+      <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+    <!--代理人查看可以代理谁登陆-->
+    <select id="queryByPage2" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select <include refid="Base_Column_List" /> from
+        (select tmp_tb.* , rownum rn from
+        (select <include refid="Base_Column_List" /> from TP_AGENT
+        <include refid="Base_Where_Clause"/>
+        and agent_id = #{createById}
+        <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from TP_AGENT
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

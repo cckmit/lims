@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCBaseInitDataEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_execute.entity.PCBaseInitDataEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="ITEMS_NAME" jdbcType="VARCHAR" property="itemsName" />
+    <result column="PRICE" jdbcType="VARCHAR" property="price" />
+    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+    <result column="CODE_TYPE" jdbcType="VARCHAR" property="codeType" />
+    <result column="INIT_SORT" jdbcType="DECIMAL" property="initSort" />
+    <result column="ITEMS_CODE" jdbcType="VARCHAR" property="itemsCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, ITEMS_NAME, PRICE, UNIT, CODE_TYPE, INIT_SORT, ITEMS_CODE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_BASE_INITDATA
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update PC_BASE_INITDATA
+    set DEL_FLAG = 1
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.pc_execute.entity.PCBaseInitDataEO">
+    insert into PC_BASE_INITDATA (
+    	ID, 
+    	DEL_FLAG, 
+    	ITEMS_NAME, 
+      	PRICE, 
+      	UNIT, 
+      	CODE_TYPE, 
+      	INIT_SORT, 
+      	ITEMS_CODE
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{itemsName,jdbcType=VARCHAR}, 
+      	#{price,jdbcType=VARCHAR}, 
+      	#{unit,jdbcType=VARCHAR}, 
+      	#{codeType,jdbcType=VARCHAR}, 
+      	#{initSort,jdbcType=DECIMAL}, 
+      	#{itemsCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_execute.entity.PCBaseInitDataEO">
+    insert into PC_BASE_INITDATA
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="itemsName != null">
+        ITEMS_NAME,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="unit != null">
+        UNIT,
+      </if>
+      <if test="codeType != null">
+        CODE_TYPE,
+      </if>
+      <if test="initSort != null">
+        INIT_SORT,
+      </if>
+      <if test="itemsCode != null">
+        ITEMS_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsName != null">
+        #{itemsName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null">
+        #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="initSort != null">
+        #{initSort,jdbcType=DECIMAL},
+      </if>
+      <if test="itemsCode != null">
+        #{itemsCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_execute.entity.PCBaseInitDataEO">
+    update PC_BASE_INITDATA
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsName != null">
+        ITEMS_NAME = #{itemsName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="codeType != null">
+        CODE_TYPE = #{codeType,jdbcType=VARCHAR},
+      </if>
+      <if test="initSort != null">
+        INIT_SORT = #{initSort,jdbcType=DECIMAL},
+      </if>
+      <if test="itemsCode != null">
+        ITEMS_CODE = #{itemsCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_execute.entity.PCBaseInitDataEO">
+    update PC_BASE_INITDATA
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      ITEMS_NAME = #{itemsName,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      CODE_TYPE = #{codeType,jdbcType=VARCHAR},
+      INIT_SORT = #{initSort,jdbcType=DECIMAL},
+      ITEMS_CODE = #{itemsCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+ <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+ 		WHERE DEL_FLAG != 1
+ 		<choose>
+           <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="search">
+                   AND (
+	                    ITEMS_NAME LIKE '%${search}%' 
+	                    OR PRICE LIKE '%${search}%'
+	                    OR UNIT LIKE '%${search}%'
+	                    OR CODE_TYPE LIKE '%${search}%'
+                    )
+                </foreach>
+           </when>
+           <otherwise>
+		 		<if test="itemsName != null and itemsName != ''">
+		          AND ITEMS_NAME LIKE '%${itemsName}%'
+		      	</if>
+		       	<if test="price != null and price != ''">
+		          AND PRICE LIKE '%${price}%'
+		      	</if>
+		      	<if test="unit != null and unit != ''">
+		          AND UNIT LIKE '%${unit}%'
+		       </if>
+		       <if test="codeType != null and codeType != ''">
+		          AND CODE_TYPE LIKE '%${codeType}%'
+		       </if>
+		   </otherwise>
+       </choose>
+   </sql>
+  
+  <!-- 列表总数-->
+ <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PC_BASE_INITDATA
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询列表 分页 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	SELECT *
+	FROM
+		(select tmp_tb.* , rownum rn from
+			(SELECT
+			 <include refid="Base_Column_List"/>
+			 FROM PC_BASE_INITDATA
+			 <include refid="Base_Where_Clause"/>
+			 ORDER BY CODE_TYPE,INIT_SORT
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+		where rn &gt;= ${pager.startIndex}
+  </select>
+  
+  <select id="findListByCodeType" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List"/> 
+    from PC_BASE_INITDATA
+    where DEL_FLAG = 0
+    and
+    CODE_TYPE = #{codeType,jdbcType=VARCHAR}
+    ORDER BY INIT_SORT
+  </select>
+</mapper>

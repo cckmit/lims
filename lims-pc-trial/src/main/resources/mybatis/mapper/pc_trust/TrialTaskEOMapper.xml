@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_trust.dao.TrialTaskEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_trust.entity.TrialTaskEO">
+        <id column="id" property="id"/>
+        <result column="have_temp_plate" property="haveTempPlate"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_by_name" property="createByName"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="task_type" property="taskType"/>
+        <result column="task_name" property="taskName"/>
+        <result column="task_code" property="taskCode"/>
+        <result column="trustor_org_id" property="trustorOrgId"/>
+        <result column="trustor_org_name" property="trustorOrgName"/>
+        <result column="plan_finish_time" property="planFinishTime"/>
+        <result column="according" property="according"/>
+        <result column="urgency" property="urgency"/>
+        <result column="task_purpose" property="taskPurpose"/>
+        <result column="task_requirement" property="taskRequirement"/>
+        <result column="task_file_id" property="taskFileId"/>
+        <result column="task_file_name" property="taskFileName"/>
+        <result column="have_notice" property="haveNotice"/>
+        <result column="deal_plate_times" property="dealPlateTimes"/>
+        <result column="car_seats" property="carSeats"/>
+        <result column="task_status" property="taskStatus"/>
+        <result column="dely_type" property="delyType"/>
+        <result property="delyDays" column="dely_days"/>
+        <result property="pvOrcv" column="pvOrcv"/>
+        <result column="at_name" property="atName"/>
+        <result property="atId" column="at_id"/>
+        <result property="personIds" column="person_ids"/>
+        <result property="taskVersion" column="task_version"/>
+        <result property="taskNumber" column="task_number"/>
+        <result property="initStatus" column="init_status"/>
+        <result property="supPersonIds" column="sup_person_ids"/>
+        <collection property="trialItemsEOList" column="id"
+                    select="com.adc.da.pc_items.dao.TrialItemsEODao.selectByTaskId"/>
+        <collection property="trialPersonEOList" column="id"
+                    select="com.adc.da.pc_person.dao.TrialPersonEODao.selectByTaskId"/>
+    </resultMap>
+
+    <!-- PC_TRIAL_TASK table all fields -->
+    <sql id="Base_Column_List">
+            have_temp_plate,
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            at_id,
+            at_name,
+            task_type,
+            task_name,
+            task_code,
+            trustor_org_id,
+            trustor_org_name,
+            plan_finish_time,
+            according,
+            urgency,
+            task_purpose,
+            task_requirement,
+            task_file_id,
+            task_file_name,
+            pvOrcv,
+            have_notice,
+            deal_plate_times,
+            car_seats,
+            task_status,
+            create_by_name,
+            dely_type,
+            dely_days,
+            person_ids,
+            task_version,
+            task_number,
+            init_status,
+            sup_person_ids
+    </sql>
+    <sql id="Column_List">
+            have_temp_plate,
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            at_id,
+            at_name,
+                task_type,
+            task_name,
+            task_code,
+            trustor_org_id,
+            trustor_org_name,
+            plan_finish_time,
+            according,
+            urgency,
+            task_purpose,
+            task_requirement,
+            task_file_id,
+            task_file_name,
+            pvOrcv,
+            have_notice,
+            deal_plate_times,
+            car_seats,
+            task_status,
+            create_by_name,
+            dely_type,
+            dely_days,
+            person_ids,
+            task_version,
+            task_number,
+            init_status,
+            sup_person_ids
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1 and del_flag = 0
+        and ID in(select MAX(ID) from PC_TRIAL_TASK group by task_number)
+        <if test="createBy != null and personIds != null">
+            and ( create_By = #{createBy} or person_ids like '%'||#{personIds}||'%' )
+        </if>
+        <if test="createByIds != null">
+            and create_By in
+            <foreach collection="createByIds" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="search">
+                    and (
+                    task_code like '%${search}%' or
+                    according like '%${search}%' or
+                    create_by_name like '%${search}%' or
+                    trustor_org_name like '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <trim suffixOverrides=",">
+                    <if test="createTime != null">
+                        and create_time like '%'||#{createTime}||'%'
+                    </if>
+                    <if test="taskName != null">
+                        and task_name like '%'||#{taskName}||'%'
+                    </if>
+                    <if test="taskCode != null">
+                        and task_code like '%'||#{taskCode}||'%'
+                    </if>
+                    <if test="trustorOrgName != null">
+                        and trustor_org_name like '%'||#{trustorOrgName}||'%'
+                    </if>
+                    <if test="planFinishTime != null">
+                        and plan_finish_time like '%'||#{planFinishTime}||'%'
+                    </if>
+                    <if test="according != null">
+                        and according like '%'||#{according}||'%'
+                    </if>
+                    <if test="aOre != null">
+                        and task_status != 0
+                    </if>
+                    <if test="taskStatus != null">
+                        and task_status = #{taskStatus}
+                    </if>
+                    <if test="createByName != null">
+                        and create_by_name like '%'||#{createByName}||'%'
+                    </if>
+                    <if test="supPersonIds != null">
+                        and sup_person_ids like '%'||#{supPersonIds}||'%'
+                    </if>
+                </trim>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_trust.entity.TrialTaskEO">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT sys_guid() FROM DUAL
+        </selectKey>
+        insert into PC_TRIAL_TASK
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="haveTempPlate != null">have_temp_plate,</if>
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="taskType != null">task_type,</if>
+            <if test="taskName != null">task_name,</if>
+            <if test="taskCode != null">task_code,</if>
+            <if test="trustorOrgId != null">trustor_org_id,</if>
+            <if test="trustorOrgName != null">trustor_org_name,</if>
+            <if test="planFinishTime != null">plan_finish_time,</if>
+            <if test="according != null">according,</if>
+            <if test="urgency != null">urgency,</if>
+            <if test="taskPurpose != null">task_purpose,</if>
+            <if test="taskRequirement != null">task_requirement,</if>
+            <if test="taskFileId != null">task_file_id,</if>
+            <if test="taskFileName != null">task_file_name,</if>
+            <if test="haveNotice != null">have_notice,</if>
+            <if test="dealPlateTimes != null">deal_plate_times,</if>
+            <if test="carSeats != null">car_seats,</if>
+            <if test="taskStatus != null">task_Status,</if>
+            <if test="createByName != null">create_By_Name,</if>
+            <if test="delyType != null">dely_type,</if>
+            <if test="delyDays != null">dely_Days,</if>
+            <if test="pvOrcv != null">pvOrcv,</if>
+            <if test="atId != null">at_id,</if>
+            <if test="atName != null">at_Name,</if>
+            <if test="personIds != null">person_ids,</if>
+            <if test="taskVersion != null">task_version,</if>
+            <if test="taskNumber != null">task_number,</if>
+            <if test="initStatus != null">init_status,</if>
+            <if test="supPersonIds != null">sup_person_ids,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="haveTempPlate != null">#{haveTempPlate, jdbcType=VARCHAR},</if>
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="taskType != null">#{taskType, jdbcType=VARCHAR},</if>
+            <if test="taskName != null">#{taskName, jdbcType=VARCHAR},</if>
+            <if test="taskCode != null">#{taskCode, jdbcType=VARCHAR},</if>
+            <if test="trustorOrgId != null">#{trustorOrgId, jdbcType=VARCHAR},</if>
+            <if test="trustorOrgName != null">#{trustorOrgName, jdbcType=VARCHAR},</if>
+            <if test="planFinishTime != null">#{planFinishTime, jdbcType=VARCHAR},</if>
+            <if test="according != null">#{according, jdbcType=VARCHAR},</if>
+            <if test="urgency != null">#{urgency, jdbcType=VARCHAR},</if>
+            <if test="taskPurpose != null">#{taskPurpose, jdbcType=VARCHAR},</if>
+            <if test="taskRequirement != null">#{taskRequirement, jdbcType=VARCHAR},</if>
+            <if test="taskFileId != null">#{taskFileId, jdbcType=VARCHAR},</if>
+            <if test="taskFileName != null">#{taskFileName, jdbcType=VARCHAR},</if>
+            <if test="haveNotice != null">#{haveNotice, jdbcType=VARCHAR},</if>
+            <if test="dealPlateTimes != null">#{dealPlateTimes, jdbcType=VARCHAR},</if>
+            <if test="carSeats != null">#{carSeats, jdbcType=VARCHAR},</if>
+            <if test="taskStatus != null">#{taskStatus, jdbcType=VARCHAR},</if>
+            <if test="createByName != null">#{createByName, jdbcType=VARCHAR},</if>
+            <if test="delyType != null">#{delyType, jdbcType=VARCHAR},</if>
+            <if test="delyDays != null">#{delyDays},</if>
+            <if test="pvOrcv != null">#{pvOrcv},</if>
+            <if test="atId != null">#{atId},</if>
+            <if test="atName != null">#{atName},</if>
+            <if test="personIds != null">#{personIds},</if>
+            <if test="taskVersion != null">#{taskVersion},</if>
+            <if test="taskNumber != null">#{taskNumber},</if>
+            <if test="initStatus != null">#{initStatus},</if>
+            <if test="supPersonIds != null">#{supPersonIds},</if>
+        </trim>
+    </insert>
+
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_trust.entity.TrialTaskEO">
+        update PC_TRIAL_TASK
+        <set>
+            <if test="haveTempPlate != null">
+                have_temp_plate = #{haveTempPlate},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="taskType != null">
+                task_type = #{taskType},
+            </if>
+            <if test="taskName != null">
+                task_name = #{taskName},
+            </if>
+            <if test="taskCode != null">
+                task_code = #{taskCode},
+            </if>
+            <if test="trustorOrgId != null">
+                trustor_org_id = #{trustorOrgId},
+            </if>
+            <if test="trustorOrgName != null">
+                trustor_org_name = #{trustorOrgName},
+            </if>
+            <if test="planFinishTime != null">
+                plan_finish_time = #{planFinishTime},
+            </if>
+            <if test="according != null">
+                according = #{according},
+            </if>
+            <if test="urgency != null">
+                urgency = #{urgency},
+            </if>
+            <if test="taskPurpose != null">
+                task_purpose = #{taskPurpose},
+            </if>
+            <if test="taskRequirement != null">
+                task_requirement = #{taskRequirement},
+            </if>
+            <if test="taskFileId != null">
+                task_file_id = #{taskFileId},
+            </if>
+            <if test="taskFileName != null">
+                task_file_name = #{taskFileName},
+            </if>
+            <if test="haveNotice != null">
+                have_notice = #{haveNotice},
+            </if>
+            <if test="dealPlateTimes != null">
+                deal_plate_times = #{dealPlateTimes},
+            </if>
+            <if test="carSeats != null">
+                car_seats = #{carSeats},
+            </if>
+            <if test="taskStatus != null">
+                task_Status = #{taskStatus},
+            </if>
+            <if test="createByName != null">
+                create_By_Name = #{createByName},
+            </if>
+            <if test="delyType != null">
+                dely_Type = #{delyType},
+            </if>
+            <if test="delyDays != null">
+                dely_Days = #{delyDays},
+            </if>
+            <if test="pvOrcv != null">
+                pvOrcv = #{pvOrcv},
+            </if>
+            <if test="atId != null">
+                at_id = #{atId},
+            </if>
+            <if test="atName != null">
+                at_name = #{atName},
+            </if>
+            <if test="personIds != null">
+                person_ids = #{personIds},
+            </if>
+            <if test="initStatus != null">
+                init_status = #{initStatus},
+            </if>
+            <if test="supPersonIds != null">
+                sup_person_ids = #{supPersonIds},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 PC_TRIAL_TASK -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_TASK
+        where id = #{value}
+
+    </select>
+
+    <!--提交申请-->
+    <update id="applyTask" parameterType="java.lang.String">
+        update PC_TRIAL_TASK
+        set task_status = #{status}
+        where id = #{id}
+    </update>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from PC_TRIAL_TASK
+        where id = #{value}
+    </delete>
+
+    <update id="logicDel" parameterType="java.lang.String">
+        update PC_TRIAL_TASK
+        set del_flag = 1
+        where id = #{id}
+    </update>
+
+    <!-- PC_TRIAL_TASK 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_TRIAL_TASK
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_TRIAL_TASK列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Column_List"/>
+        from PC_TRIAL_TASK
+        <include refid="Base_Where_Clause"/>
+        order by dely_days desc
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <!--查询所有未完成的申请-->
+    <select id="findAllList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_TASK
+        where task_status != 8 and del_flag = 0
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_TASK
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+
+
+
+
+	<select id="costPSQCForCashOut" resultType="com.adc.da.pc_budget_cash_out.entity.PcAutoPayForEO">
+        select temp.ID, sum(temp.TOTAL) AS cashAmount, temp.ITEMS_CODE as budgetCode, temp.ITEMS_NAME as budgetName,
+        temp.STD_PRICE as stdPrice, temp.UNIT as unit
+        from (select pbt.*
+        from pc_budget_test pbt
+        left join pc_trial_task ptt on ptt.ID = pbt.TRIAL_TASK_ID
+        where ptt.ID = #{trialTaskId}
+        and pbt.DEL_FLAG = 0
+        and pbt.ITEMS_CODE in
+        <foreach collection="codeList" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) temp
+        group by temp.ID, temp.ITEMS_CODE, temp.ITEMS_NAME, temp.STD_PRICE,
+        temp.UNIT
+    </select>
+
+    <select id="costPSQCForCashOutPerson" resultType="com.adc.da.pc_budget_cash_out.entity.PcAutoPayForEO">
+        select temp.ID, sum(temp.TOTAL) AS cashAmount, temp.ITEMS_CODE as budgetCode, temp.ITEMS_NAME as budgetName,
+        temp.DAYNUM
+        from (select pbt.*
+        from PC_BUDGET_PERSON pbt
+        left join pc_trial_task ptt on ptt.ID = pbt.TRIAL_TASK_ID
+        where ptt.ID = #{trialTaskId}
+        and pbt.DEL_FLAG = 0
+        and pbt.ITEMS_CODE in
+        <foreach collection="codeList" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) temp
+        group by  temp.ID, temp.ITEMS_CODE, temp.ITEMS_NAME, temp.DAYNUM
+    </select>
+
+    <!-- 分页查询变更记录 -->
+    <select id="changeTaskByPage" resultMap="BaseResultMap" parameterType="com.adc.da.pc_trust.page.TrialTaskChangeEOPage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Column_List"/>
+        from PC_TRIAL_TASK
+            where task_number = #{taskNumber}
+        order by dely_days desc
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <!-- 分页查询变更记录 -->
+    <select id="changeTaskByCount" resultType="java.lang.Integer">
+        select
+        count(1)
+        from PC_TRIAL_TASK
+        where task_number = #{taskNumber}
+        order by dely_days desc
+    </select>
+
+    <select id="getNewTaskByTaskNumber" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Column_List"/>
+        from PC_TRIAL_TASK
+        where task_number = #{taskNumber}
+        order by dely_days desc
+        ) tmp_tb where rownum = 1)
+    </select>
+
+</mapper>

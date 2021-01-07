@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_execute.dao.ScaffoldingChangeEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.trial_execute.entity.ScaffoldingChangeEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="SCAFFOLDING_ID_BEFORE" jdbcType="VARCHAR" property="scaffoldingIdBefore" />
+    <result column="SCAFFOLDING_NAME_BEFORE" jdbcType="VARCHAR" property="scaffoldingNameBefore" />
+    <result column="SCAFFOLDING_ID_AFTER" jdbcType="VARCHAR" property="scaffoldingIdAfter" />
+    <result column="SCAFFOLDING_NAME_AFTER" jdbcType="VARCHAR" property="scaffoldingNameAfter" />
+  </resultMap>
+  
+  <resultMap id="DetailResultMap" type="com.adc.da.trial_execute.entity.ScaffoldingChangeEO">
+  	<id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="SCAFFOLDING_ID_BEFORE" jdbcType="VARCHAR" property="scaffoldingIdBefore" />
+    <result column="SCAFFOLDING_NAME_BEFORE" jdbcType="VARCHAR" property="scaffoldingNameBefore" />
+    <result column="SCAFFOLDING_ID_AFTER" jdbcType="VARCHAR" property="scaffoldingIdAfter" />
+    <result column="SCAFFOLDING_NAME_AFTER" jdbcType="VARCHAR" property="scaffoldingNameAfter" />
+  	<collection property="scaffoldingList" ofType="com.adc.da.trial_execute.entity.ScaffoldingUserEO">
+  		<result column="SCAFFOLDING_CHANGE_ID" jdbcType="VARCHAR" property="scaffoldingChangeId" />
+	    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+	    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+	    <result column="TYPE_FLAG" jdbcType="VARCHAR" property="typeFlag" />
+  	</collection>
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_BY, CREATE_TIME, TRIALTASK_ID, SCAFFOLDING_ID_BEFORE, SCAFFOLDING_NAME_BEFORE, 
+    SCAFFOLDING_ID_AFTER, SCAFFOLDING_NAME_AFTER
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="DetailResultMap">
+    select 
+    *
+    from EV_SCAFFOLDING_CHANGE
+    LEFT JOIN EV_SCAFFOLDING_USER ON EV_SCAFFOLDING_CHANGE."ID" = EV_SCAFFOLDING_USER.SCAFFOLDING_CHANGE_ID
+    where EV_SCAFFOLDING_CHANGE.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from EV_SCAFFOLDING_CHANGE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.trial_execute.entity.ScaffoldingChangeEO">
+    insert into EV_SCAFFOLDING_CHANGE (
+    	ID, 
+    	DEL_FLAG, 
+    	CREATE_BY, 
+      	CREATE_TIME, 
+      	TRIALTASK_ID, 
+      	SCAFFOLDING_ID_BEFORE, 
+      	SCAFFOLDING_NAME_BEFORE, 
+      	SCAFFOLDING_ID_AFTER, 
+      	SCAFFOLDING_NAME_AFTER
+     )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{createBy,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=VARCHAR}, 
+      	#{trialtaskId,jdbcType=VARCHAR}, 
+      	#{scaffoldingIdBefore,jdbcType=VARCHAR}, 
+      	#{scaffoldingNameBefore,jdbcType=VARCHAR}, 
+      	#{scaffoldingIdAfter,jdbcType=VARCHAR}, 
+      	#{scaffoldingNameAfter,jdbcType=VARCHAR}
+     )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.trial_execute.entity.ScaffoldingChangeEO">
+    insert into EV_SCAFFOLDING_CHANGE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID,
+      </if>
+      <if test="scaffoldingIdBefore != null">
+        SCAFFOLDING_ID_BEFORE,
+      </if>
+      <if test="scaffoldingNameBefore != null">
+        SCAFFOLDING_NAME_BEFORE,
+      </if>
+      <if test="scaffoldingIdAfter != null">
+        SCAFFOLDING_ID_AFTER,
+      </if>
+      <if test="scaffoldingNameAfter != null">
+        SCAFFOLDING_NAME_AFTER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingIdBefore != null">
+        #{scaffoldingIdBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingNameBefore != null">
+        #{scaffoldingNameBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingIdAfter != null">
+        #{scaffoldingIdAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingNameAfter != null">
+        #{scaffoldingNameAfter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_execute.entity.ScaffoldingChangeEO">
+    update EV_SCAFFOLDING_CHANGE
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingIdBefore != null">
+        SCAFFOLDING_ID_BEFORE = #{scaffoldingIdBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingNameBefore != null">
+        SCAFFOLDING_NAME_BEFORE = #{scaffoldingNameBefore,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingIdAfter != null">
+        SCAFFOLDING_ID_AFTER = #{scaffoldingIdAfter,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingNameAfter != null">
+        SCAFFOLDING_NAME_AFTER = #{scaffoldingNameAfter,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.trial_execute.entity.ScaffoldingChangeEO">
+    update EV_SCAFFOLDING_CHANGE
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      SCAFFOLDING_ID_BEFORE = #{scaffoldingIdBefore,jdbcType=VARCHAR},
+      SCAFFOLDING_NAME_BEFORE = #{scaffoldingNameBefore,jdbcType=VARCHAR},
+      SCAFFOLDING_ID_AFTER = #{scaffoldingIdAfter,jdbcType=VARCHAR},
+      SCAFFOLDING_NAME_AFTER = #{scaffoldingNameAfter,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    
+    <!-- 列表总数-->
+   <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT count(1) FROM EV_SCAFFOLDING_CHANGE
+       <include refid="Base_Where_Clause"/>
+   </select>
+  
+   <!-- 查询条件 -->
+   <sql id="Base_Where_Clause">
+       WHERE DEL_FLAG = 0 
+       	   AND TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR}
+	       <if test="createDate1 != null and createDate1 != ''">
+	          AND CREATE_TIME <![CDATA[>=]]> #{createDate1}
+	       </if>
+	       <if test="createDate2 != null and createDate2 != ''">
+	          AND CREATE_TIME <![CDATA[<=]]> #{createDate2}
+	       </if>
+   </sql>
+  
+   <!-- 分页查询列表 -->
+   <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+       	<include refid="Base_Column_List"/>
+       	FROM EV_SCAFFOLDING_CHANGE 
+        <include refid="Base_Where_Clause"/>
+        ORDER BY CREATE_TIME DESC
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+  
+  
+</mapper>

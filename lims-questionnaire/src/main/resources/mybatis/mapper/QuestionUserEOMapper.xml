@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.dao.QuestionUserEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.entity.QuestionUserEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="TOPICS_ID" jdbcType="VARCHAR" property="topicsId" />
+    <result column="TOPICS_NAME" jdbcType="VARCHAR" property="topicsName" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="IS_ANSWER" jdbcType="VARCHAR" property="isAnswer" />
+    <result column="CONTEXT" jdbcType="VARCHAR" property="context" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, DEL_FLAG, TOPICS_ID, TOPICS_NAME, 
+    USER_ID, USER_NAME, IS_ANSWER, CONTEXT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from QM_QUESTION_USER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from QM_QUESTION_USER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.entity.QuestionUserEO">
+    insert into QM_QUESTION_USER (
+    	ID, 
+    	CREATE_BY, 
+    	CREATE_TIME, 
+      	UPDATE_BY, 
+      	UPDATE_TIME, 
+      	DEL_FLAG, 
+      	TOPICS_ID, 
+      	TOPICS_NAME, 
+      	USER_ID, 
+      	USER_NAME, 
+      	IS_ANSWER, 
+      	CONTEXT
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{createBy,jdbcType=VARCHAR}, 
+    	#{createTime,jdbcType=VARCHAR}, 
+      	#{updateBy,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{delFlag,jdbcType=VARCHAR}, 
+      	#{topicsId,jdbcType=VARCHAR}, 
+      	#{topicsName,jdbcType=VARCHAR}, 
+      	#{userId,jdbcType=VARCHAR}, 
+      	#{userName,jdbcType=VARCHAR}, 
+      	#{isAnswer,jdbcType=VARCHAR}, 
+      	#{context,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.entity.QuestionUserEO">
+    insert into QM_QUESTION_USER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="topicsId != null">
+        TOPICS_ID,
+      </if>
+      <if test="topicsName != null">
+        TOPICS_NAME,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="isAnswer != null">
+        IS_ANSWER,
+      </if>
+      <if test="context != null">
+        CONTEXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsId != null">
+        #{topicsId,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsName != null">
+        #{topicsName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAnswer != null">
+        #{isAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null">
+        #{context,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.entity.QuestionUserEO">
+    update QM_QUESTION_USER
+    <set>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsId != null">
+        TOPICS_ID = #{topicsId,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsName != null">
+        TOPICS_NAME = #{topicsName,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="isAnswer != null">
+        IS_ANSWER = #{isAnswer,jdbcType=VARCHAR},
+      </if>
+      <if test="context != null">
+        CONTEXT = #{context,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.entity.QuestionUserEO">
+    update QM_QUESTION_USER
+    set CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      TOPICS_ID = #{topicsId,jdbcType=VARCHAR},
+      TOPICS_NAME = #{topicsName,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      IS_ANSWER = #{isAnswer,jdbcType=VARCHAR},
+      CONTEXT = #{context,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="selectByTopicsId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from QM_QUESTION_USER
+    where TOPICS_ID = #{topicsId,jdbcType=VARCHAR}
+    and DEL_FLAG = 0
+  </select>
+  
+  
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from QM_QUESTION_USER
+    where TOPICS_ID = #{topicsId,jdbcType=VARCHAR}
+    and USER_ID = #{userId,jdbcType=VARCHAR}
+    and DEL_FLAG = 0
+  </select>
+</mapper>

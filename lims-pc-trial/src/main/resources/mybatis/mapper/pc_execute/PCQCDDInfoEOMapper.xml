@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCQCDDInfoEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_execute.entity.PCQCDDInfoEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="QCDD_NO" jdbcType="VARCHAR" property="qcddNo" />
+    <result column="TRIAL_TASK_ID" jdbcType="VARCHAR" property="trialTaskId" />
+    <result column="PROJECT_ID" jdbcType="VARCHAR" property="projectId" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="PROJECT_LEADER_ID" jdbcType="VARCHAR" property="projectLeaderId" />
+    <result column="PROJECT_LEADER_NAME" jdbcType="VARCHAR" property="projectLeaderName" />
+    <result column="PROJECT_ORG_ID" jdbcType="VARCHAR" property="projectOrgId" />
+    <result column="PROJECT_ORG_NAME" jdbcType="VARCHAR" property="projectOrgName" />
+    <result column="CONCLUSION" jdbcType="VARCHAR" property="conclusion" />
+    <result column="ATTACH_ID" jdbcType="VARCHAR" property="attachId" />
+    <result column="ATTACH_NAME" jdbcType="VARCHAR" property="attachName" />
+    <result column="BASEBUS_ID" jdbcType="VARCHAR" property="baseBusId"/>
+    <result column="QCDD_STATUS" jdbcType="VARCHAR" property="qcddStatus"/>
+    <result column="TASK_NUMBER" property="taskNumber" />
+    <result column="SUP_ID_END" jdbcType="VARCHAR" property="supIdEnd" />
+    <result column="SUP_NAME_END" jdbcType="VARCHAR" property="supNameEnd" />
+    <result column="COST_END" jdbcType="VARCHAR" property="costEnd" />
+    <result column="TASK_OR_PLAN" property="taskOrPlan" />
+  </resultMap>
+  
+  
+  <resultMap id="DetailResultMap" type="com.adc.da.pc_execute.entity.PCQCDDInfoEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="QCDD_NO" jdbcType="VARCHAR" property="qcddNo" />
+    <result column="TRIAL_TASK_ID" jdbcType="VARCHAR" property="trialTaskId" />
+    <result column="PROJECT_ID" jdbcType="VARCHAR" property="projectId" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="PROJECT_LEADER_ID" jdbcType="VARCHAR" property="projectLeaderId" />
+    <result column="PROJECT_LEADER_NAME" jdbcType="VARCHAR" property="projectLeaderName" />
+    <result column="PROJECT_ORG_ID" jdbcType="VARCHAR" property="projectOrgId" />
+    <result column="PROJECT_ORG_NAME" jdbcType="VARCHAR" property="projectOrgName" />
+    <result column="CONCLUSION" jdbcType="VARCHAR" property="conclusion" />
+    <result column="ATTACH_ID" jdbcType="VARCHAR" property="attachId" />
+    <result column="ATTACH_NAME" jdbcType="VARCHAR" property="attachName" />
+    <result column="QCDD_STATUS" jdbcType="VARCHAR" property="qcddStatus"/>
+    <result column="TASK_NUMBER" property="taskNumber" />
+    <result column="SUP_ID_END" jdbcType="VARCHAR" property="supIdEnd" />
+    <result column="SUP_NAME_END" jdbcType="VARCHAR" property="supNameEnd" />
+    <result column="COST_END" jdbcType="VARCHAR" property="costEnd" />
+    <result column="TASK_OR_PLAN" property="taskOrPlan" />
+    <collection property="supList" ofType="com.adc.da.pc_execute.entity.PCQCDDSupEO">
+  		<result column="SUP_ID" jdbcType="VARCHAR" property="supId" />
+	    <result column="SUP_NAME" jdbcType="VARCHAR" property="supName" />
+	    <result column="QUALITY" jdbcType="VARCHAR" property="quality" />
+	    <result column="COST" jdbcType="VARCHAR" property="cost" />
+	    <result column="DELIVER" jdbcType="VARCHAR" property="deliver" />
+	    <result column="DEVELOPMENT" jdbcType="VARCHAR" property="development" />
+  	</collection>
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, REMARK, QCDD_NO, TRIAL_TASK_ID, 
+    PROJECT_ID, PROJECT_NAME, PROJECT_LEADER_ID, PROJECT_LEADER_NAME, PROJECT_ORG_ID, 
+    PROJECT_ORG_NAME, CONCLUSION, ATTACH_ID, ATTACH_NAME, QCDD_STATUS, TASK_NUMBER, SUP_ID_END, 
+    SUP_NAME_END, COST_END, TASK_OR_PLAN
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="DetailResultMap">
+    select 
+    PC_QCDD_INFO.ID, 
+    PC_QCDD_INFO.CREATE_BY, 
+    PC_QCDD_INFO.CREATE_TIME, 
+    PC_QCDD_INFO.REMARK, QCDD_NO, 
+    PC_QCDD_INFO.TRIAL_TASK_ID, 
+    PC_QCDD_INFO.PROJECT_ID, 
+    PC_QCDD_INFO.PROJECT_NAME, 
+    PC_QCDD_INFO.PROJECT_LEADER_ID, 
+    PC_QCDD_INFO.PROJECT_LEADER_NAME, 
+    PC_QCDD_INFO.PROJECT_ORG_ID, 
+    PC_QCDD_INFO.PROJECT_ORG_NAME, 
+    PC_QCDD_INFO.CONCLUSION, 
+    PC_QCDD_INFO.ATTACH_ID, 
+    PC_QCDD_INFO.ATTACH_NAME, 
+    PC_QCDD_INFO.QCDD_STATUS, 
+    PC_QCDD_INFO.TASK_NUMBER,
+    
+    PC_QCDD_INFO.SUP_ID_END,
+    PC_QCDD_INFO.SUP_NAME_END,
+    PC_QCDD_INFO.COST_END,
+    
+    PC_QCDD_SUP.SUP_ID, 
+    PC_QCDD_SUP.SUP_NAME, 
+    PC_QCDD_SUP.QUALITY, 
+    PC_QCDD_SUP.COST, 
+    PC_QCDD_SUP.DELIVER, 
+    PC_QCDD_SUP.DEVELOPMENT
+    from PC_QCDD_INFO
+    LEFT JOIN PC_QCDD_SUP ON PC_QCDD_INFO.ID = PC_QCDD_SUP.QCDD_ID
+    where PC_QCDD_INFO.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update PC_QCDD_INFO
+    set del_flag = 1
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.pc_execute.entity.PCQCDDInfoEO">
+    insert into PC_QCDD_INFO (
+    	ID, 
+    	DEL_FLAG, 
+    	CREATE_BY, 
+      	CREATE_TIME, 
+      	UPDATE_BY, 
+      	UPDATE_TIME, 
+      	REMARK, 
+      	QCDD_NO, 
+      	TRIAL_TASK_ID, 
+      	PROJECT_ID, 
+      	PROJECT_NAME, 
+      	PROJECT_LEADER_ID, 
+      	PROJECT_LEADER_NAME, 
+      	PROJECT_ORG_ID, 
+      	PROJECT_ORG_NAME, 
+      	CONCLUSION, 
+      	ATTACH_ID, 
+      	ATTACH_NAME,
+      	QCDD_STATUS,
+      	TASK_NUMBER,
+      	SUP_ID_END,
+      	SUP_NAME_END,
+      	COST_END,
+      	TASK_OR_PLAN
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{createBy,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=VARCHAR}, 
+      	#{updateBy,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{remark,jdbcType=VARCHAR}, 
+      	#{qcddNo,jdbcType=VARCHAR}, 
+      	#{trialTaskId,jdbcType=VARCHAR}, 
+      	#{projectId,jdbcType=VARCHAR}, 
+      	#{projectName,jdbcType=VARCHAR}, 
+      	#{projectLeaderId,jdbcType=VARCHAR}, 
+      	#{projectLeaderName,jdbcType=VARCHAR}, 
+      	#{projectOrgId,jdbcType=VARCHAR}, 
+      	#{projectOrgName,jdbcType=VARCHAR}, 
+      	#{conclusion,jdbcType=VARCHAR}, 
+      	#{attachId,jdbcType=VARCHAR},
+      	#{attachName,jdbcType=VARCHAR},
+      	#{qcddStatus,jdbcType=VARCHAR},
+      	#{taskNumber,jdbcType=VARCHAR},
+      	#{supIdEnd,jdbcType=VARCHAR},
+      	#{supNameEnd,jdbcType=VARCHAR},
+      	#{costEnd,jdbcType=VARCHAR},
+      	#{taskOrPlan,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_execute.entity.PCQCDDInfoEO">
+    insert into PC_QCDD_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="qcddNo != null">
+        QCDD_NO,
+      </if>
+      <if test="trialTaskId != null">
+        TRIAL_TASK_ID,
+      </if>
+      <if test="projectId != null">
+        PROJECT_ID,
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME,
+      </if>
+      <if test="projectLeaderId != null">
+        PROJECT_LEADER_ID,
+      </if>
+      <if test="projectLeaderName != null">
+        PROJECT_LEADER_NAME,
+      </if>
+      <if test="projectOrgId != null">
+        PROJECT_ORG_ID,
+      </if>
+      <if test="projectOrgName != null">
+        PROJECT_ORG_NAME,
+      </if>
+      <if test="conclusion != null">
+        CONCLUSION,
+      </if>
+      <if test="attachId != null">
+        ATTACH_ID,
+      </if>
+      <if test="attachName != null">
+        ATTACH_NAME,
+      </if>
+      <if test="qcddStatus != null">
+        QCDD_STATUS,
+      </if>
+      <if test="taskNumber != null">
+        TASK_NUMBER,
+      </if>
+      <if test="supIdEnd != null">
+          SUP_ID_END,
+      </if>
+      <if test="supNameEnd != null">
+          SUP_NAME_END,
+      </if>
+      <if test="costEnd != null">
+          COST_END,
+      </if>
+      <if test="taskOrPlan != null">
+        TASK_OR_PLAN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="qcddNo != null">
+        #{qcddNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectLeaderId != null">
+        #{projectLeaderId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectLeaderName != null">
+        #{projectLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgName != null">
+        #{projectOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="conclusion != null">
+        #{conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="attachId != null">
+        #{attachId,jdbcType=VARCHAR},
+      </if>
+      <if test="attachName != null">
+        #{attachName,jdbcType=VARCHAR},
+      </if>
+      <if test="qcddStatus != null">
+        #{qcddStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumber != null">
+        #{taskNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="supIdEnd != null">
+        #{supIdEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="supNameEnd != null">
+        #{supNameEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="costEnd != null">
+        #{costEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="taskOrPlan != null">
+        #{taskOrPlan,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_execute.entity.PCQCDDInfoEO">
+    update PC_QCDD_INFO
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="qcddNo != null">
+        QCDD_NO = #{qcddNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectId != null">
+        PROJECT_ID = #{projectId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectName != null">
+        PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectLeaderId != null">
+        PROJECT_LEADER_ID = #{projectLeaderId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectLeaderName != null">
+        PROJECT_LEADER_NAME = #{projectLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgId != null">
+        PROJECT_ORG_ID = #{projectOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectOrgName != null">
+        PROJECT_ORG_NAME = #{projectOrgName,jdbcType=VARCHAR},
+      </if>
+      <if test="conclusion != null">
+        CONCLUSION = #{conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="attachId != null">
+        ATTACH_ID = #{attachId,jdbcType=VARCHAR},
+      </if>
+      <if test="attachName != null">
+        ATTACH_NAME = #{attachName,jdbcType=VARCHAR},
+      </if>
+      <if test="qcddStatus != null">
+        QCDD_STATUS = #{qcddStatus,jdbcType=VARCHAR},
+      </if>
+	  <if test="taskNumber != null">
+	    TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR},
+	  </if>
+      <if test="supIdEnd != null">
+          SUP_ID_END = #{supIdEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="supNameEnd != null">
+          SUP_NAME_END = #{supNameEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="costEnd != null">
+          COST_END = #{costEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="taskOrPlan != null">
+        TASK_OR_PLAN = #{taskOrPlan,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_execute.entity.PCQCDDInfoEO">
+    update PC_QCDD_INFO
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      QCDD_NO = #{qcddNo,jdbcType=VARCHAR},
+      TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      PROJECT_ID = #{projectId,jdbcType=VARCHAR},
+      PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+      PROJECT_LEADER_ID = #{projectLeaderId,jdbcType=VARCHAR},
+      PROJECT_LEADER_NAME = #{projectLeaderName,jdbcType=VARCHAR},
+      PROJECT_ORG_ID = #{projectOrgId,jdbcType=VARCHAR},
+      PROJECT_ORG_NAME = #{projectOrgName,jdbcType=VARCHAR},
+      CONCLUSION = #{conclusion,jdbcType=VARCHAR},
+      ATTACH_ID = #{attachId,jdbcType=VARCHAR},
+      ATTACH_NAME = #{attachName,jdbcType=VARCHAR},
+      QCDD_STATUS = #{qcddStatus,jdbcType=VARCHAR},
+      TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR},
+      SUP_ID_END = #{supIdEnd,jdbcType=VARCHAR},
+      SUP_NAME_END = #{supNameEnd,jdbcType=VARCHAR},
+      COST_END = #{costEnd,jdbcType=VARCHAR},
+      TASK_OR_PLAN = #{taskOrPlan,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+  <!-- 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_QCDD_INFO
+        LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = PC_QCDD_INFO.ID
+        <include refid="Base_Where_Clause"/>
+    </select>
+  
+  <!-- 查询列表 分页 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT *
+        FROM
+        (select tmp_tb.* , rownum rn from
+        (SELECT
+        	PC_QCDD_INFO.ID,
+			PC_QCDD_INFO.DEL_FLAG,
+			PC_QCDD_INFO.CREATE_BY,
+			PC_QCDD_INFO.CREATE_TIME,
+			PC_QCDD_INFO.UPDATE_BY,
+			PC_QCDD_INFO.UPDATE_TIME,
+			PC_QCDD_INFO.REMARK,
+			PC_QCDD_INFO.TASK_OR_PLAN,
+			
+			PC_QCDD_INFO.SUP_ID_END,
+			PC_QCDD_INFO.SUP_NAME_END,
+			PC_QCDD_INFO.COST_END,
+			
+			QCDD_NO,
+			TRIAL_TASK_ID,
+			PROJECT_ID,
+			PROJECT_NAME,
+			PROJECT_LEADER_ID,
+			PROJECT_LEADER_NAME,
+			PROJECT_ORG_ID,
+			PROJECT_ORG_NAME,
+			CONCLUSION,
+			ATTACH_ID,
+			ATTACH_NAME,
+			QCDD_STATUS,
+        	TS_BASEBUS.ID AS BASEBUS_ID
+        FROM PC_QCDD_INFO
+        LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = PC_QCDD_INFO.ID
+        <include refid="Base_Where_Clause"/>
+        ORDER BY PC_QCDD_INFO.UPDATE_TIME DESC
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+  
+  
+  	<!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        WHERE PC_QCDD_INFO.DEL_FLAG != 1
+        <if test="trialTaskId != null and trialTaskId != ''">
+            AND TRIAL_TASK_ID = #{trialTaskId}
+        </if>
+        <if test="taskNumber != null and taskNumber != ''">
+            AND TASK_NUMBER = #{taskNumber}
+        </if>
+        <if test="taskOrPlan != null and taskOrPlan != ''">
+            AND TASK_OR_PLAN = #{taskOrPlan}
+        </if>
+        <if test="qcddNo != null and qcddNo != ''">
+            AND QCDD_NO = #{qcddNo}
+        </if>
+        <if test="projectName != null and projectName != ''">
+            AND PROJECT_NAME LIKE '%${projectName}%'
+        </if>
+        <if test="projectLeaderName != null and projectLeaderName != ''">
+            AND PROJECT_LEADER_NAME LIKE '%projectLeaderName%'
+        </if>
+        <if test="projectOrgName != null and projectOrgName != ''">
+            AND PROJECT_ORG_NAME LIKE '%projectOrgName'
+        </if>
+        <if test="createDate1 != null and createDate1 != ''">
+            AND PC_QCDD_INFO.CREATE_TIME <![CDATA[>=]]> #{createDate1}
+        </if>
+        <if test="createDate2 != null and createDate2 != ''">
+            AND PC_QCDD_INFO.CREATE_TIME <![CDATA[<=]]> #{createDate2}
+        </if>
+    </sql>
+  
+  
+  	<select id="selectActProcIdById" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT ACT_HI_PROCINST.PROC_INST_ID_ AS ACT_PROC_ID
+        FROM PC_QCDD_INFO
+                 LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = PC_QCDD_INFO.ID
+                 LEFT JOIN ACT_HI_PROCINST ON TS_BASEBUS.ID = ACT_HI_PROCINST.BUSINESS_KEY_
+        WHERE PC_QCDD_INFO.ID = #{id,jdbcType=VARCHAR}
+    </select>
+  
+</mapper>

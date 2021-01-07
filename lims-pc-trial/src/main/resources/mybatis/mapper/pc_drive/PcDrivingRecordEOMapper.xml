@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_drive.dao.PcDrivingRecordEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_drive.entity.PcDrivingRecordEO" >
+    <id column="id" property="id" />
+    <result column="del_flag" property="delFlag" />
+    <result column="create_time" property="createTime" />
+    <result column="create_by" property="createBy" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="driving_date" property="drivingDate" />
+    <result column="line_type" property="lineType" />
+    <result column="start_place" property="startPlace" />
+    <result column="end_place" property="endPlace" />
+    <result column="start_mileage" property="startMileage" />
+    <result column="end_mileage" property="endMileage" />
+    <result column="single_mileage" property="singleMileage" />
+    <result column="total_mileage" property="totalMileage" />
+    <result column="driver" property="driver" />
+    <result column="remark" property="remark" />
+    <result column="init_task_id" property="initTaskId" />
+    <result column="trial_task_id" property="trialTaskId"/>
+    <result column="task_number" property="taskNumber"/>
+  </resultMap>
+
+  <!-- PC_DRIVING_RECORD table all fields -->
+  <sql id="Base_Column_List" >
+     id, del_flag, create_time, create_by, update_time, update_by, driving_date,
+     line_type, start_place, end_place, start_mileage, end_mileage, single_mileage,
+     total_mileage, driver, remark, init_task_id,trial_task_id,task_number
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="delFlag != null" >
+        and del_flag ${delFlagOperator} #{delFlag}
+      </if>
+      <if test="createTime != null" >
+        and create_time ${createTimeOperator} #{createTime}
+      </if>
+      <if test="createBy != null" >
+        and create_by ${createByOperator} #{createBy}
+      </if>
+      <if test="updateTime != null" >
+        and update_time ${updateTimeOperator} #{updateTime}
+      </if>
+      <if test="updateBy != null" >
+        and update_by ${updateByOperator} #{updateBy}
+      </if>
+      <if test="drivingDate != null" >
+        and driving_date ${drivingDateOperator} #{drivingDate}
+      </if>
+      <if test="lineType != null" >
+        and line_type ${lineTypeOperator} #{lineType}
+      </if>
+      <if test="startPlace != null" >
+        and start_place ${startPlaceOperator} #{startPlace}
+      </if>
+      <if test="endPlace != null" >
+        and end_place ${endPlaceOperator} #{endPlace}
+      </if>
+      <if test="startMileage != null" >
+        and start_mileage ${startMileageOperator} #{startMileage}
+      </if>
+      <if test="endMileage != null" >
+        and end_mileage ${endMileageOperator} #{endMileage}
+      </if>
+      <if test="singleMileage != null" >
+        and single_mileage ${singleMileageOperator} #{singleMileage}
+      </if>
+      <if test="totalMileage != null" >
+        and total_mileage ${totalMileageOperator} #{totalMileage}
+      </if>
+      <if test="driver != null" >
+        and driver ${driverOperator} #{driver}
+      </if>
+      <if test="remark != null" >
+        and remark ${remarkOperator} #{remark}
+      </if>
+      <if test="initTaskId != null" >
+        and init_task_id ${initTaskIdOperator} #{initTaskId}
+      </if>
+      <if test="trialTaskId != null" >
+        and trial_task_id ${trialTaskIdOperator} #{trialTaskId}
+      </if>
+        <if test="taskNumber != null" >
+        and task_number ${taskNumberOperator} #{taskNumber}
+      </if>
+    </trim>
+  </sql>
+
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_drive.entity.PcDrivingRecordEO" >
+   <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SYS_GUID() FROM DUAL
+    </selectKey>
+        insert into PC_DRIVING_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="createTime != null" >create_time,</if>
+                <if test="createBy != null" >create_by,</if>
+                <if test="updateTime != null" >update_time,</if>
+                <if test="updateBy != null" >update_by,</if>
+                <if test="drivingDate != null" >driving_date,</if>
+                <if test="lineType != null" >line_type,</if>
+                <if test="startPlace != null" >start_place,</if>
+                <if test="endPlace != null" >end_place,</if>
+                <if test="startMileage != null" >start_mileage,</if>
+                <if test="endMileage != null" >end_mileage,</if>
+                <if test="singleMileage != null" >single_mileage,</if>
+                <if test="totalMileage != null" >total_mileage,</if>
+                <if test="driver != null" >driver,</if>
+                <if test="remark != null" >remark,</if>
+                <if test="initTaskId != null" >init_task_id,</if>
+                <if test="trialTaskId != null" >trial_task_id,</if>
+                <if test="taskNumber != null" >task_number,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="createTime != null" >#{createTime, jdbcType=VARCHAR},</if>
+                <if test="createBy != null" >#{createBy, jdbcType=VARCHAR},</if>
+                <if test="updateTime != null" >#{updateTime, jdbcType=VARCHAR},</if>
+                <if test="updateBy != null" >#{updateBy, jdbcType=VARCHAR},</if>
+                <if test="drivingDate != null" >#{drivingDate, jdbcType=VARCHAR},</if>
+                <if test="lineType != null" >#{lineType, jdbcType=VARCHAR},</if>
+                <if test="startPlace != null" >#{startPlace, jdbcType=VARCHAR},</if>
+                <if test="endPlace != null" >#{endPlace, jdbcType=VARCHAR},</if>
+                <if test="startMileage != null" >#{startMileage, jdbcType=VARCHAR},</if>
+                <if test="endMileage != null" >#{endMileage, jdbcType=VARCHAR},</if>
+                <if test="singleMileage != null" >#{singleMileage, jdbcType=VARCHAR},</if>
+                <if test="totalMileage != null" >#{totalMileage, jdbcType=VARCHAR},</if>
+                <if test="driver != null" >#{driver, jdbcType=VARCHAR},</if>
+                <if test="remark != null" >#{remark, jdbcType=VARCHAR},</if>
+                <if test="initTaskId != null" >#{initTaskId, jdbcType=VARCHAR},</if>
+                <if test="trialTaskId != null" >#{trialTaskId, jdbcType=VARCHAR},</if>
+                <if test="taskNumber != null" >#{taskNumber, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_drive.entity.PcDrivingRecordEO" >
+    update PC_DRIVING_RECORD
+       set  del_flag = #{delFlag},
+            create_time = #{createTime},
+            create_by = #{createBy},
+            update_time = #{updateTime},
+            update_by = #{updateBy},
+            driving_date = #{drivingDate},
+            line_type = #{lineType},
+            start_place = #{startPlace},
+            end_place = #{endPlace},
+            start_mileage = #{startMileage},
+            end_mileage = #{endMileage},
+            single_mileage = #{singleMileage},
+            total_mileage = #{totalMileage},
+            driver = #{driver},
+            remark = #{remark},
+            init_task_id = #{initTaskId}
+            trial_task_id = #{trialTaskId}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_drive.entity.PcDrivingRecordEO" >
+    update PC_DRIVING_RECORD
+    <set >
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy},
+      </if>
+      <if test="drivingDate != null" >
+        driving_date = #{drivingDate},
+      </if>
+      <if test="lineType != null" >
+        line_type = #{lineType},
+      </if>
+      <if test="startPlace != null" >
+        start_place = #{startPlace},
+      </if>
+      <if test="endPlace != null" >
+        end_place = #{endPlace},
+      </if>
+      <if test="startMileage != null" >
+        start_mileage = #{startMileage},
+      </if>
+      <if test="endMileage != null" >
+        end_mileage = #{endMileage},
+      </if>
+      <if test="singleMileage != null" >
+        single_mileage = #{singleMileage},
+      </if>
+      <if test="totalMileage != null" >
+        total_mileage = #{totalMileage},
+      </if>
+      <if test="driver != null" >
+        driver = #{driver},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark},
+      </if>
+      <if test="initTaskId != null" >
+        init_task_id = #{initTaskId},
+      </if>
+        <if test="trialTaskId != null" >
+            trial_task_id = #{trialTaskId},
+        </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 PC_DRIVING_RECORD -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PC_DRIVING_RECORD
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_DRIVING_RECORD
+     where id = #{value}
+
+  </delete>
+
+  <!-- PC_DRIVING_RECORD 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PC_DRIVING_RECORD
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PC_DRIVING_RECORD列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PC_DRIVING_RECORD
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PC_DRIVING_RECORD
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+    <resultMap id="recordVoMap" type="com.adc.da.pc_drive.vo.PcDrivingRecourdVo">
+        <id column="id" property="trialTaskId"/>
+        <result column="CHASSIS_CODE" property="chassisCode"/>
+        <result column="VEHICLE_TYPE" property="vehicleType"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="PLAN_FINISH_TIME" property="planFinishTime"/>
+        <result column="TASK_CODE" property="taskCode"/>
+        <collection property="pcTrialLineVos" column="id" select="findTrialLineByInitTaskId">
+        </collection>
+    </resultMap>
+    <select id="findDrivingRecord" resultMap="recordVoMap" parameterType="String">
+         select * from
+         (
+          	select tt.id,TT.CREATE_TIME,TT.PLAN_FINISH_TIME,TT.TASK_CODE,ti.VEHICLE_TYPE
+          	,ROWNUM rn
+            from PC_TRIAL_TASK tt
+            LEFT JOIN PC_TRIAL_ITEMS ti
+            on ti.TRIAL_TASK_ID = tt.id
+			where TT.id=#{0}
+		)
+		WHERE rn = 1
+		  
+    </select>
+    <resultMap id="trialLineVo" type="com.adc.da.pc_drive.vo.PcTrialLineVo">
+        <result column="LINE_TYPE" property="lineType"/>
+    </resultMap>
+    <select id="findTrialLineByInitTaskId" parameterType="String" resultMap="trialLineVo">
+        select tl.line_type from PC_TRIAL_TASK tt
+          LEFT JOIN PC_RELIABLE_INITTASK RI
+          ON TT.id = ri.TRIAL_TASK_ID
+          LEFT JOIN PC_TRIAL_LINE tl
+          ON ri.id = tl.INIT_TASK_ID
+          where TT.id=#{0}
+    </select>
+
+    <resultMap id="recordVo" type="com.adc.da.pc_drive.vo.PcDrivingRecourdVo">
+        <id column="id" property="trialTaskId"/>
+        <result column="CHASSIS_CODE" property="chassisCode"/>
+        <result column="VEHICLE_TYPE" property="vehicleType"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="PLAN_FINISH_TIME" property="planFinishTime"/>
+        <result column="TASK_CODE" property="taskCode"/>
+        <collection property="pcTrialLineVos" ofType="com.adc.da.pc_drive.vo.PcTrialLineVo">
+            <result column="LINE_TYPE" property="lineType"/>
+        </collection>
+    </resultMap>
+    <select id="findDrivingRecordByTaskId" resultMap="recordVo" parameterType="String">
+          select tt.id,TT.CREATE_TIME,TT.PLAN_FINISH_TIME,TT.TASK_CODE,ti.VEHICLE_TYPE,tl.LINE_TYPE
+            from PC_TRIAL_TASK tt
+            LEFT JOIN PC_TRIAL_ITEMS ti
+             on ti.TRIAL_TASK_ID = tt.id
+            LEFT JOIN PC_TRIAL_LINE tl
+            on tl.TRIAL_TASK_ID = tt.id
+            where tt.id=#{0}
+    </select>
+
+    <resultMap id="PcStandVoMap" type="com.adc.da.pc_drive.vo.PcCurveVo">
+        <result property="drivingDate" column="DAY_NO"/>
+        <result property="singleMileage" column="ONE_DAY_KM"/>
+    </resultMap>
+    <select id="findStandardCurve" resultMap="PcStandVoMap" parameterType="java.lang.String">
+         select tl.ONE_DAY_KM,tl.DAY_NO
+          FROM PC_TRIAL_LINE tl
+          where TL.TRIAL_TASK_ID = #{0}
+    </select>
+
+    <resultMap id="PcActualVoMap" type="com.adc.da.pc_drive.vo.PcCurveVo">
+        <result property="drivingDate" column="DRIVING_DATE"/>
+        <result property="singleMileage" column="SINGLE_MILEAGE"/>
+    </resultMap>
+    <select id="findActualCurve" resultMap="PcActualVoMap" parameterType="java.lang.String">
+        select dr.DRIVING_DATE,dr.SINGLE_MILEAGE from
+        PC_DRIVING_RECORD dr
+        where DR.TRIAL_TASK_ID = #{0}
+    </select>
+
+
+
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCTrialExecuteDao">
+
+    <resultMap id="trialExecuteListVO" type="com.adc.da.pc_execute.vo.PCTrialExecuteListVO">
+        <id property="id" column="id"/>
+        <result property="proName" column="INSPRO_NAME"/>
+        <result property="insproStandard" column="inspro_standard"/>
+        <result property="orgName" column="org_name"/>
+        <result property="usName" column="us_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="reportFinishTime" column="report_finish_time"/>
+        <result property="trialprojectRate" column="trialproject_rate"/>
+        <result property="reportStatus" column="report_status"/>
+        <result property="attachmentName" column="attachment_name"/>
+        <result property="reportId" column="REPORT_ID"/>
+        <result property="busId" column="BUS_ID"/>
+        <result property="reportFileId" column="REPORT_FILEID"/>
+        <result property="orgName" column="ORG_NAME"/>
+        <result property="pdfFileId" column="PDF_FILEID"/>
+    </resultMap>
+    
+    <select id="selectListById" resultMap="trialExecuteListVO">
+        SELECT
+			E . ID,
+			E .INSPRO_NAME,
+			E.INS_STD_NAME AS INSPRO_STANDARD,
+			tu.USNAME,
+			TASK.CREATE_TIME,
+			E2.CREATE_TIME AS END_TIME,
+			E2.UPDATE_TIME AS REPORT_FINISH_TIME,
+			E2.REPORT_STATUS,
+			A2.ATTACHMENT_NAME,
+			E2. ID AS REPORT_ID,
+			TB. ID AS BUS_ID,
+			E2.REPORT_FILEID AS REPORT_FILEID,
+			TASK.TRUSTOR_ORG_NAME AS ORG_NAME,
+			E2.PDF_FILEID PDF_FILEID
+		FROM
+			PC_TRIAL_ITEMS E
+		LEFT JOIN PC_TRIAL_TASK TASK ON E.TRIAL_TASK_ID = TASK. ID
+		LEFT JOIN EV_TRIAL_REPORT E2 ON E .REPORT_ID = E2. ID
+		LEFT JOIN TS_USER TU ON TU.USID = TASK.CREATE_BY
+		LEFT JOIN TS_ATTACHMENT A2 ON A2. ID = E2.REPORT_FILEID
+		LEFT JOIN TS_BASEBUS TB ON TB.BUSINESS_ID = E2. ID
+		WHERE
+			TASK.ID = #{ID}
+    </select>
+
+</mapper>

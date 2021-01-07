@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_report.dao.TrialReportEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.trial_report.entity.TrialReportEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="REPORT_STATUS" jdbcType="VARCHAR" property="reportStatus" />
+    <result column="REPORT_FILEID" jdbcType="VARCHAR" property="reportFileid" />
+    <result column="ACCESSORY_FILEID" jdbcType="VARCHAR" property="accessoryFileid" />
+    <result column="PDF_FILEID" jdbcType="VARCHAR" property="pdfFileid" />
+    <result column="REPORT_NO" jdbcType="VARCHAR" property="reportNo" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="TRIALTASK_RESULT" jdbcType="VARCHAR" property="trialTaskResult" />
+    <result column="ARCHIVE_STATUS" jdbcType="VARCHAR" property="archiveStatus" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="VIN_CODE" jdbcType="VARCHAR" property="VINCode" />
+    <result column="INSPRO_NAMES" jdbcType="VARCHAR" property="insProNames" />
+    <result column="REPORT_TYPE" jdbcType="VARCHAR" property="reportType" />
+    <result column="TASK_CODE" jdbcType="VARCHAR" property="taskCode" />
+    <result column="ORIGINATOR" jdbcType="VARCHAR" property="originator" />
+  </resultMap>
+  
+  <resultMap id="SearchResultMap" type="com.adc.da.trial_report.entity.TrialReportEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="REPORT_STATUS" jdbcType="VARCHAR" property="reportStatus" />
+    <result column="REPORT_NO" jdbcType="VARCHAR" property="reportNo" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="TRIALTASK_RESULT" jdbcType="VARCHAR" property="trialTaskResult" />
+    <result column="ARCHIVE_STATUS" jdbcType="VARCHAR" property="archiveStatus" />
+    <result column="VIN_CODE" jdbcType="VARCHAR" property="VINCode" />
+    <result column="INSPRO_NAMES" jdbcType="VARCHAR" property="insProNames" />
+    <result column="ENGINEER_USERNAME" jdbcType="VARCHAR" property="engineerUserName" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="REPORT_TYPE" jdbcType="VARCHAR" property="reportType" />
+    <result column="TASK_CODE" jdbcType="VARCHAR" property="taskCode" />
+    <result column="ORIGINATOR" jdbcType="VARCHAR" property="originator" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    ID, REPORT_STATUS, REPORT_FILEID, ACCESSORY_FILEID, PDF_FILEID,
+    REPORT_NO, TRIALTASK_ID, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, DEL_FLAG, 
+    REMARK, TRIALTASK_RESULT, ARCHIVE_STATUS, VIN_CODE, INSPRO_NAMES, REPORT_TYPE,TASK_CODE,ORIGINATOR
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EV_TRIAL_REPORT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from EV_TRIAL_REPORT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.trial_report.entity.TrialReportEO">
+    insert into EV_TRIAL_REPORT (
+    	ID, 
+    	REPORT_STATUS, 
+    	REPORT_FILEID, 
+      	ACCESSORY_FILEID, 
+      	PDF_FILEID, 
+      	REPORT_NO, 
+      	TRIALTASK_ID, 
+      	CREATE_BY, 
+      	CREATE_TIME, 
+      	UPDATE_BY, 
+      	UPDATE_TIME, 
+      	DEL_FLAG, 
+      	REMARK,
+      	TRIALTASK_RESULT,
+      	ARCHIVE_STATUS,
+      	VIN_CODE,
+      	INSPRO_NAMES,
+      	REPORT_TYPE,
+      	ORIGINATOR,
+      	TASK_CODE
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{reportStatus,jdbcType=VARCHAR}, 
+    	#{reportFileid,jdbcType=VARCHAR}, 
+      	#{accessoryFileid,jdbcType=VARCHAR}, 
+      	#{pdfFileid,jdbcType=VARCHAR}, 
+      	#{reportNo,jdbcType=VARCHAR}, 
+      	#{trialtaskId,jdbcType=VARCHAR}, 
+      	#{createBy,jdbcType=VARCHAR}, 
+     	#{createTime,jdbcType=VARCHAR}, 
+     	#{updateBy,jdbcType=VARCHAR}, 
+     	#{updateTime,jdbcType=VARCHAR}, 
+     	#{delFlag,jdbcType=VARCHAR}, 
+     	#{remark,jdbcType=VARCHAR},
+     	#{trialTaskResult,jdbcType=VARCHAR},
+     	#{archiveStatus,jdbcType=VARCHAR},
+     	#{VINCode,jdbcType=VARCHAR},
+     	#{insProNames,jdbcType=VARCHAR},
+     	#{reportType,jdbcType=VARCHAR},
+     	#{originator,jdbcType=VARCHAR},
+     	#{taskCode,jdbcType=VARCHAR}
+     )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.trial_report.entity.TrialReportEO">
+    insert into EV_TRIAL_REPORT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="reportStatus != null">
+        REPORT_STATUS,
+      </if>
+      <if test="reportFileid != null">
+        REPORT_FILEID,
+      </if>
+      <if test="accessoryFileid != null">
+        ACCESSORY_FILEID,
+      </if>
+      <if test="pdfFileid != null">
+        PDF_FILEID,
+      </if>
+      <if test="reportNo != null">
+        REPORT_NO,
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="trialTaskResult != null">
+        TRIALTASK_RESULT,
+      </if>
+      <if test="archiveStatus != null">
+        ARCHIVE_STATUS,
+      </if>
+      <if test="VINCode != null">
+        VIN_CODE,
+      </if>
+      <if test="insProNames != null">
+        INSPRO_NAMES,
+      </if>
+      <if test="reportType != null">
+        REPORT_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="reportStatus != null">
+        #{reportStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFileid != null">
+        #{reportFileid,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoryFileid != null">
+        #{accessoryFileid,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfFileid != null">
+        #{pdfFileid,jdbcType=VARCHAR},
+      </if>
+      <if test="reportNo != null">
+        #{reportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskResult != null">
+        #{trialTaskResult,jdbcType=VARCHAR},
+      </if>
+      <if test="archiveStatus != null">
+        #{archiveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="VINCode != null">
+        #{VINCode,jdbcType=VARCHAR},
+      </if>
+      <if test="insProNames != null">
+        #{insProNames,jdbcType=VARCHAR},
+      </if>
+      <if test="reportType != null">
+        #{reportType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_report.entity.TrialReportEO">
+    update EV_TRIAL_REPORT
+    <set>
+      <if test="reportStatus != null">
+        REPORT_STATUS = #{reportStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFileid != null">
+        REPORT_FILEID = #{reportFileid,jdbcType=VARCHAR},
+      </if>
+      <if test="accessoryFileid != null">
+        ACCESSORY_FILEID = #{accessoryFileid,jdbcType=VARCHAR},
+      </if>
+      <if test="pdfFileid != null">
+        PDF_FILEID = #{pdfFileid,jdbcType=VARCHAR},
+      </if>
+      <if test="reportNo != null">
+        REPORT_NO = #{reportNo,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskResult != null">
+        TRIALTASK_RESULT = #{trialTaskResult,jdbcType=VARCHAR},
+      </if>
+      <if test="archiveStatus != null">
+        ARCHIVE_STATUS = #{archiveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="VINCode != null">
+        VIN_CODE = #{VINCode,jdbcType=VARCHAR},
+      </if>
+      <if test="insProNames != null">
+        INSPRO_NAMES = #{insProNames,jdbcType=VARCHAR},
+      </if>
+      <if test="reportType != null">
+        REPORT_TYPE = #{reportType,jdbcType=VARCHAR},
+      </if>
+      <if test="originator != null">
+        ORIGINATOR = #{originator,jdbcType=VARCHAR},
+      </if>
+      <if test="taskCode != null">
+        TASK_CODE = #{taskCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.trial_report.entity.TrialReportEO">
+    update EV_TRIAL_REPORT
+    set REPORT_STATUS = #{reportStatus,jdbcType=VARCHAR},
+      REPORT_FILEID = #{reportFileid,jdbcType=VARCHAR},
+      ACCESSORY_FILEID = #{accessoryFileid,jdbcType=VARCHAR},
+      PDF_FILEID = #{pdfFileid,jdbcType=VARCHAR},
+      REPORT_NO = #{reportNo,jdbcType=VARCHAR},
+      TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      TRIALTASK_RESULT = #{trialTaskResult,jdbcType=VARCHAR},
+      ARCHIVE_STATUS = #{archiveStatus,jdbcType=VARCHAR},
+      VIN_CODE = #{VINCode,jdbcType=VARCHAR},
+      INSPRO_NAMES = #{insProNames,jdbcType=VARCHAR},
+      REPORT_TYPE = #{reportType,jdbcType=VARCHAR},
+      ORIGINATOR = #{originator,jdbcType=VARCHAR},
+      TASK_CODE = #{taskCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+       WHERE EV_TRIAL_REPORT.DEL_FLAG != 1
+       <if test="reportType != null and reportType != ''">
+	       AND EV_TRIAL_REPORT.REPORT_TYPE = #{reportType}
+	   </if>
+	   	
+	   <if test="reportType == null or reportType == ''">
+	       AND EV_TRIAL_REPORT.REPORT_TYPE != 'EV'
+	   </if>
+       <choose>
+           <when test="searchPhrase != null">
+               <foreach collection="searchPhrase" item="search">
+                   AND (
+                   	    EV_TRIAL_REPORT.TRIALTASK_RESULT LIKE '%${search}%' 
+						OR EV_TRIAL_REPORT.ARCHIVE_STATUS LIKE '%${search}%'
+						OR EV_TRIAL_REPORT.VIN_CODE LIKE '%${search}%' 
+						OR EV_TRIAL_REPORT.INSPRO_NAMES LIKE '%${search}%' 
+						OR EV_TRIAL_REPORT.CREATE_TIME LIKE '%${search}%' 
+						OR EV_TRIAL_REPORT.TASK_CODE LIKE '%${search}%' 
+						OR EV_TRIAL_REPORT.ORIGINATOR LIKE '%${search}%' 
+						OR TS_USER.USNAME LIKE '%${search}%'
+						OR TS_ORG.ORG_NAME LIKE '%${search}%'
+                   )
+               </foreach>
+           </when>
+           <otherwise>
+           		<if test="trialTaskResult != null and trialTaskResult != ''">
+                   AND EV_TRIAL_REPORT.TRIALTASK_RESULT LIKE '%${trialTaskResult}%'
+               	</if>
+               	<if test="archiveStatus != null and archiveStatus != ''">
+                   AND EV_TRIAL_REPORT.ARCHIVE_STATUS LIKE '%${archiveStatus}%'
+               	</if>
+               	<if test="VINCode != null and VINCode != ''">
+                   AND EV_TRIAL_REPORT.VIN_CODE LIKE '%${VINCode}%'
+               	</if>
+               	<if test="insProNames != null and insProNames != ''">
+                   AND EV_TRIAL_REPORT.INSPRO_NAMES LIKE '%${insProNames}%'
+               	</if>
+               	<if test="taskCode != null and taskCode != ''">
+                   AND EV_TRIAL_REPORT.TASK_CODE LIKE '%${taskCode}%'
+               	</if>
+               	<if test="engineerUserName != null and engineerUserName != ''">
+                   AND TS_USER.USNAME LIKE '%${engineerUserName}%'
+               	</if>
+               	<if test="orgName != null and orgName != ''">
+                   AND TS_ORG.ORG_NAME LIKE '%${orgName}%'
+               	</if>
+               	
+               	<if test="createBy != null and createBy != '' ">
+                   AND EV_TRIAL_REPORT.CREATE_BY = #{createBy}
+               	</if>
+                
+               	<if test="originator != null and originator != ''">
+                   AND EV_TRIAL_REPORT.ORIGINATOR LIKE '%${originator}%'
+               	</if>
+               	<if test="trialFinishDate1 != null and trialFinishDate1 != ''">
+                   AND EV_TRIAL_REPORT.CREATE_TIME <![CDATA[>=]]> #{trialFinishDate1}
+                </if>
+                <if test="trialFinishDate2 != null and trialFinishDate2 != ''">
+                   AND EV_TRIAL_REPORT.CREATE_TIME <![CDATA[<=]]> #{trialFinishDate2}
+                </if>
+                <if test="createByIds != null">
+                   AND EV_TRIAL_REPORT.CREATE_BY IN 
+                   	<foreach collection="createByIds" item="createById" index="index" open="(" close=")" separator=",">
+					  #{createById}
+					</foreach>
+               	</if>
+           </otherwise>
+       </choose>
+   </sql>
+  
+  <!-- EV_TRIAL_REPORT 列表总数-->
+ <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from EV_TRIAL_REPORT
+    	LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_REPORT.CREATE_BY
+		LEFT JOIN TR_USER_ORG ON TR_USER_ORG.USER_ID = EV_TRIAL_REPORT.CREATE_BY
+		LEFT JOIN TS_ORG ON TS_ORG."ID" = TR_USER_ORG.ORG_ID
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询EV_TRIAL_REPORT列表 -->
+  <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+	SELECT *
+	FROM
+		(select tmp_tb.* , rownum rn from
+			(SELECT
+					EV_TRIAL_REPORT."ID",
+					EV_TRIAL_REPORT.REPORT_NO,
+					EV_TRIAL_REPORT.REPORT_STATUS,
+					EV_TRIAL_REPORT.TRIALTASK_ID,
+					EV_TRIAL_REPORT.TRIALTASK_RESULT,
+					EV_TRIAL_REPORT.ARCHIVE_STATUS,
+					EV_TRIAL_REPORT.VIN_CODE,
+					EV_TRIAL_REPORT.INSPRO_NAMES,
+					EV_TRIAL_REPORT.REPORT_TYPE,
+					EV_TRIAL_REPORT.ORIGINATOR,
+					EV_TRIAL_REPORT.TASK_CODE,
+					EV_TRIAL_REPORT.CREATE_TIME,
+					TS_USER.USNAME AS ENGINEER_USERNAME,
+					TS_ORG.ORG_NAME AS ORG_NAME
+				FROM
+					EV_TRIAL_REPORT
+				LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_REPORT.CREATE_BY
+				LEFT JOIN TR_USER_ORG ON TR_USER_ORG.USER_ID = EV_TRIAL_REPORT.CREATE_BY
+				LEFT JOIN TS_ORG ON TS_ORG."ID" = TR_USER_ORG.ORG_ID
+			 <include refid="Base_Where_Clause"/>
+			 ORDER BY EV_TRIAL_REPORT.UPDATE_TIME DESC
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+ <!-- 查询所有记录 -->
+  <select id="queryByList" resultMap="BaseResultMap">
+    SELECT 
+    <include refid="Base_Column_List"/> 
+    FROM EV_TRIAL_REPORT
+    WHERE DEL_FLAG != 1
+  </select>
+
+<!-- 根据试验任务书id查询所有报告 -->
+  <select id="queryReportByTrialTaskId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT 
+    <include refid="Base_Column_List"/> 
+    FROM EV_TRIAL_REPORT
+    WHERE DEL_FLAG != 1
+    AND
+    TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectActProcIdById" parameterType="java.lang.String" resultType="java.lang.String">
+       SELECT ACT_HI_PROCINST.PROC_INST_ID_ AS ACT_PROC_ID
+       FROM EV_TRIAL_REPORT
+                LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = EV_TRIAL_REPORT.ID
+                LEFT JOIN ACT_HI_PROCINST ON TS_BASEBUS.ID = ACT_HI_PROCINST.BUSINESS_KEY_
+       WHERE EV_TRIAL_REPORT.ID = #{id,jdbcType=VARCHAR}
+   </select>
+  
+  
+</mapper>

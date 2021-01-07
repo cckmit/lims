@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.supplier.dao.AbilityEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.supplier.entity.AbilityEO">
+        <id column="id" property="id"/>
+        <result column="sup_name" property="supName"/>
+        <result column="sup_type" property="supType"/>
+        <result column="sup_qualifications" property="supQualifications"/>
+        <result column="sup_indate" property="supIndate"/>
+        <result column="sup_changelog" property="supChangelog"/>
+        <result column="sup_contract_code" property="supContractCode"/>
+        <result column="sup_con_startdate" property="supConStartdate"/>
+        <result column="sup_con_enddate" property="supConEnddate"/>
+        <result column="sup_manager_name" property="supManagerName"/>
+        <result column="sup_telephone" property="supTelephone"/>
+        <result column="sup_mail" property="supMail"/>
+        <result column="sup_manager_id" property="supManagerId"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="attachment_Id" property="attachmentId"/>
+        <result column="attachment_name" property="attachmentName"/>
+        <result column="sup_code" property="supCode"/>
+        <!-- <collection property="projectEOList" column="id" select="findProList"></collection> -->
+    </resultMap>
+
+    <resultMap id="projectEO" type="com.adc.da.supplier.entity.SupProjectEO">
+        <result column="sup_project_id" property="supProjectId" />
+        <result column="sup_ability_id" property="supAbilityId" />
+        <result column="sup_unit" property="supUnit" />
+        <result column="sup_price" property="supPrice" />
+        <result column="sup_discount" property="supDiscount" />
+        <result column="contract_project_name" property="contractProjectName" />
+        <association property="insProjectEO" javaType="com.adc.da.insproject.entity.InsProjectEO">
+            <result property="proName" column="PRO_NAME"/>
+        </association>
+    </resultMap>
+
+
+
+    <resultMap id="DetialResultMap" type="com.adc.da.supplier.entity.AbilityEO">
+        <id column="id" property="id"/>
+        <result column="sup_name" property="supName"/>
+        <result column="sup_type" property="supType"/>
+        <result column="sup_qualifications" property="supQualifications"/>
+        <result column="sup_indate" property="supIndate"/>
+        <result column="sup_changelog" property="supChangelog"/>
+        <result column="sup_contract_code" property="supContractCode"/>
+        <result column="sup_con_startdate" property="supConStartdate"/>
+        <result column="sup_con_enddate" property="supConEnddate"/>
+        <result column="sup_manager_name" property="supManagerName"/>
+        <result column="sup_telephone" property="supTelephone"/>
+        <result column="sup_mail" property="supMail"/>
+        <result column="sup_manager_id" property="supManagerId"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="attachment_Id" property="attachmentId"/>
+        <result column="attachment_name" property="attachmentName"/>
+        <result column="sup_code" property="supCode"/>
+        <collection property="projectEOList" ofType="com.adc.da.supplier.entity.SupProjectEO">
+        	<result column="sup_project_id" property="supProjectId" />
+		    <result column="sup_ability_id" property="supAbilityId" />
+		    <result column="sup_unit" property="supUnit" />
+		    <result column="sup_price" property="supPrice" />
+		    <result column="contract_project_name" property="contractProjectName" />
+		    <result column="sup_discount" property="supDiscount" />
+		    <result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+		    <result column="TEST_OBJ" jdbcType="VARCHAR" property="testObj" />
+		    <result column="TEST_PROJECT" jdbcType="VARCHAR" property="testProject" />
+		    <result column="TEST_STANDARD" jdbcType="VARCHAR" property="testStandard" />
+		    <result column="TEST_METHOD" jdbcType="VARCHAR" property="testMethod" />
+		    <result column="TEST_TYPE" jdbcType="VARCHAR" property="testType" />
+		    <result column="TEST_STANDARD_NAME" jdbcType="VARCHAR" property="testStandardName" />
+		  	<result column="SUP_DISCOUNT_PRICE" property="supDiscountPrice" />
+        </collection>
+    </resultMap>
+    
+
+    <!-- SUP_ABILITY table all fields -->
+    <sql id="Base_Column_List">
+     sup_name, id, sup_type, sup_qualifications, sup_indate, sup_changelog, sup_contract_code, sup_con_startdate, sup_con_enddate, sup_manager_name, sup_telephone, sup_mail, sup_manager_id, del_flag, attachment_Id, attachment_Name, sup_code
+  </sql>
+    <select id="findProList" resultMap="projectEO" parameterType="java.lang.String">
+        select  sp.*, bp.pro_name  from SUP_PROJECT sp left join BM_INSPECT_PROJECT bp on sp.sup_project_id = bp.id WHERE sup_ability_id  =  #{id}
+    </select>
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1 and del_flag = 0
+        <choose>
+            <when test="searchPhrase!=null">
+                <foreach collection="searchPhrase" item="search">
+                    and (
+                    sup_name like '%${search}%' or
+               <!--     sup_type like '%${search}%' or           -->
+                    sup_qualifications like '%${search}%' or
+                    sup_indate like '%${search}%' or
+                    sup_changelog like '%${search}%' or
+                    sup_contract_code like '%${search}%' or
+                    sup_con_startdate like '%${search}%' or
+                    sup_con_enddate like '%${search}%' or
+                    sup_manager_name like '%${search}%' or
+                    sup_telephone like '%${search}%' or
+                    sup_mail like '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <trim suffixOverrides=",">
+                    <if test="supName != null">
+                        and sup_name like '%${supName}%'
+                    </if>
+                    <if test="supType != null and supType != ''">
+                        and sup_type like '%${supType}%'
+                    </if>
+                    <if test="removeType != null and removeType != ''">
+                        AND SUP_TYPE not like('%${removeType}%')
+                    </if>
+                    <if test="supQualifications != null">
+                        and sup_qualifications like '%${supQualifications}%'
+                    </if>
+                    <if test="supIndate1 != null">
+                        and sup_indate &gt;= #{supIndate1}
+                    </if>
+                    <if test="supIndate2 != null">
+                        and sup_indate &lt;= #{supIndate2}
+                    </if>
+                    <if test="supChangelog != null">
+                        and sup_changelog like '%${supChangelog}%'
+                    </if>
+                    <if test="supContractCode != null">
+                        and sup_contract_code like '%${supContractCode}%'
+                    </if>
+                    <if test="supConStartdate1 != null">
+                        and sup_con_startdate &gt;= #{supConStartdate1}
+                    </if>
+                    <if test="supConStartdate2 != null">
+                        and sup_con_startdate &lt;= #{supConStartdate2}
+                    </if>
+                    <if test="supConEnddate1 != null">
+                        and sup_con_enddate &gt;= #{supConEnddate1}
+                    </if>
+                    <if test="supConEnddate2 != null">
+                        and sup_con_enddate &lt;= #{supConEnddate2}
+                    </if>
+                    <if test="supManagerName != null">
+                        and sup_manager_name like '%${supManagerName}%'
+                    </if>
+                    <if test="supTelephone != null">
+                        and sup_telephone like '%${supTelephone}%'
+                    </if>
+                    <if test="supMail != null">
+                        and sup_mail like '%${supMail}%'
+                    </if>
+                </trim>
+            </otherwise>
+        </choose>
+    </sql>
+
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.supplier.entity.AbilityEO">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT sys_guid() FROM DUAL
+        </selectKey>
+        insert into SUP_ABILITY
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="supName != null">sup_name,</if>
+            <if test="id != null">id,</if>
+            <if test="supType != null">sup_type,</if>
+            <if test="supQualifications != null">sup_qualifications,</if>
+            <if test="supIndate != null">sup_indate,</if>
+            <if test="supChangelog != null">sup_changelog,</if>
+            <if test="supContractCode != null">sup_contract_code,</if>
+            <if test="supConStartdate != null">sup_con_startdate,</if>
+            <if test="supConEnddate != null">sup_con_enddate,</if>
+            <if test="supManagerName != null">sup_manager_name,</if>
+            <if test="supTelephone != null">sup_telephone,</if>
+            <if test="supMail != null">sup_mail,</if>
+            <if test="supManagerId != null">sup_manager_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="attachmentId != null">attachment_Id,</if>
+            <if test="attachmentName != null">attachment_name,</if>
+            <if test="supCode != null">sup_code,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="supName != null">#{supName, jdbcType=VARCHAR},</if>
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="supType != null">#{supType, jdbcType=VARCHAR},</if>
+            <if test="supQualifications != null">#{supQualifications, jdbcType=VARCHAR},</if>
+            <if test="supIndate != null">#{supIndate, jdbcType=VARCHAR},</if>
+            <if test="supChangelog != null">#{supChangelog, jdbcType=VARCHAR},</if>
+            <if test="supContractCode != null">#{supContractCode, jdbcType=VARCHAR},</if>
+            <if test="supConStartdate != null">#{supConStartdate, jdbcType=VARCHAR},</if>
+            <if test="supConEnddate != null">#{supConEnddate, jdbcType=VARCHAR},</if>
+            <if test="supManagerName != null">#{supManagerName, jdbcType=VARCHAR},</if>
+            <if test="supTelephone != null">#{supTelephone, jdbcType=VARCHAR},</if>
+            <if test="supMail != null">#{supMail, jdbcType=VARCHAR},</if>
+            <if test="supManagerId != null">#{supManagerId, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=VARCHAR},</if>
+            <if test="attachmentId != null">#{attachmentId, jdbcType=VARCHAR},</if>
+            <if test="attachmentName != null">#{attachmentName, jdbcType=VARCHAR},</if>
+            <if test="supCode != null">#{supCode, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.supplier.entity.AbilityEO">
+        update SUP_ABILITY
+        <set>
+            <if test="supName != null">
+                sup_name = #{supName},
+            </if>
+            <if test="supType != null">
+                sup_type = #{supType},
+            </if>
+            <if test="supQualifications != null">
+                sup_qualifications = #{supQualifications},
+            </if>
+            <if test="supIndate != null">
+                sup_indate = #{supIndate},
+            </if>
+            <if test="supChangelog != null">
+                sup_changelog = #{supChangelog},
+            </if>
+            <if test="supContractCode != null">
+                sup_contract_code = #{supContractCode},
+            </if>
+            <if test="supConStartdate != null">
+                sup_con_startdate = #{supConStartdate},
+            </if>
+            <if test="supConEnddate != null">
+                sup_con_enddate = #{supConEnddate},
+            </if>
+            <if test="supManagerName != null">
+                sup_manager_name = #{supManagerName},
+            </if>
+            <if test="supTelephone != null">
+                sup_telephone = #{supTelephone},
+            </if>
+            <if test="supMail != null">
+                sup_mail = #{supMail},
+            </if>
+            <if test="supManagerId != null">
+                sup_manager_id = #{supManagerId},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="attachmentId != null ">
+                attachment_Id = #{attachmentId},
+            </if>
+            <if test="attachmentName != null ">
+                attachment_name = #{attachmentName},
+            </if>
+            <if test="supCode != null ">
+                sup_code = #{supCode},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 SUP_ABILITY -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        	*
+        from SUP_ABILITY
+        where id = #{id}
+    </select>
+
+    <!-- 删除记录 -->
+    <update id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update  SUP_ABILITY
+    set  del_flag = 1
+     where id = #{value}
+
+  </update>
+
+    <!-- SUP_ABILITY 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from SUP_ABILITY
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询SUP_ABILITY列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from SUP_ABILITY
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from SUP_ABILITY
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <select id="findSupByCode" parameterType="java.lang.String" resultType="java.lang.String">
+        select id from sup_ability where sup_code = #{value} and del_flag = 0
+    </select>
+
+</mapper>

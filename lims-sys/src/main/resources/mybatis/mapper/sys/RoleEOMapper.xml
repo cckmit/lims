@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.RoleEODao">
+	<!-- Result Map -->
+	<resultMap id="BaseResultMap"
+		type="com.adc.da.sys.entity.RoleEO">
+		<id column="id" property="id" />
+		<result column="data_scope" property="dataScope" />
+		<result column="del_flag" property="delFlag" />
+		<result column="is_default" property="isDefault" />
+		<result column="name" property="name" />
+		<result column="remarks" property="remarks" />
+		<result column="role_code" property="roleCode" />
+		<result column="ext_info" property="extInfo" />
+		<result column="extInfo2" property="extInfo2" />
+		<result column="extInfo3" property="extInfo3" />
+		<result column="extInfo4" property="extInfo4" />
+		<result column="extInfo5" property="extInfo5" />
+	</resultMap>
+
+	<resultMap id="RoleMenuMap" extends="BaseResultMap"
+		type="com.adc.da.sys.entity.RoleEO">
+		<collection property="menuEOList"
+			ofType="com.adc.da.sys.entity.MenuEO">
+			<id column="m_id" property="id" />
+			<result column="m_delFlag" property="delFlag" />
+			<result column="m_name" property="name" />
+			<result column="m_parentId" property="parentId" />
+			<result column="m_parentIds" property="parentIds" />
+			<result column="m_href" property="href" />
+			<result column="m_icon" property="icon" />
+			<result column="m_isShow" property="isShow" />
+			<result column="m_permission" property="permission" />
+			<result column="m_remarks" property="remarks" />
+			<result column="m_sort" property="sort" />
+			<result column="m_extInfo" property="extInfo" />
+		</collection>
+	</resultMap>
+
+	<!-- TS_ROLE table all fields -->
+	<sql id="Base_Column_List">
+		id, data_scope, del_flag, is_default, name, remarks,
+		ext_info, extInfo2, extInfo3, extInfo4, extInfo5,role_code
+	</sql>
+
+	<sql id="Role_Menu_List">
+		r.*, m.id as m_id,
+		m.del_flag as m_delFlag,
+		m.name as m_name,
+		m.parent_id as m_parentId,
+		m.parent_ids as m_parentIds,
+		m.href as
+		m_href,
+		m.icon as m_icon,
+		m.is_show as m_isShow,
+		m.permission as
+		m_permission,
+		m.remarks as m_remarks,
+		m.sort as m_sort,
+		m.ext_info as
+		m_extInfo
+	</sql>
+
+	<!-- 查询条件 -->
+	<sql id="Base_Where_Clause">
+		where 1=1
+		<choose>
+			<when test="searchPhrase != null">
+				<foreach collection="searchPhrase" item="search"
+					>
+					AND (
+					TS_ROLE.role_code LIKE '%${search}%'
+					OR TS_ROLE.name LIKE '%${search}%'
+					)
+				</foreach>
+			</when>
+			<otherwise>
+				<trim suffixOverrides=",">
+					<if test="id != null">
+						and id ${idOperator} #{id}
+					</if>
+					<if test="dataScope != null">
+						and data_scope ${dataScopeOperator} #{dataScope}
+					</if>
+					<if test="delFlag != null">
+						and del_flag ${delFlagOperator} #{delFlag}
+					</if>
+					<if test="isDefault != null">
+						and is_default ${isDefaultOperator} #{isDefault}
+					</if>
+					<if test="name != null">
+						and name ${nameOperator} #{name}
+					</if>
+					<if test="remarks != null">
+						and remarks ${remarksOperator} #{remarks}
+					</if>
+					<if test="rcode != null">
+						and role_code ${rcodeOperator} #{rcode}
+					</if>
+				</trim>
+			</otherwise>
+		</choose>
+	</sql>
+
+	<update id="save" parameterType="com.adc.da.sys.entity.RoleEO">
+		<selectKey resultType="java.lang.String" keyProperty="usid"
+			order="BEFORE">
+			select SEQ_TS_ROLE.nextval as idfrom dual
+		</selectKey>
+		update TS_ROLE
+		set `del_flag`= 0
+		where `id` = #{id}
+	</update>
+
+	<select id="getRoleWithMenus" resultMap="RoleMenuMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Role_Menu_List" />
+		from TS_ROLE r
+		left join TR_ROLE_MENU rm on r.id = rm.role_id
+		left join
+		TS_MENU m on rm.menu_id = m.id
+		where r.id = #{id}
+	</select>
+
+
+	<select id="getRoleByCode" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TS_ROLE
+		where ext_info = #{roleCode}
+	</select>
+
+	<select id="getRoleListByUserId" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TS_ROLE r, TR_USER_ROLE ur
+		where r.id = ur.role_id and ur.user_id
+		= #{userId}
+	</select>
+
+	<update id="deleteLogic" parameterType="java.lang.String">
+		update TS_ROLE
+		set
+		del_Flag = 1
+		where id = #{roleId}
+	</update>
+
+	<delete id="deleteRoleMenuByRoleId"
+		parameterType="java.lang.String">
+		delete from TR_ROLE_MENU rm
+		where rm.role_id = #{roleId}
+	</delete>
+
+	<resultMap id="UserRoleMap"
+		type="com.adc.da.sys.entity.UserRoleEO">
+		<result column="user_id" property="userId" />
+		<result column="role_id" property="roleId" />
+	</resultMap>
+	<select id="getUserRoleListByRoleId" resultMap="UserRoleMap"
+		parameterType="java.lang.String">
+       select * from TR_USER_ROLE ur
+		where ur.role_id = #{roleId}
+	</select>
+	<select id="getUserRoleListPageByRoleId" resultMap="UserRoleMap"
+			parameterType="com.adc.da.base.page.BasePage">
+       select * from (
+       select tur.* , rownum rn from
+		(select * from TR_USER_ROLE ur
+		where ur.role_id =
+		#{id} ) tur  where rownum &lt;= ${pager.endIndex})
+		where rn >= ${pager.startIndex}
+	</select>
+
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TS_ROLE
+		where del_flag = 0
+	</select>
+
+	<select id="getMenuIdListByRoleId" resultType="java.lang.String"
+		parameterType="java.lang.String">
+		select menu_id
+		from TS_ROLE_MENU rm
+		where rm.role_id =
+		#{roleId}
+	</select>
+
+	<insert id="saveRoleMenu">
+		insert into TR_ROLE_MENU(role_id,menu_id) values
+		(#{roleId}, #{menuId})
+	</insert>
+
+	<select id="isBelong" resultType="integer">
+		select count(1)
+		from
+		TR_USER_ROLE
+		where user_id = #{userId} and role_id =#{roleId}
+	</select>
+
+	<!-- 动态插入记录 主键是序列 -->
+	<insert id="insertSelective"
+		parameterType="com.adc.da.sys.entity.RoleEO">
+		insert into TS_ROLE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="isDefault != null">is_default,</if>
+			<if test="delFlag != null">del_flag,</if>
+			<if test="dataScope != null">data_scope,</if>
+			<if test="id != null">id,</if>
+			<if test="extInfo != null">ext_info,</if>
+			<if test="remarks != null">remarks,</if>
+			<if test="name != null">name,</if>
+			<if test="roleCode != null">role_code,</if>
+			<if test="extInfo2 != null">extInfo2,</if>
+			<if test="extInfo3 != null">extInfo3,</if>
+			<if test="extInfo4 != null">extInfo4,</if>
+			<if test="extInfo5 != null">extInfo5</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="isDefault != null">#{isDefault},</if>
+			<if test="delFlag != null">#{delFlag},</if>
+			<if test="dataScope != null">#{dataScope},</if>
+			<if test="id != null">#{id},</if>
+			<if test="extInfo != null">#{extInfo},</if>
+			<if test="remarks != null">#{remarks},</if>
+			<if test="name != null">#{name},</if>
+			<if test="roleCode != null">#{roleCode},</if>
+			<if test="extInfo2 != null">#{extInfo2},</if>
+			<if test="extInfo3 != null">#{extInfo3},</if>
+			<if test="extInfo4 != null">#{extInfo4},</if>
+			<if test="extInfo5 != null">#{extInfo5}</if>
+		</trim>
+	</insert>
+
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.adc.da.sys.entity.RoleEO">
+		insert into TS_ROLE(
+		<include refid="Base_Column_List" />
+		)
+		values (#{id}, #{dataScope}, #{delFlag}, #{isDefault}, #{name},
+		#{remarks}, #{extInfo})
+	</insert>
+
+	<!-- 根据pk，修改记录 -->
+	<update id="updateByPrimaryKey"
+		parameterType="com.adc.da.sys.entity.RoleEO">
+		update TS_ROLE
+		set data_scope = #{dataScope},
+		del_flag =
+		#{delFlag},
+		is_default = #{isDefault},
+		name = #{name},
+		remarks =
+		#{remarks},
+		extInfo = #{extInfo}
+		where id = #{id}
+	</update>
+
+	<!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateByPrimaryKeySelective"
+		parameterType="com.adc.da.sys.entity.RoleEO">
+		update TS_ROLE set
+		<trim suffixOverrides=",">
+			<if test="dataScope != null">
+				data_scope = #{dataScope},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag},
+			</if>
+			<if test="isDefault != null">
+				is_default = #{isDefault},
+			</if>
+			<if test="name != null">
+				name = #{name},
+			</if>
+			<if test="roleCode != null">
+				role_code=#{roleCode},
+			</if>
+			<if test="remarks != null">
+				remarks = #{remarks},
+			</if>
+			<if test="extInfo != null">
+				EXT_INFO=#{extInfo},
+			</if>
+			<if test="extInfo2 != null">
+				extInfo2 = #{extInfo2},
+			</if>
+			<if test="extInfo3 != null">
+				extInfo3 = #{extInfo3},
+			</if>
+			<if test="extInfo4 != null">
+				extInfo4 = #{extInfo4},
+			</if>
+			<if test="extInfo5 != null">
+				extInfo5 = #{extInfo5},
+			</if>
+		</trim>
+		where id = #{id}
+	</update>
+
+	<!-- 根据id查询 TS_ROLE -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from TS_ROLE
+		where id = #{value}
+
+	</select>
+
+	<!-- 删除记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from
+		TS_ROLE
+		where id = #{value}
+
+	</delete>
+
+	<!-- TS_ROLE 列表总数 -->
+	<select id="queryByCount" resultType="java.lang.Integer"
+		parameterType="com.adc.da.base.page.BasePage">
+		select count(1) from TS_ROLE
+		<include refid="Base_Where_Clause" />
+		and del_flag != 1
+	</select>
+
+	<!-- 查询TS_ROLE列表 -->
+	<select id="queryByPage" resultMap="BaseResultMap"
+		parameterType="com.adc.da.base.page.BasePage">
+		select
+		<include refid="Base_Column_List" />
+		from
+		(select tmp_tb.* , rownum rn from
+		(select
+		<include refid="Base_Column_List" />
+		from TS_ROLE
+		<include refid="Base_Where_Clause" />
+		and TS_ROLE.del_flag != 1
+		<if
+			test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		) tmp_tb where rownum &lt;= ${pager.endIndex})
+		where rn &gt;= ${pager.startIndex}
+	</select>
+	<!--mysql date 2019-01-18 -->
+	<!--@author Lee Kwanho 李坤澔 -->
+	<!-- 查询TS_ROLE列表 -->
+	<select id="queryByPage" resultMap="BaseResultMap"
+		parameterType="com.adc.da.base.page.BasePage" databaseId="mysql">
+		select
+		<include refid="Base_Column_List" />
+		from TS_ROLE
+		<include refid="Base_Where_Clause" />
+		and TS_ROLE.del_flag != 1
+		<if
+			test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+		limit ${pager.startIndex -1}, ${pager.pageSize}
+	</select>
+
+	<select id="queryByList" resultMap="BaseResultMap"
+		parameterType="com.adc.da.base.page.BasePage">
+		select
+		<include refid="Base_Column_List" />
+		from TS_ROLE
+		<include refid="Base_Where_Clause" />
+		<if
+			test="pager.orderCondition != null and pager.orderCondition != ''">
+			${pager.orderCondition}
+		</if>
+	</select>
+	<!-- 根据角色名查询 TS_ROLE -->
+	<select id="selectByRoleName" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TS_ROLE
+		where name in 
+		<foreach collection="list" item="roleName" open="(" close=")" separator=",">
+			#{roleName}
+		</foreach>
+	</select>
+</mapper>

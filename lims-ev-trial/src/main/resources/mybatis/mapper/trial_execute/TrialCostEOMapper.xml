@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_execute.dao.TrialCostEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.trial_execute.entity.TrialCostEO">
+        <id column="id" property="id"/>
+        <result column="trialtask_id" property="trialtaskId"/>
+        <result column="scaffolding_cost" property="scaffoldingCost"/>
+        <result column="upkeep_cost" property="upkeepCost"/>
+        <result column="scaffolding_run_cost" property="scaffoldingRunCost"/>
+        <result column="engineer_cost" property="engineerCost"/>
+        <result column="technician_cost" property="technicianCost"/>
+        <result column="k_thermocouple_cost" property="kThermocoupleCost"/>
+        <result column="pt_cost" property="ptCost"/>
+        <result column="gasoline_cost" property="gasolineCost"/>
+        <result column="water_cost" property="waterCost"/>
+        <result column="electricity_cost" property="electricityCost"/>
+        <result column="coolant_cost" property="coolantCost"/>
+        <result column="motoroil_cost" property="motoroilCost"/>
+        <result column="management_cost" property="managementCost"/>
+        <result column="engine_destuffing_cost" property="engineDestuffingCost"/>
+        <result column="engine_cost" property="engineCost"/>
+        <result column="wicking_cost" property="wickingCost"/>
+        <result column="ecv_cost" property="ecvCost"/>
+        <result column="frock_cost" property="frockCost"/>
+        <result column="report_cost" property="reportCost"/>
+        <result column="logistics_cost" property="logisticsCost"/>
+        <result column="total_cost" property="totalCost"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_by_name" property="createByName"/>
+        <result column="evNumber" property="evNumber"/>
+        <result column="title" property="title"/>
+    </resultMap>
+
+    <!-- EV_TRIAL_COST table all fields -->
+    <sql id="Base_Column_List">
+     id, trialtask_id, scaffolding_cost, upkeep_cost, scaffolding_run_cost, engineer_cost, technician_cost, k_thermocouple_cost, pt_cost, gasoline_cost, water_cost, electricity_cost,
+     coolant_cost, motoroil_cost, management_cost, engine_destuffing_cost, engine_cost, wicking_cost, ecv_cost, frock_cost, report_cost, logistics_cost, total_cost, create_by, create_time,
+     update_by, update_time, del_flag, create_by_name, title, evNumber
+  </sql>
+  
+  <sql id="Search_Column_List">
+	etc.ID,etc.trialtask_id,etc.scaffolding_cost,etc.upkeep_cost,etc.scaffolding_run_cost,
+	etc.engineer_cost,etc.technician_cost,etc.k_thermocouple_cost,etc.pt_cost,etc.gasoline_cost,
+	etc.water_cost,etc.electricity_cost,etc.coolant_cost,etc.motoroil_cost,etc.management_cost,
+	etc.engine_destuffing_cost,etc.engine_cost,etc.wicking_cost,etc.ecv_cost,etc.frock_cost,
+	etc.report_cost,etc.logistics_cost,etc.total_cost,etc.create_by,etc.create_time,
+	etc.update_by,etc.update_time,etc.del_flag,etc.create_by_name
+</sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="trialtaskId != null">
+                and etc.trialtask_id ${trialtaskIdOperator} #{trialtaskId}
+            </if>
+            <if test="createByName != null">
+                and etc.create_by_name like '%${createByName}%'
+            </if>
+            <if test="createTime1 != null">
+                and etc.create_time &gt;= #{createTime1}
+            </if>
+            <if test="createTime2 != null">
+                and etc.create_time &lt;= #{createTime2}
+            </if>
+        </trim>
+    </sql>
+
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.trial_execute.entity.TrialCostEO">
+     <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT sys_guid() FROM DUAL
+    </selectKey>
+        insert into EV_TRIAL_COST
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="trialtaskId != null">trialtask_id,</if>
+            <if test="scaffoldingCost != null">scaffolding_cost,</if>
+            <if test="upkeepCost != null">upkeep_cost,</if>
+            <if test="scaffoldingRunCost != null">scaffolding_run_cost,</if>
+            <if test="engineerCost != null">engineer_cost,</if>
+            <if test="technicianCost != null">technician_cost,</if>
+            <if test="kThermocoupleCost != null">k_thermocouple_cost,</if>
+            <if test="ptCost != null">pt_cost,</if>
+            <if test="gasolineCost != null">gasoline_cost,</if>
+            <if test="waterCost != null">water_cost,</if>
+            <if test="electricityCost != null">electricity_cost,</if>
+            <if test="coolantCost != null">coolant_cost,</if>
+            <if test="motoroilCost != null">motoroil_cost,</if>
+            <if test="managementCost != null">management_cost,</if>
+            <if test="engineDestuffingCost != null">engine_destuffing_cost,</if>
+            <if test="engineCost != null">engine_cost,</if>
+            <if test="wickingCost != null">wicking_cost,</if>
+            <if test="ecvCost != null">ecv_cost,</if>
+            <if test="frockCost != null">frock_cost,</if>
+            <if test="reportCost != null">report_cost,</if>
+            <if test="logisticsCost != null">logistics_cost,</if>
+            <if test="totalCost != null">total_cost,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createByName != null">create_by_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="trialtaskId != null">#{trialtaskId, jdbcType=VARCHAR},</if>
+            <if test="scaffoldingCost != null">#{scaffoldingCost, jdbcType=VARCHAR},</if>
+            <if test="upkeepCost != null">#{upkeepCost, jdbcType=VARCHAR},</if>
+            <if test="scaffoldingRunCost != null">#{scaffoldingRunCost, jdbcType=VARCHAR},</if>
+            <if test="engineerCost != null">#{engineerCost, jdbcType=VARCHAR},</if>
+            <if test="technicianCost != null">#{technicianCost, jdbcType=VARCHAR},</if>
+            <if test="kThermocoupleCost != null">#{kThermocoupleCost, jdbcType=VARCHAR},</if>
+            <if test="ptCost != null">#{ptCost, jdbcType=VARCHAR},</if>
+            <if test="gasolineCost != null">#{gasolineCost, jdbcType=VARCHAR},</if>
+            <if test="waterCost != null">#{waterCost, jdbcType=VARCHAR},</if>
+            <if test="electricityCost != null">#{electricityCost, jdbcType=VARCHAR},</if>
+            <if test="coolantCost != null">#{coolantCost, jdbcType=VARCHAR},</if>
+            <if test="motoroilCost != null">#{motoroilCost, jdbcType=VARCHAR},</if>
+            <if test="managementCost != null">#{managementCost, jdbcType=VARCHAR},</if>
+            <if test="engineDestuffingCost != null">#{engineDestuffingCost, jdbcType=VARCHAR},</if>
+            <if test="engineCost != null">#{engineCost, jdbcType=VARCHAR},</if>
+            <if test="wickingCost != null">#{wickingCost, jdbcType=VARCHAR},</if>
+            <if test="ecvCost != null">#{ecvCost, jdbcType=VARCHAR},</if>
+            <if test="frockCost != null">#{frockCost, jdbcType=VARCHAR},</if>
+            <if test="reportCost != null">#{reportCost, jdbcType=VARCHAR},</if>
+            <if test="logisticsCost != null">#{logisticsCost, jdbcType=VARCHAR},</if>
+            <if test="totalCost != null">#{totalCost, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=VARCHAR},</if>
+            <if test="createByName != null">#{createByName, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_execute.entity.TrialCostEO">
+        update EV_TRIAL_COST
+        <set>
+            <if test="trialtaskId != null">
+                trialtask_id = #{trialtaskId},
+            </if>
+            <if test="scaffoldingCost != null">
+                scaffolding_cost = #{scaffoldingCost},
+            </if>
+            <if test="upkeepCost != null">
+                upkeep_cost = #{upkeepCost},
+            </if>
+            <if test="scaffoldingRunCost != null">
+                scaffolding_run_cost = #{scaffoldingRunCost},
+            </if>
+            <if test="engineerCost != null">
+                engineer_cost = #{engineerCost},
+            </if>
+            <if test="technicianCost != null">
+                technician_cost = #{technicianCost},
+            </if>
+            <if test="kThermocoupleCost != null">
+                k_thermocouple_cost = #{kThermocoupleCost},
+            </if>
+            <if test="ptCost != null">
+                pt_cost = #{ptCost},
+            </if>
+            <if test="gasolineCost != null">
+                gasoline_cost = #{gasolineCost},
+            </if>
+            <if test="waterCost != null">
+                water_cost = #{waterCost},
+            </if>
+            <if test="electricityCost != null">
+                electricity_cost = #{electricityCost},
+            </if>
+            <if test="coolantCost != null">
+                coolant_cost = #{coolantCost},
+            </if>
+            <if test="motoroilCost != null">
+                motoroil_cost = #{motoroilCost},
+            </if>
+            <if test="managementCost != null">
+                management_cost = #{managementCost},
+            </if>
+            <if test="engineDestuffingCost != null">
+                engine_destuffing_cost = #{engineDestuffingCost},
+            </if>
+            <if test="engineCost != null">
+                engine_cost = #{engineCost},
+            </if>
+            <if test="wickingCost != null">
+                wicking_cost = #{wickingCost},
+            </if>
+            <if test="ecvCost != null">
+                ecv_cost = #{ecvCost},
+            </if>
+            <if test="frockCost != null">
+                frock_cost = #{frockCost},
+            </if>
+            <if test="reportCost != null">
+                report_cost = #{reportCost},
+            </if>
+            <if test="logisticsCost != null">
+                logistics_cost = #{logisticsCost},
+            </if>
+            <if test="totalCost != null">
+                total_cost = #{totalCost},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createByName != null">
+                create_By_Name = #{createByName},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 EV_TRIAL_COST -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Search_Column_List"/>
+        , ett.EV_NUMBER evNumber, ett.title title
+        from EV_TRIAL_COST etc
+        left join EV_TRIAL_TASK ett on etc.trialtask_id = ett.id
+        where etc.id = #{value}
+    </select>
+
+    <!-- EV_TRIAL_COST 列表总数-->
+    <select id="queryByVOCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from EV_TRIAL_COST etc
+        left join EV_TRIAL_TASK ett on etc.trialtask_id = ett.id
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询EV_TRIAL_COST列表 -->
+    <select id="queryByVOPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        	*
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Search_Column_List"/>
+        , ett.EV_NUMBER evNumber, ett.title title
+        from EV_TRIAL_COST etc
+        left join EV_TRIAL_TASK ett on etc.trialtask_id = ett.id
+        <include refid="Base_Where_Clause"/>
+        order by etc.create_time desc
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByVOList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select etc.id, etc.trialtask_id, etc.scaffolding_cost, etc.upkeep_cost, etc.scaffolding_run_cost, 
+        	etc.engineer_cost, etc.technician_cost, etc.k_thermocouple_cost, etc.pt_cost, gasoline_cost, 
+        	etc.water_cost, etc.electricity_cost,etc.coolant_cost, etc.motoroil_cost, etc.management_cost, 
+        	etc.engine_destuffing_cost, etc.engine_cost, etc.wicking_cost, etc.ecv_cost, etc.frock_cost, 
+        	etc.report_cost, etc.logistics_cost, etc.total_cost, etc.create_by, etc.create_time,etc.update_by, 
+        	etc.update_time, etc.del_flag,etc. create_by_name, ett.EV_NUMBER evNumber, ett.title title
+        from EV_TRIAL_COST etc
+        left join EV_TRIAL_TASK ett on etc.trialtask_id = ett.id
+        <include refid="Base_Where_Clause"/>
+        order by etc.create_time desc
+    </select>
+
+</mapper>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_parts_apply.dao.PcPartsApplySampleEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_parts_apply.entity.PcPartsApplySampleEO" >
+    <id column="id" property="id" />
+    <result column="part_name" property="partName" />
+    <result column="part_type" property="partType" />
+    <result column="part_unit" property="partUnit" />
+    <result column="part_total" property="partTotal" />
+    <result column="remark" property="remark" />
+    <result column="del_flag" property="delFlag" />
+    <result column="part_apply_id" property="partApplyId" />
+    <result column="part_Id" property="partId" />
+  </resultMap>
+
+  <!-- PC_PARTS_APPLY_SAMPLE table all fields -->
+  <sql id="Base_Column_List" >
+     id, part_name, part_type, part_unit, part_total, remark, del_flag, part_apply_id, part_Id
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="partName != null" >
+        and part_name ${partNameOperator} #{partName}
+      </if>
+      <if test="partType != null" >
+        and part_type ${partTypeOperator} #{partType}
+      </if>
+      <if test="partUnit != null" >
+        and part_unit ${partUnitOperator} #{partUnit}
+      </if>
+      <if test="partTotal != null" >
+        and part_total ${partTotalOperator} #{partTotal}
+      </if>
+      <if test="remark != null" >
+        and remark ${remarkOperator} #{remark}
+      </if>
+      <if test="delFlag != null" >
+        and del_flag ${delFlagOperator} #{delFlag}
+      </if>
+      <if test="partApplyId != null" >
+        and part_apply_id ${partApplyIdOperator} #{partApplyId}
+      </if>
+    </trim>
+  </sql>
+
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_parts_apply.entity.PcPartsApplySampleEO" >
+    <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SYS_GUID() FROM DUAL
+    </selectKey>
+        insert into PC_PARTS_APPLY_SAMPLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="partName != null" >part_name,</if>
+                <if test="partType != null" >part_type,</if>
+                <if test="partUnit != null" >part_unit,</if>
+                <if test="partTotal != null" >part_total,</if>
+                <if test="remark != null" >remark,</if>
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="partApplyId != null" >part_apply_id,</if>
+                <if test="partId != null" >part_Id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="partName != null" >#{partName, jdbcType=VARCHAR},</if>
+                <if test="partType != null" >#{partType, jdbcType=VARCHAR},</if>
+                <if test="partUnit != null" >#{partUnit, jdbcType=VARCHAR},</if>
+                <if test="partTotal != null" >#{partTotal, jdbcType=VARCHAR},</if>
+                <if test="remark != null" >#{remark, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="partApplyId != null" >#{partApplyId, jdbcType=VARCHAR},</if>
+                <if test="partId != null ">#{partId},</if>
+            </trim>
+  </insert>
+
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_parts_apply.entity.PcPartsApplySampleEO" >
+    update PC_PARTS_APPLY_SAMPLE
+    <set >
+      <if test="partName != null" >
+        part_name = #{partName},
+      </if>
+      <if test="partType != null" >
+        part_type = #{partType},
+      </if>
+      <if test="partUnit != null" >
+        part_unit = #{partUnit},
+      </if>
+      <if test="partTotal != null" >
+        part_total = #{partTotal},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+      <if test="partApplyId != null" >
+        part_apply_id = #{partApplyId},
+      </if>
+        <if test="partId != null" >
+            part_Id = #{partId},
+        </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 PC_PARTS_APPLY_SAMPLE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PC_PARTS_APPLY_SAMPLE
+     where id = #{value}
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_PARTS_APPLY_SAMPLE
+     where id = #{value}
+  </delete>
+
+    <delete id="delByApplyId" parameterType="java.lang.String">
+        delete from PC_PARTS_APPLY_SAMPLE
+        where part_apply_id = #{value}
+    </delete>
+
+  <!-- PC_PARTS_APPLY_SAMPLE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PC_PARTS_APPLY_SAMPLE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PC_PARTS_APPLY_SAMPLE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PC_PARTS_APPLY_SAMPLE
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PC_PARTS_APPLY_SAMPLE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+    <select id="queryByApplyId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/> from PC_PARTS_APPLY_SAMPLE
+        where part_apply_id = #{value}
+    </select>
+
+</mapper>

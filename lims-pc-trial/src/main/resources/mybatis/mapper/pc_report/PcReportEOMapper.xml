@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_report.dao.PcReportEODao">
+    <resultMap id="BaseResultMap" type="com.adc.da.acttask.entity.ActTaskEO">
+        <result property="businessId" column="businessId"/>
+        <result property="title" column="title"/>
+        <result property="businessType" column="businessType"/>
+        <result property="createTime" column="createTime"/>
+        <result property="formKey" column="formKey"/>
+        <result property="proInstId" column="proInstId"/>
+        <result property="usId" column="usId"/>
+        <result property="userName" column="userName"/>
+        <result property="procDefId" column="procDefId"/>
+        <result property="taskTime" column="taskTime"/>
+        <result property="businessKey" column="businessKey"/>
+        <result property="currIds" column="currIds"/>
+        <result property="currNames" column="currNames"/>
+        <result property="dealTime" column="dealTime"/>
+        <result property="taskId" column="taskId"/>
+        <result property="assignee" column="assignee"/>
+        <result property="collectionStatus" column="collection_status"/>
+    </resultMap>
+
+    <sql id="RuColumn">
+        businessId,     title,     businessType,     createTime,     formKey,  taskId,
+        proInstId,     usId,     userName,     procDefId,     taskTime,     businessKey, assignee
+    </sql>
+
+    <!--待办查询-->
+    <select id="reportTaskPage" resultMap="BaseResultMap" parameterType="com.adc.da.acttask.page.ActTaskEOPage">
+        select
+        <include refid="RuColumn"/>
+        from
+        (select A.*, rownum rn from ( SELECT
+        tb.business_id businessId,
+        tb.title title,
+        tb.business_type businessType,
+        tb.create_time createTime,
+        art.form_key_ formKey,
+        to_char(art.create_time_, 'yyyy-mm-dd HH24:mi:ss') taskTime,
+        art.proc_inst_id_ proInstId,
+        art.id_ taskId,
+        art.assignee_ assignee,
+        tu.usid usId,
+        tu.usname userName,
+        ahp.BUSINESS_KEY_ businessKey,
+        ahp.proc_def_id_ procDefId
+        FROM
+        TS_BASEBUS tb
+        LEFT JOIN TS_USER tu ON tu.usid = tb.create_by
+        LEFT JOIN ACT_HI_PROCINST ahp ON tb. ID = ahp.BUSINESS_KEY_
+        LEFT JOIN ACT_RU_TASK art ON ahp.proc_inst_id_ = art.proc_inst_id_
+        <include refid="Ru_Where_Clause"/>
+        ORDER BY
+        art.Create_time_ DESC) A where rownum &lt;= ${pager.endIndex})
+        where rn >= ${pager.startIndex}
+    </select>
+
+
+    <select id="reportTaskCount" parameterType="com.adc.da.acttask.page.ActTaskEOPage" resultType="java.lang.Integer">
+        select count(1) from TS_BASEBUS tb
+        LEFT JOIN TS_USER tu ON tu.usid = tb.create_by
+        LEFT JOIN ACT_HI_PROCINST ahp ON tb. ID = ahp.BUSINESS_KEY_
+        LEFT JOIN ACT_RU_TASK art ON ahp.proc_inst_id_ = art.proc_inst_id_
+        <include refid="Ru_Where_Clause"/>
+    </select>
+
+
+    <sql id="currUserId">
+        <if test="currUserId !=null">
+            and (
+            SELECT
+            fun_proc_current_users_ids (art.proc_inst_id_)
+            FROM
+            dual
+            ) LIKE '%${currUserId}%'
+        </if>
+    </sql>
+    <sql id="Ru_Where_Clause">
+        WHERE 1 = 1
+        and (ahp.proc_def_id_ like '%p0c7d07edd7f8416686e3e50f745676d0%' or
+             ahp.proc_def_id_ like '%p72c7139b2acb4b1f9880f4dbda718d9b%')
+        <include refid="currUserId" />
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="search">
+                    and (
+                    tb.title like '%${search}%' or
+                    tb.create_time like '%${search}%' or
+                    tu.usname like '%${search}%' or
+                    art.create_time_ like '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <trim suffixOverrides=",">
+                    <if test="title != null">
+                        and tb.title like '%${title}%'
+                    </if>
+                    <if test="userName != null">
+                        and tu.usname like '%${userName}%'
+                    </if>
+                    <if test="createTime1 != null">
+                        and tb.create_time >= #{createTime1}
+                    </if>
+                    <if test="createTime2 != null">
+                        and tb.create_time &lt;= #{createTime2}
+                    </if>
+                    <if test="taskTime1 != null">
+                        and art.create_time_ >= to_timestamp(#{taskTime1}, 'yyyy-mm-dd')
+                    </if>
+                    <if test="taskTime2 != null">
+                        and art.create_time_ &lt;= to_timestamp(#{taskTime2}, 'yyyy-mm-dd')
+                    </if>
+                    <if test="businessKey != null">
+                        and ahp.BUSINESS_KEY_ = #{businessKey}
+                    </if>
+                    <if test="businessType != null">
+                        and tb.business_type = #{businessType}
+                    </if>
+                </trim>
+            </otherwise>
+        </choose>
+    </sql>
+    <sql id="Report_Where_Clause">
+    	WHERE
+			EV_TRIAL_REPORT.DEL_FLAG != 1
+		AND EV_TRIAL_REPORT.REPORT_STATUS = '3'
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="phrase">
+                    AND (
+                    	EV_TRIAL_REPORT.REPORT_NO LIKE '%${phrase}%'
+                    	OR EV_TRIAL_TASK.TITLE LIKE '%${phrase}%'
+                    	OR EV_TRIAL_TASK.EV_NUMBER LIKE '%${phrase}%'
+                    	OR TS_USER.USNAME LIKE '%${phrase}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="trialReportNum != null and trialReportNum != ''">
+                    AND EV_TRIAL_REPORT.REPORT_NO LIKE '%${trialReportNum}%'
+                </if>
+                <if test="trialTaskTitle != null and trialTaskTitle != ''">
+                    AND EV_TRIAL_TASK.TITLE LIKE '%${trialTaskTitle}%'
+                </if>
+                <if test="trialTaskNum != null and trialTaskNum != ''">
+                    AND EV_TRIAL_TASK.EV_NUMBER LIKE '%${trialTaskNum}%'
+                </if>
+                
+                <if test="trialengineerUserName != null and trialengineerUserName != ''">
+                    AND TS_USER.USNAME LIKE '%${trialengineerUserName}%'
+                </if>
+                
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="queryReportByPage" resultType="com.adc.da.pc_report.page.ReportPage" parameterType="com.adc.da.pc_report.page.ReportPage">
+    	SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+			EV_TRIAL_REPORT."ID" AS id,
+			EV_TRIAL_REPORT.REPORT_NO AS trialReportNum,
+			EV_TRIAL_REPORT.TRIALTASK_ID AS trialTaskId,
+			EV_TRIAL_REPORT.CREATE_TIME AS createTime,
+			EV_TRIAL_REPORT.REPORT_FILEID AS reportFileId,
+			EV_TRIAL_REPORT.PDF_FILEID AS reportPDFid,
+			EV_TRIAL_TASK.TITLE AS trialTaskTitle,
+			EV_TRIAL_TASK.EV_NUMBER AS trialTaskNum,
+			TS_USER.USNAME trialengineerUserName
+		FROM
+			EV_TRIAL_REPORT
+		LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_REPORT.CREATE_BY
+		LEFT JOIN TR_USER_ORG ON TR_USER_ORG.USER_ID = EV_TRIAL_REPORT.CREATE_BY
+		LEFT JOIN TS_ORG ON TS_ORG."ID" = TR_USER_ORG.ORG_ID
+		LEFT JOIN EV_TRIAL_TASK ON EV_TRIAL_REPORT.TRIALTASK_ID = EV_TRIAL_TASK.ID
+		<include refid="Report_Where_Clause"></include>
+		ORDER BY
+			EV_TRIAL_REPORT.UPDATE_TIME DESC
+       
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+    
+    </select>
+
+	<select id="queryCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+	    select count(1) FROM
+			EV_TRIAL_REPORT
+		LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_REPORT.CREATE_BY
+		LEFT JOIN TR_USER_ORG ON TR_USER_ORG.USER_ID = EV_TRIAL_REPORT.CREATE_BY
+		LEFT JOIN TS_ORG ON TS_ORG."ID" = TR_USER_ORG.ORG_ID
+		LEFT JOIN EV_TRIAL_TASK ON EV_TRIAL_REPORT.TRIALTASK_ID = EV_TRIAL_TASK.ID
+		<include refid="Report_Where_Clause"></include>
+	  </select>
+</mapper>

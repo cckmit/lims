@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_budget_cash_out.dao.PcBudgetCashOutEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_budget_cash_out.entity.PcBudgetCashOutEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="trial_id" property="trialId"/>
+        <result column="trial_code" property="trialCode"/>
+        <result column="trial_project_name" property="trialProjectName"/>
+        <result column="bco_code" property="code"/>
+        <result column="request_payout_id" property="requestPayoutId"/>
+        <result column="request_payout_name" property="requestPayoutName"/>
+        <result column="request_payout_org_id" property="requestPayoutOrgId"/>
+        <result column="request_payout_org_name" property="requestPayoutOrgName"/>
+        <result column="apply_date" property="applyDate"/>
+        <result column="payee_id" property="payeeId"/>
+        <result column="payee_name" property="payeeName"/>
+        <result column="payee_org_id" property="payeeOrgId"/>
+        <result column="payee_org_name" property="payeeOrgName"/>
+        <result column="bank_account" property="bankAccount"/>
+        <result column="bank_into_site" property="bankIntoSite"/>
+        <result column="bank_into_site_name" property="bankIntoSiteName"/>
+        <result column="request_payout_amount" property="requestPayoutAmount"/>
+        <result property="status" column="status"/>
+        <result property="currentWaitUserId" column="current_wait_user_id"/>
+        <result property="currentWaitUserName" column="current_wait_user_name"/>
+        <result property="pvOrCv" column="PC_CV"/>
+        <result property="taskNumber" column="TASK_NUMBER"/>
+        <result property="taskOrPlan" column="TASK_OR_PLAN"/>
+    </resultMap>
+
+    <!-- PC_BUDGET_CASH_OUT table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            trial_id,
+            trial_code,
+            trial_project_name,
+            bco_code,
+            request_payout_id,
+            request_payout_name,
+            request_payout_org_id,
+            request_payout_org_name,
+            apply_date,
+            payee_id,
+            payee_name,
+            payee_org_id,
+            payee_org_name,
+            bank_account,
+            bank_into_site,
+            bank_into_site_name,
+            request_payout_amount,
+            status,
+            current_wait_user_id,
+            current_wait_user_name,
+            PC_CV,
+            TASK_NUMBER,
+            TASK_OR_PLAN
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where del_flag = 0
+        <if test="taskNumber != null and taskNumber != ''">
+            and task_number = #{taskNumber}
+        </if>
+        <if test="trialId != null and trialId != ''">
+            and trial_id = #{trialId}
+        </if>
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    AND (BCO_CODE LIKE '%'||#{keyWord}||'%' OR PAYEE_NAME LIKE '%'||#{keyWord}||'%' OR
+                    PAYEE_ORG_NAME LIKE '%'||#{keyWord}||'%' OR BANK_ACCOUNT LIKE '%'||#{keyWord}||'%'
+                    OR REQUEST_PAYOUT_AMOUNT LIKE '%'||#{keyWord}||'%' OR apply_date LIKE '%'||#{keyWord}||'%')
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="code != null and code != ''">
+                    AND BCO_CODE LIKE '%'||#{code}||'%'
+                </if>
+                <if test="payeeName != null and payeeName != ''">
+                    AND PAYEE_NAME LIKE '%'||#{payeeName}||'%'
+                </if>
+                <if test="payeeOrgName != null and payeeOrgName != ''">
+                    AND PAYEE_ORG_NAME LIKE '%'||#{payeeOrgName}||'%'
+                </if>
+                <if test="bankAccount != null and bankAccount != ''">
+                    AND BANK_ACCOUNT LIKE '%'||#{bankAccount}||'%'
+                </if>
+                <if test="requestPayoutAmount != null and requestPayoutAmount != ''">
+                    AND REQUEST_PAYOUT_AMOUNT LIKE '%'||#{requestPayoutAmount}||'%'
+                </if>
+                <if test="applyDateStart != null and applyDateStart != ''">
+                    AND apply_date >= #{applyDateStart}
+                </if>
+                <if test="applyDateEnd != null and applyDateEnd != ''">
+                    AND apply_date <![CDATA[<=]]> #{applyDateEnd}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_budget_cash_out.entity.PcBudgetCashOutEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_BUDGET_CASH_OUT.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PC_BUDGET_CASH_OUT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="trialId != null">trial_id,</if>
+            <if test="trialCode != null">trial_code,</if>
+            <if test="trialProjectName != null">trial_project_name,</if>
+            <if test="code != null">bco_code,</if>
+            <if test="requestPayoutId != null">request_payout_id,</if>
+            <if test="requestPayoutName != null">request_payout_name,</if>
+            <if test="requestPayoutOrgId != null">request_payout_org_id,</if>
+            <if test="requestPayoutOrgName != null">request_payout_org_name,</if>
+            <if test="applyDate != null">apply_date,</if>
+            <if test="payeeId != null">payee_id,</if>
+            <if test="payeeName != null">payee_name,</if>
+            <if test="payeeOrgId != null">payee_org_id,</if>
+            <if test="payeeOrgName != null">payee_org_name,</if>
+            <if test="bankAccount != null">bank_account,</if>
+            <if test="bankIntoSite != null">bank_into_site,</if>
+            <if test="bankIntoSiteName != null">bank_into_site_name,</if>
+            <if test="requestPayoutAmount != null">request_payout_amount,</if>
+            <if test="status != null">STATUS,</if>
+            <if test="currentWaitUserId != null">CURRENT_WAIT_USER_ID,</if>
+            <if test="currentWaitUserName != null">CURRENT_WAIT_USER_NAME,</if>
+            <if test="pvOrCv != null">PC_CV,</if>
+            <if test="taskNumber != null">TASK_NUMBER,</if>
+            <if test="taskOrPlan != null">TASK_OR_PLAN,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="trialId != null">#{trialId, jdbcType=VARCHAR},</if>
+            <if test="trialCode != null">#{trialCode, jdbcType=VARCHAR},</if>
+            <if test="trialProjectName != null">#{trialProjectName, jdbcType=VARCHAR},</if>
+            <if test="code != null">#{code, jdbcType=VARCHAR},</if>
+            <if test="requestPayoutId != null">#{requestPayoutId, jdbcType=VARCHAR},</if>
+            <if test="requestPayoutName != null">#{requestPayoutName, jdbcType=VARCHAR},</if>
+            <if test="requestPayoutOrgId != null">#{requestPayoutOrgId, jdbcType=VARCHAR},</if>
+            <if test="requestPayoutOrgName != null">#{requestPayoutOrgName, jdbcType=VARCHAR},</if>
+            <if test="applyDate != null">#{applyDate, jdbcType=VARCHAR},</if>
+            <if test="payeeId != null">#{payeeId, jdbcType=VARCHAR},</if>
+            <if test="payeeName != null">#{payeeName, jdbcType=VARCHAR},</if>
+            <if test="payeeOrgId != null">#{payeeOrgId, jdbcType=VARCHAR},</if>
+            <if test="payeeOrgName != null">#{payeeOrgName, jdbcType=VARCHAR},</if>
+            <if test="bankAccount != null">#{bankAccount, jdbcType=VARCHAR},</if>
+            <if test="bankIntoSite != null">#{bankIntoSite, jdbcType=VARCHAR},</if>
+            <if test="bankIntoSiteName != null">#{bankIntoSiteName, jdbcType=VARCHAR},</if>
+            <if test="requestPayoutAmount != null">#{requestPayoutAmount, jdbcType=VARCHAR},</if>
+            <if test="status != null">#{status, jdbcType=VARCHAR},</if>
+            <if test="currentWaitUserId != null">#{currentWaitUserId, jdbcType=VARCHAR},</if>
+            <if test="currentWaitUserName != null">#{currentWaitUserName, jdbcType=VARCHAR},</if>
+            <if test="pvOrCv != null">#{pvOrCv, jdbcType=VARCHAR},</if>
+            <if test="taskNumber != null">#{taskNumber, jdbcType=VARCHAR},</if>
+            <if test="taskOrPlan != null">#{taskOrPlan, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_budget_cash_out.entity.PcBudgetCashOutEO">
+        update PC_BUDGET_CASH_OUT
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="trialId != null">
+                trial_id = #{trialId},
+            </if>
+            <if test="trialCode != null">
+                trial_code = #{trialCode},
+            </if>
+            <if test="trialProjectName != null">
+                trial_project_name = #{trialProjectName},
+            </if>
+            <if test="code != null">
+                bco_code = #{code},
+            </if>
+            <if test="requestPayoutId != null">
+                request_payout_id = #{requestPayoutId},
+            </if>
+            <if test="requestPayoutName != null">
+                request_payout_name = #{requestPayoutName},
+            </if>
+            <if test="requestPayoutOrgId != null">
+                request_payout_org_id = #{requestPayoutOrgId},
+            </if>
+            <if test="requestPayoutOrgName != null">
+                request_payout_org_name = #{requestPayoutOrgName},
+            </if>
+            <if test="applyDate != null">
+                apply_date = #{applyDate},
+            </if>
+            <if test="payeeId != null">
+                payee_id = #{payeeId},
+            </if>
+            <if test="payeeName != null">
+                payee_name = #{payeeName},
+            </if>
+            <if test="payeeOrgId != null">
+                payee_org_id = #{payeeOrgId},
+            </if>
+            <if test="payeeOrgName != null">
+                payee_org_name = #{payeeOrgName},
+            </if>
+            <if test="bankAccount != null">
+                bank_account = #{bankAccount},
+            </if>
+            <if test="bankIntoSite != null">
+                bank_into_site = #{bankIntoSite},
+            </if>
+            <if test="bankIntoSiteName != null">
+                bank_into_site_name = #{bankIntoSiteName},
+            </if>
+            <if test="requestPayoutAmount != null">
+                request_payout_amount = #{requestPayoutAmount},
+            </if>
+            <if test="status != null">
+                STATUS = #{status} ,
+            </if>
+            <if test="currentWaitUserId != null">
+                CURRENT_WAIT_USER_ID = #{currentWaitUserId},
+            </if>
+            <if test="currentWaitUserName != null">
+                CURRENT_WAIT_USER_NAME = #{currentWaitUserName},
+            </if>
+            <if test="pvOrCv != null">
+                PC_CV = #{pvOrCv} ,
+            </if>
+            <if test="taskNumber != null">
+                TASK_NUMBER = #{taskNumber} ,
+            </if>
+            <if test="taskOrPlan != null">
+                TASK_OR_PLAN = #{taskOrPlan} ,
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <resultMap id="findOne" extends="BaseResultMap" type="com.adc.da.pc_budget_cash_out.entity.PcBudgetCashOutEO">
+        <collection property="autoPayForEOList" resultMap="autoPayForEO"/>
+    </resultMap>
+    <resultMap id="autoPayForEO" type="com.adc.da.pc_budget_cash_out.entity.PcAutoPayForEO">
+        <result property="bcoId" column="bco_id"/>
+        <result property="budgetName" column="budget_name"/>
+        <result property="budgetCode" column="budget_code"/>
+        <result property="cashAmount" column="cash_amount"/>
+        <result property="ifCheckout" column="if_checkout"/>
+    </resultMap>
+    <!-- 根据id查询 PC_BUDGET_CASH_OUT -->
+    <sql id="selectByPrimaryKey_Base_Column_List">
+            PBCO.id,
+            PBCO.del_flag,
+            PBCO.create_time,
+            PBCO.create_by,
+            PBCO.update_time,
+            PBCO.update_by,
+            trial_id,
+            trial_code,
+            trial_project_name,
+            bco_code,
+            request_payout_id,
+            request_payout_name,
+            request_payout_org_id,
+            request_payout_org_name,
+            apply_date,
+            payee_id,
+            payee_name,
+            payee_org_id,
+            payee_org_name,
+            bank_account,
+            bank_into_site,
+            bank_into_site_name,
+            request_payout_amount,
+            PC_CV
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="findOne" parameterType="java.lang.String">
+        select
+        <include refid="selectByPrimaryKey_Base_Column_List"/>,
+        bco_id,budget_name,budget_code,cash_amount,if_checkout
+        from PC_BUDGET_CASH_OUT PBCO left join PC_AUTO_PAY_FOR PAPF on PAPF.BCO_ID = PBCO.ID
+        where PBCO.id = #{value} and PBCO.DEL_FLAG = 0
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from PC_BUDGET_CASH_OUT
+        where id = #{value}
+
+    </delete>
+
+    <!-- PC_BUDGET_CASH_OUT 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_BUDGET_CASH_OUT
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_BUDGET_CASH_OUT列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_BUDGET_CASH_OUT
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_BUDGET_CASH_OUT
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>

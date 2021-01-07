@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.payment.dao.CostPaymentEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.payment.entity.CostPaymentEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="BASEBUS_ID" jdbcType="VARCHAR" property="basebusId" />
+    <result column="DATA_ORIGIN" jdbcType="VARCHAR" property="dataOrigin" />
+    <result column="SUP_ID" jdbcType="VARCHAR" property="supId" />
+    <result column="SUP_NAME" jdbcType="VARCHAR" property="supName" />
+    <result column="SUP_CODE" jdbcType="VARCHAR" property="supCode" />
+    <result column="SUP_TYPE" jdbcType="VARCHAR" property="supType" />
+    <result column="PAYMENT_DESC" jdbcType="VARCHAR" property="paymentDesc" />
+    <result column="PAYMENT_DATE" jdbcType="VARCHAR" property="paymentDate" />
+    <result column="PAYMENT_NO" jdbcType="VARCHAR" property="paymentNo" />
+    <result column="PAYMENT_STATUS" jdbcType="VARCHAR" property="paymentStatus" />
+    <result column="PAYMENT_PERSON_ID" jdbcType="VARCHAR" property="paymentPersonId" />
+    <result column="PAYMENT_PERSON" jdbcType="VARCHAR" property="paymentPerson" />
+    <collection property="summaryList" ofType="com.adc.da.summary.entity.CostSummaryEO">
+  		<id column="SUMMARY_ID" jdbcType="VARCHAR" property="id" />
+	    <result column="TASK_NAME" jdbcType="VARCHAR" property="taskName" />
+	    <result column="CAR_TYPE" jdbcType="VARCHAR" property="carType" />
+	    <result column="TOTAL_COST" jdbcType="VARCHAR" property="totalCost" />
+	    <result column="TASK_DESC" jdbcType="VARCHAR" property="taskDesc" />
+	    <result column="TRUST_NO" jdbcType="VARCHAR" property="trustNo" />
+	    <result column="ITEM_NO" jdbcType="VARCHAR" property="itemNo" />
+	    <result column="EDIT_STATUS" jdbcType="VARCHAR" property="editStatus" />
+	    <result column="FORM_KEY" jdbcType="VARCHAR" property="formKey" />
+	    <result column="PAYMENT_COST" jdbcType="VARCHAR" property="paymentCost" />
+	    <result column="SUMMARY_PAYMENT_DESC" jdbcType="VARCHAR" property="paymentDesc" />
+  	</collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, BASEBUS_ID, DATA_ORIGIN, SUP_ID, SUP_NAME, SUP_CODE, SUP_TYPE, 
+    PAYMENT_DESC, PAYMENT_DATE, PAYMENT_NO, PAYMENT_STATUS, PAYMENT_PERSON_ID, PAYMENT_PERSON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+	  SELECT
+		CM_COST_PAYMENT. ID,
+		CM_COST_PAYMENT.DEL_FLAG,
+		CM_COST_PAYMENT.BASEBUS_ID,
+		CM_COST_PAYMENT.DATA_ORIGIN,
+		CM_COST_PAYMENT.SUP_ID,
+		CM_COST_PAYMENT.SUP_NAME,
+		CM_COST_PAYMENT.SUP_CODE,
+		CM_COST_PAYMENT.SUP_TYPE,
+		CM_COST_PAYMENT.PAYMENT_DESC,
+		CM_COST_PAYMENT.PAYMENT_DATE,
+		CM_COST_PAYMENT.PAYMENT_NO,
+		CM_COST_PAYMENT.PAYMENT_STATUS,
+		CM_COST_PAYMENT.PAYMENT_PERSON_ID,
+		CM_COST_PAYMENT.PAYMENT_PERSON,
+		CM_COST_SUMMARY.CAR_TYPE,
+		CM_COST_SUMMARY.ID AS SUMMARY_ID,
+		CM_COST_SUMMARY.PAYMENT_DESC AS SUMMARY_PAYMENT_DESC,
+		CM_COST_SUMMARY.TASK_NAME,
+		CM_COST_SUMMARY.TOTAL_COST,
+		CM_COST_SUMMARY.TASK_DESC,
+		CM_COST_SUMMARY.TRUST_NO,
+		CM_COST_SUMMARY.ITEM_NO,
+		CM_COST_SUMMARY.EDIT_STATUS,
+		CM_COST_SUMMARY.FORM_KEY,
+		CM_COST_SUMMARY.PAYMENT_COST
+	FROM
+		CM_COST_PAYMENT
+	LEFT JOIN CM_COST_SUMMARY ON CM_COST_SUMMARY.PAYMENT_ID = CM_COST_PAYMENT.ID
+    where CM_COST_PAYMENT.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from CM_COST_PAYMENT
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.payment.entity.CostPaymentEO">
+    insert into CM_COST_PAYMENT (
+    	ID, 
+    	DEL_FLAG, 
+      	BASEBUS_ID, 
+      	DATA_ORIGIN, 
+      	SUP_ID, 
+      	SUP_NAME, 
+      	SUP_CODE, 
+      	SUP_TYPE, 
+      	PAYMENT_DESC, 
+      	PAYMENT_DATE, 
+      	PAYMENT_NO, 
+      	PAYMENT_STATUS, 
+      	PAYMENT_PERSON_ID, 
+      	PAYMENT_PERSON
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+      	#{basebusId,jdbcType=VARCHAR}, 
+      	#{dataOrigin,jdbcType=VARCHAR}, 
+      	#{supId,jdbcType=VARCHAR}, 
+     	#{supName,jdbcType=VARCHAR}, 
+     	#{supCode,jdbcType=VARCHAR}, 
+     	#{supType,jdbcType=VARCHAR}, 
+      	#{paymentDesc,jdbcType=VARCHAR}, 
+      	#{paymentDate,jdbcType=VARCHAR}, 
+      	#{paymentNo,jdbcType=VARCHAR}, 
+      	#{paymentStatus,jdbcType=VARCHAR}, 
+      	#{paymentPersonId,jdbcType=VARCHAR}, 
+      	#{paymentPerson,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.payment.entity.CostPaymentEO">
+    insert into CM_COST_PAYMENT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="basebusId != null">
+        BASEBUS_ID,
+      </if>
+      <if test="dataOrigin != null">
+        DATA_ORIGIN,
+      </if>
+      <if test="supId != null">
+        SUP_ID,
+      </if>
+      <if test="supName != null">
+        SUP_NAME,
+      </if>
+      <if test="supCode != null">
+        SUP_CODE,
+      </if>
+      <if test="supType != null">
+        SUP_TYPE,
+      </if>
+      <if test="paymentDesc != null">
+        PAYMENT_DESC,
+      </if>
+      <if test="paymentDate != null">
+        PAYMENT_DATE,
+      </if>
+      <if test="paymentNo != null">
+        PAYMENT_NO,
+      </if>
+      <if test="paymentStatus != null">
+        PAYMENT_STATUS,
+      </if>
+      <if test="paymentPersonId != null">
+        PAYMENT_PERSON_ID,
+      </if>
+      <if test="paymentPerson != null">
+        PAYMENT_PERSON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="basebusId != null">
+        #{basebusId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataOrigin != null">
+        #{dataOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="supId != null">
+        #{supId,jdbcType=VARCHAR},
+      </if>
+      <if test="supName != null">
+        #{supName,jdbcType=VARCHAR},
+      </if>
+      <if test="supCode != null">
+        #{supCode,jdbcType=VARCHAR},
+      </if>
+      <if test="supType != null">
+        #{supType,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentDesc != null">
+        #{paymentDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentDate != null">
+        #{paymentDate,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentNo != null">
+        #{paymentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentStatus != null">
+        #{paymentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentPersonId != null">
+        #{paymentPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentPerson != null">
+        #{paymentPerson,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.payment.entity.CostPaymentEO">
+    update CM_COST_PAYMENT
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="basebusId != null">
+        BASEBUS_ID = #{basebusId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataOrigin != null">
+        DATA_ORIGIN = #{dataOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="supId != null">
+        SUP_ID = #{supId,jdbcType=VARCHAR},
+      </if>
+      <if test="supName != null">
+        SUP_NAME = #{supName,jdbcType=VARCHAR},
+      </if>
+      <if test="supCode != null">
+        SUP_CODE = #{supCode,jdbcType=VARCHAR},
+      </if>
+      <if test="supType != null">
+        SUP_TYPE = #{supType,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentDesc != null">
+        PAYMENT_DESC = #{paymentDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentDate != null">
+        PAYMENT_DATE = #{paymentDate,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentNo != null">
+        PAYMENT_NO = #{paymentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentStatus != null">
+        PAYMENT_STATUS = #{paymentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentPersonId != null">
+        PAYMENT_PERSON_ID = #{paymentPersonId,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentPerson != null">
+        PAYMENT_PERSON = #{paymentPerson,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.payment.entity.CostPaymentEO">
+    update CM_COST_PAYMENT
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      BASEBUS_ID = #{basebusId,jdbcType=VARCHAR},
+      DATA_ORIGIN = #{dataOrigin,jdbcType=VARCHAR},
+      SUP_ID = #{supId,jdbcType=VARCHAR},
+      SUP_NAME = #{supName,jdbcType=VARCHAR},
+      SUP_CODE = #{supCode,jdbcType=VARCHAR},
+      SUP_TYPE = #{supType,jdbcType=VARCHAR},
+      PAYMENT_DESC = #{paymentDesc,jdbcType=VARCHAR},
+      PAYMENT_DATE = #{paymentDate,jdbcType=VARCHAR},
+      PAYMENT_NO = #{paymentNo,jdbcType=VARCHAR},
+      PAYMENT_STATUS = #{paymentStatus,jdbcType=VARCHAR},
+      PAYMENT_PERSON_ID = #{paymentPersonId,jdbcType=VARCHAR},
+      PAYMENT_PERSON = #{paymentPerson,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  
+   <!-- 查询条件 -->
+   <sql id="Base_Where_Clause">
+       WHERE CM_COST_PAYMENT.DEL_FLAG != 1
+       <choose>
+           <when test="searchPhrase != null">
+               <foreach collection="searchPhrase" item="search">
+                   AND (
+	                   PAYMENT_NO LIKE '%${search}%' 
+	                   OR SUP_NAME LIKE '%${search}%' 
+	                   OR PAYMENT_PERSON LIKE '%${search}%' 
+                   )
+               </foreach>
+           </when>
+           <otherwise>
+               <if test="paymentStatus != null and paymentStatus != ''">
+                   AND PAYMENT_STATUS = #{paymentStatus}
+               </if>
+               <if test="paymentNo != null and paymentNo != ''">
+                   AND PAYMENT_NO LIKE '%${paymentNo}%'
+               </if>
+               <if test="supName != null and supName != ''">
+                   AND SUP_NAME LIKE '%${supName}%'
+               </if>
+               <if test="paymentPerson != null and paymentPerson != ''">
+                   AND PAYMENT_PERSON LIKE '%${paymentPerson}%'
+               </if>
+           </otherwise>
+       </choose>
+   </sql>
+  
+  
+    <!-- 列表总数-->
+   <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT count(1) FROM CM_COST_PAYMENT
+       <include refid="Base_Where_Clause"/>
+   </select>
+  
+  
+   <!-- 分页查询列表 -->
+   <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+		       	CM_COST_PAYMENT.ID,
+				CM_COST_PAYMENT.DEL_FLAG,
+				CM_COST_PAYMENT.DATA_ORIGIN,
+				CM_COST_PAYMENT.SUP_ID,
+				CM_COST_PAYMENT.SUP_NAME,
+				CM_COST_PAYMENT.SUP_CODE,
+				CM_COST_PAYMENT.SUP_TYPE,
+				CM_COST_PAYMENT.PAYMENT_DESC,
+				CM_COST_PAYMENT.PAYMENT_DATE,
+				CM_COST_PAYMENT.PAYMENT_NO,
+				CM_COST_PAYMENT.PAYMENT_STATUS,
+				CM_COST_PAYMENT.PAYMENT_PERSON_ID,
+				CM_COST_PAYMENT.PAYMENT_PERSON,
+				TS_BASEBUS.ID AS BASEBUS_ID
+    		from CM_COST_PAYMENT
+    		LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = CM_COST_PAYMENT.ID
+    	 <include refid="Base_Where_Clause"/>
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+  
+  
+  
+</mapper>

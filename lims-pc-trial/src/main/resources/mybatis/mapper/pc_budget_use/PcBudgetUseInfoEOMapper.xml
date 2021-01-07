@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_budget_use.dao.PcBudgetUseInfoEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_budget_use.entity.PcBudgetUseInfoEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="bu_id" property="buId"/>
+        <result column="bu_project" property="buProject"/>
+        <result column="bu_content" property="buContent"/>
+        <result column="bu_unit_price" property="buUnitPrice"/>
+        <result column="bu_count" property="buCount"/>
+        <result column="bu_subtotal" property="buSubtotal"/>
+        <result column="bu_supplier" property="buSupplier"/>
+        <result column="bu_Supplier_Id" property="buSupplierId"/>
+        <result column="bu_Project_Id" property="buProjectId"/>
+    </resultMap>
+
+    <!-- PC_BUDGET_USE_INFO table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            bu_id,
+            bu_project,
+            bu_content,
+            bu_unit_price,
+            bu_count,
+            bu_subtotal,
+            bu_supplier,
+            buSupplierId,
+            buProjectId
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+            <if test="delFlag != null">
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time ${createTimeOperator} #{createTime}
+            </if>
+            <if test="createBy != null">
+                and create_by ${createByOperator} #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time ${updateTimeOperator} #{updateTime}
+            </if>
+            <if test="updateBy != null">
+                and update_by ${updateByOperator} #{updateBy}
+            </if>
+            <if test="buId != null">
+                and bu_id ${buIdOperator} #{buId}
+            </if>
+            <if test="buProject != null">
+                and bu_project ${buProjectOperator} #{buProject}
+            </if>
+            <if test="buContent != null">
+                and bu_content ${buContentOperator} #{buContent}
+            </if>
+            <if test="buUnitPrice != null">
+                and bu_unit_price ${buUnitPriceOperator} #{buUnitPrice}
+            </if>
+            <if test="buCount != null">
+                and bu_count ${buCountOperator} #{buCount}
+            </if>
+            <if test="buSubtotal != null">
+                and bu_subtotal ${buSubtotalOperator} #{buSubtotal}
+            </if>
+            <if test="buSupplier != null">
+                and bu_supplier ${buSupplierOperator} #{buSupplier}
+            </if>
+            <if test="buSupplierId != null">
+                and bu_Supplier_Id ${buSupplierIdOperator} #{buSupplierId}
+            </if>
+            <if test="buProjectId != null">
+                and bu_Project_Id ${buProjectIdOperator} #{buProjectId}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.pc_budget_use.entity.PcBudgetUseInfoEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SEQ_PC_BUDGET_USE_INFO.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into PC_BUDGET_USE_INFO(<include refid="Base_Column_List"/>)
+        values (#{id, jdbcType=VARCHAR}, #{delFlag, jdbcType=INTEGER}, #{createTime, jdbcType=VARCHAR},
+        #{createBy, jdbcType=VARCHAR}, #{updateTime, jdbcType=VARCHAR}, #{updateBy, jdbcType=VARCHAR},
+        #{buId, jdbcType=VARCHAR}, #{buProject, jdbcType=VARCHAR}, #{buContent, jdbcType=VARCHAR},
+        #{buUnitPrice, jdbcType=VARCHAR}, #{buCount, jdbcType=VARCHAR}, #{buSubtotal, jdbcType=VARCHAR},
+        #{buSupplier, jdbcType=VARCHAR}, #{buSupplierId, jdbcType=VARCHAR}, #{buProjectId, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_budget_use.entity.PcBudgetUseInfoEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_BUDGET_USE_INFO.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PC_BUDGET_USE_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="buId != null">bu_id,</if>
+            <if test="buProject != null">bu_project,</if>
+            <if test="buContent != null">bu_content,</if>
+            <if test="buUnitPrice != null">bu_unit_price,</if>
+            <if test="buCount != null">bu_count,</if>
+            <if test="buSubtotal != null">bu_subtotal,</if>
+            <if test="buSupplier != null">bu_supplier,</if>
+            <if test="buSupplierId != null">bu_Supplier_Id,</if>
+            <if test="buProjectId != null">bu_Project_Id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="buId != null">#{buId, jdbcType=VARCHAR},</if>
+            <if test="buProject != null">#{buProject, jdbcType=VARCHAR},</if>
+            <if test="buContent != null">#{buContent, jdbcType=VARCHAR},</if>
+            <if test="buUnitPrice != null">#{buUnitPrice, jdbcType=VARCHAR},</if>
+            <if test="buCount != null">#{buCount, jdbcType=VARCHAR},</if>
+            <if test="buSubtotal != null">#{buSubtotal, jdbcType=VARCHAR},</if>
+            <if test="buSupplier != null">#{buSupplier, jdbcType=VARCHAR},</if>
+            <if test="buSupplierId != null">#{buSupplierId, jdbcType=VARCHAR},</if>
+            <if test="buProjectId != null">#{buProjectId, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_budget_use.entity.PcBudgetUseInfoEO">
+        update PC_BUDGET_USE_INFO
+        set del_flag      = #{delFlag},
+            create_time   = #{createTime},
+            create_by     = #{createBy},
+            update_time   = #{updateTime},
+            update_by     = #{updateBy},
+            bu_id         = #{buId},
+            bu_project    = #{buProject},
+            bu_content    = #{buContent},
+            bu_unit_price = #{buUnitPrice},
+            bu_count      = #{buCount},
+            bu_subtotal   = #{buSubtotal},
+            bu_supplier   = #{buSupplier},
+            bu_Supplier_Id   = #{buSupplierId},
+            bu_Project_Id   = #{buProjectId}
+        where id = #{id}
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_budget_use.entity.PcBudgetUseInfoEO">
+        update PC_BUDGET_USE_INFO
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="buId != null">
+                bu_id = #{buId},
+            </if>
+            <if test="buProject != null">
+                bu_project = #{buProject},
+            </if>
+            <if test="buContent != null">
+                bu_content = #{buContent},
+            </if>
+            <if test="buUnitPrice != null">
+                bu_unit_price = #{buUnitPrice},
+            </if>
+            <if test="buCount != null">
+                bu_count = #{buCount},
+            </if>
+            <if test="buSubtotal != null">
+                bu_subtotal = #{buSubtotal},
+            </if>
+            <if test="buSupplier != null">
+                bu_supplier = #{buSupplier},
+            </if>
+            <if test="buSupplierId != null">
+                bu_Supplier_Id = #{buSupplierId},
+            </if>
+            <if test="buProjectId != null">
+                bu_Project_Id = #{buProjectId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 PC_BUDGET_USE_INFO -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_BUDGET_USE_INFO
+        where id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from PC_BUDGET_USE_INFO
+        where id = #{value}
+
+    </delete>
+
+    <!-- PC_BUDGET_USE_INFO 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_BUDGET_USE_INFO
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_BUDGET_USE_INFO列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_BUDGET_USE_INFO
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_BUDGET_USE_INFO
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <delete id="deleteByBuId">
+        delete
+        from PC_BUDGET_USE_INFO
+        where BU_ID = #{id}
+    </delete>
+
+
+
+    <!-- 根据费用id,供应商id查询费用 -->
+    <select id="selectCostByBuIdAndSupId" resultType="java.lang.String">
+        select
+        "SUM"(BU_SUBTOTAL)
+        from PC_BUDGET_USE_INFO
+        where BU_ID = #{buId}
+        and BU_SUPPLIER_ID = #{supId}
+    </select>
+
+    <!-- 根据费用id,供应商id查询费用 -->
+    <select id="selectCostBySupIdAndTrialId" resultType="java.lang.String">
+        SELECT
+        "SUM"(bui.BU_SUBTOTAL)
+        FROM  PC_BUDGET_USE bu,PC_BUDGET_USE_INFO bui
+        WHERE bu.TRIAL_ID = #{trialId}
+        AND bui.BU_SUPPLIER_ID = #{supId}
+        AND bu.ID=bui.BU_ID
+    </select>
+
+</mapper>

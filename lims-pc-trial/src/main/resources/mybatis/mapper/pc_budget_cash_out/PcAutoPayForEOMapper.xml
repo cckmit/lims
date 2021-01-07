@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_budget_cash_out.dao.PcAutoPayForEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_budget_cash_out.entity.PcAutoPayForEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="bco_id" property="bcoId"/>
+        <result column="budget_name" property="budgetName"/>
+        <result column="budget_code" property="budgetCode"/>
+        <result column="cash_amount" property="cashAmount"/>
+        <result column="if_checkout" property="ifCheckout"/>
+    </resultMap>
+
+    <!-- PC_AUTO_PAY_FOR table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            bco_id,
+            budget_name,
+            budget_code,
+            cash_amount,
+            if_checkout
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+            <if test="delFlag != null">
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time ${createTimeOperator} #{createTime}
+            </if>
+            <if test="createBy != null">
+                and create_by ${createByOperator} #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time ${updateTimeOperator} #{updateTime}
+            </if>
+            <if test="updateBy != null">
+                and update_by ${updateByOperator} #{updateBy}
+            </if>
+            <if test="bcoId != null">
+                and bco_id ${bcoIdOperator} #{bcoId}
+            </if>
+            <if test="budgetName != null">
+                and budget_name ${budgetNameOperator} #{budgetName}
+            </if>
+            <if test="budgetCode != null">
+                and budget_code ${budgetCodeOperator} #{budgetCode}
+            </if>
+            <if test="cashAmount != null">
+                and cash_amount ${cashAmountOperator} #{cashAmount}
+            </if>
+            <if test="ifCheckout != null">
+                and if_checkout ${ifCheckoutOperator} #{ifCheckout}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.pc_budget_cash_out.entity.PcAutoPayForEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SEQ_PC_AUTO_PAY_FOR.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into PC_AUTO_PAY_FOR(<include refid="Base_Column_List"/>)
+        values (#{id, jdbcType=VARCHAR}, #{delFlag, jdbcType=INTEGER}, #{createTime, jdbcType=VARCHAR},
+        #{createBy, jdbcType=VARCHAR}, #{updateTime, jdbcType=VARCHAR}, #{updateBy, jdbcType=VARCHAR},
+        #{bcoId, jdbcType=VARCHAR}, #{budgetName, jdbcType=VARCHAR}, #{budgetCode, jdbcType=VARCHAR},
+        #{cashAmount, jdbcType=VARCHAR}, #{ifCheckout, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_budget_cash_out.entity.PcAutoPayForEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_AUTO_PAY_FOR.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PC_AUTO_PAY_FOR
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="bcoId != null">bco_id,</if>
+            <if test="budgetName != null">budget_name,</if>
+            <if test="budgetCode != null">budget_code,</if>
+            <if test="cashAmount != null">cash_amount,</if>
+            <if test="ifCheckout != null">if_checkout,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="bcoId != null">#{bcoId, jdbcType=VARCHAR},</if>
+            <if test="budgetName != null">#{budgetName, jdbcType=VARCHAR},</if>
+            <if test="budgetCode != null">#{budgetCode, jdbcType=VARCHAR},</if>
+            <if test="cashAmount != null">#{cashAmount, jdbcType=VARCHAR},</if>
+            <if test="ifCheckout != null">#{ifCheckout, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_budget_cash_out.entity.PcAutoPayForEO">
+        update PC_AUTO_PAY_FOR
+        set del_flag    = #{delFlag},
+            create_time = #{createTime},
+            create_by   = #{createBy},
+            update_time = #{updateTime},
+            update_by   = #{updateBy},
+            bco_id      = #{bcoId},
+            budget_name = #{budgetName},
+            budget_code = #{budgetCode},
+            cash_amount = #{cashAmount},
+            if_checkout = #{ifCheckout}
+        where id = #{id}
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_budget_cash_out.entity.PcAutoPayForEO">
+        update PC_AUTO_PAY_FOR
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="bcoId != null">
+                bco_id = #{bcoId},
+            </if>
+            <if test="budgetName != null">
+                budget_name = #{budgetName},
+            </if>
+            <if test="budgetCode != null">
+                budget_code = #{budgetCode},
+            </if>
+            <if test="cashAmount != null">
+                cash_amount = #{cashAmount},
+            </if>
+            <if test="ifCheckout != null">
+                if_checkout = #{ifCheckout},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 PC_AUTO_PAY_FOR -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_AUTO_PAY_FOR
+        where id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from PC_AUTO_PAY_FOR
+        where id = #{value}
+
+    </delete>
+
+    <!-- PC_AUTO_PAY_FOR 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_AUTO_PAY_FOR
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_AUTO_PAY_FOR列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_AUTO_PAY_FOR
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_AUTO_PAY_FOR
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <delete id="deleteByBcoId">
+        delete
+        from PC_AUTO_PAY_FOR
+        where BCO_ID = #{id}
+    </delete>
+
+</mapper>

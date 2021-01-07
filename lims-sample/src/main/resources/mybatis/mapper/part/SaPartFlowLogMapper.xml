@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.part.dao.SaPartFlowLogDAO">
+    <resultMap id="BaseResultMap" type="com.adc.da.part.entity.SaPartFlowLogEO">
+        <!--@mbg.generated-->
+        <id column="ID" property="id"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="PART_SEQUENCE_ID" property="partSequenceId"/>
+        <result column="LEADER_ID" property="leaderId"/>
+        <result column="OPERATION_DATE" property="operationDate"/>
+        <result column="OPERATION_CONTENT" property="operationContent"/>
+        <result column="OPERATOR_ID" property="operatorId"/>
+        <result column="TRIAL_APPLY_NO" property="trialApplyNo"/>
+        <result column="REMARKS" property="remarks"/>
+        <result column="ENTRUST_USER_ID" property="entrustUserId"/>
+        <result column="SAMPLE_USER_ID" property="sampleUserId"/>
+        <result column="OTHERS" property="others"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        ID, DEL_FLAG, CREATE_TIME, CREATE_BY, PART_SEQUENCE_ID, LEADER_ID, OPERATION_DATE, OPERATION_CONTENT,
+        OPERATOR_ID, TRIAL_APPLY_NO, REMARKS, ENTRUST_USER_ID, SAMPLE_USER_ID, "OTHERS"
+    </sql>
+
+    <sql id="Column_List">
+        <!--@mbg.generated-->
+        SPFL.ID, SPFL.DEL_FLAG, SPFL.CREATE_TIME, SPFL.CREATE_BY, SPFL.PART_SEQUENCE_ID, SPFL.LEADER_ID, SPFL.OPERATION_DATE, SPFL.OPERATION_CONTENT,
+        SPFL.OPERATOR_ID, SPFL.TRIAL_APPLY_NO, SPFL.REMARKS, SPFL.ENTRUST_USER_ID, SPFL.SAMPLE_USER_ID, SPFL."OTHERS"
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_FLOW_LOG
+        WHERE ID = #{id} and DEL_FLAG = 0
+    </select>
+    <insert id="insertSelective" parameterType="com.adc.da.part.entity.SaPartFlowLogEO">
+        <!--@mbg.generated-->
+        INSERT INTO SA_PART_FLOW_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="createBy != null">
+                CREATE_BY,
+            </if>
+            <if test="partSequenceId != null">
+                PART_SEQUENCE_ID,
+            </if>
+            <if test="leaderId != null">
+                LEADER_ID,
+            </if>
+            <if test="operationDate != null">
+                OPERATION_DATE,
+            </if>
+            <if test="operationContent != null">
+                OPERATION_CONTENT,
+            </if>
+            <if test="operatorId != null">
+                OPERATOR_ID,
+            </if>
+            <if test="trialApplyNo != null">
+                TRIAL_APPLY_NO,
+            </if>
+            <if test="remarks != null">
+                REMARKS,
+            </if>
+            <if test="entrustUserId != null">
+                ENTRUST_USER_ID,
+            </if>
+            <if test="sampleUserId != null">
+                SAMPLE_USER_ID,
+            </if>
+            <if test="others != null">
+                "OTHERS",
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="partSequenceId != null">
+                #{partSequenceId},
+            </if>
+            <if test="leaderId != null">
+                #{leaderId},
+            </if>
+            <if test="operationDate != null">
+                #{operationDate},
+            </if>
+            <if test="operationContent != null">
+                #{operationContent},
+            </if>
+            <if test="operatorId != null">
+                #{operatorId},
+            </if>
+            <if test="trialApplyNo != null">
+                #{trialApplyNo},
+            </if>
+            <if test="remarks != null">
+                #{remarks},
+            </if>
+            <if test="entrustUserId != null">
+                #{entrustUserId},
+            </if>
+            <if test="sampleUserId != null">
+                #{sampleUserId},
+            </if>
+            <if test="others != null">
+                #{others},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.part.entity.SaPartFlowLogEO">
+        <!--@mbg.generated-->
+        UPDATE SA_PART_FLOW_LOG
+        <set>
+            <if test="delFlag != null">
+                DEL_FLAG = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="partSequenceId != null">
+                PART_SEQUENCE_ID = #{partSequenceId},
+            </if>
+            <if test="leaderId != null">
+                LEADER_ID = #{leaderId},
+            </if>
+            <if test="operationDate != null">
+                OPERATION_DATE = #{operationDate},
+            </if>
+            <if test="operationContent != null">
+                OPERATION_CONTENT = #{operationContent},
+            </if>
+            <if test="operatorId != null">
+                OPERATOR_ID = #{operatorId},
+            </if>
+            <if test="trialApplyNo != null">
+                TRIAL_APPLY_NO = #{trialApplyNo},
+            </if>
+            <if test="remarks != null">
+                REMARKS = #{remarks},
+            </if>
+            <if test="entrustUserId != null">
+                ENTRUST_USER_ID = #{entrustUserId},
+            </if>
+            <if test="sampleUserId != null">
+                SAMPLE_USER_ID = #{sampleUserId},
+            </if>
+            <if test="others != null">
+                "OTHERS" = #{others},
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <update id="deleteBySequenceId">
+        UPDATE SA_PART_FLOW_LOG
+        SET DEL_FLAG = 1
+        WHERE PART_SEQUENCE_ID = #{id}
+    </update>
+
+    <!-- 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.part.page.SaPartFlowLogPage">
+        SELECT COUNT(1)
+        FROM SA_PART_FLOW_LOG SPFL LEFT JOIN SA_PART_SEQUENCE SPS ON SPFL.PART_SEQUENCE_ID = SPS.ID
+        WHERE SPS.PART_ID = #{partId} AND SPFL.DEL_FLAG = 0
+    </select>
+
+    <!-- 查询列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.part.page.SaPartFlowLogPage">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="Column_List"/>
+        FROM SA_PART_FLOW_LOG SPFL LEFT JOIN SA_PART_SEQUENCE SPS ON SPFL.PART_SEQUENCE_ID = SPS.ID
+        WHERE SPS.PART_ID = #{partId} AND SPFL.DEL_FLAG = 0
+        ORDER BY SPFL.CREATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="selectByPartId" resultType="com.adc.da.part.vo.SaPartFlowLogVO">
+        SELECT TU1.USNAME AS leaderName, TU2.USNAME AS operatorName, TO1.ORG_NAME AS leaderOrg, TO2.ORG_NAME AS
+                             operatorOrg, SCFL.ID, SCFL.REMARKS, SCFL.OPERATION_DATE AS operationDate, SCFL.OTHERS
+        FROM SA_Part_FLOW_LOG SCFL LEFT JOIN TS_USER TU1 ON SCFL.LEADER_ID = TU1.USID
+            LEFT JOIN TR_USER_ORG TUO1 ON TU1.USID = TUO1.USER_ID
+            LEFT JOIN TS_ORG TO1 ON TO1.ID = TUO1.ORG_ID
+            LEFT JOIN TS_USER TU2 ON SCFL.OPERATOR_ID = TU2.USID
+            LEFT JOIN TR_USER_ORG TUO2 ON TU2.USID = TUO2.USER_ID
+            LEFT JOIN TS_ORG TO2 ON TO2.ID = TUO2.ORG_ID
+            LEFT JOIN SA_PART_SEQUENCE SPS ON SCFL.PART_SEQUENCE_ID = SPS.ID
+        WHERE SCFL.DEL_FLAG = 0 AND SPS.PART_ID = #{id} AND SCFL.OPERATION_CONTENT = #{label}
+        order by SCFL.CREATE_TIME DESC
+    </select>
+
+</mapper>

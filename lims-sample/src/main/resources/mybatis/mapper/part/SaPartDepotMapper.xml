@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.part.dao.SaPartDepotDAO">
+
+    <resultMap id="BaseResultMap" type="com.adc.da.part.entity.SaPartDepotEO">
+        <!--@mbg.generated-->
+        <id column="ID" property="id"/>
+        <result column="DEPOT_NAME" property="depotName"/>
+        <result column="DEPOT_NUMBER" property="depotNumber"/>
+        <result column="AREA_NUMBER" property="areaNumber"/>
+        <result column="ROW_NUMBER" property="rowNumber"/>
+        <result column="SHELF_NUMBER" property="shelfNumber"/>
+        <result column="LAYER_NUMBER" property="layerNumber"/>
+        <result column="USED_PART_SPACE" property="usedPartSpace"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+        <result column="BARCODE" property="barcode"/>
+        <result column="PART_SPACE_STATUS" property="partSpaceStatus"/>
+        <result column="PART_DEPOT_ID" property="partDepotId"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="UPDATE_BY" property="updateBy"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+        <result column="UNUSE_PART_SPACE_NUMBER" property="unUsePartSpaceNumber"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        ID, DEPOT_NAME, DEPOT_NUMBER, AREA_NUMBER, ROW_NUMBER, SHELF_NUMBER, LAYER_NUMBER,
+        USED_PART_SPACE, DEL_FLAG, BARCODE, PART_SPACE_STATUS, PART_DEPOT_ID, CREATE_BY,
+        CREATE_TIME, UPDATE_BY, UPDATE_TIME, UNUSE_PART_SPACE_NUMBER
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        WHERE del_flag = 0 AND part_space_status = 0
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    and (depot_name LIKE '%'||#{keyWord}||'%' OR depot_number LIKE '%'||#{keyWord}||'%' OR update_time
+                    LIKE '%'||#{keyWord}||'%')
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="depotName != null and depotName != ''">
+                    AND depot_name LIKE '%'||#{depotName}||'%'
+                </if>
+                <if test="depotNumber != null and depotNumber != ''">
+                    AND depot_number LIKE '%'||#{depotNumber}||'%'
+                </if>
+                <if test="updateTime1 != null and updateTime1 != ''">
+                    AND update_time >= #{updateTime1}
+                </if>
+                <if test="updateTime2 != null and updateTime2 != ''">
+                    AND update_time <![CDATA[<=]]> #{updateTime2}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="selectByParam" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DEPOT
+        WHERE ID = #{id} AND DEL_FLAG = 0 AND PART_SPACE_STATUS = #{partSpaceStatus}
+    </select>
+
+    <update id="deleteByParentId">
+        UPDATE SA_PART_DEPOT
+        SET DEL_FLAG    = 1,
+            UPDATE_TIME = #{date},
+            UPDATE_BY   = #{userId}
+        WHERE PART_DEPOT_ID = #{id}
+    </update>
+
+    <!-- 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        SELECT count(1) FROM SA_PART_DEPOT
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DEPOT
+        <include refid="Base_Where_Clause"/>
+        ORDER BY UPDATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByDepotNuhmber" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DEPOT WHERE DEL_FLAG = 0 AND PART_SPACE_STATUS = 0 AND DEPOT_NUMBER = #{depotNumber}
+    </select>
+
+    <update id="deleteById">
+        UPDATE SA_PART_DEPOT
+        SET DEL_FLAG    = 1,
+            UPDATE_TIME = #{date},
+            UPDATE_BY   = #{userId}
+        WHERE ID = #{id}
+    </update>
+
+    <select id="getPartSpacePage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DEPOT
+        WHERE DEL_FLAG = 0 AND PART_SPACE_STATUS = 1 AND PART_DEPOT_ID = #{id}
+        ORDER BY UPDATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByShelfNumber" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DEPOT WHERE DEL_FLAG = 0 AND PART_SPACE_STATUS = 1 AND SHELF_NUMBER = #{shelfNumber}
+    </select>
+
+    <select id="queryByShelfNumberAndPart" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DEPOT WHERE DEL_FLAG = 0 AND PART_SPACE_STATUS = 1 AND SHELF_NUMBER = #{shelfNumber}
+        and PART_DEPOT_ID = #{partDepotId}
+    </select>
+
+    <select id="queryUnUsePartSpaceNumber" resultType="java.lang.Integer">
+        SELECT sum(UNUSE_PART_SPACE_NUMBER) AS UNUSE_PART_SPACE_NUMBER
+        FROM SA_PART_DEPOT
+        WHERE PART_DEPOT_ID = #{id} AND DEL_FLAG = 0
+    </select>
+
+    <select id="getPartSpaceStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SA_PART_DEPOT WHERE DEL_FLAG = 0 AND PART_DEPOT_ID = #{partDepotId}
+    </select>
+
+    <select id="selectByParkNameAndRowNumber" resultType="com.adc.da.part.entity.SaPartDataEO">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DEPOT
+        WHERE DEL_FLAG = 0 AND PART_DEPOT_ID = (SELECT ID
+        FROM SA_PART_DEPOT
+        WHERE DEL_FLAG = 0 AND DEPOT_NUMBER = #{parkName}) AND ROW_NUMBER = #{rowNumber}
+    </select>
+
+    <insert id="insertSelective" parameterType="com.adc.da.part.entity.SaPartDepotEO" >
+        <!--@mbg.generated-->
+        insert into SA_PART_DEPOT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                ID,
+            </if>
+            <if test="depotName != null">
+                DEPOT_NAME,
+            </if>
+            <if test="depotNumber != null">
+                DEPOT_NUMBER,
+            </if>
+            <if test="areaNumber != null">
+                AREA_NUMBER,
+            </if>
+            <if test="rowNumber != null">
+                "ROW_NUMBER",
+            </if>
+            <if test="shelfNumber != null">
+                SHELF_NUMBER,
+            </if>
+            <if test="layerNumber != null">
+                LAYER_NUMBER,
+            </if>
+            <if test="usedPartSpace != null">
+                USED_PART_SPACE,
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG,
+            </if>
+            <if test="barcode != null">
+                BARCODE,
+            </if>
+            <if test="partSpaceStatus != null">
+                PART_SPACE_STATUS,
+            </if>
+            <if test="partDepotId != null">
+                PART_DEPOT_ID,
+            </if>
+            <if test="createBy != null">
+                CREATE_BY,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="unUsePartSpaceNumber != null">
+                UNUSE_PART_SPACE_NUMBER,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null and id != ''">
+                #{id},
+            </if>
+            <if test="depotName != null">
+                #{depotName},
+            </if>
+            <if test="depotNumber != null">
+                #{depotNumber},
+            </if>
+            <if test="areaNumber != null">
+                #{areaNumber},
+            </if>
+            <if test="rowNumber != null">
+                #{rowNumber},
+            </if>
+            <if test="shelfNumber != null">
+                #{shelfNumber},
+            </if>
+            <if test="layerNumber != null">
+                #{layerNumber},
+            </if>
+            <if test="usedPartSpace != null">
+                #{usedPartSpace},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="barcode != null">
+                #{barcode},
+            </if>
+            <if test="partSpaceStatus != null">
+                #{partSpaceStatus},
+            </if>
+            <if test="partDepotId != null">
+                #{partDepotId},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="unUsePartSpaceNumber != null">
+                #{unUsePartSpaceNumber},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.part.entity.SaPartDepotEO">
+        <!--@mbg.generated-->
+        update SA_PART_DEPOT
+        <set>
+            <if test="depotName != null">
+                DEPOT_NAME = #{depotName},
+            </if>
+            <if test="depotNumber != null">
+                DEPOT_NUMBER = #{depotNumber},
+            </if>
+            <if test="areaNumber != null">
+                AREA_NUMBER = #{areaNumber},
+            </if>
+            <if test="rowNumber != null">
+                "ROW_NUMBER" = #{rowNumber},
+            </if>
+            <if test="shelfNumber != null">
+                SHELF_NUMBER = #{shelfNumber},
+            </if>
+            <if test="layerNumber != null">
+                LAYER_NUMBER = #{layerNumber},
+            </if>
+            <if test="usedPartSpace != null">
+                USED_PART_SPACE = #{usedPartSpace},
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG = #{delFlag},
+            </if>
+            <if test="barcode != null">
+                BARCODE = #{barcode},
+            </if>
+            <if test="partSpaceStatus != null">
+                PART_SPACE_STATUS = #{partSpaceStatus},
+            </if>
+            <if test="partDepotId != null">
+                PART_DEPOT_ID = #{partDepotId},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime},
+            </if>
+            <if test="unUsePartSpaceNumber != null">
+                UNUSE_PART_SPACE_NUMBER = #{unUsePartSpaceNumber},
+            </if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <select id="getPart" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SA_PART_DEPOT WHERE DEL_FLAG = 0 AND PART_DEPOT_ID = #{partDepotId}
+    </select>
+
+    <select id="getPartSpace" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SA_PART_DEPOT WHERE DEL_FLAG = 0 AND PART_DEPOT_ID = #{partDepotId}
+        and AREA_NUMBER = #{areaNumber} and ROW_NUMBER = #{rowNumber} and SHELF_NUMBER = #{shelfNumber}
+    </select>
+
+</mapper>

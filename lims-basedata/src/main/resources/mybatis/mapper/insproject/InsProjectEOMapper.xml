@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.insproject.dao.InsProjectEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.insproject.entity.InsProjectEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="DECIMAL" property="delFlag" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy.usid" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy.usid" />
+    <result column="PRO_NAME" jdbcType="VARCHAR" property="proName" />
+    <result column="PRO_CODE" jdbcType="VARCHAR" property="proCode" />
+    <result column="PRO_TYPE_ID" jdbcType="VARCHAR" property="proTypeId" />
+    <result column="PRO_BELONG_ID" jdbcType="VARCHAR" property="proBelongId" />
+    <result column="LAB_ID" jdbcType="VARCHAR" property="labId" />
+    <result column="PREF_ATTRIBUTE" jdbcType="VARCHAR" property="prefAttribute" />
+    <result column="PRO_ABILITY" jdbcType="VARCHAR" property="proAbility" />
+    <result column="PRO_CNAS" jdbcType="VARCHAR" property="proCNAS" />
+    <result column="OPERATION_DATE" jdbcType="VARCHAR" property="operationDate" />
+    <result column="TRIAL_METHOD" jdbcType="VARCHAR" property="trialMethod" />
+    <result column="PRO_DESC" jdbcType="VARCHAR" property="proDesc" />
+    <result column="SAMPLE_DESC" jdbcType="VARCHAR" property="sampleDesc" />
+    <result column="PRO_TYPE" jdbcType="VARCHAR" property="proType" />
+  </resultMap>
+  
+  <resultMap id="SearchResultMap" type="com.adc.da.insproject.entity.InsProjectEO">
+  	<id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="PRO_NAME" jdbcType="VARCHAR" property="proName" />
+    <result column="PRO_CODE" jdbcType="VARCHAR" property="proCode" />
+    <result column="PRO_ABILITY" jdbcType="VARCHAR" property="proAbility" />
+    <result column="OPERATION_DATE" jdbcType="VARCHAR" property="operationDate" />
+    <result column="TRIAL_METHOD" jdbcType="VARCHAR" property="trialMethod" />
+    <result column="PRO_DESC" jdbcType="VARCHAR" property="proDesc" />
+    <result column="SAMPLE_DESC" jdbcType="VARCHAR" property="sampleDesc" />
+    <result column="PRO_TYPE" jdbcType="VARCHAR" property="proType" />
+	<result column="PRO_TYPE_ID" jdbcType="VARCHAR" property="proTypeId" />	
+    <result column="LAB_ID" jdbcType="VARCHAR" property="labId" />
+    <result column="LAB_NAME" jdbcType="VARCHAR" property="labName" />
+  </resultMap>
+  
+    <resultMap id="DetailResultMap" type="com.adc.da.insproject.entity.InsProjectEO">
+  	<id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="PRO_NAME" jdbcType="VARCHAR" property="proName" />
+    <result column="PRO_CODE" jdbcType="VARCHAR" property="proCode" />
+    <result column="PRO_ABILITY" jdbcType="VARCHAR" property="proAbility" />
+    <result column="OPERATION_DATE" jdbcType="VARCHAR" property="operationDate" />
+    <result column="TRIAL_METHOD" jdbcType="VARCHAR" property="trialMethod" />
+    <result column="PRO_DESC" jdbcType="VARCHAR" property="proDesc" />
+    <result column="SAMPLE_DESC" jdbcType="VARCHAR" property="sampleDesc" />
+    <result column="PRO_TYPE" jdbcType="VARCHAR" property="proType" />
+	<result column="PRO_TYPE_ID" jdbcType="VARCHAR" property="proTypeId" />	
+    <result column="LAB_ID" jdbcType="VARCHAR" property="labId" />
+    <result column="LAB_NAME" jdbcType="VARCHAR" property="labName" />
+  	<collection property="standardList" ofType="com.adc.da.standard.entity.StandardEO">
+  		<id column="STD_ID" jdbcType="VARCHAR" property="stdId" />
+  		<result column="STD_NAME" jdbcType="VARCHAR" property="stdName" />
+  		<result column="STD_NO" jdbcType="VARCHAR" property="stdNo" />
+  		<result column="STD_FILE_ID" jdbcType="VARCHAR" property="stdFileId" />
+  	</collection>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, PRO_NAME, PRO_CODE, 
+    PRO_TYPE_ID, PRO_BELONG_ID, LAB_ID, PREF_ATTRIBUTE, PRO_ABILITY, PRO_CNAS, OPERATION_DATE, 
+    TRIAL_METHOD, PRO_DESC, SAMPLE_DESC, PRO_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="DetailResultMap">
+        SELECT
+	     inspro.ID,
+		 inspro.PRO_NAME,
+		 inspro.PRO_CODE,
+		 inspro.PRO_TYPE_ID,
+		 inspro.PRO_BELONG_ID,
+		 inspro.LAB_ID,
+		 inspro.PREF_ATTRIBUTE,
+		 inspro.PRO_ABILITY,
+		 inspro.PRO_CNAS,
+		 inspro.OPERATION_DATE,
+		 inspro.TRIAL_METHOD,
+		 inspro.PRO_DESC,
+		 inspro.SAMPLE_DESC,
+		 inspro.PRO_TYPE,
+		 org.ORG_NAME AS LAB_NAME,
+		 std.ID AS STD_ID,
+		 std.STD_NAME,
+		 std.STD_NO,
+		 std.STD_FILE_ID
+	FROM
+	BM_INSPECT_PROJECT inspro
+	LEFT JOIN BM_INSPROJECT_STANDARD insprostd ON insprostd.PRO_ID = INSPRO."ID"
+	LEFT JOIN BM_STANDARD std ON std."ID" =  INSPROSTD.STD_ID 
+	LEFT JOIN TS_ORG org ON org."ID" = inspro.lab_Id
+	WHERE inspro.DEL_FLAG != 1
+	AND
+	inspro.ID = #{id,jdbcType=VARCHAR}
+	ORDER BY inspro.UPDATE_TIME DESC
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    UPDATE BM_INSPECT_PROJECT
+    SET DEL_FLAG = 1
+    WHERE ID = #{ID,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.insproject.entity.InsProjectEO">
+    insert into BM_INSPECT_PROJECT (
+    	ID, 
+    	DEL_FLAG, 
+    	CREATE_TIME, 
+      	CREATE_BY, 
+      	UPDATE_TIME, 
+      	UPDATE_BY, 
+      	PRO_NAME, 
+      	PRO_CODE, 
+      	PRO_TYPE_ID, 
+      	PRO_BELONG_ID, 
+      	LAB_ID, 
+      	PREF_ATTRIBUTE, 
+      	PRO_ABILITY, 
+      	PRO_CNAS, 
+      	OPERATION_DATE, 
+      	TRIAL_METHOD, 
+      	PRO_DESC, 
+      	SAMPLE_DESC, 
+      	PRO_TYPE
+     )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=DECIMAL}, 
+    	#{createTime,jdbcType=VARCHAR}, 
+      	#{createBy.usid,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{updateBy.usid,jdbcType=VARCHAR}, 
+      	#{proName,jdbcType=VARCHAR}, 
+      	#{proCode,jdbcType=VARCHAR}, 
+      	#{proTypeId,jdbcType=VARCHAR}, 
+      	#{proBelongId,jdbcType=VARCHAR}, 
+      	#{labId,jdbcType=VARCHAR}, 
+      	#{prefAttribute,jdbcType=VARCHAR}, 
+      	#{proAbility,jdbcType=VARCHAR}, 
+      	#{proCNAS,jdbcType=VARCHAR}, 
+      	#{operationDate,jdbcType=VARCHAR}, 
+     	#{trialMethod,jdbcType=VARCHAR}, 
+     	#{proDesc,jdbcType=VARCHAR}, 
+     	#{sampleDesc,jdbcType=VARCHAR}, 
+      	#{proType,jdbcType=VARCHAR}
+     )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.insproject.entity.InsProjectEO">
+    insert into BM_INSPECT_PROJECT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="proName != null">
+        PRO_NAME,
+      </if>
+      <if test="proCode != null">
+        PRO_CODE,
+      </if>
+      <if test="proTypeId != null">
+        PRO_TYPE_ID,
+      </if>
+      <if test="proBelongId != null">
+        PRO_BELONG_ID,
+      </if>
+      <if test="labId != null">
+        LAB_ID,
+      </if>
+      <if test="prefAttribute != null">
+        PREF_ATTRIBUTE,
+      </if>
+      <if test="proAbility != null">
+        PRO_ABILITY,
+      </if>
+      <if test="proCNAS != null">
+        PRO_CNAS,
+      </if>
+      <if test="operationDate != null">
+        OPERATION_DATE,
+      </if>
+      <if test="trialMethod != null">
+        TRIAL_METHOD,
+      </if>
+      <if test="proDesc != null">
+        PRO_DESC,
+      </if>
+      <if test="sampleDesc != null">
+        SAMPLE_DESC,
+      </if>
+      <if test="proType != null">
+        PRO_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="proName != null">
+        #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="proCode != null">
+        #{proCode,jdbcType=VARCHAR},
+      </if>
+      <if test="proTypeId != null">
+        #{proTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="proBelongId != null">
+        #{proBelongId,jdbcType=VARCHAR},
+      </if>
+      <if test="labId != null">
+        #{labId,jdbcType=VARCHAR},
+      </if>
+      <if test="prefAttribute != null">
+        #{prefAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="proAbility != null">
+        #{proAbility,jdbcType=VARCHAR},
+      </if>
+      <if test="proCNAS != null">
+        #{proCNAS,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDate != null">
+        #{operationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="trialMethod != null">
+        #{trialMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="proDesc != null">
+        #{proDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleDesc != null">
+        #{sampleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="proType != null">
+        #{proType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.insproject.entity.InsProjectEO">
+    update BM_INSPECT_PROJECT
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="proName != null">
+        PRO_NAME = #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="proCode != null">
+        PRO_CODE = #{proCode,jdbcType=VARCHAR},
+      </if>
+      <if test="proTypeId != null">
+        PRO_TYPE_ID = #{proTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="proBelongId != null">
+        PRO_BELONG_ID = #{proBelongId,jdbcType=VARCHAR},
+      </if>
+      <if test="labId != null">
+        LAB_ID = #{labId,jdbcType=VARCHAR},
+      </if>
+      <if test="prefAttribute != null">
+        PREF_ATTRIBUTE = #{prefAttribute,jdbcType=VARCHAR},
+      </if>
+      <if test="proAbility != null">
+        PRO_ABILITY = #{proAbility,jdbcType=VARCHAR},
+      </if>
+      <if test="proCNAS != null">
+        PRO_CNAS = #{proCNAS,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDate != null">
+        OPERATION_DATE = #{operationDate,jdbcType=VARCHAR},
+      </if>
+      <if test="trialMethod != null">
+        TRIAL_METHOD = #{trialMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="proDesc != null">
+        PRO_DESC = #{proDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleDesc != null">
+        SAMPLE_DESC = #{sampleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="proType != null">
+        PRO_TYPE = #{proType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.insproject.entity.InsProjectEO">
+    update BM_INSPECT_PROJECT
+    set DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      PRO_NAME = #{proName,jdbcType=VARCHAR},
+      PRO_CODE = #{proCode,jdbcType=VARCHAR},
+      PRO_TYPE_ID = #{proTypeId,jdbcType=VARCHAR},
+      PRO_BELONG_ID = #{proBelongId,jdbcType=VARCHAR},
+      LAB_ID = #{labId,jdbcType=VARCHAR},
+      PREF_ATTRIBUTE = #{prefAttribute,jdbcType=VARCHAR},
+      PRO_ABILITY = #{proAbility,jdbcType=VARCHAR},
+      PRO_CNAS = #{proCNAS,jdbcType=VARCHAR},
+      OPERATION_DATE = #{operationDate,jdbcType=VARCHAR},
+      TRIAL_METHOD = #{trialMethod,jdbcType=VARCHAR},
+      PRO_DESC = #{proDesc,jdbcType=VARCHAR},
+      SAMPLE_DESC = #{sampleDesc,jdbcType=VARCHAR},
+      PRO_TYPE = #{proType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    <!--查询所有记录-->
+  <select id="findAll" resultMap="DetailResultMap">
+    SELECT
+	     inspro.ID,
+		 inspro.PRO_NAME,
+		 inspro.PRO_CODE,
+		 inspro.PRO_TYPE_ID,
+		 inspro.PRO_BELONG_ID,
+		 inspro.LAB_ID,
+		 inspro.PREF_ATTRIBUTE,
+		 inspro.PRO_ABILITY,
+		 inspro.PRO_CNAS,
+		 inspro.OPERATION_DATE,
+		 inspro.TRIAL_METHOD,
+		 inspro.PRO_DESC,
+		 inspro.SAMPLE_DESC,
+		 inspro.PRO_TYPE,
+		 org.ORG_NAME AS LAB_NAME,
+		 std.ID AS STD_ID,
+		 std.STD_NAME,
+		 std.STD_NO,
+		 std.STD_FILE_ID
+	FROM
+	BM_INSPECT_PROJECT inspro
+	LEFT JOIN BM_INSPROJECT_STANDARD insprostd ON insprostd.PRO_ID = INSPRO."ID"
+	LEFT JOIN BM_STANDARD std ON std."ID" =  INSPROSTD.STD_ID 
+	LEFT JOIN TS_ORG org ON org."ID" = inspro.lab_Id
+	WHERE inspro.DEL_FLAG != 1
+	ORDER BY inspro.UPDATE_TIME DESC
+  </select>
+
+  <!--查询当前记录是否有子节点-->
+  <select id="selectChildsById" resultMap="BaseResultMap">
+     SELECT
+     <include refid="Base_Column_List"/>
+     FROM BM_INSPECT_PROJECT
+     WHERE DEL_FLAG != 1
+     AND PRO_BELONG_ID = #{proBelongId,jdbcType=VARCHAR}
+  </select>
+  
+  
+    <!-- 列表总数-->
+   <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT count(1) FROM BM_INSPECT_PROJECT INSPRO      
+	   LEFT JOIN TS_ORG ORG ON ORG."ID" = INSPRO.LAB_ID
+       <include refid="Base_Where_Clause"/>
+       ORDER BY INSPRO.UPDATE_TIME DESC
+   </select>
+  
+   <!-- 查询条件 -->
+   <sql id="Base_Where_Clause">
+       WHERE INSPRO.DEL_FLAG = 0
+       <choose>
+           <when test="searchPhrase != null">
+               <foreach collection="searchPhrase" item="search">
+                   AND (
+	                   INSPRO.PRO_NAME LIKE '%${search}%' 
+	                   OR INSPRO.PRO_CODE LIKE '%${search}%'
+	                   OR INSPRO.TRIAL_METHOD LIKE '%${search}%'
+	                   OR INSPRO.PRO_DESC LIKE '%${search}%'
+	                   OR ORG.ORG_NAME LIKE '%${search}%'
+                   )
+               </foreach>
+           </when>
+           <otherwise>
+               <if test="proName != null and proName != ''">
+                   AND INSPRO.PRO_NAME LIKE '%${proName}%'
+               </if>
+               <if test="proCode != null and proCode != ''">
+                   AND INSPRO.PRO_CODE LIKE '%${proCode}%'
+               </if>
+              <!--  <if test="stdNo != null and stdNo != ''">
+                   AND STD.STD_NO LIKE '%${stdNo}%'
+               </if> -->
+               <if test="trialMethod != null and trialMethod != ''">
+                   AND INSPRO.TRIAL_METHOD LIKE '%${trialMethod}%'
+               </if>
+               <if test="proDesc != null and proDesc != ''">
+                   AND INSPRO.PRO_DESC LIKE '%${proDesc}%'
+               </if>
+               <if test="labName != null and labName != ''">
+                   AND ORG.ORG_NAME LIKE '%${labName}%'
+               </if>
+               <if test="proTypeId != null and proTypeId != ''">
+                   AND INSPRO.PRO_TYPE_ID = #{proTypeId}
+               </if>
+           </otherwise>
+       </choose>
+       <if test="proCode2 != null and proCode2 != ''">
+           AND INSPRO.PRO_CODE = #{proCode2}
+       </if>
+   </sql>
+   <!-- 分页查询列表 -->
+   <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+       	 INSPRO.ID,
+		 INSPRO.PRO_NAME,
+		 INSPRO.PRO_CODE,
+		 INSPRO.PRO_TYPE_ID,
+		 INSPRO.PRO_BELONG_ID,
+		 INSPRO.LAB_ID,
+		 INSPRO.PREF_ATTRIBUTE,
+		 INSPRO.PRO_ABILITY,
+		 INSPRO.PRO_CNAS,
+		 INSPRO.OPERATION_DATE,
+		 INSPRO.TRIAL_METHOD,
+		 INSPRO.PRO_DESC,
+		 INSPRO.SAMPLE_DESC,
+		 INSPRO.PRO_TYPE,
+		 ORG.ORG_NAME AS LAB_NAME
+       FROM BM_INSPECT_PROJECT INSPRO
+	   LEFT JOIN TS_ORG ORG ON ORG."ID" = INSPRO.LAB_ID
+       <include refid="Base_Where_Clause"/>
+       ORDER BY INSPRO.UPDATE_TIME DESC
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+    <!-- 通过试验任务ID来分页查询 -->
+    <select id="queryByPageForPcTask" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        INSPRO.ID,
+        INSPRO.PRO_NAME,
+        INSPRO.PRO_CODE,
+        INSPRO.PRO_TYPE_ID,
+        INSPRO.PRO_BELONG_ID,
+        INSPRO.LAB_ID,
+        INSPRO.PREF_ATTRIBUTE,
+        INSPRO.PRO_ABILITY,
+        INSPRO.PRO_CNAS,
+        INSPRO.OPERATION_DATE,
+        INSPRO.TRIAL_METHOD,
+        INSPRO.PRO_DESC,
+        INSPRO.SAMPLE_DESC,
+        INSPRO.PRO_TYPE,
+        ORG.ORG_NAME AS LAB_NAME
+        FROM BM_INSPECT_PROJECT INSPRO
+        LEFT JOIN TS_ORG ORG ON ORG."ID" = INSPRO.LAB_ID
+        where
+        INSPRO.ID in (
+          SELECT
+           E .INSPRO_ID
+          FROM
+           PC_TRIAL_ITEMS E
+          LEFT JOIN PC_TRIAL_TASK TASK ON E.TRIAL_TASK_ID = TASK. ID
+          WHERE
+           TASK.ID = #{stdNo,jdbcType=VARCHAR} )
+        and INSPRO.DEL_FLAG = 0
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="search">
+                    AND (
+                    INSPRO.PRO_NAME LIKE '%${search}%'
+                    OR INSPRO.PRO_CODE LIKE '%${search}%'
+                    OR INSPRO.TRIAL_METHOD LIKE '%${search}%'
+                    OR INSPRO.PRO_DESC LIKE '%${search}%'
+                    OR ORG.ORG_NAME LIKE '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="proName != null and proName != ''">
+                    AND INSPRO.PRO_NAME LIKE '%${proName}%'
+                </if>
+                <if test="proCode != null and proCode != ''">
+                    AND INSPRO.PRO_CODE LIKE '%${proCode}%'
+                </if>
+                <!--  <if test="stdNo != null and stdNo != ''">
+                     AND STD.STD_NO LIKE '%${stdNo}%'
+                 </if> -->
+                <if test="trialMethod != null and trialMethod != ''">
+                    AND INSPRO.TRIAL_METHOD LIKE '%${trialMethod}%'
+                </if>
+                <if test="proDesc != null and proDesc != ''">
+                    AND INSPRO.PRO_DESC LIKE '%${proDesc}%'
+                </if>
+                <if test="labName != null and labName != ''">
+                    AND ORG.ORG_NAME LIKE '%${labName}%'
+                </if>
+                <if test="proTypeId != null and proTypeId != ''">
+                    AND INSPRO.PRO_TYPE_ID = #{proTypeId}
+                </if>
+            </otherwise>
+        </choose>
+        ORDER BY INSPRO.UPDATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <!-- 查询出通过试验任务ID查出的列表总数-->
+    <select id="queryByCountForPcTask" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        SELECT count(1)
+        FROM BM_INSPECT_PROJECT INSPRO
+        LEFT JOIN TS_ORG ORG ON ORG."ID" = INSPRO.LAB_ID
+        where
+        INSPRO.ID in (
+        SELECT
+        E .INSPRO_ID
+        FROM
+        PC_TRIAL_ITEMS E
+        LEFT JOIN PC_TRIAL_TASK TASK ON E.TRIAL_TASK_ID = TASK. ID
+        WHERE
+        TASK.ID = #{stdNo,jdbcType=VARCHAR} )
+        and INSPRO.DEL_FLAG = 0
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="search">
+                    AND (
+                    INSPRO.PRO_NAME LIKE '%${search}%'
+                    OR INSPRO.PRO_CODE LIKE '%${search}%'
+                    OR INSPRO.TRIAL_METHOD LIKE '%${search}%'
+                    OR INSPRO.PRO_DESC LIKE '%${search}%'
+                    OR ORG.ORG_NAME LIKE '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="proName != null and proName != ''">
+                    AND INSPRO.PRO_NAME LIKE '%${proName}%'
+                </if>
+                <if test="proCode != null and proCode != ''">
+                    AND INSPRO.PRO_CODE LIKE '%${proCode}%'
+                </if>
+                <!--  <if test="stdNo != null and stdNo != ''">
+                     AND STD.STD_NO LIKE '%${stdNo}%'
+                 </if> -->
+                <if test="trialMethod != null and trialMethod != ''">
+                    AND INSPRO.TRIAL_METHOD LIKE '%${trialMethod}%'
+                </if>
+                <if test="proDesc != null and proDesc != ''">
+                    AND INSPRO.PRO_DESC LIKE '%${proDesc}%'
+                </if>
+                <if test="labName != null and labName != ''">
+                    AND ORG.ORG_NAME LIKE '%${labName}%'
+                </if>
+                <if test="proTypeId != null and proTypeId != ''">
+                    AND INSPRO.PRO_TYPE_ID = #{proTypeId}
+                </if>
+            </otherwise>
+        </choose>
+    </select>
+   <!--查询检验项目是否关联过试验任务-->
+   <select id="checkTrialTaskById" resultType="java.lang.Integer" parameterType="java.lang.String">
+       SELECT count(1) FROM EV_TRIALTASK_INSPRO INSPRO      
+	   LEFT JOIN BM_INSPECT_PROJECT PRO ON PRO."ID" = INSPRO.INSPRO_ID
+	   WHERE PRO.ID = #{ID,jdbcType=VARCHAR}
+   </select>
+   
+   <!-- 根据名称和类型查询检验项目，只取第一条 -->
+   <select id="getByNameAndType" resultMap="BaseResultMap">
+     SELECT
+     <include refid="Base_Column_List"/>
+     FROM BM_INSPECT_PROJECT
+     WHERE DEL_FLAG != 1
+     AND PRO_NAME = #{name,jdbcType=VARCHAR}
+     AND PRO_TYPE = #{type,jdbcType=VARCHAR}
+     AND ROWNUM = 1
+  </select>
+  
+  
+  <select id="selectInsProByTypeId" resultMap="BaseResultMap">
+     SELECT
+     <include refid="Base_Column_List"/>
+     FROM BM_INSPECT_PROJECT
+     WHERE DEL_FLAG != 1
+     AND PRO_TYPE_ID = #{proTypeId,jdbcType=VARCHAR}
+  </select>
+  
+  
+</mapper>

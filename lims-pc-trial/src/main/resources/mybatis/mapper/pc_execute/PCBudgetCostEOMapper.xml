@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCBudgetCostEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_execute.entity.PCBudgetCostEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="TRIAL_TASK_ID" jdbcType="VARCHAR" property="trialTaskId" />
+    <result column="ATTACH_ID" jdbcType="VARCHAR" property="attachId" />
+    <result column="ATTACH_NAME" jdbcType="VARCHAR" property="attachName" />
+    <result column="CREATE_BY_NAME" jdbcType="VARCHAR" property="createByName" />
+    <result column="SUBSIDY_REMARK" jdbcType="VARCHAR" property="subsidyRemark" />
+    <result column="SELF_TOTAL" jdbcType="VARCHAR" property="selfTotal"/>
+    <result column="PUBLIC_TOTAL" jdbcType="VARCHAR" property="publicTotal"/>
+    <result column="ACCO_COST" jdbcType="VARCHAR" property="accoCost"/>
+    <result column="OIL_CHARGE_COST" jdbcType="VARCHAR" property="oilChargeCost"/>
+    <result column="HIGH_ROAD_COST" jdbcType="VARCHAR" property="highRoadCost"/>
+    <result column="REPAIR_COST" jdbcType="VARCHAR" property="repairCost"/>
+    <result column="TEMP_CARD_COST" jdbcType="VARCHAR" property="tempCardCost"/>
+    <result column="BUSNIESS_COST" jdbcType="VARCHAR" property="busniessCost"/>
+    <result column="DANGER_COST" jdbcType="VARCHAR" property="dangerCost"/>
+    <result column="PUB_OIL_CHARGE_COST" jdbcType="VARCHAR" property="pubOilChargeCost"/>
+    <result column="OUT_SOURCE_COST" jdbcType="VARCHAR" property="outSourceCost"/>
+    <result column="PUB_REPAIR_COST" jdbcType="VARCHAR" property="pubRepairCost"/>
+    <result column="TEST_FIELD_COST" jdbcType="VARCHAR" property="testFieldCost"/>
+    <result column="FLOW_STATUS" jdbcType="VARCHAR" property="flowStatus"/>
+    <result column="TASK_NUMBER" property="taskNumber" />
+    
+    <result column="ROAD_SEND_COST" property="roadSendCost" />
+    <result column="ROAD_TEST_COST" property="roadTestCost" />
+    <result column="PARKING_COST" property="parkingCost" />
+    <result column="TRAILER_RENT_COST" property="trailerRentCost" />
+    <result column="TRANSPORT_COST" property="transportCost" />
+    <result column="TRANSITION_COST" property="transitionCost" />
+    
+    <result column="OTHER_COST" property="otherCost" />
+    <result column="COST_TYPE" property="costType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_BY, CREATE_TIME, TRIAL_TASK_ID, ATTACH_ID, ATTACH_NAME, CREATE_BY_NAME,
+    SUBSIDY_REMARK,
+    SELF_TOTAL,
+    PUBLIC_TOTAL,
+    ACCO_COST,
+    OIL_CHARGE_COST,
+    HIGH_ROAD_COST,
+    REPAIR_COST,
+    TEMP_CARD_COST,
+    BUSNIESS_COST,
+    DANGER_COST,
+    PUB_OIL_CHARGE_COST,
+    OUT_SOURCE_COST,
+    PUB_REPAIR_COST,
+    TEST_FIELD_COST,
+    FLOW_STATUS,
+    TASK_NUMBER,
+    
+    ROAD_SEND_COST, 
+    ROAD_TEST_COST, 
+    PARKING_COST, 
+    TRAILER_RENT_COST, 
+    TRANSPORT_COST, 
+    TRANSITION_COST,
+    OTHER_COST,
+    COST_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_BUDGET_COST
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_BUDGET_COST
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.pc_execute.entity.PCBudgetCostEO">
+    insert into PC_BUDGET_COST (
+    	ID, 
+    	DEL_FLAG, 
+    	CREATE_BY, 
+      	CREATE_TIME, 
+      	TRIAL_TASK_ID, 
+      	ATTACH_ID, 
+      	ATTACH_NAME, 
+      	CREATE_BY_NAME, 
+      	SUBSIDY_REMARK,
+      	SELF_TOTAL,
+        PUBLIC_TOTAL,
+        ACCO_COST,
+        OIL_CHARGE_COST,
+        HIGH_ROAD_COST,
+        REPAIR_COST,
+        TEMP_CARD_COST,
+        BUSNIESS_COST,
+        DANGER_COST,
+        PUB_OIL_CHARGE_COST,
+        OUT_SOURCE_COST,
+        PUB_REPAIR_COST,
+        TEST_FIELD_COST,
+        FLOW_STATUS,
+        TASK_NUMBER,
+    
+	    ROAD_SEND_COST, 
+	    ROAD_TEST_COST, 
+	    PARKING_COST, 
+	    TRAILER_RENT_COST, 
+	    TRANSPORT_COST, 
+	    TRANSITION_COST,
+	    OTHER_COST,
+	    COST_TYPE
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{createBy,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=VARCHAR}, 
+      	#{trialTaskId,jdbcType=VARCHAR}, 
+      	#{attachId,jdbcType=VARCHAR}, 
+      	#{attachName,jdbcType=VARCHAR}, 
+      	#{createByName,jdbcType=VARCHAR}, 
+      	#{subsidyRemark,jdbcType=VARCHAR},
+      	#{selfTotal,jdbcType=VARCHAR},
+        #{publicTotal,jdbcType=VARCHAR},
+        #{accoCost,jdbcType=VARCHAR},
+        #{oilChargeCost,jdbcType=VARCHAR},
+        #{highRoadCost,jdbcType=VARCHAR},
+        #{repairCost,jdbcType=VARCHAR},
+        #{tempCardCost,jdbcType=VARCHAR},
+        #{busniessCost,jdbcType=VARCHAR},
+        #{dangerCost,jdbcType=VARCHAR},
+        #{pubOilChargeCost,jdbcType=VARCHAR},
+        #{outSourceCost,jdbcType=VARCHAR},
+        #{pubRepairCost,jdbcType=VARCHAR},
+        #{testFieldCost,jdbcType=VARCHAR},
+        #{flowStatus,jdbcType=VARCHAR},
+        #{taskNumber,jdbcType=VARCHAR},
+        
+        #{roadSendCost,jdbcType=VARCHAR},
+        #{roadTestCost,jdbcType=VARCHAR},
+        #{parkingCost,jdbcType=VARCHAR},
+        #{trailerRentCost,jdbcType=VARCHAR},
+        #{transportCost,jdbcType=VARCHAR},
+        #{transitionCost,jdbcType=VARCHAR},
+        
+        #{otherCost,jdbcType=VARCHAR},
+        #{costType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_execute.entity.PCBudgetCostEO">
+    insert into PC_BUDGET_COST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="trialTaskId != null">
+        TRIAL_TASK_ID,
+      </if>
+      <if test="attachId != null">
+        ATTACH_ID,
+      </if>
+      <if test="attachName != null">
+        ATTACH_NAME,
+      </if>
+      <if test="createByName != null">
+        CREATE_BY_NAME,
+      </if>
+      <if test="subsidyRemark != null">
+        SUBSIDY_REMARK,
+      </if>
+      <if test="selfTotal != null">
+        SELF_TOTAL,
+      </if>
+      <if test="publicTotal != null">
+        PUBLIC_TOTAL,
+      </if>
+      <if test="accoCost != null">
+        ACCO_COST,
+      </if>
+      <if test="oilChargeCost != null">
+        OIL_CHARGE_COST,
+      </if>
+      <if test="highRoadCost != null">
+        HIGH_ROAD_COST,
+      </if>
+      <if test="repairCost != null">
+        REPAIR_COST,
+      </if>
+      <if test="tempCardCost != null">
+        TEMP_CARD_COST,
+      </if>
+      <if test="busniessCost != null">
+        BUSNIESS_COST,
+      </if>
+      <if test="dangerCost != null">
+        DANGER_COST,
+      </if>
+      <if test="pubOilChargeCost != null">
+        PUB_OIL_CHARGE_COST,
+      </if>
+      <if test="outSourceCost != null">
+        OUT_SOURCE_COST,
+      </if>
+      <if test="pubRepairCost != null">
+        PUB_REPAIR_COST,
+      </if>
+      <if test="testFieldCost != null">
+        TEST_FIELD_COST,
+      </if>
+      <if test="flowStatus != null">
+        flowStatus,
+      </if>
+      <if test="taskNumber != null">
+        TASK_NUMBER,
+      </if>
+      
+      <if test="roadSendCost != null">
+        ROAD_SEND_COST,
+      </if>
+      <if test="roadTestCost != null">
+        ROAD_TEST_COST,
+      </if>
+      <if test="parkingCost != null">
+        PARKING_COST,
+      </if>
+      <if test="trailerRentCost != null">
+        TRAILER_RENT_COST,
+      </if>
+      <if test="transportCost != null">
+        TRANSPORT_COST,
+      </if>
+      <if test="transitionCost != null">
+        TRANSITION_COST,
+      </if>
+      
+      <if test="otherCost != null">
+        OTHER_COST,
+      </if>
+      <if test="costType != null">
+        COST_TYPE,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="attachId != null">
+        #{attachId,jdbcType=VARCHAR},
+      </if>
+      <if test="attachName != null">
+        #{attachName,jdbcType=VARCHAR},
+      </if>
+      <if test="createByName != null">
+        #{createByName,jdbcType=VARCHAR},
+      </if>
+      <if test="subsidyRemark != null">
+        #{subsidyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="selfTotal != null">
+        #{selfTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="publicTotal != null">
+        #{publicTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="accoCost != null">
+        #{accoCost,jdbcType=VARCHAR},
+      </if>
+      <if test="oilChargeCost != null">
+        #{oilChargeCost,jdbcType=VARCHAR},
+      </if>
+      <if test="highRoadCost != null">
+        #{highRoadCost,jdbcType=VARCHAR},
+      </if>
+      <if test="repairCost != null">
+        #{repairCost,jdbcType=VARCHAR},
+      </if>
+      <if test="tempCardCost != null">
+        #{tempCardCost,jdbcType=VARCHAR},
+      </if>
+      <if test="busniessCost != null">
+        #{busniessCost,jdbcType=VARCHAR},
+      </if>
+      <if test="dangerCost != null">
+        #{dangerCost,jdbcType=VARCHAR},
+      </if>
+      <if test="pubOilChargeCost != null">
+        #{pubOilChargeCost,jdbcType=VARCHAR},
+      </if>
+      <if test="outSourceCost != null">
+        #{outSourceCost,jdbcType=VARCHAR},
+      </if>
+      <if test="pubRepairCost != null">
+        #{pubRepairCost,jdbcType=VARCHAR},
+      </if>
+      <if test="testFieldCost != null">
+        #{testFieldCost,jdbcType=VARCHAR},
+      </if>
+      <if test="flowStatus != null">
+        #{flowStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumber != null">
+        #{taskNumber,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="roadSendCost != null">
+        #{roadSendCost,jdbcType=VARCHAR},
+      </if>
+      <if test="roadTestCost != null">
+        #{roadTestCost,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingCost != null">
+        #{parkingCost,jdbcType=VARCHAR},
+      </if>
+      <if test="trailerRentCost != null">
+        #{trailerRentCost,jdbcType=VARCHAR},
+      </if>
+      <if test="transportCost != null">
+        #{transportCost,jdbcType=VARCHAR},
+      </if>
+      <if test="transitionCost != null">
+        #{transitionCost,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="otherCost != null">
+        #{otherCost,jdbcType=VARCHAR},
+      </if>
+      <if test="costType != null">
+        #{costType,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_execute.entity.PCBudgetCostEO">
+    update PC_BUDGET_COST
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="attachId != null">
+        ATTACH_ID = #{attachId,jdbcType=VARCHAR},
+      </if>
+      <if test="attachName != null">
+        ATTACH_NAME = #{attachName,jdbcType=VARCHAR},
+      </if>
+      <if test="createByName != null">
+        CREATE_BY_NAME = #{createByName,jdbcType=VARCHAR},
+      </if>
+      <if test="subsidyRemark != null">
+        SUBSIDY_REMARK = #{subsidyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="selfTotal != null">
+        SELF_TOTAL = #{selfTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="publicTotal != null">
+        PUBLIC_TOTAL = #{publicTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="accoCost != null">
+        ACCO_COST = #{accoCost,jdbcType=VARCHAR},
+      </if>
+      <if test="oilChargeCost != null">
+        OIL_CHARGE_COST = #{oilChargeCost,jdbcType=VARCHAR},
+      </if>
+      <if test="highRoadCost != null">
+        HIGH_ROAD_COST = #{highRoadCost,jdbcType=VARCHAR},
+      </if>
+      <if test="repairCost != null">
+        REPAIR_COST = #{repairCost,jdbcType=VARCHAR},
+      </if>
+      <if test="tempCardCost != null">
+        TEMP_CARD_COST = #{tempCardCost,jdbcType=VARCHAR},
+      </if>
+      <if test="busniessCost != null">
+        BUSNIESS_COST = #{busniessCost,jdbcType=VARCHAR},
+      </if>
+      <if test="dangerCost != null">
+        DANGER_COST = #{dangerCost,jdbcType=VARCHAR},
+      </if>
+      <if test="pubOilChargeCost != null">
+        PUB_OIL_CHARGE_COST = #{pubOilChargeCost,jdbcType=VARCHAR},
+      </if>
+      <if test="outSourceCost != null">
+        OUT_SOURCE_COST = #{outSourceCost,jdbcType=VARCHAR},
+      </if>
+      <if test="pubRepairCost != null">
+        PUB_REPAIR_COST = #{pubRepairCost,jdbcType=VARCHAR},
+      </if>
+      <if test="testFieldCost != null">
+        TEST_FIELD_COST = #{testFieldCost,jdbcType=VARCHAR},
+      </if>
+      <if test="flowStatus != null">
+        FLOW_STATUS = #{flowStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumber != null">
+        TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="roadSendCost != null">
+        ROAD_SEND_COST = #{roadSendCost,jdbcType=VARCHAR},
+      </if>
+      <if test="roadTestCost != null">
+        ROAD_TEST_COST = #{roadTestCost,jdbcType=VARCHAR},
+      </if>
+      <if test="parkingCost != null">
+        PARKING_COST = #{parkingCost,jdbcType=VARCHAR},
+      </if>
+      <if test="trailerRentCost != null">
+        TRAILER_RENT_COST = #{trailerRentCost,jdbcType=VARCHAR},
+      </if>
+      <if test="transportCost != null">
+        TRANSPORT_COST = #{transportCost,jdbcType=VARCHAR},
+      </if>
+      <if test="transitionCost != null">
+        TRANSITION_COST = #{transitionCost,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="otherCost != null">
+        OTHER_COST = #{otherCost,jdbcType=VARCHAR},
+      </if>
+      <if test="costType != null">
+        COST_TYPE = #{costType,jdbcType=VARCHAR},
+      </if>
+      
+      
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_execute.entity.PCBudgetCostEO">
+    update PC_BUDGET_COST
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      ATTACH_ID = #{attachId,jdbcType=VARCHAR},
+      ATTACH_NAME = #{attachName,jdbcType=VARCHAR},
+      CREATE_BY_NAME = #{createByName,jdbcType=VARCHAR},
+      SUBSIDY_REMARK = #{subsidyRemark,jdbcType=VARCHAR},
+      SELF_TOTAL          = #{selfTotal,jdbcType=VARCHAR},
+      PUBLIC_TOTAL        = #{publicTotal,jdbcType=VARCHAR},
+      ACCO_COST           = #{accoCost,jdbcType=VARCHAR},
+      OIL_CHARGE_COST     = #{oilChargeCost,jdbcType=VARCHAR},
+      HIGH_ROAD_COST      = #{highRoadCost,jdbcType=VARCHAR},
+      REPAIR_COST         = #{repairCost,jdbcType=VARCHAR},
+      TEMP_CARD_COST      = #{tempCardCost,jdbcType=VARCHAR},
+      BUSNIESS_COST       = #{busniessCost,jdbcType=VARCHAR},
+      DANGER_COST         = #{dangerCost,jdbcType=VARCHAR},
+      PUB_OIL_CHARGE_COST = #{pubOilChargeCost,jdbcType=VARCHAR},
+      OUT_SOURCE_COST     = #{outSourceCost,jdbcType=VARCHAR},
+      PUB_REPAIR_COST     = #{pubRepairCost,jdbcType=VARCHAR},
+      TEST_FIELD_COST     = #{testFieldCost,jdbcType=VARCHAR},
+      FLOW_STATUS         = #{flowStatus,jdbcType=VARCHAR},
+      TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR},
+      
+      ROAD_SEND_COST = #{roadSendCost,jdbcType=VARCHAR},
+      ROAD_TEST_COST = #{roadTestCost,jdbcType=VARCHAR},
+      PARKING_COST = #{parkingCost,jdbcType=VARCHAR},
+      TRAILER_RENT_COST = #{trailerRentCost,jdbcType=VARCHAR},
+      TRANSPORT_COST = #{transportCost,jdbcType=VARCHAR},
+      TRANSITION_COST = #{transitionCost,jdbcType=VARCHAR},
+      
+      OTHER_COST = #{otherCost,jdbcType=VARCHAR},
+      COST_TYPE = #{costType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getCostByTrialTaskId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_BUDGET_COST
+    where TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getCostByTrialTaskNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_BUDGET_COST
+    where TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByTrialTaskId" parameterType="java.lang.String">
+    delete from PC_BUDGET_COST
+    where TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByTrialTaskNumber" parameterType="java.lang.String">
+    delete from PC_BUDGET_COST
+    where TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR}
+  </delete>  
+  
+</mapper>

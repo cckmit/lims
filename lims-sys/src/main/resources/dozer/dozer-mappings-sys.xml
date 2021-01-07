@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+    <!--由于VO 和 EO 字段名称非完全对应,且有的字段类型不一样,所有需要依靠dozer进行转换-->
+    <!--调用时依靠Controller 中
+        @Autowired private BeanMapper beanMapper 进行自动装配，然后调用相应方法进行匹配-->
+
+    <!--时间进行格式转换-->
+    <mapping date-format="yyyy-MM-dd">
+        <!--用户对应实体类-->
+        <class-a>com.adc.da.sys.entity.UserEO</class-a>
+        <class-b>com.adc.da.sys.vo.UserVO</class-b>
+
+        <!--区别字段-->
+        <field>
+            <a>roleIdList</a>
+            <b>rolesstr</b>
+        </field>
+        <field>
+            <a>roleEOList</a>
+            <b>roles</b>
+        </field>
+        <field>
+            <a>orgIdList</a>
+            <b>orgsstr</b>
+        </field>
+        <field>
+            <a>orgEOList</a>
+            <b>orgs</b>
+        </field>
+
+        <!--密码进行单向映射-->
+        <field-exclude type="one-way">
+            <a>password</a>
+            <b>password</b>
+        </field-exclude>
+    </mapping>
+
+    <mapping>
+        <!--角色对应实体类-->
+        <class-a>com.adc.da.sys.entity.RoleEO</class-a>
+        <class-b>com.adc.da.sys.vo.RoleVO</class-b>
+
+        <!--区别字段-->
+        <field>
+            <a>id</a>
+            <b>rid</b>
+        </field>
+        <field>
+            <a>roleCode</a>
+            <b>rcode</b>
+        </field>
+        <field>
+            <a>name</a>
+            <b>rname</b>
+        </field>
+        <field>
+            <a>remarks</a>
+            <b>rdesc</b>
+        </field>
+        <field>
+            <a>delFlag</a>
+            <b>enabled</b>
+        </field>
+        <field>
+            <a>menuEOIdList</a>
+            <b>menusstr</b>
+        </field>
+        <field>
+            <a>menuEOList</a>
+            <b>menus</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <!--菜单对应实体类-->
+        <class-a>com.adc.da.sys.entity.MenuEO</class-a>
+        <class-b>com.adc.da.sys.vo.MenuVO</class-b>
+    </mapping>
+    <mapping>
+        <!--数据字典对应实体类-->
+        <class-a>com.adc.da.sys.entity.DictionaryEO</class-a>
+        <class-b>com.adc.da.sys.vo.DictionaryVO</class-b>
+    </mapping>
+    <mapping>
+        <!--字典类型对应实体类-->
+        <class-a>com.adc.da.sys.entity.DicTypeEO</class-a>
+        <class-b>com.adc.da.sys.vo.DicTypeVO</class-b>
+    </mapping>
+    <mapping>
+        <!--组织机构对应实体类-->
+        <class-a>com.adc.da.sys.entity.OrgEO</class-a>
+        <class-b>com.adc.da.sys.vo.OrgVO</class-b>
+    </mapping>
+    <mapping date-format="yyyy-MM-dd HH:mm:ss">
+        <!--日志对应实体类，存在时间格式转换 -->
+        <class-a>com.adc.da.log.entity.LogEO</class-a>
+        <class-b>com.adc.da.log.vo.LogVO</class-b>
+    </mapping>
+
+</mappings>

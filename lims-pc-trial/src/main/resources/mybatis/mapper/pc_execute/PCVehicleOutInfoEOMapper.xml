@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCVehicleOutInfoEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_execute.entity.PCVehicleOutInfoEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="VEHICLE_OUT_ID" jdbcType="VARCHAR" property="vehicleOutId" />
+    <result column="SAMPLE_ID" jdbcType="VARCHAR" property="sampleId" />
+    <result column="CHASSIS_NUMBER" jdbcType="VARCHAR" property="chassisNumber" />
+    <result column="VEHICLE_TYPE" jdbcType="VARCHAR" property="vehicleType" />
+    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+    <result column="NUMBERS" jdbcType="VARCHAR" property="numbers" />
+    <result column="LOAN_NUMBER" jdbcType="VARCHAR" property="loanNumber" />
+    <result column="START_POINT" jdbcType="VARCHAR" property="startPoint" />
+    <result column="END_POINT" jdbcType="VARCHAR" property="endPoint" />
+    <result column="DRIVER_NAME" jdbcType="VARCHAR" property="driverName" />
+    <result column="DRIVER_ID" jdbcType="VARCHAR" property="driverId" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, VEHICLE_OUT_ID, SAMPLE_ID, CHASSIS_NUMBER, VEHICLE_TYPE, UNIT, NUMBERS, 
+    LOAN_NUMBER, START_POINT, END_POINT, DRIVER_NAME, DRIVER_ID, REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_VEHICLE_OUT_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_VEHICLE_OUT_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.pc_execute.entity.PCVehicleOutInfoEO">
+    insert into PC_VEHICLE_OUT_INFO (
+    	ID, 
+    	DEL_FLAG, 
+    	VEHICLE_OUT_ID, 
+      	SAMPLE_ID, 
+      	CHASSIS_NUMBER, 
+      	VEHICLE_TYPE, 
+      	UNIT, 
+      	NUMBERS, 
+      	LOAN_NUMBER, 
+      	START_POINT, 
+      	END_POINT, 
+      	DRIVER_NAME, 
+      	DRIVER_ID, 
+      	REMARK
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{vehicleOutId,jdbcType=VARCHAR}, 
+      	#{sampleId,jdbcType=VARCHAR}, 
+      	#{chassisNumber,jdbcType=VARCHAR}, 
+      	#{vehicleType,jdbcType=VARCHAR}, 
+      	#{unit,jdbcType=VARCHAR}, 
+      	#{numbers,jdbcType=VARCHAR}, 
+      	#{loanNumber,jdbcType=VARCHAR}, 
+      	#{startPoint,jdbcType=VARCHAR}, 
+      	#{endPoint,jdbcType=VARCHAR}, 
+      	#{driverName,jdbcType=VARCHAR}, 
+      	#{driverId,jdbcType=VARCHAR}, 
+      	#{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_execute.entity.PCVehicleOutInfoEO">
+    insert into PC_VEHICLE_OUT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="vehicleOutId != null">
+        VEHICLE_OUT_ID,
+      </if>
+      <if test="sampleId != null">
+        SAMPLE_ID,
+      </if>
+      <if test="chassisNumber != null">
+        CHASSIS_NUMBER,
+      </if>
+      <if test="vehicleType != null">
+        VEHICLE_TYPE,
+      </if>
+      <if test="unit != null">
+        UNIT,
+      </if>
+      <if test="numbers != null">
+        NUMBERS,
+      </if>
+      <if test="loanNumber != null">
+        LOAN_NUMBER,
+      </if>
+      <if test="startPoint != null">
+        START_POINT,
+      </if>
+      <if test="endPoint != null">
+        END_POINT,
+      </if>
+      <if test="driverName != null">
+        DRIVER_NAME,
+      </if>
+      <if test="driverId != null">
+        DRIVER_ID,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleOutId != null">
+        #{vehicleOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleId != null">
+        #{sampleId,jdbcType=VARCHAR},
+      </if>
+      <if test="chassisNumber != null">
+        #{chassisNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleType != null">
+        #{vehicleType,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="numbers != null">
+        #{numbers,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNumber != null">
+        #{loanNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="startPoint != null">
+        #{startPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="endPoint != null">
+        #{endPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="driverName != null">
+        #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="driverId != null">
+        #{driverId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_execute.entity.PCVehicleOutInfoEO">
+    update PC_VEHICLE_OUT_INFO
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleOutId != null">
+        VEHICLE_OUT_ID = #{vehicleOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleId != null">
+        SAMPLE_ID = #{sampleId,jdbcType=VARCHAR},
+      </if>
+      <if test="chassisNumber != null">
+        CHASSIS_NUMBER = #{chassisNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleType != null">
+        VEHICLE_TYPE = #{vehicleType,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="numbers != null">
+        NUMBERS = #{numbers,jdbcType=VARCHAR},
+      </if>
+      <if test="loanNumber != null">
+        LOAN_NUMBER = #{loanNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="startPoint != null">
+        START_POINT = #{startPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="endPoint != null">
+        END_POINT = #{endPoint,jdbcType=VARCHAR},
+      </if>
+      <if test="driverName != null">
+        DRIVER_NAME = #{driverName,jdbcType=VARCHAR},
+      </if>
+      <if test="driverId != null">
+        DRIVER_ID = #{driverId,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_execute.entity.PCVehicleOutInfoEO">
+    update PC_VEHICLE_OUT_INFO
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      VEHICLE_OUT_ID = #{vehicleOutId,jdbcType=VARCHAR},
+      SAMPLE_ID = #{sampleId,jdbcType=VARCHAR},
+      CHASSIS_NUMBER = #{chassisNumber,jdbcType=VARCHAR},
+      VEHICLE_TYPE = #{vehicleType,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      NUMBERS = #{numbers,jdbcType=VARCHAR},
+      LOAN_NUMBER = #{loanNumber,jdbcType=VARCHAR},
+      START_POINT = #{startPoint,jdbcType=VARCHAR},
+      END_POINT = #{endPoint,jdbcType=VARCHAR},
+      DRIVER_NAME = #{driverName,jdbcType=VARCHAR},
+      DRIVER_ID = #{driverId,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="deleteByVehicleOutId" parameterType="java.lang.String">
+    delete from PC_VEHICLE_OUT_INFO
+    where VEHICLE_OUT_ID = #{vehicleOutId,jdbcType=VARCHAR}
+  </delete>
+</mapper>

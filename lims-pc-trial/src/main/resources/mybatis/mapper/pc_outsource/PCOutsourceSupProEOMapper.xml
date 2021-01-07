@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_outsource.dao.PCOutsourceSupProEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_outsource.entity.PCOutsourceSupProEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="OUTSOURCE_ID" jdbcType="VARCHAR" property="outsourceId" />
+    <result column="SUP_ID" jdbcType="VARCHAR" property="supId" />
+    <result column="SUP_NAME" jdbcType="VARCHAR" property="supName" />
+    <result column="DISCOUNT_PRICE" jdbcType="VARCHAR" property="discountPrice" />
+    <result column="TESTPRO_NAME" jdbcType="VARCHAR" property="testproName" />
+    <result column="GROUP_FLAG" jdbcType="VARCHAR" property="groupFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, OUTSOURCE_ID, SUP_ID, SUP_NAME, DISCOUNT_PRICE, TESTPRO_NAME, GROUP_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_OUTSOURCE_SUPPRO
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_OUTSOURCE_SUPPRO
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.pc_outsource.entity.PCOutsourceSupProEO">
+    insert into PC_OUTSOURCE_SUPPRO (ID, DEL_FLAG, OUTSOURCE_ID, 
+      SUP_ID, SUP_NAME, DISCOUNT_PRICE, 
+      TESTPRO_NAME, GROUP_FLAG)
+    values (#{id,jdbcType=VARCHAR}, #{delFlag,jdbcType=VARCHAR}, #{outsourceId,jdbcType=VARCHAR}, 
+      #{supId,jdbcType=VARCHAR}, #{supName,jdbcType=VARCHAR}, #{discountPrice,jdbcType=VARCHAR}, 
+      #{testproName,jdbcType=VARCHAR}, #{groupFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_outsource.entity.PCOutsourceSupProEO">
+    insert into PC_OUTSOURCE_SUPPRO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="outsourceId != null">
+        OUTSOURCE_ID,
+      </if>
+      <if test="supId != null">
+        SUP_ID,
+      </if>
+      <if test="supName != null">
+        SUP_NAME,
+      </if>
+      <if test="discountPrice != null">
+        DISCOUNT_PRICE,
+      </if>
+      <if test="testproName != null">
+        TESTPRO_NAME,
+      </if>
+      <if test="groupFlag != null">
+        GROUP_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="outsourceId != null">
+        #{outsourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="supId != null">
+        #{supId,jdbcType=VARCHAR},
+      </if>
+      <if test="supName != null">
+        #{supName,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPrice != null">
+        #{discountPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="testproName != null">
+        #{testproName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupFlag != null">
+        #{groupFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_outsource.entity.PCOutsourceSupProEO">
+    update PC_OUTSOURCE_SUPPRO
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="outsourceId != null">
+        OUTSOURCE_ID = #{outsourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="supId != null">
+        SUP_ID = #{supId,jdbcType=VARCHAR},
+      </if>
+      <if test="supName != null">
+        SUP_NAME = #{supName,jdbcType=VARCHAR},
+      </if>
+      <if test="discountPrice != null">
+        DISCOUNT_PRICE = #{discountPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="testproName != null">
+        TESTPRO_NAME = #{testproName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupFlag != null">
+        GROUP_FLAG = #{groupFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_outsource.entity.PCOutsourceSupProEO">
+    update PC_OUTSOURCE_SUPPRO
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      OUTSOURCE_ID = #{outsourceId,jdbcType=VARCHAR},
+      SUP_ID = #{supId,jdbcType=VARCHAR},
+      SUP_NAME = #{supName,jdbcType=VARCHAR},
+      DISCOUNT_PRICE = #{discountPrice,jdbcType=VARCHAR},
+      TESTPRO_NAME = #{testproName,jdbcType=VARCHAR},
+      GROUP_FLAG = #{groupFlag,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    
+  <select id="findSupProListByOutsourceId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_OUTSOURCE_SUPPRO
+    where OUTSOURCE_ID = #{outsourceId,jdbcType=VARCHAR}
+    AND DEL_FLAG = 0
+  </select>
+  
+  
+  <delete id="deleteByOutSourceId" parameterType="java.lang.String">
+    delete from PC_OUTSOURCE_SUPPRO
+    where OUTSOURCE_ID = #{outsourceId,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="selectSupProList" parameterType="java.lang.String" resultMap="BaseResultMap">
+   SELECT
+		SUP_NAME,
+		SUP_ID,
+		"SUM"(DISCOUNT_PRICE) AS DISCOUNT_PRICE
+   FROM PC_OUTSOURCE_SUPPRO
+   WHERE OUTSOURCE_ID = #{outsourceId,jdbcType=VARCHAR}
+   AND DEL_FLAG = 0
+   GROUP BY SUP_ID,SUP_NAME
+  </select>
+  
+  
+</mapper>

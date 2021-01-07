@@ -1,0 +1,891 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.UserEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.UserEO">
+        <id column="usid" property="usid"/>
+        <result column="account" property="account"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="password" property="password"/>
+        <result column="usname" property="usname"/>
+        <result column="user_code" property="userCode"/>
+        <result column="office_phone" property="officePhone"/>
+        <result column="CELLPHONE_NUMBER" property="cellPhoneNumber"/>
+        <result column="HOME_ADDRESS" property="homeAddress"/>
+        <result column="POSTAL_CODE" property="postalCode"/>
+        <result column="EMAIL" property="email"/>
+        <result column="CONTACT_ADDRESS" property="contactAddress"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+        <result column="USER_STATE" property="userState"/>
+        <result column="AVATAR" property="avatar"/>
+        <result column="ext_info" property="extInfo"/>
+        <result column="extInfo2" property="extInfo2"/>
+        <result column="extInfo3" property="extInfo3"/>
+        <result column="extInfo4" property="extInfo4"/>
+        <result column="extInfo5" property="extInfo5"/>
+        <result column="USPOSITION" property="usposition"/>
+        <result column="USSIGNDOMAIN" property="ussigndomain"/>
+        <result column="HONOR" property="honor"/>
+        <result column="HONORDESCRIPTION" property="honordescription"/>
+        <result column="SEAL" property="seal"/>
+        <result column="AVATAR_NAME" property="avatarName"/>
+        <result column="HONOR_NAME" property="honorName"/>
+        <result column="SEAL_NAME" property="sealName"/>
+    </resultMap>
+
+    <!-- TS_USER table all fields -->
+    <sql id="Base_Column_List">
+        usid, account, del_flag, password, usname, user_code,office_phone,CELLPHONE_NUMBER,
+        HOME_ADDRESS,POSTAL_CODE,EMAIL,CONTACT_ADDRESS,CREATE_TIME,UPDATE_TIME,USER_STATE,
+        ext_info, extInfo2, extInfo3, extInfo4, extInfo5,USPOSITION,USSIGNDOMAIN,SEAL
+    </sql>
+
+    <resultMap id="UserRoleMap" extends="BaseResultMap" type="com.adc.da.sys.entity.UserEO">
+        <collection property="roleEOList" ofType="com.adc.da.sys.entity.RoleEO">
+            <id column="id" property="id"/>
+            <result column="data_scope" property="dataScope"/>
+            <result column="r_delFlag" property="delFlag"/>
+            <result column="is_default" property="isDefault"/>
+            <result column="name" property="name"/>
+            <result column="remarks" property="remarks"/>
+            <result column="r_extInfo" property="extInfo"/>
+            <result column="r_extInfo2" property="extInfo2"/>
+            <result column="r_extInfo3" property="extInfo3"/>
+            <result column="r_extInfo4" property="extInfo4"/>
+            <result column="r_extInfo5" property="extInfo5"/>
+        </collection>
+        <collection property="orgEOList" ofType="com.adc.da.sys.entity.OrgEO">
+            <id column="org_id" property="id"/>
+            <result column="org_name" property="name"/>
+            <result column="org_desc" property="orgDesc"/>
+            <result column="org_code" property="orgCode"/>
+            <result column="org_type" property="orgType"/>
+            <result column="org_parent_id" property="parentId"/>
+            <result column="org_remarks" property="remarks"/>
+            <result column="org_isshow" property="isShow"/>
+            <result column="org_delFlag" property="delFlag"/>
+            <result column="org_parentIds" property="parentIds"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="Baseuserpage" type="com.adc.da.sys.entity.UserEO">
+        <id property="usid" column="usid"/>
+        <result property="account" column="account" />
+        <result column="usname" property="usname" />
+        <result property="userCode" column="userCode"/>
+        <result column="officePhone" property="officePhone" />
+        <result column="cellPhoneNumber" property="cellPhoneNumber"/>
+        <result property="homeAddress" column="homeAddress"/>
+        <result column="email" property="email"/>
+        <result property="usposition" column="usposition"/>
+        <result column="extInfo5" property="extInfo5"/>
+        <result property="orgName" column="orgname"/>
+        <result column="rolename" property="roleName"/>
+        <result column="roleCode" property="roleCode"/>
+    </resultMap>
+
+    <!--新增avatar字段用于获取头像信息-->
+    <!--新增honor、seal字段用于获取纸质、印章信息-->
+    <sql id="User_Role_List">
+        u.*, r.id as id,
+        r.data_scope as dataScope,
+        r.del_flag as r_delFlag,
+        r.is_default as isDefault,
+        r.name as name,
+        r.remarks as remarks,
+        r.ext_info as r_extInfo,
+        r.extInfo2 as r_extInfo2,
+        r.extInfo3 as r_extInfo3,
+        r.extInfo4 as r_extInfo4,
+        r.extInfo5 as r_extInfo5,
+        ORG.id AS org_id,
+        ORG.ORG_NAME AS org_name,
+        ORG.ORG_DESC AS org_desc,
+        ORG.ORG_CODE AS org_code,
+        ORG.ORG_TYPE AS org_type,
+        ORG.PARENT_ID AS org_parent_id,
+        ORG.REMARKS AS org_remarks,
+        ORG.IS_SHOW AS org_isshow,
+        ORG.DEL_FLAG AS org_delFlag,
+        ORG.PARENT_IDS AS org_parentIds,
+        TR_USER_AVATAR.FILE_ID AS AVATAR,
+        TR_USER_HONOR.FILE_ID AS honor,
+        TR_USER_HONOR.DESCRIPTION AS honordescription,
+        TR_USER_SEAL.FILE_ID AS seal
+    </sql>
+
+    <sql id="New_Base_Where_Clause">
+        where  1=1
+        <if test=" orgId != null">
+            and to1.Id = #{orgId}
+        </if>
+        <trim suffixOverrides=",">
+            <if test="searchPhrase != null">
+                <!-- 通用查询 20190719 张英慧添加-->
+                <foreach collection="searchPhrase" item="phrase" >
+                    and
+                    (tu.account like '%${phrase}%'
+                    or
+                    tu.usname like '%${phrase}%'
+                    or
+                    tu.USER_CODE like '%${phrase}%'
+                    or
+                    tu.USPOSITION like '%${phrase}%'
+                    or
+                    tu.EMAIL like '%${phrase}%'
+                    or
+                    tu.CELLPHONE_NUMBER like '%${phrase}%'
+                    or
+                    to1.ORG_NAME like '%${phrase}%'
+                    )
+                </foreach>
+
+            </if>
+            <if test="searchPhrase == null">
+                <!-- 普通查询 -->
+                <if test="account != null">
+                    <!--登录账号查询-->
+                    and tu.account like '%'||#{account}||'%'
+                </if>
+                <if test="usname != null">
+                    <!--登录人的真实姓名-->
+                    and tu.usname like '%'||#{usname}||'%'
+                </if>
+                <if test="userCode!=null">
+                    <!--登录人工号-->
+                    and tu.user_code like '%'||#{userCode}||'%'
+                </if>
+                <if test="usposition!=null">
+                    <!--登录人职位-->
+                    and tu.usposition like '%'||#{usposition}||'%'
+                </if>
+                <if test="email!=null">
+                    <!--登录人邮箱-->
+                    and tu.email like '%'||#{email}||'%'
+                </if>
+                <if test="cellPhoneNumber!=null">
+                    <!--登录人手机号-->
+                    and tu.CELLPHONE_NUMBER like '%'||#{cellPhoneNumber}||'%'
+                </if>
+                <if test="orgName!=null">
+                    <!--登录人所属机构-->
+                    and to1.ORG_NAME like '%'||#{orgName}||'%'
+                </if>
+                <if test="rolename !=null">
+                    and tr.name like '%'||#{rolename}||'%'
+                </if>
+            </if>
+        </trim>
+    </sql>
+    <sql id="New_Base_Where_Clause_Role">
+        where  1=1
+        <if test=" orgId != null">
+            and to1.Id = #{orgId}
+        </if>
+        <trim suffixOverrides=",">
+            <if test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="phrase" >
+                    and
+                    (tu.account like '%${phrase}%'
+                    or
+                    tu.usname like '%${phrase}%'
+                    or
+                    tu.USER_CODE like '%${phrase}%'
+                    or
+                    tu.USPOSITION like '%${phrase}%'
+                    or
+                    tu.EMAIL like '%${phrase}%'
+                    or
+                    tu.CELLPHONE_NUMBER like '%${phrase}%'
+                    or
+                    to1.ORG_NAME like '%${phrase}%'
+                    )
+                </foreach>
+            </if>
+            <if test="searchPhrase == null">
+                <!-- 普通查询 -->
+                <if test="account != null">
+                    <!--登录账号查询-->
+                    and tu.account like '%'||#{account}||'%'
+                </if>
+                <if test="usname != null">
+                    <!--登录人的真实姓名-->
+                    and tu.usname like '%'||#{usname}||'%'
+                </if>
+                <if test="userCode!=null">
+                    <!--登录人工号-->
+                    and tu.user_code like '%'||#{userCode}||'%'
+                </if>
+                <if test="usposition!=null">
+                    <!--登录人职位-->
+                    and tu.usposition like '%'||#{usposition}||'%'
+                </if>
+                <if test="email!=null">
+                    <!--登录人邮箱-->
+                    and tu.email like '%'||#{email}||'%'
+                </if>
+                <if test="cellPhoneNumber!=null">
+                    <!--登录人手机号-->
+                    and tu.CELLPHONE_NUMBER like '%'||#{cellPhoneNumber}||'%'
+                </if>
+                <if test="orgName!=null">
+                    <!--登录人所属机构-->
+                    and to1.ORG_NAME like '%'||#{orgName}||'%'
+                </if>
+                <if test="rolename !=null">
+                    and tr.name = #{rolename}
+                </if>
+                <if test="roleId !=null">
+                    and tr.id = '%'||#{roleId}||'%'
+                </if>
+            </if>
+            and
+            tr.NAME =  #{rolename}
+        </trim>
+    </sql>
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="searchPhrase != null">
+                <!-- 通用查询 20190719 张英慧添加-->
+                <foreach collection="searchPhrase" item="phrase" index="i">
+                    <if test="i==0">and</if>
+                    <if test="i!=0">or</if>
+                    (u0.account ${searchPhraseOperation} '%${phrase}%'
+                    or
+                    u0.usname ${searchPhraseOperation} '%${phrase}%'
+                    or
+                    u0.USER_CODE ${searchPhraseOperation} '%${phrase}%'
+                    or
+                    u0.USPOSITION ${searchPhraseOperation} '%${phrase}%'
+                    or
+                    u0.EMAIL ${searchPhraseOperation} '%${phrase}%'
+                    or
+                    u0.CELLPHONE_NUMBER ${searchPhraseOperation} '%${phrase}%'
+                    or
+                    ORG0.ORG_NAME ${searchPhraseOperation} '%${phrase}%'
+                    )
+                </foreach>
+
+            </if>
+            <if test="searchPhrase == null">
+                <!-- 普通查询 -->
+                <if test="account != null">
+                    <!--登录账号查询-->
+                    and u0.account ${accountOperator} '%'||#{account}||'%'
+                </if>
+                <if test="usname != null">
+                    <!--登录人的真实姓名-->
+                    and u0.usname ${usnameOperator} '%'||#{usname}||'%'
+                </if>
+                <if test="userCode!=null">
+                    <!--登录人工号-->
+                    and u0.user_code ${userCodeOperator} '%'||#{userCode}||'%'
+                </if>
+                <if test="usposition!=null">
+                    <!--登录人职位-->
+                    and u0.usposition ${uspositionOpetator} '%'||#{usposition}||'%'
+                </if>
+                <if test="email!=null">
+                    <!--登录人邮箱-->
+                    and u0.email ${emailOperator} '%'||#{email}||'%'
+                </if>
+                <if test="cellPhoneNumber!=null">
+                    <!--登录人手机号-->
+                    and u0.CELLPHONE_NUMBER ${cellPhoneNumberOperator} '%'||#{cellPhoneNumber}||'%'
+                </if>
+                <if test="orgName!=null">
+                    <!--登录人所属机构-->
+                    and ORG0.ORG_NAME ${orgNameOperator} '%'||#{orgName}||'%'
+                </if>
+            </if>
+        </trim>
+    </sql>
+
+    <select id="findUserByIds" resultMap="BaseResultMap">
+        select * from TS_USER
+        where  del_flag = 0  and  usid in
+        <foreach collection="array" item="id" open="(" separator="," close=")" >
+            #{id}
+        </foreach>
+    </select>
+
+    <update id="updatePassword">
+        update TS_USER set password = #{newPassword} where usid = #{userId}
+    </update>
+
+    <update id="updateUserEO" parameterType="com.adc.da.sys.entity.UserEO">
+        update TS_USER
+        <set>
+            usname = #{usname}
+        </set>
+        where usid = #{usid}
+    </update>
+
+    <select id="getRoleIdListByUserId" resultType="java.lang.String"
+            parameterType="java.lang.String">
+        select role_id
+        from TS_USER_ROLE ur
+        where ur.user_id = #{usid}
+    </select>
+
+    <select id="getOrgIdListByUserId" resultType="java.lang.String"
+            parameterType="java.lang.String">
+        select org_id
+        from TR_USER_ORG uo
+        where uo.user_id = #{usid}
+    </select>
+
+
+    <!--* 判断代理人是否在允许代理期间-->
+    <select id="findAgent" resultType="java.lang.Integer"
+            parameterType="java.lang.String">
+        select count(1)
+        from TP_AGENT ta
+        where create_by_id = #{agentId} and agent_id = #{userId}
+        and TO_CHAR(SYSDATE,'YYYY-MM-DD') between  ta.start_date  and ta.end_date
+    </select>
+
+
+    <insert id="saveUserRole">
+        insert into TR_USER_ROLE(user_id,role_id) values (#{usid}, #{roleId})
+    </insert>
+
+    <!-- 进行头像关联 -->
+    <!-- 2018-08-22 -->
+    <insert id="saveUserAvatar">
+        insert into TR_USER_AVATAR(id, user_id,file_id) values (#{id},#{userID}, #{fileID})
+    </insert>
+    <!--删除头像，仅在上传头像时调用-->
+    <!--date 2018-10-18-->
+    <!--@author Lee Kwanho 李坤澔-->
+    <delete id="deleteUserAvatar" parameterType="java.lang.String">
+        delete from
+        TR_USER_AVATAR
+        where USER_ID = #{userID}
+    </delete>
+
+    <!-- 批量配置用户角色 -->
+    <!--@author Lee Kwanho 李坤澔-->
+    <insert id="saveMultiUserRole" useGeneratedKeys="false">
+        INSERT into TR_USER_ROLE(user_id,role_id)
+        SELECT A.*
+        FROM(
+        <foreach collection="usIds" item="usIds" index="index" separator="UNION ALL">
+            SELECT
+            #{usIds},
+            #{roleId}
+            FROM dual
+        </foreach>
+        )A
+    </insert>
+
+    <!-- 批量配置用户组织 -->
+    <!--@author Lee Kwanho 李坤澔-->
+    <insert id="saveMultiUserOrg" useGeneratedKeys="false">
+        INSERT into TR_USER_ORG(user_id,org_id)
+        SELECT A.*
+        FROM(
+        <foreach collection="usIds" item="usIds" index="index" separator="UNION ALL">
+            SELECT
+            #{usIds},
+            #{orgId}
+            FROM dual
+        </foreach>
+        )A
+    </insert>
+
+    <!--新增用户组织关联-->
+    <insert id="saveUserOrg">
+        insert into TR_USER_ORG(user_id,org_id) values (#{usid}, #{orgId})
+    </insert>
+    <!--删除用户角色关联-->
+    <delete id="deleteUserRoleByUsid" parameterType="java.lang.String">
+        delete from
+        TR_USER_ROLE
+        where user_id = #{usid}
+    </delete>
+    <!--删除用户组织关联-->
+    <delete id="deleteUserOrgByUsid" parameterType="java.lang.String">
+        delete from
+        TR_USER_ORG
+        where user_id = #{usid}
+    </delete>
+    <!--批量逻辑删除用户-->
+    <update id="deleteLogicInBatch" parameterType="java.util.List">
+        update TS_USER
+        set del_flag = 1
+        where usid in
+        <foreach item="usid" collection="list" open="(" separator=","
+                 close=")" index="index">
+            #{usid}
+        </foreach>
+    </update>
+    <!--批量逻辑删除用户角色关联-->
+    <delete id="deleteUserRoleByUsidInBatch" parameterType="java.util.List">
+        delete from TR_USER_ROLE
+        where user_id in
+        <foreach item="usid" collection="list" open="(" separator=","
+                 close=")" index="index">
+            #{usid}
+        </foreach>
+    </delete>
+
+    <!-- 删除用户角色关联,指定角色类型 -->
+    <!--@author Lee KwanHo 李坤澔-->
+    <delete id="deleteMultiUserRoleByRoleId">
+        delete from TR_USER_ROLE
+        where user_id in
+        <foreach item="usIds" collection="usIds" open="(" separator=","
+                 close=")" index="index">
+            #{usIds}
+        </foreach>
+        and
+        role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteRelationByUserId" parameterType="java.lang.String">
+        delete from TR_USER_ORG where user_id = #{value}
+    </delete>
+
+    <!-- 删除用户组织关联,指定组织类型  -->
+    <!--@author Lee KwanHo 李坤澔-->
+    <delete id="deleteMultiUserOrgByOrgId">
+        delete from TR_USER_ORG
+        where user_id in
+        <foreach item="usIds" collection="usIds" open="(" separator=","
+                 close=")" index="index">
+            #{usIds}
+        </foreach>
+        and
+        org_id = #{orgId}
+    </delete>
+    <!--批量逻辑删除用户组织关联-->
+    <delete id="deleteUserOrgByUsidInBatch" parameterType="java.util.List">
+        delete from TR_USER_ORG
+        where user_id in
+        <foreach item="usid" collection="list" open="(" separator=","
+                 close=")" index="index">
+            #{usid}
+        </foreach>
+    </delete>
+
+    <!--用账户获取用户信息-->
+    <!-- 根据account获取UserEO -->
+    <select id="getUserEOByAccount" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_USER where account = #{account}
+    </select>
+
+    <!-- 根据用户真实姓名获取UserEO -->
+    <select id="getUserByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_USER where USNAME = #{name}
+        AND DEL_FLAG = 0
+    </select>
+
+    <!-- 根据用户ID查询用户 -->
+    <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_USER where usid = #{usid}
+        AND DEL_FLAG = 0
+    </select>
+
+    <!-- 根据account获取未逻辑删除的UserEO -->
+    <select id="getUserEOByAccountNotDeleted" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_USER where account = #{account} and del_flag != 1
+    </select>
+
+
+    <!--获取用户角色信息-->
+    <select id="getUserWithRoles" resultMap="UserRoleMap" parameterType="java.lang.String">
+        select
+        <include refid="User_Role_List"/>,
+        	ta.ATTACHMENT_NAME AS AVATAR_NAME,
+			ta1.ATTACHMENT_NAME AS HONOR_NAME,
+			ta2.ATTACHMENT_NAME AS SEAL_NAME
+        from TS_USER u
+        left join TR_USER_ROLE ur on u.usid = ur.user_id
+        left join TS_ROLE r on ur.role_id = r.id
+        left join TR_USER_ORG UORG on u.usid = UORG.user_id
+        left join TS_ORG ORG on UORG.org_id = ORG.id
+        LEFT JOIN TR_USER_AVATAR on u.usid = TR_USER_AVATAR.USER_ID
+        LEFT JOIN TS_ATTACHMENT ta ON TR_USER_AVATAR.FILE_ID = ta.ID
+        LEFT JOIN TR_USER_HONOR on u.usid = TR_USER_HONOR.USER_ID
+        LEFT JOIN TS_ATTACHMENT ta1 ON TR_USER_HONOR.FILE_ID = ta1.ID
+        LEFT JOIN TR_USER_SEAL on u.usid = TR_USER_SEAL.USER_ID
+        LEFT JOIN TS_ATTACHMENT ta2 ON TR_USER_SEAL.FILE_ID = ta2.ID
+        where u.usid = #{id}
+    </select>
+    <!--获取用户基本信息-->
+    <select id="get" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_USER u where u.usid = #{id}
+    </select>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.sys.entity.UserEO">
+        insert into TS_USER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="usid != null">usid,</if>
+            <if test="account != null">account,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="password != null">password,</if>
+            <if test="usname != null">usname,</if>
+            <if test="userCode != null">user_code,</if>
+            <if test="officePhone != null">office_phone,</if>
+            <if test="cellPhoneNumber != null">CELLPHONE_NUMBER,</if>
+            <if test="homeAddress != null">HOME_ADDRESS,</if>
+            <if test="postalCode != null">POSTAL_CODE,</if>
+            <if test="email != null">EMAIL,</if>
+            <if test="contactAddress != null">CONTACT_ADDRESS,</if>
+            <if test="createTime != null">CREATE_TIME,</if>
+            <if test="updateTime != null">UPDATE_TIME,</if>
+            <if test="userState != null">USER_STATE,</if>
+            <if test="extInfo != null">ext_info,</if>
+            <if test="extInfo2 != null">extInfo2,</if>
+            <if test="extInfo3 != null">extInfo3,</if>
+            <if test="extInfo4 != null">extInfo4,</if>
+            <if test="extInfo5 != null">extInfo5,</if>
+            <if test="usposition != null">usposition,</if>
+            <if test="ussigndomain != null">ussigndomain,</if>
+            <if test="seal != null">seal,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="usid != null">#{usid},</if>
+            <if test="account != null">#{account},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="password != null">#{password},</if>
+            <if test="usname != null">#{usname},</if>
+            <if test="userCode != null">#{userCode},</if>
+            <if test="officePhone != null">#{officePhone},</if>
+            <if test="cellPhoneNumber != null">#{cellPhoneNumber},</if>
+            <if test="homeAddress != null">#{homeAddress},</if>
+            <if test="postalCode != null">#{postalCode},</if>
+            <if test="email != null">#{email},</if>
+            <if test="contactAddress != null">#{contactAddress},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="userState != null">#{userState},</if>
+            <if test="extInfo != null">#{extInfo},</if>
+            <if test="extInfo2 != null">#{extInfo2},</if>
+            <if test="extInfo3 != null">#{extInfo3},</if>
+            <if test="extInfo4 != null">#{extInfo4},</if>
+            <if test="extInfo5 != null">#{extInfo5},</if>
+            <if test="usposition != null">#{usposition},</if>
+            <if test="ussigndomain != null">#{ussigndomain},</if>
+            <if test="seal != null">#{seal},</if>
+        </trim>
+
+    </insert>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.sys.entity.UserEO">
+        update TS_USER
+        <set>
+            <if test="usname != null">
+                usname = #{usname},
+            </if>
+            <if test="userCode != null">
+                USER_CODE = #{userCode},
+            </if>
+            <if test="officePhone != null">
+                OFFICE_PHONE = #{officePhone},
+            </if>
+            <if test="cellPhoneNumber != null">
+                CELLPHONE_NUMBER = #{cellPhoneNumber},
+            </if>
+            <if test="homeAddress != null">
+                HOME_ADDRESS = #{homeAddress},
+            </if>
+            <if test="postalCode != null">
+                POSTAL_CODE = #{postalCode},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="contactAddress != null">
+                CONTACT_ADDRESS = #{contactAddress},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime},
+            </if>
+            <if test="userState != null">
+                USER_STATE = #{userState},
+            </if>
+            <if test="extInfo != null">
+                EXT_INFO=#{extInfo},
+            </if>
+            <if test="extInfo2 != null">
+                extInfo2 = #{extInfo2},
+            </if>
+            <if test="extInfo3 != null">
+                extInfo3 = #{extInfo3},
+            </if>
+            <if test="extInfo4 != null">
+                extInfo4 = #{extInfo4},
+            </if>
+            <if test="extInfo5 != null">
+                extInfo5 = #{extInfo5},
+            </if>
+            <if test="usposition!=null">
+                usposition = #{usposition},
+            </if>
+            <if test="ussigndomain!=null">
+                ussigndomain = #{ussigndomain},
+            </if>
+            <if test="delFlag!=null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="seal!=null">
+                seal = #{seal},
+            </if>
+        </set>
+        where usid = #{usid}
+    </update>
+
+    <!-- 根据id查询 TS_USER -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_USER
+        where usid = #{value} and del_flag != 1
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from TS_USER
+        where usid = #{value}
+    </delete>
+
+    <!-- TS_USER 列表总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select
+        count(DISTINCT TU.usid )
+        FROM
+        TS_USER tu
+        LEFT JOIN TR_USER_ROLE tur ON TUR.USER_ID = TU.usid
+        LEFT JOIN TS_ROLE tr ON tr. ID = tur.role_id
+        LEFT JOIN TR_USER_ORG tuo ON tuo.user_id = tu.usid
+        LEFT JOIN TS_ORG to1 ON TO1. ID = tuo.org_id
+        <include refid="New_Base_Where_Clause"/>
+        and tu.del_flag != 1
+    </select>
+    <!-- TS_USER 列表总数 -->
+    <select id="queryByCountByRole" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select
+        count(DISTINCT TU.usid )
+        FROM
+        TS_USER tu
+        LEFT JOIN TR_USER_ROLE tur ON TUR.USER_ID = TU.usid
+        LEFT JOIN TS_ROLE tr ON tr. ID = tur.role_id
+        LEFT JOIN TR_USER_ORG tuo ON tuo.user_id = tu.usid
+        LEFT JOIN TS_ORG to1 ON TO1. ID = tuo.org_id
+        <include refid="New_Base_Where_Clause_Role"/>
+        and tu.del_flag != 1
+    </select>
+    <!-- 查询TS_USER列表 -->
+    <select id="queryByPage" resultMap="Baseuserpage" parameterType="com.adc.da.base.page.BasePage">
+        select
+        usid, account,usname,userCode,officePhone,cellPhoneNumber,homeAddress,email,usposition,
+        extInfo5,orgname,rolename,roleCode
+        from(
+        select tmp_tb.* , rownum rn
+        from(select tu.usid usid,
+        tu. ACCOUNT account,
+        tu.usname usname,
+        tu.user_code userCode,
+        tu.office_phone officePhone,
+        tu.CELLPHONE_NUMBER cellPhoneNumber,
+        tu.HOME_ADDRESS homeAddress,
+        tu.EMAIL email,
+        tu.USPOSITION usposition,
+        tu.extInfo5 extInfo5,
+        to1.org_name orgname,
+        wm_concat (tr.name) rolename,
+        wm_concat (tr.role_code) roleCode
+        FROM
+        TS_USER tu
+        LEFT JOIN TR_USER_ROLE tur ON TUR.USER_ID = TU.usid
+        LEFT JOIN TS_ROLE tr ON tr. ID = tur.role_id
+        LEFT JOIN TR_USER_ORG tuo ON tuo.user_id = tu.usid
+        LEFT JOIN TS_ORG to1 ON TO1. ID = tuo.org_id
+        <include refid="New_Base_Where_Clause"/>
+        and tu.del_flag = 0
+        GROUP BY
+        tu.usid,
+        tu. ACCOUNT,
+        tu.usname,
+        tu.user_code,
+        tu.office_phone,
+        tu.CELLPHONE_NUMBER,
+        tu.HOME_ADDRESS,
+        tu.EMAIL,
+        tu.USPOSITION,
+        tu.extInfo5,
+        to1.org_name
+        ) tmp_tb where rownum &lt;= ${pager.endIndex}
+        ) u
+        where rn &gt;= ${pager.startIndex}
+    </select>
+    <!-- 查询TS_USER列表 -->
+    <select id="queryByPageByRole" resultMap="Baseuserpage" parameterType="com.adc.da.base.page.BasePage">
+        select
+        usid, account,usname,userCode,officePhone,cellPhoneNumber,homeAddress,email,usposition,
+        extInfo5,orgname,rolename,roleCode
+        from(
+        select tmp_tb.* , rownum rn
+        from(select tu.usid usid,
+        tu. ACCOUNT account,
+        tu.usname usname,
+        tu.user_code userCode,
+        tu.office_phone officePhone,
+        tu.CELLPHONE_NUMBER cellPhoneNumber,
+        tu.HOME_ADDRESS homeAddress,
+        tu.EMAIL email,
+        tu.USPOSITION usposition,
+        tu.extInfo5 extInfo5,
+        to1.org_name orgname,
+        wm_concat (tr.name) rolename,
+        wm_concat (tr.role_code) roleCode
+        FROM
+        TS_USER tu
+        LEFT JOIN TR_USER_ROLE tur ON TUR.USER_ID = TU.usid
+        LEFT JOIN TS_ROLE tr ON tr. ID = tur.role_id
+        LEFT JOIN TR_USER_ORG tuo ON tuo.user_id = tu.usid
+        LEFT JOIN TS_ORG to1 ON TO1. ID = tuo.org_id
+        <include refid="New_Base_Where_Clause_Role"/>
+        and tu.del_flag != 1
+        GROUP BY
+        tu.usid,
+        tu. ACCOUNT,
+        tu.usname,
+        tu.user_code,
+        tu.office_phone,
+        tu.CELLPHONE_NUMBER,
+        tu.HOME_ADDRESS,
+        tu.EMAIL,
+        tu.USPOSITION,
+        tu.extInfo5,
+        to1.org_name
+        ) tmp_tb where rownum &lt;= ${pager.endIndex}
+        ) u
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <!--@author Lee Kwanho 李坤澔-->
+    <!--date 2019-01-18-->
+    <!--mysql queryByPage-->
+    <select id="queryByPage" resultMap="UserRoleMap" parameterType="com.adc.da.base.page.BasePage" databaseId="mysql">
+        select
+        <include refid="User_Role_List"/>
+        from
+        (select distinct u0.* from TS_USER u0
+        left join TR_USER_ROLE ur0 on u0.usid = ur0.user_id
+        left join TS_ROLE r0 on ur0.role_id = r0.id
+        left join TR_USER_ORG UORG0 on u0.usid = UORG0.user_id
+        left join TS_ORG ORG0 on UORG0.org_id = ORG0.id
+        <include refid="Base_Where_Clause"/>
+        and u0.del_flag != 1
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        limit ${pager.startIndex -1}, ${pager.pageSize}
+        ) u
+        left join TR_USER_ROLE ur on u.usid = ur.user_id
+        left join TS_ROLE r on ur.role_id = r.id
+        left join TR_USER_ORG UORG on u.usid = UORG.user_id
+        left join TS_ORG ORG on UORG.org_id = ORG.id
+        LEFT JOIN TR_USER_AVATAR on u.usid = TR_USER_AVATAR.USER_ID
+        LEFT JOIN TR_USER_HONOR on u.usid = TR_USER_HONOR.USER_ID
+        LEFT JOIN TR_USER_SEAL on u.usid = TR_USER_SEAL.USER_ID
+    </select>
+
+    <!--存在问题需要调整-->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_USER
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        and TS_USER.del_flag = 0
+    </select>
+
+    <!--进行用户资质关联 -->
+    <delete id="deleteUserHonor" parameterType="java.lang.String">
+        delete from TR_USER_HONOR where USER_ID = #{userId}
+    </delete>
+    <insert id="saveUserHonor">
+        insert into TR_USER_HONOR
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="id != null">ID,</if>
+        <if test="userId != null">USER_ID,</if>
+        <if test="fileId != null">FILE_ID,</if>
+        <if test="description != null">DESCRIPTION</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="fileId != null">#{fileId},</if>
+            <if test="description != null">#{description}</if>
+        </trim>
+    </insert>
+    <!--进行用户印章关联-->
+    <delete id="deleteUserSeal" parameterType="java.lang.String">
+        delete from TR_USER_SEAL where USER_ID = #{userId}
+    </delete>
+    <insert id="saveUserSeal">
+        insert into TR_USER_SEAL(ID,USER_ID,FILE_ID) values (#{id},#{userId},#{fileId})
+    </insert>
+
+    <update id="lockUser">
+        update TS_USER set extInfo5 = #{lockStatus} where USID = #{userId}
+    </update>
+    <!--根据角色code获取用户信息-->
+    <select id="getUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select TS_USER.usid,TS_USER.account,TS_USER.usname,TS_USER.user_code,TS_USER.office_phone,TS_USER.CELLPHONE_NUMBER,TS_USER.HOME_ADDRESS,TS_USER.POSTAL_CODE,TS_USER.EMAIL
+        FROM TS_ROLE
+        INNER JOIN TR_USER_ROLE UR
+        ON TS_ROLE.ID = UR.ROLE_ID
+        INNER JOIN TS_USER
+        ON UR.USER_ID = TS_USER.USID
+        WHERE TS_ROLE.ROLE_CODE = #{code,jdbcType=VARCHAR}
+        AND TS_USER.del_flag = 0
+        AND TS_ROLE.del_flag = 0
+    </select>
+
+    <!--根据角色code获取用户信息-->
+    <select id="getOrgIdByUserId" resultType="java.lang.String"
+            parameterType="java.lang.String">
+        select org_id
+        from TR_USER_ORG uo
+        where uo.user_id = #{usid}
+    </select>
+
+    <select id="findUserByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from TS_user where account = #{value}
+    </select>
+    
+    <select id="queryByRoleAndOrg" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from ts_user
+		  where del_flag = 0
+		  and usid in (select user_id from tr_user_role where role_id = #{0})
+		  and usid in (select user_id from tr_user_org where org_id = #{1})
+    </select>
+
+</mapper>

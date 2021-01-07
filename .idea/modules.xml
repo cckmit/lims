@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/lims.iml" filepath="$PROJECT_DIR$/lims.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-basedata/lims-basedata.iml" filepath="$PROJECT_DIR$/lims-basedata/lims-basedata.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-cost/lims-cost.iml" filepath="$PROJECT_DIR$/lims-cost/lims-cost.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-ev-trial/lims-ev-trial.iml" filepath="$PROJECT_DIR$/lims-ev-trial/lims-ev-trial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-login/lims-login.iml" filepath="$PROJECT_DIR$/lims-login/lims-login.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-main/lims-main.iml" filepath="$PROJECT_DIR$/lims-main/lims-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-pc-trial/lims-pc-trial.iml" filepath="$PROJECT_DIR$/lims-pc-trial/lims-pc-trial.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-personspace/lims-personspace.iml" filepath="$PROJECT_DIR$/lims-personspace/lims-personspace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-questionnaire/lims-questionnaire.iml" filepath="$PROJECT_DIR$/lims-questionnaire/lims-questionnaire.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-report/lims-report.iml" filepath="$PROJECT_DIR$/lims-report/lims-report.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-resource/lims-resource.iml" filepath="$PROJECT_DIR$/lims-resource/lims-resource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-sample/lims-sample.iml" filepath="$PROJECT_DIR$/lims-sample/lims-sample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-supplier/lims-supplier.iml" filepath="$PROJECT_DIR$/lims-supplier/lims-supplier.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lims-sys/lims-sys.iml" filepath="$PROJECT_DIR$/lims-sys/lims-sys.iml" />
+    </modules>
+  </component>
+</project>

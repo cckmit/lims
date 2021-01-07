@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.dao.TopicsEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.entity.TopicsEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="TOPICS_NAME" jdbcType="VARCHAR" property="topicsName" />
+    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+    <result column="PUBLISH_USER_COUNT" jdbcType="VARCHAR" property="publishUserCount" />
+    <result column="TOPICS_STATUS" jdbcType="VARCHAR" property="topicsStatus" />
+    <result column="ORG_IDS" jdbcType="VARCHAR" property="orgIds" />
+    
+  </resultMap>
+  
+  
+  <resultMap id="SearchResultMap" type="com.adc.da.entity.TopicsEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="TOPICS_NAME" jdbcType="VARCHAR" property="topicsName" />
+    <result column="ORG_ID" jdbcType="VARCHAR" property="orgId" />
+    <result column="ORG_IDS" jdbcType="VARCHAR" property="orgIds" />
+    <result column="ORG_NAME" jdbcType="VARCHAR" property="orgName" />
+    <result column="PUBLISH_USER_COUNT" jdbcType="VARCHAR" property="publishUserCount" />
+    <result column="TOPICS_STATUS" jdbcType="VARCHAR" property="topicsStatus" />
+    <collection property="questionUserList" ofType="com.adc.da.entity.QuestionUserEO">
+	    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+	    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+  	</collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, DEL_FLAG, TOPICS_NAME, ORG_ID, 
+    ORG_NAME, PUBLISH_USER_COUNT, TOPICS_STATUS, ORG_IDS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from QM_TOPICS
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update  QM_TOPICS
+    set DEL_FLAG = 1
+    WHERE ID = #{ID,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.entity.TopicsEO">
+    insert into QM_TOPICS (
+    	ID, 
+    	CREATE_BY, 
+    	CREATE_TIME, 
+      	UPDATE_BY, 
+      	UPDATE_TIME, 
+      	DEL_FLAG, 
+      	TOPICS_NAME, 
+      	ORG_ID, 
+      	ORG_NAME, 
+      	PUBLISH_USER_COUNT,
+      	TOPICS_STATUS,
+      	ORG_IDS
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{createBy,jdbcType=VARCHAR}, 
+    	#{createTime,jdbcType=VARCHAR}, 
+      	#{updateBy,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{delFlag,jdbcType=VARCHAR}, 
+      	#{topicsName,jdbcType=VARCHAR}, 
+      	#{orgId,jdbcType=VARCHAR}, 
+      	#{orgName,jdbcType=VARCHAR}, 
+      	#{publishUserCount,jdbcType=VARCHAR},
+      	#{topicsStatus,jdbcType=VARCHAR},
+      	#{orgIds,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.entity.TopicsEO">
+    insert into QM_TOPICS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="topicsName != null">
+        TOPICS_NAME,
+      </if>
+      <if test="orgId != null">
+        ORG_ID,
+      </if>
+      <if test="orgName != null">
+        ORG_NAME,
+      </if>
+      <if test="publishUserCount != null">
+        PUBLISH_USER_COUNT,
+      </if>
+      <if test="topicsStatus != null">
+        TOPICS_STATUS,
+      </if>
+      <if test="orgIds != null">
+        ORG_IDS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsName != null">
+        #{topicsName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishUserCount != null">
+        #{publishUserCount,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsStatus != null">
+        #{topicsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIds != null">
+        #{orgIds,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.entity.TopicsEO">
+    update QM_TOPICS
+    <set>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsName != null">
+        TOPICS_NAME = #{topicsName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        ORG_ID = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="publishUserCount != null">
+        PUBLISH_USER_COUNT = #{publishUserCount,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsStatus != null">
+        TOPICS_STATUS = #{topicsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIds != null">
+        ORG_IDS = #{orgIds,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.entity.TopicsEO">
+    update QM_TOPICS
+    set CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      TOPICS_NAME = #{topicsName,jdbcType=VARCHAR},
+      ORG_ID = #{orgId,jdbcType=VARCHAR},
+      ORG_NAME = #{orgName,jdbcType=VARCHAR},
+      PUBLISH_USER_COUNT = #{publishUserCount,jdbcType=VARCHAR},
+      TOPICS_STATUS = #{topicsStatus,jdbcType=VARCHAR},
+      ORG_IDS = #{orgIds,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+   <!-- 列表总数-->
+   <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT count(1) FROM QM_TOPICS       
+       <include refid="Base_Where_Clause"/>
+   </select>
+  
+   <!-- 查询条件 -->
+   <sql id="Base_Where_Clause">
+       WHERE QM_TOPICS.DEL_FLAG = 0
+       <choose>
+           <when test="searchPhrase != null">
+               <foreach collection="searchPhrase" item="search">
+                   AND (
+                        QM_TOPICS.TOPICS_NAME LIKE '%${search}%'
+	                   OR ORG_NAME LIKE '%${search}%'
+                   )
+               </foreach>
+           </when>
+           <otherwise>
+               <if test="topicsName != null and topicsName != ''">
+                   AND QM_TOPICS.TOPICS_NAME LIKE '%${topicsName}%'
+               </if>
+               <if test="orgName != null and orgName != ''">
+                   AND ORG_NAME LIKE '%${orgName}%'
+               </if>
+               <if test="orgId != null and orgId != ''">
+                   AND ORG_ID = #{orgId}
+               </if>
+               <if test="orgIds != null and orgIds != ''">
+                   AND ORG_IDS LIKE '%${orgIds}%'
+               </if>
+               <if test="topicsStatus != null and topicsStatus != ''">
+                   AND QM_TOPICS.TOPICS_STATUS = #{topicsStatus}
+               </if>
+               <if test="createBy != null and createBy != ''">
+                   AND CREATE_BY = #{createBy}
+               </if>
+               
+           </otherwise>
+       </choose>
+   </sql>
+   <!-- 分页查询列表 -->
+   <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+       	    QM_TOPICS.ID,
+			QM_TOPICS.CREATE_BY,
+			QM_TOPICS.CREATE_TIME,
+			QM_TOPICS.UPDATE_BY,
+			QM_TOPICS.UPDATE_TIME,
+			QM_TOPICS.DEL_FLAG,
+			QM_TOPICS.TOPICS_NAME,
+			ORG_ID,
+			ORG_IDS,
+			ORG_NAME,
+			PUBLISH_USER_COUNT,
+			TOPICS_STATUS,
+			QM_QUESTION_USER.USER_ID,
+			QM_QUESTION_USER.USER_NAME
+       	 FROM QM_TOPICS
+       	 LEFT JOIN QM_QUESTION_USER ON QM_TOPICS.ID = QM_QUESTION_USER.TOPICS_ID
+      	 <include refid="Base_Where_Clause"/>
+       ORDER BY QM_TOPICS.UPDATE_TIME DESC
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+    <!-- 管理分页查询列表 -->
+    <select id="manageQueryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        QM_TOPICS.ID,
+        QM_TOPICS.CREATE_BY,
+        QM_TOPICS.CREATE_TIME,
+        QM_TOPICS.UPDATE_BY,
+        QM_TOPICS.UPDATE_TIME,
+        QM_TOPICS.DEL_FLAG,
+        QM_TOPICS.TOPICS_NAME,
+        ORG_ID,
+        ORG_IDS,
+        ORG_NAME,
+        PUBLISH_USER_COUNT,
+        TOPICS_STATUS
+        FROM QM_TOPICS
+        <include refid="Base_Where_Clause"/>
+        ORDER BY QM_TOPICS.UPDATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+  
+</mapper>

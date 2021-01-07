@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.equipment.dao.EquipmentBorrowRecordEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.equipment.entity.EquipmentBorrowRecordEO" >
+    <result column="if_lend" property="ifLend" />
+    <result column="process_state" property="processState" />
+    <result column="expect_return_time" property="expectReturnTime" />
+    <result column="brw_isbrw" property="brwIsbrw" />
+    <result column="brw_return_time" property="brwReturnTime" />
+    <result column="brw_borrower_time" property="brwBorrowerTime" />
+    <result column="brw_borrower_name" property="brwBorrowerName" />
+    <result column="brw_borrower_id" property="brwBorrowerId" />
+    <result column="eq_id" property="eqId" />
+    <result column="id" property="id" />
+  </resultMap>
+
+  <!-- RES_EQUIPMENT_BORROW_RECORD table all fields -->
+  <sql id="Base_Column_List" >
+     expect_return_time, brw_isbrw, brw_return_time, brw_borrower_time, brw_borrower_name, brw_borrower_id, eq_id, id, process_state, if_lend
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+       <if test="ifLend != null" >
+          and if_lend ${ifLendOperator} #{ifLend}
+       </if>
+      <if test="processState != null" >
+        and process_state ${processStateOperator} #{processState}
+      </if>
+      <if test="expectReturnTime != null" >
+        and expect_return_time ${expectReturnTimeOperator} #{expectReturnTime}
+      </if>
+      <if test="brwIsbrw != null" >
+        and brw_isbrw ${brwIsbrwOperator} #{brwIsbrw}
+      </if>
+      <if test="brwReturnTime != null" >
+        and brw_return_time ${brwReturnTimeOperator} #{brwReturnTime}
+      </if>
+      <if test="brwBorrowerTime!= null" >
+        and brw_borrower_time ${brwBorrowerTimeOperator} #{brwBorrowerTime}
+      </if>
+      <if test="brwBorrowerName != null" >
+        and brw_borrower_name ${brwBorrowerNameOperator} #{brwBorrowerName}
+      </if>
+      <if test="brwBorrowerId != null" >
+        and brw_borrower_id ${brwBorrowerIdOperator} #{brwBorrowerId}
+      </if>
+      <if test="eqId != null" >
+        and eq_id ${eqIdOperator} #{eqId}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.equipment.entity.EquipmentBorrowRecordEO" >
+    insert into RES_EQUIPMENT_BORROW_RECORD(<include refid="Base_Column_List" />)
+    values (#{ifLend, jdbcType=VARCHAR},#{processState, jdbcType=VARCHAR},#{expectReturnTime, jdbcType=VARCHAR},#{brwIsbrw, jdbcType=VARCHAR}, #{brwReturnTime, jdbcType=VARCHAR}, #{brwBorrowerTime
+, jdbcType=VARCHAR}, #{brwBorrowerName
+, jdbcType=VARCHAR}, #{brwBorrowerId, jdbcType=VARCHAR}, #{eqId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR})
+  </insert>
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.equipment.entity.EquipmentBorrowRecordEO" >
+        insert into RES_EQUIPMENT_BORROW_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="ifLend != null" >if_lend,</if>
+                <if test="processState != null" >process_state,</if>
+                <if test="expectReturnTime != null" >expect_return_time,</if>
+                <if test="brwIsbrw != null" >brw_isbrw,</if>
+                <if test="brwReturnTime != null" >brw_return_time,</if>
+                <if test="brwBorrowerTime!= null" >brw_borrower_time,</if>
+                <if test="brwBorrowerName!= null" >brw_borrower_name,</if>
+                <if test="brwBorrowerId != null" >brw_borrower_id,</if>
+                <if test="eqId != null" >eq_id,</if>
+                <if test="id != null" >id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="ifLend != null" >#{ifLend, jdbcType=VARCHAR},</if>
+                <if test="processState != null" >#{processState, jdbcType=VARCHAR},</if>
+                <if test="expectReturnTime != null" >#{expectReturnTime, jdbcType=VARCHAR},</if>
+                <if test="brwIsbrw != null" >#{brwIsbrw, jdbcType=VARCHAR},</if>
+                <if test="brwReturnTime != null" >#{brwReturnTime, jdbcType=VARCHAR},</if>
+                <if test="brwBorrowerTime!= null" >#{brwBorrowerTime, jdbcType=VARCHAR},</if>
+                <if test="brwBorrowerName!= null" >#{brwBorrowerName, jdbcType=VARCHAR},</if>
+                <if test="brwBorrowerId != null" >#{brwBorrowerId, jdbcType=VARCHAR},</if>
+                <if test="eqId != null" >#{eqId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+    <!--通过传入的对象来更新对应的记录-->
+    <update id="updateByBorrowEO" parameterType="com.adc.da.equipment.entity.EquipmentBorrowRecordEO">
+        update RES_EQUIPMENT_BORROW_RECORD
+        <set >
+            <if test="eqId != null" >
+                EQ_ID = #{eqId},
+            </if>
+            <if test="brwBorrowerId != null" >
+                BRW_BORROWER_ID = #{brwBorrowerId},
+            </if>
+            <if test="brwBorrowerName != null" >
+                BRW_BORROWER_NAME = #{brwBorrowerName},
+            </if>
+            <if test="brwBorrowerTime != null" >
+                BRW_BORROWER_TIME = #{brwBorrowerTime},
+            </if>
+            <if test="brwReturnTime != null" >
+                BRW_RETURN_TIME = #{brwReturnTime},
+            </if>
+            <if test="brwIsbrw != null" >
+                BRW_ISBRW = #{brwIsbrw},
+            </if>
+            <if test="expectReturnTime != null" >
+                EXPECT_RETURN_TIME = #{expectReturnTime},
+            </if>
+            <if test="processState != null" >
+                PROCESS_STATE = #{processState},
+            </if>
+            <if test="ifLend != null" >
+                IF_LEND = #{ifLend},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+  <!-- RES_EQUIPMENT_BORROW_RECORD 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.equipment.page.EquipmentBorrowRecordEOPage">
+    select count(1) from RES_EQUIPMENT_BORROW_RECORD
+    where RES_EQUIPMENT_BORROW_RECORD.EQ_ID = #{eqId,jdbcType=VARCHAR}
+    AND BRW_ISBRW = '0'
+  </select>
+
+    <!--通过设备ID，查出借用表中借用状态为借出的记录条数-->
+    <select id="queryCountForEqBorrow" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(1) from RES_EQUIPMENT_BORROW_RECORD
+        where IF_LEND = '0'
+        AND BRW_ISBRW = '0'
+        AND EQ_ID=#{0,jdbcType=VARCHAR}
+    </select>
+    <!--查出对应的借出记录-->
+    <select id="selectBorrowRecordByEqId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+         from RES_EQUIPMENT_BORROW_RECORD record
+         where record.EQ_ID=#{0,jdbcType=VARCHAR}
+         AND record.BRW_ISBRW='0'
+         AND record.IF_LEND = '0'
+    </select>
+  <!-- 查询RES_EQUIPMENT_BORROW_RECORD列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.equipment.page.EquipmentBorrowRecordEOPage">
+	select *
+    from
+	(select tmp_tb.* , rownum rn from
+      (select <include refid="Base_Column_List" />
+      from RES_EQUIPMENT_BORROW_RECORD
+      where RES_EQUIPMENT_BORROW_RECORD.EQ_ID=#{eqId,jdbcType=VARCHAR}
+      AND RES_EQUIPMENT_BORROW_RECORD.BRW_ISBRW='0'
+      ORDER BY BRW_BORROWER_TIME desc
+      ) tmp_tb
+      WHERE rownum &lt;= ${pager.endIndex})
+      WHERE rn &gt;= ${pager.startIndex}
+  </select>
+  <!--根据设备查询当前处于流程中的借用数据id-->
+    <select id="getBorrowId" parameterType="java.lang.String" resultType="java.lang.String">
+        select RES_EQUIPMENT_BORROW_RECORD.ID
+        from RES_EQUIPMENT_BORROW_RECORD
+        where RES_EQUIPMENT_BORROW_RECORD.EQ_ID = #{eqId,jdbcType=VARCHAR}
+        and RES_EQUIPMENT_BORROW_RECORD.PROCESS_STATE = '0'
+    </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from RES_EQUIPMENT_BORROW_RECORD
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+    <!-- 根据id查询 借用EO -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List" />
+        from RES_EQUIPMENT_BORROW_RECORD
+        where id = #{value}
+    </select>
+</mapper>

@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_budget_use.dao.PcBudgetUseEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_budget_use.entity.PcBudgetUseEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="trial_id" property="trialId"/>
+        <result column="trial_code" property="trialCode"/>
+        <result column="trial_project_name" property="trialProjectName"/>
+        <result column="bu_code" property="code"/>
+        <result column="budget_total" property="budgetTotal"/>
+        <result column="current_wait_userid" property="currentWaitUserId"/>
+        <result column="current_wait_username" property="currentWaitUserName"/>
+        <result column="status" property="status"/>
+        <result column="pc_cv" property="pvOrCv"/>
+        <result property="trialStartTime" column="trial_start_time"/>
+        <result property="trialEndTime" column="trial_end_time"/>
+        <result property="trialLocation" column="trial_location"/>
+        <result column="attachment_id" property="attachmentId"/>
+        <result column="attachment_name" property="attachmentName"/>
+        <result column="TASK_NUMBER" property="taskNumber"/>
+        <result column="TASK_OR_PLAN" property="taskOrPlan" />
+        <result column="TOTAL" property="total" />
+        <result column="SUP_NAME" property="supName" />
+        <result column="BU_PROJECT_NAME" property="buProjectName" />
+        <result column="SUP_ID" property="supId" />
+    </resultMap>
+
+    <!-- PC_BUDGET_USE table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            trial_id,
+            trial_code,
+            trial_project_name,
+            bu_code,
+            budget_total,
+            current_wait_userid,
+            current_wait_username,
+            status,
+            pc_cv,
+            trial_start_time,
+            TRIAL_END_TIME,
+            TRIAL_LOCATION,
+            TASK_NUMBER,
+            TASK_OR_PLAN,
+            TOTAL,
+            SUP_NAME,
+            BU_PROJECT_NAME,
+            SUP_ID
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where del_flag = 0
+        <if test="trialId != null">
+                    and trial_id = #{trialId}
+        </if>
+   		<if test="taskNumber != null">
+            and task_number = #{taskNumber}
+        </if>
+        <if test="supId != null">
+            and SUP_ID = #{supId}
+        </if>
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    AND (trial_code LIKE '%'||#{keyWord}||'%' OR bu_code LIKE '%'||#{keyWord}||'%' OR
+                    budget_total LIKE '%'||#{keyWord}||'%' OR trial_location LIKE '%'||#{keyWord}||'%'
+                    OR trial_start_time LIKE '%'||#{keyWord}||'%' OR trial_end_time LIKE '%'||#{keyWord}||'%')
+                </foreach>
+            </when>
+            <otherwise>
+            	<if test="taskOrPlan != null">
+                    and TASK_OR_PLAN = #{taskOrPlan}
+                </if>
+                <if test="trialCode != null">
+                    and trial_code like '%'||#{trialCode}||'%'
+                </if>
+                <if test="code != null">
+                    and bu_code like '%'||#{code}||'%'
+                </if>
+                <if test="budgetTotal != null">
+                    and budget_total like '%'||#{budgetTotal}||'%'
+                </if>
+                <if test="trialLocation != null">
+                    and trial_location like '%'||#{trialLocation}||'%'
+                </if>
+                <if test="trialStartTimeStart != null">
+                    and trial_start_time >= #{trialStartTimeStart}
+                </if>
+                <if test="trialStartTimeEnd != null">
+                    and trial_start_time <![CDATA[<=]]> #{trialStartTimeEnd}
+                </if>
+                <if test="trialEndTimeStart != null">
+                    and trial_end_time >= #{trialEndTimeStart}
+                </if>
+                <if test="trialEndTimeEnd != null">
+                    and trial_end_time <![CDATA[<=]]> #{trialEndTimeEnd}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_budget_use.entity.PcBudgetUseEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_BUDGET_USE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PC_BUDGET_USE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="trialId != null">trial_id,</if>
+            <if test="trialCode != null">trial_code,</if>
+            <if test="trialProjectName != null">trial_project_name,</if>
+            <if test="code != null">bu_code,</if>
+            <if test="budgetTotal != null">budget_total,</if>
+            <if test="currentWaitUserId != null">current_wait_userid,</if>
+            <if test="currentWaitUserName != null">current_wait_username,</if>
+            <if test="status != null">status,</if>
+            <if test="pvOrCv != null">pc_cv,</if>
+            <if test="trialStartTime != null">TRIAL_START_TIME,</if>
+            <if test="trialEndTime != null">TRIAL_END_TIME,</if>
+            <if test="trialLocation != null">TRIAL_LOCATION,</if>
+            <if test="attachmentId != null">attachment_id,</if>
+            <if test="attachmentName != null">attachment_name,</if>
+            <if test="taskNumber != null">task_number,</if>
+            <if test="taskOrPlan != null">TASK_OR_PLAN,</if>
+            <if test="total != null">TOTAL,</if>
+            <if test="supName != null">SUP_NAME,</if>
+            <if test="buProjectName != null">BU_PROJECT_NAME,</if>
+            <if test="supId != null">SUP_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="trialId != null">#{trialId, jdbcType=VARCHAR},</if>
+            <if test="trialCode != null">#{trialCode, jdbcType=VARCHAR},</if>
+            <if test="trialProjectName != null">#{trialProjectName, jdbcType=VARCHAR},</if>
+            <if test="code != null">#{code, jdbcType=VARCHAR},</if>
+            <if test="budgetTotal != null">#{budgetTotal, jdbcType=VARCHAR},</if>
+            <if test="currentWaitUserId != null">#{currentWaitUserId, jdbcType=VARCHAR},</if>
+            <if test="currentWaitUserName != null">#{currentWaitUserName, jdbcType=VARCHAR},</if>
+            <if test="status != null">#{status, jdbcType=VARCHAR},</if>
+            <if test="pvOrCv != null">#{pvOrCv, jdbcType=VARCHAR},</if>
+            <if test="trialStartTime != null">#{trialStartTime, jdbcType=VARCHAR},</if>
+            <if test="trialEndTime != null">#{trialEndTime, jdbcType=VARCHAR},</if>
+            <if test="trialLocation != null">#{trialLocation, jdbcType=VARCHAR},</if>
+            <if test="attachmentId != null">#{attachmentId, jdbcType=VARCHAR},</if>
+            <if test="attachmentName != null">#{attachmentName, jdbcType=VARCHAR},</if>
+            <if test="taskNumber != null">#{taskNumber, jdbcType=VARCHAR},</if>
+            <if test="taskOrPlan != null">#{taskOrPlan,jdbcType=VARCHAR},</if>
+            <if test="total != null">#{total,jdbcType=VARCHAR},</if>
+            <if test="supName != null">#{supName,jdbcType=VARCHAR},</if>
+            <if test="buProjectName != null">#{buProjectName,jdbcType=VARCHAR},</if>
+            <if test="supId != null">#{supId,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_budget_use.entity.PcBudgetUseEO">
+        update PC_BUDGET_USE
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="trialId != null">
+                trial_id = #{trialId},
+            </if>
+            <if test="trialCode != null">
+                trial_code = #{trialCode},
+            </if>
+            <if test="trialProjectName != null">
+                trial_project_name = #{trialProjectName},
+            </if>
+            <if test="code != null">
+                bu_code = #{code},
+            </if>
+            <if test="budgetTotal != null">
+                budget_total = #{budgetTotal},
+            </if>
+            <if test="currentWaitUserId != null">
+                current_wait_userid = #{currentWaitUserId},
+            </if>
+            <if test="currentWaitUserName != null">
+                current_wait_username = #{currentWaitUserName},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="pvOrCv != null">
+                pc_cv = #{pvOrCv} ,
+            </if>
+            <if test="trialStartTime != null">
+                TRIAL_START_TIME = #{trialStartTime},
+            </if>
+            <if test="trialEndTime != null">
+                TRIAL_END_TIME = #{trialEndTime},
+            </if>
+            <if test="trialLocation != null">
+                TRIAL_LOCATION = #{trialLocation},
+            </if>
+            <if test="taskOrPlan != null">
+		        TASK_OR_PLAN = #{taskOrPlan,jdbcType=VARCHAR},
+		    </if>
+            <if test="total != null">
+                TOTAL = #{total,jdbcType=VARCHAR},
+            </if>
+            <if test="supName != null">
+                SUP_NAME = #{supName,jdbcType=VARCHAR},
+            </if>
+            <if test="buProjectName != null">
+                BU_PROJECT_NAME = #{buProjectName,jdbcType=VARCHAR},
+            </if>
+            <if test="supId != null">
+                SUP_ID = #{supId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <sql id="BudgetUseEo">
+            BU.id,
+            BU.del_flag,
+            BU.create_time,
+            BU.create_by,
+            BU.update_time,
+            BU.update_by,
+            BU.attachment_id,
+            BU.attachment_name,
+            trial_id,
+            trial_code,
+            trial_project_name,
+            bu_code,
+            budget_total,
+            current_wait_userid,
+            current_wait_username,
+            status,
+            pc_cv,
+            trial_start_time,
+            TRIAL_END_TIME,
+            TRIAL_LOCATION,
+            BU_PROJECT,
+            BU_CONTENT,
+            BU_UNIT_PRICE,
+            BU_COUNT,
+            BU_SUBTOTAL,
+            BU_SUPPLIER,
+            attachment_id,
+            attachment_name,
+            TASK_OR_PLAN,
+            bu_Supplier_Id
+    </sql>
+    <resultMap id="BudgetUseEoResultMap" type="com.adc.da.pc_budget_use.entity.PcBudgetUseEO" extends="BaseResultMap">
+        <collection property="pcBudgetUseInfoEOList" resultMap="pcBudgetUseInfoEOList"/>
+    </resultMap>
+    <resultMap id="pcBudgetUseInfoEOList" type="com.adc.da.pc_budget_use.entity.PcBudgetUseInfoEO">
+        <result property="buProject" column="bu_project"/>
+        <result property="buContent" column="bu_content"/>
+        <result property="buUnitPrice" column="bu_unit_price"/>
+        <result property="buCount" column="bu_count"/>
+        <result property="buSubtotal" column="bu_subtotal"/>
+        <result property="buSupplier" column="bu_supplier"/>
+        <result column="bu_Supplier_Id" property="buSupplierId"/>
+    </resultMap>
+    <!-- 根据id查询 PC_BUDGET_USE -->
+    <select id="selectByPrimaryKey" resultMap="BudgetUseEoResultMap" parameterType="java.lang.String">
+        select
+        <include refid="BudgetUseEo"/>
+        from PC_BUDGET_USE BU left join PC_BUDGET_USE_INFO PBUI on BU.ID = PBUI.BU_ID
+        where BU.id = #{value} and BU.DEL_FLAG = 0
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from PC_BUDGET_USE
+        where id = #{value}
+
+    </delete>
+
+    <!-- PC_BUDGET_USE 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_BUDGET_USE
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_BUDGET_USE列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_BUDGET_USE
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_BUDGET_USE
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <select id="findTaskByTrialId" resultType="com.adc.da.pc_budget_use.vo.TrialTaskVO">
+        select PTT.CREATE_TIME as trialStartTime, ETR.CREATE_TIME as trialEndTime
+        from PC_TRIAL_TASK PTT
+                 left join EV_TRIAL_REPORT ETR on ETR.TRIALTASK_ID = PTT.ID
+        where PTT.DEL_FLAG = 0 and ETR.DEL_FLAG = 0
+          and PTT.ID = #{trialId}
+    </select>
+
+    <select id="findTaskByTaskNumber" resultType="com.adc.da.pc_budget_use.vo.TrialTaskVO">
+        select PTT.CREATE_TIME as trialStartTime, ETR.CREATE_TIME as trialEndTime
+        from PC_TRIAL_TASK PTT
+                 left join EV_TRIAL_REPORT ETR on ETR.TRIALTASK_ID = PTT.ID
+        where PTT.DEL_FLAG = 0 and ETR.DEL_FLAG = 0
+        and PTT.TASK_NUMBER = #{taskNumber} order by PTT.CREATE_TIME desc
+    </select>
+
+</mapper>

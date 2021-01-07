@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.stdtype.dao.StdTypeEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.stdtype.entity.StdTypeEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="DECIMAL" property="delFlag" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy.usid" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy.usid" />
+    <result column="STD_TYPE_NAME" jdbcType="VARCHAR" property="stdTypeName" />
+    <result column="STD_TYPE_PARENT_ID" jdbcType="VARCHAR" property="stdTypeParentId" />
+  </resultMap>
+  
+  
+   <resultMap id="IdResultMap" type="java.lang.String">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, STD_TYPE_NAME, STD_TYPE_PARENT_ID
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BM_STD_TYPE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    UPDATE BM_STD_TYPE
+    SET DEL_FLAG = 1
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.adc.da.stdtype.entity.StdTypeEO">
+    insert into BM_STD_TYPE (
+ 		ID, 
+ 		DEL_FLAG, 
+ 		CREATE_TIME, 
+   		CREATE_BY, 
+   		UPDATE_TIME, 
+   		UPDATE_BY, 
+   		STD_TYPE_NAME, 
+   		STD_TYPE_PARENT_ID
+    )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=DECIMAL}, 
+    	#{createTime,jdbcType=VARCHAR}, 
+      	#{createBy.usid,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{updateBy.usid,jdbcType=VARCHAR}, 
+     	#{stdTypeName,jdbcType=VARCHAR}, 
+     	#{stdTypeParentId,jdbcType=VARCHAR}
+     )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.adc.da.stdtype.entity.StdTypeEO">
+    insert into BM_STD_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="stdTypeName != null">
+        STD_TYPE_NAME,
+      </if>
+      <if test="stdTypeParentId != null">
+        STD_TYPE_PARENT_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="stdTypeName != null">
+        #{stdTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="stdTypeParentId != null">
+        #{stdTypeParentId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.stdtype.entity.StdTypeEO">
+    update BM_STD_TYPE
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="stdTypeName != null">
+        STD_TYPE_NAME = #{stdTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="stdTypeParentId != null">
+        STD_TYPE_PARENT_ID = #{stdTypeParentId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.stdtype.entity.StdTypeEO">
+    update BM_STD_TYPE
+    set DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      STD_TYPE_NAME = #{stdTypeName,jdbcType=VARCHAR},
+      STD_TYPE_PARENT_ID = #{stdTypeParentId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询列表 -->
+  <select id="findAll" resultMap="BaseResultMap" parameterType="com.adc.da.stdtype.entity.StdTypeEO">
+    select 
+    <include refid="Base_Column_List" />
+    from BM_STD_TYPE
+    where DEL_FLAG != 1
+  </select>
+  
+  <!--查询当前记录是否有子节点-->
+  <select id="selectChildsById" resultMap="BaseResultMap">
+     SELECT
+     <include refid="Base_Column_List"/>
+     FROM BM_STD_TYPE
+     WHERE DEL_FLAG != 1
+     AND STD_TYPE_PARENT_ID = #{stdTypeParentId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+  <select id="selectIdByName"  resultMap="IdResultMap" parameterType="java.lang.String">
+     SELECT
+     ID
+     FROM BM_STD_TYPE
+     WHERE DEL_FLAG != 1
+     AND STD_TYPE_NAME = #{stdTypeName,jdbcType=VARCHAR}
+  </select>
+  
+  
+</mapper>

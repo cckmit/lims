@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_drive.dao.RoadLineRealityEODao" >
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_drive.entity.RoadLineRealityEO" >
+        <id column="ID" property="id" />
+        <result column="DEL_FLAG" property="delFlag" />
+        <result column="DRIVER_RECORD_ID" property="driverRecordId" />
+        <result column="DR_TYPE" property="drType" />
+        <result column="END_TIME" property="endTime" />
+        <result column="TEST_CONDITIONS" property="testConditions" />
+        <result column="START_LINE" property="startLine" />
+        <result column="END_LINE" property="endLine" />
+        <result column="MILE_PLUS" property="milePlus"/>
+    </resultMap>
+
+    <!-- PC_DRIVING_RECORD table all fields -->
+    <sql id="Base_Column_List" >
+     ID, DEL_FLAG, DRIVER_RECORD_ID, END_TIME, DR_TYPE, TEST_CONDITIONS, START_LINE, END_LINE,
+     MILE_PLUS
+  </sql>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_drive.entity.RoadLineRealityEO" >
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SYS_GUID() FROM DUAL
+        </selectKey>
+        insert into DRIVING_ROAD_LINE_REALITY
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >ID,</if>
+            <if test="delFlag != null" >DEL_FLAG,</if>
+            <if test="driverRecordId != null" >DRIVER_RECORD_ID,</if>
+            <if test="endTime != null" >END_TIME,</if>
+            <if test="drType != null" >DR_TYPE,</if>
+            <if test="testConditions != null" >TEST_CONDITIONS,</if>
+            <if test="startLine != null" >START_LINE,</if>
+            <if test="endLine != null" >END_LINE,</if>
+            <if test="milePlus != null" >MILE_PLUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+            <if test="driverRecordId != null" >#{driverRecordId, jdbcType=VARCHAR},</if>
+            <if test="endTime != null" >#{endTime, jdbcType=VARCHAR},</if>
+            <if test="drType != null" >#{drType, jdbcType=VARCHAR},</if>
+            <if test="testConditions != null" >#{testConditions, jdbcType=VARCHAR},</if>
+            <if test="startLine != null" >#{startLine, jdbcType=VARCHAR},</if>
+            <if test="endLine != null" >#{endLine, jdbcType=VARCHAR},</if>
+            <if test="milePlus != null" >#{milePlus, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!--    查询-->
+    <select id="selectRoadLineRealityEoByDriveRecordId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+            DRIVING_ROAD_LINE_REALITY
+        where DRIVER_RECORD_ID = #{id}
+        order by END_TIME
+    </select>
+    <!--修改 -->
+    <update id="updateRoadLineRealityEo" parameterType="com.adc.da.pc_drive.entity.RoadLineRealityEO" >
+        update DRIVING_ROAD_LINE_REALITY
+        <set >
+            <if test="driverRecordId != null" >
+                DRIVER_RECORD_ID = #{driverRecordId},
+            </if>
+            <if test="delFlag != null" >
+                DEL_FLAG = #{delFlag},
+            </if>
+            <if test="endTime != null" >
+                END_TIME = #{endTime},
+            </if>
+            <if test="drType != null" >
+                DR_TYPE = #{drType},
+            </if>
+            <if test="startLine != null" >
+                START_LINE = #{startLine},
+            </if>
+            <if test="endLine != null" >
+                END_LINE = #{endLine},
+            </if>
+            <if test="milePlus != null" >
+                MILE_PLUS = #{milePlus},
+            </if>
+            <if test="testConditions != null" >
+                TEST_CONDITIONS = #{testConditions},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+</mapper>

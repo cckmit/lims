@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_announcement.dao.AnnPlanProgramEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_announcement.entity.AnnPlanProgramEO" >
+    <id column="id" property="id" />
+    <result column="tp_pj_type" property="tpPjType" />
+    <result column="tp_total_price" property="tpTotalPrice" />
+    <result column="tp_coefficient" property="tpCoefficient" />
+    <result column="tp_unit_price" property="tpUnitPrice" />
+    <result column="tp_pj_description" property="tpPjDescription" />
+    <result column="tp_config_explain" property="tpConfigExplain" />
+    <result column="tp_actual_pj_amount" property="tpActualPjAmount" />
+    <result column="tp_test_report_no" property="tpTestReportNo" />
+    <result column="tp_product_type" property="tpProductType" />
+    <result column="tp_product_id" property="tpProductId" />
+    <result column="tp_test_type" property="tpTestType" />
+    <result column="tp_test_basis" property="tpTestBasis" />
+    <result column="tp_test_pj_id" property="tpTestPjId" />
+    <result column="tp_test_pj_name" property="tpTestPjName" />
+    <result column="tp_test_pj_no" property="tpTestPjNo" />
+    <result column="project_id" property="projectId" />
+    <result column="tp_cost_type" property="tpCostType" />
+    <result column="sup_manager_Id" property="supManagerId" />
+    <result column="sup_name" property="supName" />
+    <result column="discount" property="discount" />
+    <result column="if_Delay" property="ifDelay" />
+    <result column="if_Actual_Add" property="ifActualAdd" />
+  </resultMap>
+
+    <resultMap id="SupProjectResultMap" type="com.adc.da.pc_announcement.VO.SupProjectVO" >
+        <id column="id" property="id" />
+        <result column="sup_project_id" property="supProjectId" />
+        <result column="sup_ability_id" property="supAbilityId" />
+        <result column="sup_unit" property="supUnit" />
+        <result column="sup_price" property="supPrice" />
+        <result column="contract_project_name" property="contractProjectName" />
+        <result column="sup_discount" property="supDiscount" />
+        <result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+        <result column="TEST_OBJ" jdbcType="VARCHAR" property="testObj" />
+        <result column="TEST_PROJECT" jdbcType="VARCHAR" property="testProject" />
+        <result column="TEST_STANDARD" jdbcType="VARCHAR" property="testStandard" />
+        <result column="TEST_METHOD" jdbcType="VARCHAR" property="testMethod" />
+        <result column="TEST_TYPE" jdbcType="VARCHAR" property="testType" />
+        <result column="TEST_STANDARD_NAME" jdbcType="VARCHAR" property="testStandardName" />
+        <result column="SUP_DISCOUNT_PRICE" property="supDiscountPrice" />
+        <result column="del_flag" property="delFlag"/>
+        <result column="RATIO" property="ratio"/>
+        <result column="REMARK" property="remark"/>
+    </resultMap>
+
+  <!-- ANN_PLAN_PROGRAM table all fields -->
+  <sql id="Base_Column_List" >
+     tp_pj_type, tp_total_price, tp_coefficient, tp_unit_price, tp_pj_description, tp_config_explain, tp_actual_pj_amount, tp_test_report_no, tp_product_type, tp_product_id, tp_test_type, tp_test_basis, tp_test_pj_id, tp_test_pj_name, tp_test_pj_no, project_id, id, tp_cost_type, sup_manager_Id, sup_name, discount, if_Delay, if_Actual_Add
+  </sql>
+
+    <sql id="SupProject_Column_List" >
+     id, sup_project_id, sup_ability_id, sup_unit, sup_price, sup_discount, contract_project_name,
+     PROJECT_CODE, TEST_OBJ, TEST_PROJECT, TEST_STANDARD, TEST_METHOD, TEST_TYPE, TEST_STANDARD_NAME,
+     SUP_DISCOUNT_PRICE, del_flag, RATIO, REMARK
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="tpTotalPrice != null" >
+        and tp_total_price ${tpTotalPriceOperator} #{tpTotalPrice}
+      </if>
+      <if test="tpCoefficient != null" >
+        and tp_coefficient ${tpCoefficientOperator} #{tpCoefficient}
+      </if>
+      <if test="tpUnitPrice != null" >
+        and tp_unit_price ${tpUnitPriceOperator} #{tpUnitPrice}
+      </if>
+      <if test="tpPjDescription != null" >
+        and tp_pj_description ${tpPjDescriptionOperator} #{tpPjDescription}
+      </if>
+      <if test="tpConfigExplain != null" >
+        and tp_config_explain ${tpConfigExplainOperator} #{tpConfigExplain}
+      </if>
+      <if test="tpActualPjAmount != null" >
+        and tp_actual_pj_amount ${tpActualPjAmountOperator} #{tpActualPjAmount}
+      </if>
+      <if test="tpTestReportNo != null" >
+        and tp_test_report_no ${tpTestReportNoOperator} #{tpTestReportNo}
+      </if>
+      <if test="tpProductType != null" >
+        and tp_product_type ${tpProductTypeOperator} #{tpProductType}
+      </if>
+      <if test="tpProductId != null" >
+        and tp_product_id ${tpProductIdOperator} #{tpProductId}
+      </if>
+      <if test="tpTestType != null" >
+        and tp_test_type ${tpTestTypeOperator} #{tpTestType}
+      </if>
+      <if test="tpTestBasis != null" >
+        and tp_test_basis ${tpTestBasisOperator} #{tpTestBasis}
+      </if>
+      <if test="tpTestPjId != null" >
+        and tp_test_pj_id ${tpTestPjIdOperator} #{tpTestPjId}
+      </if>
+      <if test="tpTestPjName != null" >
+        and tp_test_pj_name ${tpTestPjNameOperator} #{tpTestPjName}
+      </if>
+      <if test="tpTestPjNo != null" >
+        and tp_test_pj_no ${tpTestPjNoOperator} #{tpTestPjNo}
+      </if>
+      <if test="projectId != null" >
+        and project_id ${projectIdOperator} #{projectId}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="tpCostType != null" >
+        and tp_cost_type ${tpCostTypeOperator} #{tpCostType}
+      </if>
+      <if test="supManagerId != null" >
+        and sup_manager_Id ${supManagerIdOperator} #{supManagerId}
+      </if>
+      <if test="supName != null" >
+        and sup_name ${supNameOperator} #{supName}
+      </if>
+      <if test="discount != null" >
+        and discount ${discountOperator} #{discount}
+      </if>
+      <if test="ifDelay != null" >
+        and if_Delay ${ifDelayOperator} #{ifDelay}
+      </if>
+      <if test="ifActualAdd != null" >
+        and if_Actual_Add ${ifActualAddOperator} #{ifActualAdd}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.pc_announcement.entity.AnnPlanProgramEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_ANN_PLAN_PROGRAM.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into ANN_PLAN_PROGRAM(<include refid="Base_Column_List" />)
+    values (#{tpPjType, jdbcType=VARCHAR}, #{tpTotalPrice, jdbcType=VARCHAR}, #{tpCoefficient, jdbcType=VARCHAR}, #{tpUnitPrice, jdbcType=VARCHAR}, #{tpPjDescription, jdbcType=VARCHAR}, #{tpConfigExplain, jdbcType=VARCHAR}, #{tpActualPjAmount, jdbcType=VARCHAR}, #{tpTestReportNo, jdbcType=VARCHAR}, #{tpProductType, jdbcType=VARCHAR}, #{tpProductId, jdbcType=VARCHAR}, #{tpTestType, jdbcType=VARCHAR}, #{tpTestBasis, jdbcType=VARCHAR}, #{tpTestPjId, jdbcType=VARCHAR}, #{tpTestPjName, jdbcType=VARCHAR}, #{tpTestPjNo, jdbcType=VARCHAR}, #{projectId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR},#{tpCostType, jdbcType=VARCHAR},#{supManagerId, jdbcType=VARCHAR},#{supName, jdbcType=VARCHAR},#{discount, jdbcType=VARCHAR},#{ifDelay, jdbcType=VARCHAR},#{ifActualAdd, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_announcement.entity.AnnPlanProgramEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_ANN_PLAN_PROGRAM.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ANN_PLAN_PROGRAM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="tpPjType != null" >tp_pj_type,</if>
+                <if test="tpTotalPrice != null" >tp_total_price,</if>
+                <if test="tpCoefficient != null" >tp_coefficient,</if>
+                <if test="tpUnitPrice != null" >tp_unit_price,</if>
+                <if test="tpPjDescription != null" >tp_pj_description,</if>
+                <if test="tpConfigExplain != null" >tp_config_explain,</if>
+                <if test="tpActualPjAmount != null" >tp_actual_pj_amount,</if>
+                <if test="tpTestReportNo != null" >tp_test_report_no,</if>
+                <if test="tpProductType != null" >tp_product_type,</if>
+                <if test="tpProductId != null" >tp_product_id,</if>
+                <if test="tpTestType != null" >tp_test_type,</if>
+                <if test="tpTestBasis != null" >tp_test_basis,</if>
+                <if test="tpTestPjId != null" >tp_test_pj_id,</if>
+                <if test="tpTestPjName != null" >tp_test_pj_name,</if>
+                <if test="tpTestPjNo != null" >tp_test_pj_no,</if>
+                <if test="projectId != null" >project_id,</if>
+                <if test="id != null" >id,</if>
+                <if test="tpCostType != null" >tp_cost_type,</if>
+                <if test="supManagerId != null" >sup_manager_Id,</if>
+                <if test="supName != null" >sup_name,</if>
+                <if test="discount != null" >discount,</if>
+                <if test="ifDelay != null" >if_Delay,</if>
+                <if test="ifActualAdd != null" >if_Actual_Add,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="tpPjType != null" >#{tpPjType, jdbcType=VARCHAR},</if>
+                <if test="tpTotalPrice != null" >#{tpTotalPrice, jdbcType=VARCHAR},</if>
+                <if test="tpCoefficient != null" >#{tpCoefficient, jdbcType=VARCHAR},</if>
+                <if test="tpUnitPrice != null" >#{tpUnitPrice, jdbcType=VARCHAR},</if>
+                <if test="tpPjDescription != null" >#{tpPjDescription, jdbcType=VARCHAR},</if>
+                <if test="tpConfigExplain != null" >#{tpConfigExplain, jdbcType=VARCHAR},</if>
+                <if test="tpActualPjAmount != null" >#{tpActualPjAmount, jdbcType=VARCHAR},</if>
+                <if test="tpTestReportNo != null" >#{tpTestReportNo, jdbcType=VARCHAR},</if>
+                <if test="tpProductType != null" >#{tpProductType, jdbcType=VARCHAR},</if>
+                <if test="tpProductId != null" >#{tpProductId, jdbcType=VARCHAR},</if>
+                <if test="tpTestType != null" >#{tpTestType, jdbcType=VARCHAR},</if>
+                <if test="tpTestBasis != null" >#{tpTestBasis, jdbcType=VARCHAR},</if>
+                <if test="tpTestPjId != null" >#{tpTestPjId, jdbcType=VARCHAR},</if>
+                <if test="tpTestPjName != null" >#{tpTestPjName, jdbcType=VARCHAR},</if>
+                <if test="tpTestPjNo != null" >#{tpTestPjNo, jdbcType=VARCHAR},</if>
+                <if test="projectId != null" >#{projectId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="tpCostType != null" >#{tpCostType, jdbcType=VARCHAR},</if>
+                <if test="supManagerId != null" >#{supManagerId, jdbcType=VARCHAR},</if>
+                <if test="supName != null" >#{supName, jdbcType=VARCHAR},</if>
+                <if test="discount != null" >#{discount, jdbcType=VARCHAR},</if>
+                <if test="ifDelay != null" >#{ifDelay, jdbcType=VARCHAR},</if>
+                <if test="ifActualAdd != null" >#{ifActualAdd, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_announcement.entity.AnnPlanProgramEO" >
+    update ANN_PLAN_PROGRAM
+       set  tp_pj_type = #{tpPjType, jdbcType=VARCHAR},
+            tp_total_price = #{tpTotalPrice, jdbcType=VARCHAR},
+            tp_coefficient = #{tpCoefficient, jdbcType=VARCHAR},
+            tp_unit_price = #{tpUnitPrice, jdbcType=VARCHAR},
+            tp_pj_description = #{tpPjDescription, jdbcType=VARCHAR},
+            tp_config_explain = #{tpConfigExplain, jdbcType=VARCHAR},
+            tp_actual_pj_amount = #{tpActualPjAmount, jdbcType=VARCHAR},
+            tp_test_report_no = #{tpTestReportNo, jdbcType=VARCHAR},
+            tp_product_type = #{tpProductType, jdbcType=VARCHAR},
+            tp_product_id = #{tpProductId, jdbcType=VARCHAR},
+            tp_test_type = #{tpTestType, jdbcType=VARCHAR},
+            tp_test_basis = #{tpTestBasis, jdbcType=VARCHAR},
+            tp_test_pj_id = #{tpTestPjId, jdbcType=VARCHAR},
+            tp_test_pj_name = #{tpTestPjName, jdbcType=VARCHAR},
+            tp_test_pj_no = #{tpTestPjNo, jdbcType=VARCHAR},
+            project_id = #{projectId, jdbcType=VARCHAR},
+            tp_cost_type = #{tpCostType},
+            sup_manager_Id = #{supManagerId},
+            sup_name = #{supName},
+            discount = #{discount},
+            if_Delay = #{ifDelay},
+            if_Actual_Add = #{ifActualAdd}
+     where  id = #{id, jdbcType=VARCHAR}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_announcement.entity.AnnPlanProgramEO" >
+    update ANN_PLAN_PROGRAM
+    <set >
+      <if test='tpPjType != null and tpPjType!=""' >
+        tp_pj_type = #{tpPjType},
+      </if>
+      <if test='tpTotalPrice != null and tpTotalPrice!=""' >
+        tp_total_price = #{tpTotalPrice},
+      </if>
+      <if test='tpCoefficient != null and tpCoefficient!=""' >
+        tp_coefficient = #{tpCoefficient},
+      </if>
+      <if test='tpUnitPrice != null and tpUnitPrice!=""' >
+        tp_unit_price = #{tpUnitPrice},
+      </if>
+      <if test='tpPjDescription != null and tpPjDescription!=""' >
+        tp_pj_description = #{tpPjDescription},
+      </if>
+      <if test='tpConfigExplain != null and tpConfigExplain!=""' >
+        tp_config_explain = #{tpConfigExplain},
+      </if>
+      <if test='tpActualPjAmount != null and tpActualPjAmount!=""' >
+        tp_actual_pj_amount = #{tpActualPjAmount},
+      </if>
+      <if test='tpTestReportNo != null and tpTestReportNo!=""' >
+        tp_test_report_no = #{tpTestReportNo},
+      </if>
+      <if test='tpProductType != null and tpProductType!=""' >
+        tp_product_type = #{tpProductType},
+      </if>
+      <if test='tpProductId != null and tpProductId!=""' >
+        tp_product_id = #{tpProductId},
+      </if>
+      <if test='tpTestType != null and tpTestType!=""'>
+        tp_test_type = #{tpTestType},
+      </if>
+      <if test='tpTestBasis != null and tpTestBasis!=""' >
+        tp_test_basis = #{tpTestBasis},
+      </if>
+      <if test='tpTestPjId != null and tpTestPjId!=""' >
+        tp_test_pj_id = #{tpTestPjId},
+      </if>
+      <if test='tpTestPjName != null and tpTestPjName!=""' >
+        tp_test_pj_name = #{tpTestPjName},
+      </if>
+      <if test='tpTestPjNo != null and tpTestPjNo!=""' >
+        tp_test_pj_no = #{tpTestPjNo},
+      </if>
+      <if test='projectId != null and projectId!=""' >
+        project_id = #{projectId},
+      </if>
+      <if test='tpCostType != null and tpCostType!=""' >
+        tp_cost_type = #{tpCostType},
+      </if>
+      <if test='supManagerId != null and supManagerId!=""' >
+          sup_manager_Id = #{supManagerId},
+      </if>
+      <if test='supName != null and supName!=""' >
+          sup_name = #{supName},
+      </if>
+      <if test='discount != null and discount!=""' >
+          discount = #{discount},
+      </if>
+      <if test='ifDelay != null and ifDelay!=""' >
+          if_Delay = #{ifDelay},
+      </if>
+      <if test='ifActualAdd != null and ifActualAdd!=""' >
+          if_Actual_Add = #{ifActualAdd},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 ANN_PLAN_PROGRAM -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from ANN_PLAN_PROGRAM
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ANN_PLAN_PROGRAM
+     where id = #{value}
+
+  </delete>
+
+  <!-- ANN_PLAN_PROGRAM 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from ANN_PLAN_PROGRAM
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询ANN_PLAN_PROGRAM列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from ANN_PLAN_PROGRAM
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from ANN_PLAN_PROGRAM
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+    <!--根据申报项目的id数组，来查出对应的检验项目数组-->
+    <select id="getIdListByPjIDList" resultType="java.lang.String" >
+        select id from ANN_PLAN_PROGRAM
+        WHERE project_id IN
+        <foreach collection="list" item="projectIdList" open="(" close=")" separator=",">
+            #{projectIdList}
+        </foreach>
+    </select>
+    <!--根据检验方案的id数组，来查出对应的检验项目数组-->
+    <select id="selectByIDList" resultMap="BaseResultMap" >
+        select <include refid="Base_Column_List"/> from ANN_PLAN_PROGRAM
+        WHERE id IN
+        <foreach collection="list" item="idListByPjIDList" open="(" close=")" separator=",">
+            #{idListByPjIDList}
+        </foreach>
+    </select>
+    <!--根据申报项目的id数组，来删除对应的检验项目-->
+    <delete id="delByIdList" parameterType="java.lang.String" >
+        DELETE from ANN_PLAN_PROGRAM
+        WHERE project_id IN
+        <foreach collection="list" item="projectIdList" open="(" close=")" separator=",">
+            #{projectIdList}
+        </foreach>
+    </delete>
+    
+    <!-- 根据项目id查找方案列表 -->
+    <select id="findProgramByProjectId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    	select <include refid="Base_Column_List" /> 
+	      from ANN_PLAN_PROGRAM
+	     where project_id = #{value}
+    </select>
+
+    <!-- 根据供应商ID和检验项目代号来找出对应供应商检验项目 -->
+    <select id="getSupProject" resultMap="SupProjectResultMap" parameterType="java.lang.String">
+      select <include refid="SupProject_Column_List" />
+        FROM SUP_PROJECT
+       WHERE  SUP_ABILITY_ID = #{supplierID,jdbcType=VARCHAR} AND PROJECT_CODE = #{projectCode,jdbcType=VARCHAR}
+
+    </select>
+</mapper>

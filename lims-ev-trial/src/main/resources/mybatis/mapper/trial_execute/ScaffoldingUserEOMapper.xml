@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_execute.dao.ScaffoldingUserEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.trial_execute.entity.ScaffoldingUserEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="SCAFFOLDING_CHANGE_ID" jdbcType="VARCHAR" property="scaffoldingChangeId" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="TYPE_FLAG" jdbcType="VARCHAR" property="typeFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, SCAFFOLDING_CHANGE_ID, USER_ID, USER_NAME, TYPE_FLAG
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EV_SCAFFOLDING_USER
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from EV_SCAFFOLDING_USER
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.trial_execute.entity.ScaffoldingUserEO">
+    insert into EV_SCAFFOLDING_USER (
+    	ID, 
+    	SCAFFOLDING_CHANGE_ID, 
+      	USER_ID, 
+      	USER_NAME,
+      	TYPE_FLAG
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{scaffoldingChangeId,jdbcType=VARCHAR}, 
+      	#{userId,jdbcType=VARCHAR}, 
+      	#{userName,jdbcType=VARCHAR},
+      	#{typeFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.trial_execute.entity.ScaffoldingUserEO">
+    insert into EV_SCAFFOLDING_USER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="scaffoldingChangeId != null">
+        SCAFFOLDING_CHANGE_ID,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+      <if test="typeFlag != null">
+        TYPE_FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingChangeId != null">
+        #{scaffoldingChangeId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeFlag != null">
+		#{typeFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_execute.entity.ScaffoldingUserEO">
+    update EV_SCAFFOLDING_USER
+    <set>
+      <if test="scaffoldingChangeId != null">
+        SCAFFOLDING_CHANGE_ID = #{scaffoldingChangeId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeFlag != null">
+        TYPE_FLAG = #{typeFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.trial_execute.entity.ScaffoldingUserEO">
+    update EV_SCAFFOLDING_USER
+    set
+      SCAFFOLDING_CHANGE_ID = #{scaffoldingChangeId,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      TYPE_FLAG = #{typeFlag,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.equipment.dao.EquipmentStatusFlagEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.equipment.entity.EquipmentStatusFlagEO" >
+    <id column="id" property="id" />
+    <result column="sta_remark" property="staRemark" />
+    <result column="sta_change_time" property="staChangeTime" />
+    <result column="sta_after_status" property="staAfterStatus" />
+    <result column="sta_before_status" property="staBeforeStatus" />
+    <result column="eq_id" property="eqId" />
+    <result column="sta_change_person" property="staChangePerson" />
+  </resultMap>
+
+  <!-- RES_EQUIPMENT_STATUS_FLAG table all fields -->
+  <sql id="Base_Column_List" >
+     sta_remark, sta_change_time, sta_after_status, sta_before_status, eq_id, id, sta_change_person
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="staRemark != null" >
+        and sta_remark ${staRemarkOperator} #{staRemark}
+      </if>
+      <if test="staChangeTime != null" >
+        and sta_change_time ${staChangeTimeOperator} #{staChangeTime}
+      </if>
+      <if test="staAfterStatus != null" >
+        and sta_after_status ${staAfterStatusOperator} #{staAfterStatus}
+      </if>
+      <if test="staBeforeStatus != null" >
+        and sta_before_status ${staBeforeStatusOperator} #{staBeforeStatus}
+      </if>
+      <if test="eqId != null" >
+        and eq_id ${eqIdOperator} #{eqId}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="staChangePerson != null" >
+        and sta_change_person ${staChangePersonOperator} #{staChangePerson}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.equipment.entity.EquipmentStatusFlagEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_RES_EQUIPMENT_STATUS_FLAG.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into RES_EQUIPMENT_STATUS_FLAG(<include refid="Base_Column_List" />)
+    values (#{staRemark, jdbcType=VARCHAR}, #{staChangeTime, jdbcType=VARCHAR}, #{staAfterStatus, jdbcType=VARCHAR}, #{staBeforeStatus, jdbcType=VARCHAR}, #{eqId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR}, #{staChangePerson, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.equipment.entity.EquipmentStatusFlagEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_RES_EQUIPMENT_STATUS_FLAG.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into RES_EQUIPMENT_STATUS_FLAG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="staRemark != null" >sta_remark,</if>
+                <if test="staChangeTime != null" >sta_change_time,</if>
+                <if test="staAfterStatus != null" >sta_after_status,</if>
+                <if test="staBeforeStatus != null" >sta_before_status,</if>
+                <if test="eqId != null" >eq_id,</if>
+                <if test="id != null" >id,</if>
+                <if test="staChangePerson != null" >sta_change_person,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="staRemark != null" >#{staRemark, jdbcType=VARCHAR},</if>
+                <if test="staChangeTime != null" >#{staChangeTime, jdbcType=VARCHAR},</if>
+                <if test="staAfterStatus != null" >#{staAfterStatus, jdbcType=VARCHAR},</if>
+                <if test="staBeforeStatus != null" >#{staBeforeStatus, jdbcType=VARCHAR},</if>
+                <if test="eqId != null" >#{eqId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="staChangePerson != null" >#{staChangePerson, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.equipment.entity.EquipmentStatusFlagEO" >
+    update RES_EQUIPMENT_STATUS_FLAG
+       set  sta_remark = #{staRemark},
+            sta_change_time = #{staChangeTime},
+            sta_after_status = #{staAfterStatus},
+            sta_before_status = #{staBeforeStatus},
+            eq_id = #{eqId},
+            sta_change_person = #{staChangePerson}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.equipment.entity.EquipmentStatusFlagEO" >
+    update RES_EQUIPMENT_STATUS_FLAG
+    <set >
+      <if test="staRemark != null" >
+        sta_remark = #{staRemark},
+      </if>
+      <if test="staChangeTime != null" >
+        sta_change_time = #{staChangeTime},
+      </if>
+      <if test="staAfterStatus != null" >
+        sta_after_status = #{staAfterStatus},
+      </if>
+      <if test="staBeforeStatus != null" >
+        sta_before_status = #{staBeforeStatus},
+      </if>
+      <if test="eqId != null" >
+        eq_id = #{eqId},
+      </if>
+      <if test="staChangePerson != null" >
+        sta_change_person = #{staChangePerson},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 RES_EQUIPMENT_STATUS_FLAG -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from RES_EQUIPMENT_STATUS_FLAG
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from RES_EQUIPMENT_STATUS_FLAG
+     where id = #{value}
+
+  </delete>
+
+  <!-- RES_EQUIPMENT_STATUS_FLAG 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from RES_EQUIPMENT_STATUS_FLAG
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询RES_EQUIPMENT_STATUS_FLAG列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from RES_EQUIPMENT_STATUS_FLAG
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from RES_EQUIPMENT_STATUS_FLAG
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

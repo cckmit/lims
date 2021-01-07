@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCVehicleOutEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_execute.entity.PCVehicleOutEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="TRIAL_TASK_ID" jdbcType="VARCHAR" property="trialTaskId" />
+    <result column="CREATE_BY_NAME" jdbcType="VARCHAR" property="createByName" />
+    <result column="DELIVERY_UNIT" jdbcType="VARCHAR" property="deliveryUnit" />
+    <result column="VEHICLE_STATUS" jdbcType="VARCHAR" property="vehicleStatus" />
+    <result column="VEHICLE_NO" jdbcType="VARCHAR" property="vehicleNo" />
+    <result column="TASK_NUMBER" property="taskNumber" />
+    <result column="TASK_OR_PLAN" property="taskOrPlan" />
+  </resultMap>
+  
+  <resultMap id="DetailResultMap" type="com.adc.da.pc_execute.entity.PCVehicleOutEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_BY_NAME" jdbcType="VARCHAR" property="createByName" />
+    <result column="DELIVERY_UNIT" jdbcType="VARCHAR" property="deliveryUnit" />
+    <result column="TRIAL_TASK_ID" jdbcType="VARCHAR" property="trialTaskId" />
+    <result column="VEHICLE_STATUS" jdbcType="VARCHAR" property="vehicleStatus" />
+    <result column="VEHICLE_NO" jdbcType="VARCHAR" property="vehicleNo" />
+    <result column="TASK_NUMBER" property="taskNumber" />
+    <result column="TASK_OR_PLAN" property="taskOrPlan" />
+	  <collection property="infoList" ofType="com.adc.da.pc_execute.entity.PCVehicleOutInfoEO">
+	  		<result column="CHASSIS_NUMBER" jdbcType="VARCHAR" property="chassisNumber" />
+		    <result column="VEHICLE_TYPE" jdbcType="VARCHAR" property="vehicleType" />
+		    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+		    <result column="NUMBERS" jdbcType="VARCHAR" property="numbers" />
+		    <result column="LOAN_NUMBER" jdbcType="VARCHAR" property="loanNumber" />
+		    <result column="START_POINT" jdbcType="VARCHAR" property="startPoint" />
+		    <result column="END_POINT" jdbcType="VARCHAR" property="endPoint" />
+		    <result column="DRIVER_NAME" jdbcType="VARCHAR" property="driverName" />
+		    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+	  </collection>
+  </resultMap>
+  
+  <resultMap id="SearchResultMap" type="com.adc.da.pc_execute.entity.PCVehicleOutEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="TRIAL_TASK_ID" jdbcType="VARCHAR" property="trialTaskId" />
+    <result column="CREATE_BY_NAME" jdbcType="VARCHAR" property="createByName" />
+    <result column="DELIVERY_UNIT" jdbcType="VARCHAR" property="deliveryUnit" />
+    <result column="VEHICLE_STATUS" jdbcType="VARCHAR" property="vehicleStatus" />
+    <result column="VEHICLE_NO" jdbcType="VARCHAR" property="vehicleNo" />
+    <result column="BASEBUS_ID" jdbcType="VARCHAR" property="baseBusId" />
+    <result column="TASK_NUMBER" property="taskNumber" />
+    <result column="TASK_OR_PLAN" property="taskOrPlan" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, TRIAL_TASK_ID, CREATE_BY_NAME, 
+    DELIVERY_UNIT, VEHICLE_STATUS, VEHICLE_NO, TASK_NUMBER, TASK_OR_PLAN
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="DetailResultMap">
+    select 
+	    PC_VEHICLE_OUT.ID, 
+	    PC_VEHICLE_OUT.CREATE_TIME, 
+	    PC_VEHICLE_OUT.CREATE_BY,
+	    CREATE_BY_NAME, 
+	    DELIVERY_UNIT, 
+	    VEHICLE_STATUS, 
+	    VEHICLE_NO,
+	    TRIAL_TASK_ID, 
+	    CHASSIS_NUMBER, 
+	    VEHICLE_TYPE, 
+	    UNIT,
+	    NUMBERS, 
+    	LOAN_NUMBER, 
+    	START_POINT, 
+    	END_POINT, 
+    	DRIVER_NAME, 
+    	REMARK,
+    	TASK_NUMBER,
+    	TASK_OR_PLAN
+    from PC_VEHICLE_OUT
+    LEFT JOIN PC_VEHICLE_OUT_INFO ON PC_VEHICLE_OUT."ID" = PC_VEHICLE_OUT_INFO.VEHICLE_OUT_ID
+    where PC_VEHICLE_OUT.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update PC_VEHICLE_OUT
+    set DEL_FLAG = 1
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.pc_execute.entity.PCVehicleOutEO">
+    insert into PC_VEHICLE_OUT (
+    	ID, 
+    	DEL_FLAG, 
+    	CREATE_TIME, 
+      	CREATE_BY, 
+      	UPDATE_TIME, 
+      	UPDATE_BY, 
+      	TRIAL_TASK_ID, 
+      	CREATE_BY_NAME, 
+      	DELIVERY_UNIT,
+      	VEHICLE_STATUS,
+      	VEHICLE_NO,
+      	TASK_NUMBER,
+      	TASK_OR_PLAN
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{createTime,jdbcType=VARCHAR}, 
+      	#{createBy,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{updateBy,jdbcType=VARCHAR}, 
+      	#{trialTaskId,jdbcType=VARCHAR}, 
+      	#{createByName,jdbcType=VARCHAR}, 
+      	#{deliveryUnit,jdbcType=VARCHAR},
+      	#{vehicleStatus,jdbcType=VARCHAR},
+      	#{vehicleNo,jdbcType=VARCHAR},
+      	#{taskNumber,jdbcType=VARCHAR},
+      	#{taskOrPlan,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_execute.entity.PCVehicleOutEO">
+    insert into PC_VEHICLE_OUT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="trialTaskId != null">
+        TRIAL_TASK_ID,
+      </if>
+      <if test="createByName != null">
+        CREATE_BY_NAME,
+      </if>
+      <if test="deliveryUnit != null">
+        DELIVERY_UNIT,
+      </if>
+      <if test="vehicleStatus != null">
+        VEHICLE_STATUS,
+      </if>
+      <if test="vehicleNo != null">
+        VEHICLE_NO,
+      </if>
+      <if test="taskNumber != null">
+        TASK_NUMBER,
+      </if>
+      <if test="taskOrPlan != null">
+        TASK_OR_PLAN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createByName != null">
+        #{createByName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryUnit != null">
+        #{deliveryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleStatus != null">
+        #{vehicleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleNo != null">
+        #{vehicleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumber != null">
+        #{taskNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taskOrPlan != null">
+        #{taskOrPlan,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_execute.entity.PCVehicleOutEO">
+    update PC_VEHICLE_OUT
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createByName != null">
+        CREATE_BY_NAME = #{createByName,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryUnit != null">
+        DELIVERY_UNIT = #{deliveryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleStatus != null">
+        VEHICLE_STATUS = #{vehicleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="vehicleNo != null">
+        VEHICLE_NO = #{vehicleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumber != null">
+        TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="taskOrPlan != null">
+        TASK_OR_PLAN = #{taskOrPlan,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_execute.entity.PCVehicleOutEO">
+    update PC_VEHICLE_OUT
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      CREATE_BY_NAME = #{createByName,jdbcType=VARCHAR},
+      DELIVERY_UNIT = #{deliveryUnit,jdbcType=VARCHAR},
+      VEHICLE_STATUS = #{vehicleStatus,jdbcType=VARCHAR},
+      VEHICLE_NO = #{vehicleNo,jdbcType=VARCHAR},
+      TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR},
+      TASK_OR_PLAN = #{taskOrPlan,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    <!-- 列表总数-->
+   <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT count(1) FROM PC_VEHICLE_OUT
+       LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = PC_VEHICLE_OUT.ID
+       <include refid="Base_Where_Clause"/>
+   </select>
+  
+   <!-- 查询条件 -->
+   <sql id="Base_Where_Clause">
+       WHERE PC_VEHICLE_OUT.DEL_FLAG = 0 
+       <choose>
+           <when test="searchPhrase != null">
+               <foreach collection="searchPhrase" item="search">
+                   AND (
+	                   CREATE_BY_NAME LIKE '%${search}%' 
+	                   OR PC_VEHICLE_OUT.CREATE_TIME LIKE '%${search}%' 
+                   )
+               </foreach>
+           </when>
+           <otherwise>
+           	   <if test="taskNumber != null and taskNumber != ''">
+                   AND PC_VEHICLE_OUT.TASK_NUMBER = #{taskNumber}
+               </if>
+               <if test="trialTaskId != null and trialTaskId != ''">
+                   AND PC_VEHICLE_OUT.TRIAL_TASK_ID = #{trialTaskId}
+               </if>
+               <if test="createByName != null and createByName != ''">
+                   AND CREATE_BY_NAME LIKE '%${createByName}%'
+               </if>
+               <if test="deliveryUnit != null and deliveryUnit != ''">
+                   AND DELIVERY_UNIT LIKE '%${deliveryUnit}%'
+               </if>
+               <if test="taskOrPlan != null and taskOrPlan != ''">
+                   AND TASK_OR_PLAN = #{taskOrPlan}
+               </if>
+               <if test="createTime1 != null and createTime1 != ''">
+                   AND PC_VEHICLE_OUT.CREATE_TIME <![CDATA[>=]]> #{createTime1}
+               </if>
+               <if test="createTime2 != null and createTime2 != ''">
+                   AND PC_VEHICLE_OUT.CREATE_TIME <![CDATA[<=]]> #{createTime2}
+               </if>
+           </otherwise>
+       </choose>
+   </sql>
+  
+   <!-- 分页查询列表 -->
+   <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+       	PC_VEHICLE_OUT.ID, 
+       	PC_VEHICLE_OUT.CREATE_TIME, 
+       	PC_VEHICLE_OUT.CREATE_BY,
+       	PC_VEHICLE_OUT.TRIAL_TASK_ID, 
+       	PC_VEHICLE_OUT.CREATE_BY_NAME, 
+    	PC_VEHICLE_OUT.DELIVERY_UNIT, 
+    	PC_VEHICLE_OUT.VEHICLE_STATUS,
+    	PC_VEHICLE_OUT.VEHICLE_NO,
+    	PC_VEHICLE_OUT.TASK_NUMBER,
+       	TS_BASEBUS.ID AS BASEBUS_ID,
+       	PC_VEHICLE_OUT.TASK_OR_PLAN
+       FROM PC_VEHICLE_OUT
+       LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = PC_VEHICLE_OUT.ID
+       <include refid="Base_Where_Clause"/>
+       ORDER BY PC_VEHICLE_OUT.UPDATE_TIME DESC
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+  
+  
+  <select id="selectActProcIdById" parameterType="java.lang.String" resultType="java.lang.String">
+       SELECT ACT_HI_PROCINST.PROC_INST_ID_ AS ACT_PROC_ID
+       FROM PC_VEHICLE_OUT
+                LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = PC_VEHICLE_OUT.ID
+                LEFT JOIN ACT_HI_PROCINST ON TS_BASEBUS.ID = ACT_HI_PROCINST.BUSINESS_KEY_
+       WHERE PC_VEHICLE_OUT.ID = #{id,jdbcType=VARCHAR}
+   </select>
+  
+</mapper>

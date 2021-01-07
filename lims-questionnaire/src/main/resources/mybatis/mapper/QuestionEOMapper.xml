@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.dao.QuestionEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.entity.QuestionEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="QUE_NAME" jdbcType="VARCHAR" property="queName" />
+    <result column="TOPICS_ID" jdbcType="VARCHAR" property="topicsId" />
+    <result column="QUE_TYPE" jdbcType="VARCHAR" property="queType" />
+    <result column="OPTION_CONTENT" jdbcType="VARCHAR" property="optionContent" />
+    <result column="QUE_SORT" jdbcType="DECIMAL" property="queSort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, QUE_NAME, TOPICS_ID, QUE_TYPE, OPTION_CONTENT, QUE_SORT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from QM_QUESTION
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from QM_QUESTION
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.entity.QuestionEO">
+    insert into QM_QUESTION (
+    	ID, 
+    	DEL_FLAG, 
+    	QUE_NAME, 
+      	TOPICS_ID, 
+      	QUE_TYPE, 
+      	OPTION_CONTENT, 
+      	QUE_SORT
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{queName,jdbcType=VARCHAR}, 
+      	#{topicsId,jdbcType=VARCHAR}, 
+      	#{queType,jdbcType=VARCHAR}, 
+      	#{optionContent,jdbcType=VARCHAR}, 
+      	#{queSort,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.entity.QuestionEO">
+    insert into QM_QUESTION
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="queName != null">
+        QUE_NAME,
+      </if>
+      <if test="topicsId != null">
+        TOPICS_ID,
+      </if>
+      <if test="queType != null">
+        QUE_TYPE,
+      </if>
+      <if test="optionContent != null">
+        OPTION_CONTENT,
+      </if>
+      <if test="queSort != null">
+        QUE_SORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="queName != null">
+        #{queName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsId != null">
+        #{topicsId,jdbcType=VARCHAR},
+      </if>
+      <if test="queType != null">
+        #{queType,jdbcType=VARCHAR},
+      </if>
+      <if test="optionContent != null">
+        #{optionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="queSort != null">
+        #{queSort,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.entity.QuestionEO">
+    update QM_QUESTION
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="queName != null">
+        QUE_NAME = #{queName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicsId != null">
+        TOPICS_ID = #{topicsId,jdbcType=VARCHAR},
+      </if>
+      <if test="queType != null">
+        QUE_TYPE = #{queType,jdbcType=VARCHAR},
+      </if>
+      <if test="optionContent != null">
+        OPTION_CONTENT = #{optionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="queSort != null">
+        QUE_SORT = #{queSort,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.entity.QuestionEO">
+    update QM_QUESTION
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      QUE_NAME = #{queName,jdbcType=VARCHAR},
+      TOPICS_ID = #{topicsId,jdbcType=VARCHAR},
+      QUE_TYPE = #{queType,jdbcType=VARCHAR},
+      OPTION_CONTENT = #{optionContent,jdbcType=VARCHAR},
+      QUE_SORT = #{queSort,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="selectByTopicsId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from QM_QUESTION
+    where TOPICS_ID = #{topicsId,jdbcType=VARCHAR}
+    and DEL_FLAG = 0
+  </select>
+  
+  
+  <delete id="deleteByTopicsId" parameterType="java.lang.String">
+    delete from QM_QUESTION
+    where TOPICS_ID = #{topicsId,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteQuestion" parameterType="java.lang.String">
+    update QM_QUESTION
+    set DEL_FLAG = 1
+    where TOPICS_ID = #{topicsId,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.project.dao.TrialProjectEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.project.entity.TrialProjectEO">
+        <id column="id" property="id"/>
+        <result column="taskbookcode" property="taskbookcode"/>
+        <result column="at_taskbook" property="atTaskbook"/>
+        <result column="at_drive_record" property="atDriveRecord"/>
+        <result column="at_check" property="atCheck"/>
+        <result column="at_torque_record" property="atTorqueRecord"/>
+        <result column="at_hub_temperature" property="atHubTemperature"/>
+        <result column="at_luqiao_ticket" property="atLuqiaoTicket"/>
+        <result column="at_repair_updown" property="atRepairUpdown"/>
+        <result column="at_fourwheel_position" property="atFourwheelPosition"/>
+        <result column="at_trial_report" property="atTrialReport"/>
+        <result column="at_trial_summary" property="atTrialSummary"/>
+        <result column="at_taskbook_name" property="atTaskbookName"/>
+        <result column="at_drive_record_name" property="atDriveRecordName"/>
+        <result column="at_check_name" property="atCheckName"/>
+        <result column="at_torque_record_name" property="atTorqueRecordName"/>
+        <result column="at_hub_temperature_name" property="atHubTemperatureName"/>
+        <result column="at_luqiao_ticket_name" property="atLuqiaoTicketName"/>
+        <result column="at_repair_updown_name" property="atRepairUpdownName"/>
+        <result column="at_fourwheel_position_name" property="atFourwheelPositionName"/>
+        <result column="at_trial_report_name" property="atTrialReportName"/>
+        <result column="at_trial_summary_name" property="atTrialSummaryName"/>
+        <result column="at_fuel_ticket" property="atFuelTicket"/>
+        <result column="approvalcode" property="approvalcode"/>
+        <result column="approvalcost" property="approvalcost"/>
+        <result column="trustcode" property="trustcode"/>
+        <result column="supid" property="supid"/>
+        <result column="supname" property="supname"/>
+        <result column="delegater" property="delegater"/>
+        <result column="applydate" property="applydate"/>
+        <result column="tasksource" property="tasksource"/>
+        <result column="frequency" property="frequency"/>
+        <result column="tasktype" property="tasktype"/>
+        <result column="taskstartdate" property="taskstartdate"/>
+        <result column="taskenddate" property="taskenddate"/>
+        <result column="vehicletype" property="vehicletype"/>
+        <result column="chassiscode" property="chassiscode"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="pvorcv" property="pvOrcv"/>
+        <result column="create_by_id" property="createById"/>
+        <result column="create_date" property="createDate"/>
+        <result column="confirm_person" property="confirmPerson"/>
+        <result property="pcId" column="pcID" />
+        <result property="operationId" column="OPERATION_ID" />
+        <result property="operationName" column="OPERATION_NAME" />
+        <result property="tower" column="tower" />
+        <result property="carType" column="car_Type" />
+        <result property="fuelType" column="fuel_Type" />
+        <result property="carId" column="car_id" />
+        <result property="whetherFinish" column="WHERTHER_FINISH" />
+        <result property="postponeNum" column="POSTPONE_NUM" />
+        <result property="whetherStandard" column="WHETHER_STANDARD" />
+        <result property="standardNum" column="STANDARD_NUM" />
+        <result property="malfunctionNum" column="MALFUNCTION_NUM" />
+        <result property="reviewNum" column="REVIEW_NUM" />
+        <result property="manyFileId" column="MANYFILE_ID" />
+        <result property="manyFileName" column="MANYFILE_NAME" />
+        <collection property="itemsDetailsEOList"  column="id" select="findItemsList" >
+        </collection>
+    </resultMap>
+    <resultMap id="itemsDetailsEOList" type="com.adc.da.project.entity.ItemsDetailsEO" >
+        <id column="id" property="id" />
+        <result column="trust_type" property="trustType" />
+        <result column="test_start_date" property="testStartDate" />
+        <result column="test_end_date" property="testEndDate" />
+        <result column="traffic" property="traffic" />
+        <result column="schedul" property="schedul" />
+        <result column="start_port" property="startPort" />
+        <result column="end_port" property="endPort" />
+        <result column="plan_mileage" property="planMileage" />
+        <result column="status" property="status" />
+        <result column="contract_project_name" property="contractProjectName" />
+        <result column="project_name" property="projectName" />
+        <result column="project_id" property="projectId" />
+        <result column="sup_trial_id" property="supTrialId" />
+        <result column="sup_project_id" property="supProjectId" />
+        <result column="car_state" property="carState" />
+    	<result column="load" property="load" />
+    </resultMap>
+
+    <!-- SUP_TRIAL_PROJECT table all fields -->
+    <sql id="Base_Column_List">
+     taskbookcode, at_taskbook, at_drive_record, at_check, at_torque_record, at_hub_temperature, at_luqiao_ticket, at_repair_updown, at_fourwheel_position, at_trial_report, at_trial_summary,pcID,
+      at_taskbook_name, at_drive_record_name, at_check_name, at_torque_record_name, at_hub_temperature_name, at_luqiao_ticket_name, at_repair_updown_name, at_fourwheel_position_name, at_trial_report_name, at_trial_summary_name,at_fuel_ticket,
+     approvalcode, approvalcost, trustcode, id, supid, supname, delegater, applydate, tasksource, frequency, tasktype, taskstartdate, taskenddate, vehicletype, chassiscode, status, remark, del_flag, pvorcv, create_by_id, create_date, confirm_person,
+     OPERATION_ID,OPERATION_NAME,tower,car_Type,fuel_Type,car_id,REVIEW_NUM,MALFUNCTION_NUM,STANDARD_NUM,WHETHER_STANDARD,POSTPONE_NUM,WHERTHER_FINISH,MANYFILE_ID,MANYFILE_NAME
+    </sql>
+
+    <select id="findItemsList" parameterType="java.lang.String" resultMap="itemsDetailsEOList">
+        select * from SUP_ITEMS_DETAILS where SUP_TRIAL_ID = #{id}
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1 and del_flag = '0'
+        <if test="createById != null" >
+            and create_by_id = #{createById}
+        </if>
+        <if test="pcId != null">
+            and pcId = #{pcId}
+        </if>
+        <if test="supid != null">
+            and supid = #{supid}
+            and status != '-1'
+        </if>
+        <choose>
+            <when test="searchPhrase !=null">
+                <foreach collection="searchPhrase" item="search">
+                    and (
+                    trustcode like '%${search}%' or
+                    supname like '%${search}%' or
+                    delegater like '%${search}%' or
+                    applydate like '%${search}%' or
+                    tasksource like '%${search}%' or
+                    frequency like '%${search}%' or
+                    tasktype like '%${search}%' or
+                    taskstartdate like '%${search}%' or
+                    taskenddate like '%${search}%' or
+                    vehicletype like '%${search}%' or
+                    chassiscode like '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <trim suffixOverrides=",">
+                    <if test="trustcode != null">
+                        and trustcode like '%${trustcode}%'
+                    </if>
+                    <if test="supname != null">
+                        and supname like '%${supname}%'
+                    </if>
+                    <if test="delegater != null">
+                        and delegater like '%${delegater}%'
+                    </if>
+                    <if test="applydate1 != null">
+                        and applydate &gt;= #{applydate1}
+                    </if>
+                    <if test="applydate2 != null">
+                        and applydate &lt;= #{applydate2}
+                    </if>
+                    <if test="tasksource != null">
+                        and tasksource like '%${tasksource}%'
+                    </if>
+                    <if test="frequency != null">
+                        and frequency like '%${frequency}%'
+                    </if>
+                    <if test="tasktype != null">
+                        and tasktype like '%${tasktype}%'
+                    </if>
+                    <if test="taskstartdate1 != null">
+                        and taskstartdate &gt;= #{taskstartdate1}
+                    </if>
+                    <if test="taskstartdate2 != null">
+                        and taskstartdate &lt;= #{taskstartdate2}
+                    </if>
+                    <if test="taskenddate1 != null">
+                        and taskenddate &gt;= #{taskenddate1}
+                    </if>
+                    <if test="taskenddate2 != null">
+                        and taskenddate &lt;= #{taskenddate2}
+                    </if>
+                    <if test="vehicletype != null">
+                        and vehicletype like '%${vehicletype}%'
+                    </if>
+                    <if test="chassiscode != null">
+                        and chassiscode like '%${chassiscode}%'
+                    </if>
+                    <if test="status != null">
+                        and status = #{status}
+                    </if>
+                </trim>
+            </otherwise>
+        </choose>
+    </sql>
+
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.project.entity.TrialProjectEO">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SYS_GUID() FROM DUAL
+        </selectKey>
+        insert into SUP_TRIAL_PROJECT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="taskbookcode != null">taskbookcode,</if>
+            <if test="atTaskbook != null">at_taskbook,</if>
+            <if test="atDriveRecord != null">at_drive_record,</if>
+            <if test="atCheck != null">at_check,</if>
+            <if test="atTorqueRecord != null">at_torque_record,</if>
+            <if test="atHubTemperature != null">at_hub_temperature,</if>
+            <if test="atLuqiaoTicket != null">at_luqiao_ticket,</if>
+            <if test="atRepairUpdown != null">at_repair_updown,</if>
+            <if test="atFourwheelPosition != null">at_fourwheel_position,</if>
+            <if test="atTrialReport != null">at_trial_report,</if>
+            <if test="atTrialSummary != null">at_trial_summary,</if>
+            <if test="atTaskbookName != null">at_taskbook_name,</if>
+            <if test="atDriveRecordName != null">at_drive_record_name,</if>
+            <if test="atCheckName != null">at_check_name,</if>
+            <if test="atTorqueRecordName != null">at_torque_record_name,</if>
+            <if test="atHubTemperatureName != null">at_hub_temperature_name,</if>
+            <if test="atLuqiaoTicketName != null">at_luqiao_ticket_name,</if>
+            <if test="atRepairUpdownName != null">at_repair_updown_name,</if>
+            <if test="atFourwheelPositionName != null">at_fourwheel_position_name,</if>
+            <if test="atTrialReportName != null">at_trial_report_name,</if>
+            <if test="atTrialSummaryName != null">at_trial_summary_name,</if>
+            <if test="atFuelTicket != null">AT_FUEL_TICKET,</if>
+            <if test="approvalcode != null">approvalcode,</if>
+            <if test="approvalcost != null">approvalcost,</if>
+            <if test="trustcode != null">trustcode,</if>
+            <if test="id != null">id,</if>
+            <if test="supid != null">supid,</if>
+            <if test="supname != null">supname,</if>
+            <if test="delegater != null">delegater,</if>
+            <if test="applydate != null">applydate,</if>
+            <if test="tasksource != null">tasksource,</if>
+            <if test="frequency != null">frequency,</if>
+            <if test="tasktype != null">tasktype,</if>
+            <if test="taskstartdate != null">taskstartdate,</if>
+            <if test="taskenddate != null">taskenddate,</if>
+            <if test="vehicletype != null">vehicletype,</if>
+            <if test="chassiscode != null">chassiscode,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="pvOrcv != null">pvorcv,</if>
+            <if test="createById != null">create_by_id,</if>
+            <if test="createDate != null">create_date,</if>
+            <if test="confirmPerson != null">confirm_Person,</if>
+            <if test="pcId != null">pcId,</if>
+            <if test="operationId != null">operation_Id,</if>
+            <if test="operationName != null">operation_Name,</if>
+            <if test="tower != null">tower,</if>
+            <if test="carType != null">car_Type,</if>
+            <if test="fuelType != null">fuel_Type,</if>
+            <if test="carId != null">car_id,</if>
+            <if test="whetherFinish != null">WHERTHER_FINISH,</if>
+            <if test="postponeNum != null">POSTPONE_NUM,</if>
+            <if test="whetherStandard != null">WHETHER_STANDARD,</if>
+            <if test="standardNum != null">STANDARD_NUM,</if>
+            <if test="malfunctionNum != null">MALFUNCTION_NUM,</if>
+            <if test="reviewNum != null">REVIEW_NUM,</if>
+            <if test="manyFileId != null">MANYFILE_ID,</if>
+            <if test="manyFileName != null">MANYFILE_NAME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="taskbookcode != null">#{taskbookcode, jdbcType=VARCHAR},</if>
+            <if test="atTaskbook != null">#{atTaskbook, jdbcType=VARCHAR},</if>
+            <if test="atDriveRecord != null">#{atDriveRecord, jdbcType=VARCHAR},</if>
+            <if test="atCheck != null">#{atCheck, jdbcType=VARCHAR},</if>
+            <if test="atTorqueRecord != null">#{atTorqueRecord, jdbcType=VARCHAR},</if>
+            <if test="atHubTemperature != null">#{atHubTemperature, jdbcType=VARCHAR},</if>
+            <if test="atLuqiaoTicket != null">#{atLuqiaoTicket, jdbcType=VARCHAR},</if>
+            <if test="atRepairUpdown != null">#{atRepairUpdown, jdbcType=VARCHAR},</if>
+            <if test="atFourwheelPosition != null">#{atFourwheelPosition, jdbcType=VARCHAR},</if>
+            <if test="atTrialReport != null">#{atTrialReport, jdbcType=VARCHAR},</if>
+            <if test="atTrialSummary != null">#{atTrialSummary, jdbcType=VARCHAR},</if>
+            <if test="atTaskbookName != null">#{atTaskbookName, jdbcType=VARCHAR},</if>
+            <if test="atDriveRecordName != null">#{atDriveRecordName, jdbcType=VARCHAR},</if>
+            <if test="atCheckName != null">#{atCheckName, jdbcType=VARCHAR},</if>
+            <if test="atTorqueRecordName != null">#{atTorqueRecordName, jdbcType=VARCHAR},</if>
+            <if test="atHubTemperatureName != null">#{atHubTemperatureName, jdbcType=VARCHAR},</if>
+            <if test="atLuqiaoTicketName != null">#{atLuqiaoTicketName, jdbcType=VARCHAR},</if>
+            <if test="atRepairUpdownName != null">#{atRepairUpdownName, jdbcType=VARCHAR},</if>
+            <if test="atFourwheelPositionName != null">#{atFourwheelPositionName, jdbcType=VARCHAR},</if>
+            <if test="atTrialReportName != null">#{atTrialReportName, jdbcType=VARCHAR},</if>
+            <if test="atTrialSummaryName != null">#{atTrialSummaryName, jdbcType=VARCHAR},</if>
+            <if test="atFuelTicket != null">#{atFuelTicket, jdbcType=VARCHAR},</if>
+            <if test="approvalcode != null">#{approvalcode, jdbcType=VARCHAR},</if>
+            <if test="approvalcost != null">#{approvalcost, jdbcType=VARCHAR},</if>
+            <if test="trustcode != null">#{trustcode, jdbcType=VARCHAR},</if>
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="supid != null">#{supid, jdbcType=VARCHAR},</if>
+            <if test="supname != null">#{supname, jdbcType=VARCHAR},</if>
+            <if test="delegater != null">#{delegater, jdbcType=VARCHAR},</if>
+            <if test="applydate != null">#{applydate, jdbcType=VARCHAR},</if>
+            <if test="tasksource != null">#{tasksource, jdbcType=VARCHAR},</if>
+            <if test="frequency != null">#{frequency, jdbcType=VARCHAR},</if>
+            <if test="tasktype != null">#{tasktype, jdbcType=VARCHAR},</if>
+            <if test="taskstartdate != null">#{taskstartdate, jdbcType=VARCHAR},</if>
+            <if test="taskenddate != null">#{taskenddate, jdbcType=VARCHAR},</if>
+            <if test="vehicletype != null">#{vehicletype, jdbcType=VARCHAR},</if>
+            <if test="chassiscode != null">#{chassiscode, jdbcType=VARCHAR},</if>
+            <if test="status != null">#{status, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=VARCHAR},</if>
+            <if test="pvOrcv != null">#{pvOrcv, jdbcType=VARCHAR},</if>
+            <if test="createById != null">#{createById, jdbcType=VARCHAR},</if>
+            <if test="createDate != null">#{createDate, jdbcType=VARCHAR},</if>
+            <if test="confirmPerson != null">#{confirmPerson, jdbcType=VARCHAR},</if>
+            <if test="pcId !=null ">#{pcId, jdbcType=VARCHAR},</if>
+            <if test="operationId !=null ">#{operationId, jdbcType=VARCHAR},</if>
+            <if test="operationName !=null ">#{operationName, jdbcType=VARCHAR},</if>
+            <if test="tower !=null ">#{tower, jdbcType=VARCHAR},</if>
+            <if test="carType !=null ">#{carType, jdbcType=VARCHAR},</if>
+            <if test="fuelType !=null ">#{fuelType, jdbcType=VARCHAR},</if>
+            <if test="carId !=null ">#{carId, jdbcType=VARCHAR},</if>
+            <if test="whetherFinish != null">#{whetherFinish, jdbcType=VARCHAR},</if>
+            <if test="postponeNum != null">#{postponeNum, jdbcType=VARCHAR},</if>
+            <if test="whetherStandard != null">#{postponeNum, jdbcType=VARCHAR},</if>
+            <if test="standardNum != null">#{standardNum, jdbcType=VARCHAR},</if>
+            <if test="malfunctionNum != null">#{malfunctionNum, jdbcType=VARCHAR},</if>
+            <if test="reviewNum != null">#{reviewNum, jdbcType=VARCHAR},</if>
+            <if test="manyFileId != null">#{manyFileId, jdbcType=VARCHAR},</if>
+            <if test="manyFileName != null">#{manyFileName, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.project.entity.TrialProjectEO">
+        update SUP_TRIAL_PROJECT
+        <set>
+            <if test="taskbookcode != null">
+                taskbookcode = #{taskbookcode},
+            </if>
+            <if test="atTaskbook != null">
+                at_taskbook = #{atTaskbook},
+            </if>
+            <if test="atDriveRecord != null">
+                at_drive_record = #{atDriveRecord},
+            </if>
+            <if test="atCheck != null">
+                at_check = #{atCheck},
+            </if>
+            <if test="atTorqueRecord != null">
+                at_torque_record = #{atTorqueRecord},
+            </if>
+            <if test="atHubTemperature != null">
+                at_hub_temperature = #{atHubTemperature},
+            </if>
+            <if test="atLuqiaoTicket != null">
+                at_luqiao_ticket = #{atLuqiaoTicket},
+            </if>
+            <if test="atRepairUpdown != null">
+                at_repair_updown = #{atRepairUpdown},
+            </if>
+            <if test="atFourwheelPosition != null">
+                at_fourwheel_position = #{atFourwheelPosition},
+            </if>
+            <if test="atTrialReport != null">
+                at_trial_report = #{atTrialReport},
+            </if>
+            <if test="atTrialSummary != null">
+                at_trial_summary = #{atTrialSummary},
+            </if>
+            <if test="atTaskbookName != null">
+                at_taskbook_name = #{atTaskbookName},
+            </if>
+            <if test="atDriveRecordName != null">
+                at_drive_record_name = #{atDriveRecordName},
+            </if>
+            <if test="atCheckName != null">
+                at_check_name = #{atCheckName},
+            </if>
+            <if test="atTorqueRecordName != null">
+                at_torque_record_name = #{atTorqueRecordName},
+            </if>
+            <if test="atHubTemperatureName != null">
+                at_hub_temperature_name = #{atHubTemperatureName},
+            </if>
+            <if test="atLuqiaoTicketName != null">
+                at_luqiao_ticket_name = #{atLuqiaoTicketName},
+            </if>
+            <if test="atRepairUpdownName != null">
+                at_repair_updown_name = #{atRepairUpdownName},
+            </if>
+            <if test="atFourwheelPositionName != null">
+                at_fourwheel_position_name = #{atFourwheelPositionName},
+            </if>
+            <if test="atTrialReportName != null">
+                at_trial_report_name = #{atTrialReportName},
+            </if>
+            <if test="atTrialSummaryName != null">
+                at_trial_summary_name = #{atTrialSummaryName},
+            </if>
+            <if test="approvalcode != null">
+                approvalcode = #{approvalcode},
+            </if>
+            <if test="approvalcost != null">
+                approvalcost = #{approvalcost},
+            </if>
+            <if test="trustcode != null">
+                trustcode = #{trustcode},
+            </if>
+            <if test="supid != null">
+                supid = #{supid},
+            </if>
+            <if test="supname != null">
+                supname = #{supname},
+            </if>
+            <if test="delegater != null">
+                delegater = #{delegater},
+            </if>
+            <if test="applydate != null">
+                applydate = #{applydate},
+            </if>
+            <if test="tasksource != null">
+                tasksource = #{tasksource},
+            </if>
+            <if test="frequency != null">
+                frequency = #{frequency},
+            </if>
+            <if test="tasktype != null">
+                tasktype = #{tasktype},
+            </if>
+            <if test="taskstartdate != null">
+                taskstartdate = #{taskstartdate},
+            </if>
+            <if test="taskenddate != null">
+                taskenddate = #{taskenddate},
+            </if>
+            <if test="vehicletype != null">
+                vehicletype = #{vehicletype},
+            </if>
+            <if test="chassiscode != null">
+                chassiscode = #{chassiscode},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="pvOrcv != null">
+                pvorcv = #{pvOrcv},
+            </if>
+            <if test="createById != null">
+                create_By_Id = #{createById},
+            </if>
+            <if test="createDate != null">
+                create_Date = #{createDate},
+            </if>
+            <if test="confirmPerson != null">
+                confirm_Person = #{confirmPerson},
+            </if>
+            <if test="pcId !=null">
+                pcId = #{pcId},
+            </if>
+            <if test="operationId !=null">
+                OPERATION_ID = #{operationId},
+            </if>
+            <if test="operationName !=null">
+                OPERATION_NAME = #{operationName},
+            </if>
+            <if test="tower !=null">
+                tower = #{tower},
+            </if>
+
+            <if test="carType !=null">
+                car_Type = #{carType},
+            </if>
+            <if test="fuelType !=null">
+                fuel_Type = #{fuelType},
+            </if>
+            <if test="carId !=null">
+                car_id = #{carId},
+            </if>
+            <if test="atFuelTicket !=null">
+                AT_FUEL_TICKET = #{atFuelTicket},
+            </if>
+            <if test="whetherFinish !=null">
+                WHERTHER_FINISH = #{whetherFinish},
+            </if>
+            <if test="postponeNum !=null">
+                POSTPONE_NUM = #{postponeNum},
+            </if>
+            <if test="whetherStandard !=null">
+                WHETHER_STANDARD = #{whetherStandard},
+            </if>
+            <if test="standardNum !=null">
+                STANDARD_NUM = #{standardNum},
+            </if>
+            <if test="malfunctionNum !=null">
+                MALFUNCTION_NUM = #{malfunctionNum},
+            </if>
+            <if test="reviewNum !=null">
+                REVIEW_NUM = #{reviewNum},
+            </if>
+            <if test="manyFileId !=null">
+                MANYFILE_ID = #{manyFileId},
+            </if>
+            <if test="manyFileName !=null">
+                MANYFILE_NAME = #{manyFileName},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--变更委托状态-->
+    <update id="updateStatus" parameterType="java.lang.String">
+        update SUP_TRIAL_PROJECT set status = #{status} where id = #{id}
+    </update>
+
+    <!-- 根据id查询 SUP_TRIAL_PROJECT -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from SUP_TRIAL_PROJECT
+        where id = #{value}
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SUP_TRIAL_PROJECT
+     where id = #{value}
+  </delete>
+
+    <!--逻辑删除-->
+<update id="deleteFlag" parameterType="java.lang.String">
+    update SUP_TRIAL_PROJECT set del_flag = 1 where id = #{id}
+</update>
+
+    <!-- SUP_TRIAL_PROJECT 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from SUP_TRIAL_PROJECT
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询SUP_TRIAL_PROJECT列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from SUP_TRIAL_PROJECT
+        <include refid="Base_Where_Clause"/>
+        order by trustcode desc
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from SUP_TRIAL_PROJECT
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+    <select id="getTrialProjectEOByCarTypeAndChassisCode"  resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        FROM
+        (select ROWNUM,
+        <include refid="Base_Column_List" />
+        from SUP_TRIAL_PROJECT
+        where car_id = #{carId})
+        WHERE  ROWNUM = 1
+    </select>
+    <select id="selectCarTypeByPcId"  resultType="com.adc.da.project.vo.TrialProjectCarVO">
+        select ID AS trialProjectId ,VEHICLETYPE AS vehicleType,CHASSISCODE AS chassisCode,car_id AS carId
+        from SUP_TRIAL_PROJECT
+        where PCID = #{pcId} and STATUS = '1'
+    </select>
+
+    <select id="getTrialProjectEOByCarIdAndPcId" parameterType="java.lang.String" resultType="com.adc.da.project.vo.TrialProjectCarVO">
+        select
+        <include refid="Base_Column_List" />
+        from SUP_TRIAL_PROJECT
+        where CAR_ID = #{carId} and PCID = #{pcId} and STATUS = '3'
+    </select>
+</mapper>

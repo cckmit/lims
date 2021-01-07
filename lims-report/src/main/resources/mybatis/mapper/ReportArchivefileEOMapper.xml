@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_report.dao.ReportArchivefileEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.trial_report.entity.ReportArchivefileEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="REPORT_ID" jdbcType="VARCHAR" property="reportId" />
+    <result column="REPORT_FILENO" jdbcType="VARCHAR" property="reportFileno" />
+    <result column="REPORT_FILEID" jdbcType="VARCHAR" property="reportFileid" />
+    <result column="REPORT_FILENAME" jdbcType="VARCHAR" property="reportFilename" />
+    <result column="REPORT_FILETYPE" jdbcType="VARCHAR" property="reportFiletype" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="ARCHIVE_STATUS" jdbcType="VARCHAR" property="archiveStatus" />
+    <result column="STORAGE_POSOTION" jdbcType="VARCHAR" property="storagePosotion" />
+    <result column="ISPAPER_ARCHIVE" jdbcType="VARCHAR" property="isPaperArchive" />
+    <result column="ISELECTRON_ARCHIVE" jdbcType="VARCHAR" property="isElectronArchive" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <resultMap id="SearchResultMap" type="com.adc.da.trial_report.entity.ReportArchivefileEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="REPORT_ID" jdbcType="VARCHAR" property="reportId" />
+    <result column="REPORT_FILENO" jdbcType="VARCHAR" property="reportFileno" />
+    <result column="REPORT_FILEID" jdbcType="VARCHAR" property="reportFileid" />
+    <result column="REPORT_FILENAME" jdbcType="VARCHAR" property="reportFilename" />
+    <result column="REPORT_FILETYPE" jdbcType="VARCHAR" property="reportFiletype" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="ARCHIVE_STATUS" jdbcType="VARCHAR" property="archiveStatus" />
+    <result column="STORAGE_POSOTION" jdbcType="VARCHAR" property="storagePosotion" />
+    <result column="ISPAPER_ARCHIVE" jdbcType="VARCHAR" property="isPaperArchive" />
+    <result column="ISELECTRON_ARCHIVE" jdbcType="VARCHAR" property="isElectronArchive" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="TITLE" jdbcType="VARCHAR" property="trialTitle" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    ID, REPORT_ID, REPORT_FILENO, REPORT_FILEID, REPORT_FILENAME, REPORT_FILETYPE, TRIALTASK_ID, 
+    ARCHIVE_STATUS, STORAGE_POSOTION, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, 
+    DEL_FLAG, REMARK, ISPAPER_ARCHIVE, ISELECTRON_ARCHIVE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EV_TRIALREPORT_ARCHIVEFILE
+    where ID = #{id,jdbcType=VARCHAR} and DEL_FLAG = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from EV_TRIALREPORT_ARCHIVEFILE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.trial_report.entity.ReportArchivefileEO">
+    insert into EV_TRIALREPORT_ARCHIVEFILE (
+    	ID, 
+    	REPORT_ID, 
+    	REPORT_FILENO, 
+      	REPORT_FILEID, 
+      	REPORT_FILENAME, 
+      	REPORT_FILETYPE, 
+      	TRIALTASK_ID, 
+      	ARCHIVE_STATUS, 
+      	STORAGE_POSOTION, 
+      	CREATE_BY, 
+      	CREATE_TIME, 
+      	UPDATE_BY, 
+      	UPDATE_TIME, 
+      	DEL_FLAG, 
+      	REMARK,
+      	ISPAPER_ARCHIVE,
+      	ISELECTRON_ARCHIVE
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{reportId,jdbcType=VARCHAR}, 
+    	#{reportFileno,jdbcType=VARCHAR}, 
+      	#{reportFileid,jdbcType=VARCHAR}, 
+      	#{reportFilename,jdbcType=VARCHAR}, 
+      	#{reportFiletype,jdbcType=VARCHAR}, 
+      	#{trialtaskId,jdbcType=VARCHAR}, 
+      	#{archiveStatus,jdbcType=VARCHAR}, 
+      	#{storagePosotion,jdbcType=VARCHAR}, 
+      	#{createBy,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=VARCHAR}, 
+      	#{updateBy,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{delFlag,jdbcType=VARCHAR}, 
+      	#{remark,jdbcType=VARCHAR},
+      	#{isPaperArchive,jdbcType=VARCHAR},
+      	#{isElectronArchive,jdbcType=VARCHAR}      	
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.trial_report.entity.ReportArchivefileEO">
+    insert into EV_TRIALREPORT_ARCHIVEFILE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="reportId != null">
+        REPORT_ID,
+      </if>
+      <if test="reportFileno != null">
+        REPORT_FILENO,
+      </if>
+      <if test="reportFileid != null">
+        REPORT_FILEID,
+      </if>
+      <if test="reportFilename != null">
+        REPORT_FILENAME,
+      </if>
+      <if test="reportFiletype != null">
+        REPORT_FILETYPE,
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID,
+      </if>
+      <if test="archiveStatus != null">
+        ARCHIVE_STATUS,
+      </if>
+      <if test="storagePosotion != null">
+        STORAGE_POSOTION,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="isPaperArchive != null">
+        ISPAPER_ARCHIVE,
+      </if>
+      <if test="isElectronArchive != null">
+        ISELECTRON_ARCHIVE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="reportId != null">
+        #{reportId,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFileno != null">
+        #{reportFileno,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFileid != null">
+        #{reportFileid,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFilename != null">
+        #{reportFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFiletype != null">
+        #{reportFiletype,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="archiveStatus != null">
+        #{archiveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="storagePosotion != null">
+        #{storagePosotion,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isPaperArchive != null">
+        #{isPaperArchive,jdbcType=VARCHAR},
+      </if>
+      <if test="isElectronArchive != null">
+        #{isElectronArchive,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_report.entity.ReportArchivefileEO">
+    update EV_TRIALREPORT_ARCHIVEFILE
+    <set>
+      <if test="reportId != null">
+        REPORT_ID = #{reportId,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFileno != null">
+        REPORT_FILENO = #{reportFileno,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFileid != null">
+        REPORT_FILEID = #{reportFileid,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFilename != null">
+        REPORT_FILENAME = #{reportFilename,jdbcType=VARCHAR},
+      </if>
+      <if test="reportFiletype != null">
+        REPORT_FILETYPE = #{reportFiletype,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="archiveStatus != null">
+        ARCHIVE_STATUS = #{archiveStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="storagePosotion != null">
+        STORAGE_POSOTION = #{storagePosotion,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isPaperArchive != null">
+        ISPAPER_ARCHIVE = #{isPaperArchive,jdbcType=VARCHAR},
+      </if>
+      <if test="isElectronArchive != null">
+        ISELECTRON_ARCHIVE = #{isElectronArchive,jdbcType=VARCHAR},
+      </if> 
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.trial_report.entity.ReportArchivefileEO">
+    update EV_TRIALREPORT_ARCHIVEFILE
+    set REPORT_ID = #{reportId,jdbcType=VARCHAR},
+      REPORT_FILENO = #{reportFileno,jdbcType=VARCHAR},
+      REPORT_FILEID = #{reportFileid,jdbcType=VARCHAR},
+      REPORT_FILENAME = #{reportFilename,jdbcType=VARCHAR},
+      REPORT_FILETYPE = #{reportFiletype,jdbcType=VARCHAR},
+      TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      ARCHIVE_STATUS = #{archiveStatus,jdbcType=VARCHAR},
+      STORAGE_POSOTION = #{storagePosotion,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ISPAPER_ARCHIVE = #{isPaperArchive,jdbcType=VARCHAR},
+      ISELECTRON_ARCHIVE = #{isElectronArchive,jdbcType=VARCHAR}       
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 通过报告id删除信息 -->
+  <update id="deleteByReportId" parameterType="com.adc.da.trial_report.entity.ReportArchivefileEO">
+    update EV_TRIALREPORT_ARCHIVEFILE
+    set
+      DEL_FLAG = '1'
+    where REPORT_ID = #{reportId,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <!-- 通过文件id删除信息 -->
+  <update id="deleteByFileId" parameterType="com.adc.da.trial_report.entity.ReportArchivefileEO">
+    update EV_TRIALREPORT_ARCHIVEFILE
+    set
+      DEL_FLAG = '1'
+    where REPORT_FILEID = #{reportFileid,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 通过报告id获取信息 -->
+  <select id="findListByReportId"  parameterType="java.lang.String" resultMap="SearchResultMap">
+   		SELECT 
+   		EV_TRIALREPORT_ARCHIVEFILE.ID, 
+   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_ID, 
+   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_FILENO, 
+   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_FILEID, 
+   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_FILENAME, 
+   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_FILETYPE, 
+   		EV_TRIALREPORT_ARCHIVEFILE.TRIALTASK_ID, 
+    	EV_TRIALREPORT_ARCHIVEFILE.ARCHIVE_STATUS, 
+    	EV_TRIALREPORT_ARCHIVEFILE.STORAGE_POSOTION,
+    	EV_TRIALREPORT_ARCHIVEFILE.ISPAPER_ARCHIVE, 
+    	EV_TRIALREPORT_ARCHIVEFILE.ISELECTRON_ARCHIVE,
+   		EV_TRIAL_TASK.TITLE
+    	from EV_TRIALREPORT_ARCHIVEFILE
+    	LEFT JOIN EV_TRIAL_TASK ON EV_TRIALREPORT_ARCHIVEFILE.TRIALTASK_ID = EV_TRIAL_TASK.ID
+   		WHERE EV_TRIALREPORT_ARCHIVEFILE.DEL_FLAG != 1
+   		AND
+   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_ID = #{reportId,jdbcType=VARCHAR}
+   </select>
+  
+   <!-- 列表总数-->
+   <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT count(1) FROM EV_TRIALREPORT_ARCHIVEFILE
+       LEFT JOIN EV_TRIAL_TASK ON EV_TRIALREPORT_ARCHIVEFILE.TRIALTASK_ID = EV_TRIAL_TASK.ID
+  		WHERE EV_TRIALREPORT_ARCHIVEFILE.DEL_FLAG != 1
+  		AND
+  		EV_TRIALREPORT_ARCHIVEFILE.REPORT_ID = #{reportId,jdbcType=VARCHAR}
+   </select>
+  
+    <select id="queryByPage"  parameterType="com.adc.da.base.page.BasePage" resultMap="SearchResultMap">
+   	   SELECT
+        *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT 
+	   		EV_TRIALREPORT_ARCHIVEFILE.ID, 
+	   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_ID, 
+	   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_FILENO, 
+	   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_FILEID, 
+	   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_FILENAME, 
+	   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_FILETYPE, 
+	   		EV_TRIALREPORT_ARCHIVEFILE.TRIALTASK_ID, 
+	    	EV_TRIALREPORT_ARCHIVEFILE.ARCHIVE_STATUS, 
+	    	EV_TRIALREPORT_ARCHIVEFILE.STORAGE_POSOTION,
+	    	EV_TRIALREPORT_ARCHIVEFILE.ISPAPER_ARCHIVE, 
+	    	EV_TRIALREPORT_ARCHIVEFILE.ISELECTRON_ARCHIVE,
+	   		EV_TRIAL_TASK.TITLE
+	    	from EV_TRIALREPORT_ARCHIVEFILE
+	    	LEFT JOIN EV_TRIAL_TASK ON EV_TRIALREPORT_ARCHIVEFILE.TRIALTASK_ID = EV_TRIAL_TASK.ID
+	   		WHERE EV_TRIALREPORT_ARCHIVEFILE.DEL_FLAG != 1
+	   		AND
+	   		EV_TRIALREPORT_ARCHIVEFILE.REPORT_ID = #{reportId,jdbcType=VARCHAR}
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+</mapper>

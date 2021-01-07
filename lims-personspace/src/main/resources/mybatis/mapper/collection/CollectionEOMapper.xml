@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.collection.dao.CollectionEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.collection.entity.CollectionEO" >
+    <id column="id" property="id" />
+    <result column="collectiontime" property="collectiontime" />
+    <result column="sendtime" property="sendtime" />
+    <result column="senduser" property="senduser" />
+    <result column="title" property="title" />
+    <result column="type" property="type" />
+    <result column="sendlink" property="sendlink" />
+    <result column="cc_create_by_id" property="ccCreateById" />
+    <result column="businessid" property="businessid" />
+    <result column="del_flag" property="delFlag" />
+  </resultMap>
+
+  <!-- TP_COLLECTION table all fields -->
+  <sql id="Base_Column_List" >
+     id, collectiontime, sendtime, senduser, title, type, sendlink, cc_create_by_id, businessid, del_flag
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+      <choose>
+          <when test="searchPhrase != null">
+              <foreach collection="searchPhrase" item="search">
+                    and  (
+                  title like '%${search}%'  or
+                  senduser like '%${search}%'  or
+                  sendtime like '%${search}%'  or
+                  collectiontime  like '%${search}%'
+                  )
+              </foreach>
+          </when>
+          <otherwise>
+    <trim suffixOverrides="," >
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="collectiontime != null" >
+        and collectiontime like  '%${collectiontime}%'
+      </if>
+      <if test="collectiontime1 != null" >
+        and collectiontime &gt;= #{collectiontime1}
+      </if>
+      <if test="collectiontime2 != null" >
+        and collectiontime &lt;= #{collectiontime2}
+      </if>
+      <if test="sendtime != null" >
+        and sendtime like '%${sendtime}%'
+      </if>
+      <if test="sendtime1 != null" >
+        and sendtime &gt;= #{sendtime1}
+      </if>
+      <if test="sendtime2 != null" >
+        and sendtime &lt;= #{sendtime2}
+      </if>
+      <if test="senduser != null" >
+        and senduser like '%${senduser}%'
+      </if>
+      <if test="title != null" >
+        and title like '%${title}%'
+      </if>
+      <if test="type != null" >
+        and type ${typeOperator} #{type}
+      </if>
+      <if test="ccCreateById != null" >
+        and cc_create_by_id ${ccCreateByIdOperator} #{ccCreateById}
+      </if>
+    </trim>
+          </otherwise>
+      </choose>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.collection.entity.CollectionEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_TP_COLLECTION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into TP_COLLECTION(<include refid="Base_Column_List" />)
+    values (#{id, jdbcType=VARCHAR}, #{collectiontime, jdbcType=VARCHAR}, #{sendtime, jdbcType=VARCHAR}, #{senduser, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{type, jdbcType=VARCHAR}, #{sendlink, jdbcType=VARCHAR}, #{ccCreateById, jdbcType=VARCHAR}, #{businessid, jdbcType=VARCHAR}, #{delFlag, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.collection.entity.CollectionEO" >
+         <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+             select sys_guid() from dual
+    </selectKey>
+        insert into TP_COLLECTION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="collectiontime != null" >collectiontime,</if>
+                <if test="sendtime != null" >sendtime,</if>
+                <if test="senduser != null" >senduser,</if>
+                <if test="title != null" >title,</if>
+                <if test="type != null" >type,</if>
+                <if test="sendlink != null" >sendlink,</if>
+                <if test="ccCreateById != null" >cc_create_by_id,</if>
+                <if test="businessid != null" >businessid,</if>
+                <if test="delFlag != null" >del_flag,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="collectiontime != null" >#{collectiontime, jdbcType=VARCHAR},</if>
+                <if test="sendtime != null" >#{sendtime, jdbcType=VARCHAR},</if>
+                <if test="senduser != null" >#{senduser, jdbcType=VARCHAR},</if>
+                <if test="title != null" >#{title, jdbcType=VARCHAR},</if>
+                <if test="type != null" >#{type, jdbcType=VARCHAR},</if>
+                <if test="sendlink != null" >#{sendlink, jdbcType=VARCHAR},</if>
+                <if test="ccCreateById != null" >#{ccCreateById, jdbcType=VARCHAR},</if>
+                <if test="businessid != null" >#{businessid, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.collection.entity.CollectionEO" >
+    update TP_COLLECTION
+       set  collectiontime = #{collectiontime},
+            sendtime = #{sendtime},
+            senduser = #{senduser},
+            title = #{title},
+            type = #{type},
+            sendlink = #{sendlink},
+            cc_create_by_id = #{ccCreateById},
+            businessid = #{businessid},
+            del_flag = #{delFlag}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.collection.entity.CollectionEO" >
+    update TP_COLLECTION
+    <set >
+      <if test="collectiontime != null" >
+        collectiontime = #{collectiontime},
+      </if>
+      <if test="sendtime != null" >
+        sendtime = #{sendtime},
+      </if>
+      <if test="senduser != null" >
+        senduser = #{senduser},
+      </if>
+      <if test="title != null" >
+        title = #{title},
+      </if>
+      <if test="type != null" >
+        type = #{type},
+      </if>
+      <if test="sendlink != null" >
+        sendlink = #{sendlink},
+      </if>
+      <if test="ccCreateById != null" >
+        cc_create_by_id = #{ccCreateById},
+      </if>
+      <if test="businessid != null" >
+        businessid = #{businessid},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 TP_COLLECTION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from TP_COLLECTION
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TP_COLLECTION
+     where id = #{value}
+
+  </delete>
+
+  <!-- TP_COLLECTION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from TP_COLLECTION
+    <include refid="Base_Where_Clause"/>
+      and del_flag = 0
+  </select>
+
+  <!-- 查询TP_COLLECTION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from TP_COLLECTION
+			 <include refid="Base_Where_Clause"/>
+      and del_flag = 0
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from TP_COLLECTION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

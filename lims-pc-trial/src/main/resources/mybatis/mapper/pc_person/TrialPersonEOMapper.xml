@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_person.dao.TrialPersonEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_person.entity.TrialPersonEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="person_id" property="personId"/>
+        <result column="person_name" property="personName"/>
+        <result column="person_role_id" property="personRoleId"/>
+        <result column="person_role_name" property="personRoleName"/>
+        <result column="person_status" property="personStatus"/>
+        <result column="change_reason" property="changeReason"/>
+        <result column="trial_task_id" property="trialTaskId"/>
+        <result column="bench_org_id" property="benchOrgId"/>
+        <result column="bench_org_name" property="benchOrgName"/>
+        <result column="sample_id" property="sampleId"/>
+        <result column="sample_name" property="sampleName"/>
+    </resultMap>
+
+    <!-- PC_TRIAL_PERSON table all fields -->
+    <sql id="Base_Column_List">
+     id, del_flag, create_by, create_time, update_time, update_by, person_id, 
+     person_name, person_role_id, person_role_name, person_status, change_reason, 
+     trial_task_id, bench_org_id, bench_org_name, sample_id, sample_name
+  </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+            <if test="delFlag != null">
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+            <if test="createBy != null">
+                and create_by ${createByOperator} #{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time ${createTimeOperator} #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time ${updateTimeOperator} #{updateTime}
+            </if>
+            <if test="updateBy != null">
+                and update_by ${updateByOperator} #{updateBy}
+            </if>
+            <if test="personId != null">
+                and person_id ${personIdOperator} #{personId}
+            </if>
+            <if test="personName != null">
+                and person_name ${personNameOperator} #{personName}
+            </if>
+            <if test="personRoleId != null">
+                and person_role_id ${personRoleIdOperator} #{personRoleId}
+            </if>
+            <if test="personRoleName != null">
+                and person_role_name ${personRoleNameOperator} #{personRoleName}
+            </if>
+            <if test="personStatus != null">
+                and person_status ${personStatusOperator} #{personStatus}
+            </if>
+            <if test="changeReason != null">
+                and change_reason ${changeReasonOperator} #{changeReason}
+            </if>
+            <if test="trialTaskId != null">
+                and trial_task_id ${trialTaskIdOperator} #{trialTaskId}
+            </if>
+        </trim>
+    </sql>
+
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_person.entity.TrialPersonEO">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SYS_GUID() FROM DUAL
+        </selectKey>
+        insert into PC_TRIAL_PERSON
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="personId != null">person_id,</if>
+            <if test="personName != null">person_name,</if>
+            <if test="personRoleId != null">person_role_id,</if>
+            <if test="personRoleName != null">person_role_name,</if>
+            <if test="personStatus != null">person_status,</if>
+            <if test="changeReason != null">change_reason,</if>
+            <if test="trialTaskId != null">trial_task_id,</if>
+            <if test="benchOrgId != null">bench_org_id,</if>
+            <if test="benchOrgName != null">bench_org_name,</if>
+            <if test="sampleId != null">sample_id,</if>
+            <if test="sampleName != null">sample_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="personId != null">#{personId, jdbcType=VARCHAR},</if>
+            <if test="personName != null">#{personName, jdbcType=VARCHAR},</if>
+            <if test="personRoleId != null">#{personRoleId, jdbcType=VARCHAR},</if>
+            <if test="personRoleName != null">#{personRoleName, jdbcType=VARCHAR},</if>
+            <if test="personStatus != null">#{personStatus, jdbcType=VARCHAR},</if>
+            <if test="changeReason != null">#{changeReason, jdbcType=VARCHAR},</if>
+            <if test="trialTaskId != null">#{trialTaskId, jdbcType=VARCHAR},</if>
+            <if test="benchOrgId !=null">#{benchOrgId, jdbcType=VARCHAR},</if>
+            <if test="benchOrgName !=null">#{benchOrgName, jdbcType=VARCHAR},</if>
+            <if test="sampleId !=null">#{sampleId, jdbcType=VARCHAR},</if>
+            <if test="sampleName !=null">#{sampleName, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_person.entity.TrialPersonEO">
+        update PC_TRIAL_PERSON
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="personId != null">
+                person_id = #{personId},
+            </if>
+            <if test="personName != null">
+                person_name = #{personName},
+            </if>
+            <if test="personRoleId != null">
+                person_role_id = #{personRoleId},
+            </if>
+            <if test="personRoleName != null">
+                person_role_name = #{personRoleName},
+            </if>
+            <if test="personStatus != null">
+                person_status = #{personStatus},
+            </if>
+            <if test="changeReason != null">
+                change_reason = #{changeReason},
+            </if>
+            <if test="trialTaskId != null">
+                trial_task_id = #{trialTaskId},
+            </if>
+            <if test="benchOrgId != null">
+                bench_org_id = #{benchOrgId},
+            </if>
+            <if test="benchOrgName != null">
+                bench_org_name = #{benchOrgName},
+            </if>
+            <if test="sampleId != null">
+                sample_id = #{sampleId},
+            </if>
+            <if test="sampleName != null">
+                sample_name = #{sampleName},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 PC_TRIAL_PERSON -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_PERSON
+        where id = #{value}
+
+    </select>
+    <!-- 根据id集合查询 PC_TRIAL_PERSON -->
+    <select id="selectByKeyArray" parameterType="java.util.ArrayList" resultType="java.util.ArrayList">
+        SELECT userName FROM (
+             select trial_task_id,
+             LISTAGG(PERSON_NAME,',')  within GROUP(ORDER BY create_time)  userName
+             from PC_TRIAL_PERSON  where trial_task_id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        )
+    </select>
+
+    <!--根据委托id查询-->
+    <select id="selectByTaskId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_PERSON
+        where trial_task_id = #{value}
+    </select>
+
+    <select id="queryByTaskId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_PERSON
+        where trial_task_id = #{value} and person_status = '0'
+    </select>
+
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_TRIAL_PERSON
+     where id = #{value}
+  </delete>
+
+    <!-- 批量删除 -->
+   <delete id="batchDelete" parameterType="java.lang.String">
+    delete from PC_TRIAL_PERSON
+     where trial_task_id = #{value}
+  </delete>
+
+    <!-- PC_TRIAL_PERSON 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_TRIAL_PERSON
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_TRIAL_PERSON列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_PERSON
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_PERSON
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>

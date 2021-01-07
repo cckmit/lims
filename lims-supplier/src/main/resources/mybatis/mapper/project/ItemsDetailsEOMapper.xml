@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.project.dao.ItemsDetailsEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.project.entity.ItemsDetailsEO" >
+    <id column="id" property="id" />
+    <result column="trust_type" property="trustType" />
+    <result column="test_start_date" property="testStartDate" />
+    <result column="test_end_date" property="testEndDate" />
+    <result column="traffic" property="traffic" />
+    <result column="schedul" property="schedul" />
+    <result column="start_port" property="startPort" />
+    <result column="end_port" property="endPort" />
+    <result column="plan_mileage" property="planMileage" />
+    <result column="status" property="status" />
+    <result column="contract_project_name" property="contractProjectName" />
+    <result column="project_name" property="projectName" />
+    <result column="project_id" property="projectId" />
+    <result column="sup_trial_id" property="supTrialId" />
+    <result column="sup_project_id" property="supProjectId" />
+    <result column="car_state" property="carState" />
+    <result column="load" property="load" />
+  </resultMap>
+
+  <!-- SUP_ITEMS_DETAILS table all fields -->
+  <sql id="Base_Column_List" >
+     id, trust_type, test_start_date, test_end_date, traffic, schedul, start_port, end_port, plan_mileage, status, contract_project_name, project_name, project_id, sup_trial_id, sup_project_id, car_state, load
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="trustType != null" >
+        and trust_type ${trustTypeOperator} #{trustType}
+      </if>
+      <if test="testStartDate != null" >
+        and test_start_date ${testStartDateOperator} #{testStartDate}
+      </if>
+      <if test="testStartDate1 != null" >
+        and test_start_date &gt;= #{testStartDate1}
+      </if>
+      <if test="testStartDate2 != null" >
+        and test_start_date &lt;= #{testStartDate2}
+      </if>
+      <if test="testEndDate != null" >
+        and test_end_date ${testEndDateOperator} #{testEndDate}
+      </if>
+      <if test="testEndDate1 != null" >
+        and test_end_date &gt;= #{testEndDate1}
+      </if>
+      <if test="testEndDate2 != null" >
+        and test_end_date &lt;= #{testEndDate2}
+      </if>
+      <if test="traffic != null" >
+        and traffic ${trafficOperator} #{traffic}
+      </if>
+      <if test="schedul != null" >
+        and schedul ${schedulOperator} #{schedul}
+      </if>
+      <if test="startPort != null" >
+        and start_port ${startPortOperator} #{startPort}
+      </if>
+      <if test="endPort != null" >
+        and end_port ${endPortOperator} #{endPort}
+      </if>
+      <if test="planMileage != null" >
+        and plan_mileage ${planMileageOperator} #{planMileage}
+      </if>
+      <if test="status != null" >
+        and status ${statusOperator} #{status}
+      </if>
+      <if test="contractProjectName != null" >
+        and contract_project_name ${contractProjectNameOperator} #{contractProjectName}
+      </if>
+      <if test="projectName != null" >
+        and project_name ${projectNameOperator} #{projectName}
+      </if>
+      <if test="projectId != null" >
+        and project_id ${projectIdOperator} #{projectId}
+      </if>
+      <if test="supTrialId != null" >
+        and sup_trial_id ${supTrialIdOperator} #{supTrialId}
+      </if>
+      <if test="supProjectId != null" >
+        and sup_project_id ${supProjectIdOperator} #{supProjectId}
+      </if>
+      <if test="carState != null" >
+        and car_state ${carStateOperator} #{carState}
+      </if>
+      <if test="load != null" >
+        and load ${loadOperator} #{load}
+      </if>
+    </trim>
+  </sql>
+
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.project.entity.ItemsDetailsEO" >
+      <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SYS_GUID() FROM DUAL
+    </selectKey>
+        insert into SUP_ITEMS_DETAILS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="trustType != null" >trust_type,</if>
+                <if test="testStartDate != null" >test_start_date,</if>
+                <if test="testEndDate != null" >test_end_date,</if>
+                <if test="traffic != null" >traffic,</if>
+                <if test="schedul != null" >schedul,</if>
+                <if test="startPort != null" >start_port,</if>
+                <if test="endPort != null" >end_port,</if>
+                <if test="planMileage != null" >plan_mileage,</if>
+                <if test="status != null" >status,</if>
+                <if test="contractProjectName != null" >contract_project_name,</if>
+                <if test="projectName != null" >project_name,</if>
+                <if test="projectId != null" >project_id,</if>
+                <if test="supTrialId != null" >sup_trial_id,</if>
+                <if test="supProjectId != null" >sup_project_id,</if>
+                <if test="carState != null" >car_state,</if>
+                <if test="load != null" >load,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="trustType != null" >#{trustType, jdbcType=VARCHAR},</if>
+                <if test="testStartDate != null" >#{testStartDate, jdbcType=TIMESTAMP},</if>
+                <if test="testEndDate != null" >#{testEndDate, jdbcType=TIMESTAMP},</if>
+                <if test="traffic != null" >#{traffic, jdbcType=VARCHAR},</if>
+                <if test="schedul != null" >#{schedul, jdbcType=VARCHAR},</if>
+                <if test="startPort != null" >#{startPort, jdbcType=VARCHAR},</if>
+                <if test="endPort != null" >#{endPort, jdbcType=VARCHAR},</if>
+                <if test="planMileage != null" >#{planMileage, jdbcType=VARCHAR},</if>
+                <if test="status != null" >#{status, jdbcType=VARCHAR},</if>
+                <if test="contractProjectName != null" >#{contractProjectName, jdbcType=VARCHAR},</if>
+                <if test="projectName != null" >#{projectName, jdbcType=VARCHAR},</if>
+                <if test="projectId != null" >#{projectId, jdbcType=VARCHAR},</if>
+                <if test="supTrialId != null" >#{supTrialId, jdbcType=VARCHAR},</if>
+                <if test="supProjectId != null" >#{supProjectId, jdbcType=VARCHAR},</if>
+                <if test="carState != null" >#{carState, jdbcType=VARCHAR},</if>
+                <if test="load != null" >#{load, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.project.entity.ItemsDetailsEO" >
+    update SUP_ITEMS_DETAILS
+    <set >
+      <if test="trustType != null" >
+        trust_type = #{trustType},
+      </if>
+      <if test="testStartDate != null" >
+        test_start_date = #{testStartDate},
+      </if>
+      <if test="testEndDate != null" >
+        test_end_date = #{testEndDate},
+      </if>
+      <if test="traffic != null" >
+        traffic = #{traffic},
+      </if>
+      <if test="schedul != null" >
+        schedul = #{schedul},
+      </if>
+      <if test="startPort != null" >
+        start_port = #{startPort},
+      </if>
+      <if test="endPort != null" >
+        end_port = #{endPort},
+      </if>
+      <if test="planMileage != null" >
+        plan_mileage = #{planMileage},
+      </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
+      <if test="contractProjectName != null" >
+        contract_project_name = #{contractProjectName},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName},
+      </if>
+      <if test="projectId != null" >
+        project_id = #{projectId},
+      </if>
+      <if test="supTrialId != null" >
+        sup_trial_id = #{supTrialId},
+      </if>
+      <if test="supProjectId != null" >
+        sup_project_id = #{supProjectId},
+      </if>
+      <if test="carState != null" >
+          car_state = #{carState},
+      </if>
+      <if test="load != null" >
+          load = #{load},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 SUP_ITEMS_DETAILS -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from SUP_ITEMS_DETAILS
+     where id = #{value}
+  </select>
+
+    <!--根据委托id查询-->
+    <select id="selectByTrialId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from SUP_ITEMS_DETAILS where SUP_TRIAL_ID = #{trialId}
+    </select>
+
+    <!--根据委托id删除-->
+    <delete id="deleteByTrialId" parameterType="java.lang.String">
+        delete  from SUP_ITEMS_DETAILS where  SUP_TRIAL_ID = #{trialId}
+    </delete>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SUP_ITEMS_DETAILS
+     where id = #{value}
+
+  </delete>
+
+  <!-- SUP_ITEMS_DETAILS 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from SUP_ITEMS_DETAILS
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询SUP_ITEMS_DETAILS列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from SUP_ITEMS_DETAILS
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from SUP_ITEMS_DETAILS
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

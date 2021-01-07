@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.kCar.dao.KBorrowInfoEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.kCar.entity.KBorrowInfoEO" >
+    <id column="id" property="id" />
+    <result column="borrow_use" property="borrowUse" />
+    <result column="borrow_user" property="borrowUser" />
+    <result column="plan_revert_date" property="planRevertDate" />
+    <result column="real_revert_date" property="realRevertDate" />
+    <result column="borrow_date" property="borrowDate" />
+    <result column="car_id" property="carId" />
+    <result column="CHASSIS_NUMBER" property="chassisNumber" />
+  </resultMap>
+
+  <!-- K_BORROW_INFO table all fields -->
+  <sql id="Base_Column_List" >
+     borrow_use, borrow_user, plan_revert_date, real_revert_date, borrow_date, car_id, id, CHASSIS_NUMBER
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="borrowUse != null" >
+        and borrow_use ${borrowUseOperator} #{borrowUse}
+      </if>
+      <if test="borrowUser != null" >
+        and borrow_user ${borrowUserOperator} #{borrowUser}
+      </if>
+      <if test="planRevertDate != null" >
+        and plan_revert_date ${planRevertDateOperator} #{planRevertDate}
+      </if>
+      <if test="realRevertDate != null" >
+        and real_revert_date ${realRevertDateOperator} #{realRevertDate}
+      </if>
+      <if test="borrowDate != null" >
+        and borrow_date ${borrowDateOperator} #{borrowDate}
+      </if>
+      <if test="chassisNumber != null" >
+        and CHASSIS_NUMBER ${chassisNumberOperator} #{chassisNumber}
+      </if>
+      
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.kCar.entity.KBorrowInfoEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_K_BORROW_INFO.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into K_BORROW_INFO(<include refid="Base_Column_List" />)
+    values (#{borrowUse, jdbcType=VARCHAR}, #{borrowUser, jdbcType=VARCHAR}, #{planRevertDate, jdbcType=VARCHAR}, #{realRevertDate, jdbcType=VARCHAR}, #{borrowDate, jdbcType=VARCHAR}, #{carId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR}, #{chassisNumber, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.kCar.entity.KBorrowInfoEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_K_BORROW_INFO.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into K_BORROW_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="borrowUse != null" >borrow_use,</if>
+                <if test="borrowUser != null" >borrow_user,</if>
+                <if test="planRevertDate != null" >plan_revert_date,</if>
+                <if test="realRevertDate != null" >real_revert_date,</if>
+                <if test="borrowDate != null" >borrow_date,</if>
+                <if test="carId != null" >car_id,</if>
+                <if test="id != null" >id,</if>
+                <if test="chassisNumber != null" >CHASSIS_NUMBER,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="borrowUse != null" >#{borrowUse, jdbcType=VARCHAR},</if>
+                <if test="borrowUser != null" >#{borrowUser, jdbcType=VARCHAR},</if>
+                <if test="planRevertDate != null" >#{planRevertDate, jdbcType=VARCHAR},</if>
+                <if test="realRevertDate != null" >#{realRevertDate, jdbcType=VARCHAR},</if>
+                <if test="borrowDate != null" >#{borrowDate, jdbcType=VARCHAR},</if>
+                <if test="carId != null" >#{carId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="chassisNumber != null" >#{chassisNumber, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.kCar.entity.KBorrowInfoEO" >
+    update K_BORROW_INFO
+       set  borrow_use = #{borrowUse},
+            borrow_user = #{borrowUser},
+            plan_revert_date = #{planRevertDate},
+            real_revert_date = #{realRevertDate},
+            borrow_date = #{borrowDate},
+            car_id = #{carId},
+            CHASSIS_NUMBER = #{chassisNumber}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.kCar.entity.KBorrowInfoEO" >
+    update K_BORROW_INFO
+    <set >
+      <if test="borrowUse != null" >
+        borrow_use = #{borrowUse},
+      </if>
+      <if test="borrowUser != null" >
+        borrow_user = #{borrowUser},
+      </if>
+      <if test="planRevertDate != null" >
+        plan_revert_date = #{planRevertDate},
+      </if>
+      <if test="realRevertDate != null" >
+        real_revert_date = #{realRevertDate},
+      </if>
+      <if test="borrowDate != null" >
+        borrow_date = #{borrowDate},
+      </if>
+      <if test="carId != null" >
+        car_id = #{carId},
+      </if>
+      <if test="chassisNumber != null" >
+        CHASSIS_NUMBER = #{chassisNumber},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 K_BORROW_INFO -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from K_BORROW_INFO
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from K_BORROW_INFO
+     where id = #{value}
+
+  </delete>
+
+  <!-- K_BORROW_INFO 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from K_BORROW_INFO
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询K_BORROW_INFO列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" />
+      from
+		(select tmp_tb.* , rownum rn
+          from
+			(select <include refid="Base_Column_List" />
+              from K_BORROW_INFO
+			 <include refid="Base_Where_Clause"/>
+             ORDER BY K_BORROW_INFO.plan_revert_date desc
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from K_BORROW_INFO
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+  
+  
+  <!-- 删除记录 -->
+  <delete id="deleteByChassisNumber" parameterType="java.lang.String">
+    delete from K_BORROW_INFO
+     where CHASSIS_NUMBER = #{chassisNumber}
+  </delete>
+  
+
+</mapper>

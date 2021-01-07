@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_execute.dao.TrialExecuteEODao">
+
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.trial_task.entity.TrialTaskEO">
+        <!-- 主键 -->
+        <id column="ID" property="id"/>
+        <!-- 表属性 -->
+        <result column="DEL_FLAG" property="delFlag"/>
+        <result column="CREATE_TIME" property="createTime"></result>
+        <result column="CREATE_BY" property="createBy"></result>
+        <result column="UPDATE_TIME" property="updateTime"></result>
+        <result column="UPDATE_BY" property="updateBy"></result>
+        <result column="EV_NUMBER" property="evNumber"></result>
+        <result column="TASK_FILEID" property="taskFileid"></result>
+        <result column="FINISH_TIME" property="finishTime"></result>
+        <result column="TITLE" property="title"></result>
+        <result column="REASON" property="reason"></result>
+        <result column="ACCORDING" property="according"></result>
+        <result column="PURPOSE" property="purpose"></result>
+        <result column="ENGINE_MODEL" property="engineModel"></result>
+        <result column="ENGINE_DEVELOP_STAGE" property="engineDevelopStage"></result>
+        <result column="ENGINE_NUMBER" property="engineNumber"></result>
+        <result column="ECU_STATUS" property="ecuStatus"></result>
+        <result column="OPERATION_FILEID" property="operationFileid"></result>
+        <result column="CURRENT_WAIT_USERID" property="currentWaitUserid"></result>
+        <result column="CURRENT_WAIT_USERNAME" property="currentWaitUsername"></result>
+        <result column="TRIAL_STATUS" property="trialStatus"></result>
+        <result column="FINISHDATE_DELYDAYS" property="finishdateDelydays"></result>
+        <result column="REMARK" property="remark"></result>
+        <result column="DELYFLAG" property="delyFlag"></result>
+        <result column="TRIALREPORT_STATUS" property="trialReportStatus"></result>
+        <result column="PERSON_IDS" property="personIds"></result>
+    </resultMap>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        WHERE DEL_FLAG = 0 and trial_status in (3, 5, 6, 7, 8)
+        <if test="userId != null and userId != '' and personIds != null ">
+            AND (CREATE_BY = #{userId} or PERSON_IDS like '%'||#{personIds}||'%')
+        </if>
+        <if test="createByIds != null">
+            AND CREATE_BY IN
+            <foreach collection="createByIds" item="createById" index="index" open="(" close=")" separator=",">
+                #{createById}
+            </foreach>
+        </if>
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="search">
+                    AND ( EV_NUMBER LIKE '%${search}%'
+                    OR TITLE LIKE '%${search}%'
+                    OR PURPOSE LIKE '%${search}%'
+                    OR TRIAL_STATUS LIKE '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="evNumber != null and evNumber != ''">
+                    AND EV_NUMBER LIKE '%${evNumber}%'
+                </if>
+                <if test="title != null and title != ''">
+                    AND TITLE LIKE '%${title}%'
+                </if>
+                <if test="purpose != null and purpose != ''">
+                    AND PURPOSE LIKE '%${purpose}%'
+                </if>
+                <if test="trialStatus != null and trialStatus != ''">
+                    AND TRIAL_STATUS = #{trialStatus}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from EV_TRIAL_TASK
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT *
+        FROM
+        (select tmp_tb.* , rownum rn from
+        (SELECT
+        ID,
+        EV_NUMBER,
+        TITLE,
+        PURPOSE,
+        TRIAL_STATUS,
+        DELYFLAG,
+        FINISHDATE_DELYDAYS,
+        PERSON_IDS
+        FROM
+        EV_TRIAL_TASK
+        <include refid="Base_Where_Clause"/>
+        ORDER BY FINISHDATE_DELYDAYS DESC
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <resultMap id="trialExecuteListVO" type="com.adc.da.trial_execute.vo.TrialExecuteListVO">
+
+        <id property="id" column="id"/>
+        <result property="proName" column="INSPRO_NAME"/>
+        <result property="insproStandard" column="inspro_standard"/>
+        <result property="orgName" column="org_name"/>
+        <result property="usName" column="us_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="reportFinishTime" column="report_finish_time"/>
+        <result property="trialprojectRate" column="trialproject_rate"/>
+        <result property="reportStatus" column="report_status"/>
+        <result property="attachmentName" column="attachment_name"/>
+        <result property="reportId" column="REPORT_ID"/>
+        <result property="busId" column="BUS_ID"/>
+        <result property="reportFileId" column="REPORT_FILEID"/>
+        <result property="orgName" column="ORG_NAME"/>
+        <result property="pdfFileId" column="PDF_FILEID"/>
+    </resultMap>
+    <select id="selectListById" resultMap="trialExecuteListVO">
+        SELECT E.ID,
+               E.INSPRO_NAME,
+               E.INSPRO_STANDARD,
+               tu.USNAME,
+               TASK.CREATE_TIME,
+               E2.UPDATE_TIME AS end_time,
+               E2.CREATE_TIME,
+               E2.PDF_FILEID,
+               E.REPORT_FINISH_TIME,
+               E2.REPORT_STATUS,
+               A2.ATTACHMENT_NAME,
+               E2.ID            as REPORT_ID,
+               TB.id            as BUS_ID,
+               E2.REPORT_FILEID AS REPORT_FILEID,
+               org.ORG_NAME
+        FROM EV_TRIALTASK_INSPRO E
+                 LEFT JOIN BM_INSPECT_PROJECT BIP ON BIP.ID = E.INSPRO_ID
+                 LEFT JOIN EV_TRIAL_TASK TASK ON E.TRIALTASK_ID = TASK.ID
+                 LEFT JOIN EV_TRIAL_REPORT E2 ON E.REPORT_ID = E2.ID
+                 LEFT JOIN TS_USER TU ON TU.USID = TASK.CREATE_BY
+                 LEFT JOIN TS_ATTACHMENT A2 ON A2.ID = E2.REPORT_FILEID
+                 left join TS_BASEBUS TB on TB.BUSINESS_ID = E2.ID
+                 left join (select ETT.id,
+                                   WM_CONCAT(T.ORG_NAME) org_name
+                            from EV_TRIAL_TASK ETT
+                                     left join EV_TRIALTASK_SAMPLE ETS on ETT.ID = ETS.TRIALTASK_ID
+                                     left join TS_ORG T on ETS.SCAFFOLDING_ID = T.ID
+                            where ETT.DEL_FLAG = 0
+                            group by ETT.ID) org on org.ID = TASK.ID
+             WHERE TASK.ID = #{id}
+             ORDER BY TASK.CREATE_TIME DESC
+    </select>
+
+</mapper>

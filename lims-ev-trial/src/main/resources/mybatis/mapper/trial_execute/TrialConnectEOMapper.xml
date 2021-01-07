@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_execute.dao.TrialConnectEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.trial_execute.entity.TrialConnectEO">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="remark" property="remark"/>
+        <result column="trialtask_id" property="trialtaskId"/>
+        <result column="create_by" property="createBy"/>
+        <result column="daily_check_status" property="dailyCheckStatus"/>
+        <result column="engine_run_status" property="engineRunStatus"/>
+        <result column="device_run_status" property="deviceRunStatus"/>
+        <result column="trial_change_status" property="trialChangeStatus"/>
+        <result column="trial_change_fileid" property="trialChangeFileid"/>
+        <result column="next_connect_notes" property="nextConnectNotes"/>
+        <result column="safety" property="safety"/>
+        <result column="plan_scaffolding_status" property="planScaffoldingStatus"/>
+        <result column="plan_duty_hour" property="planDutyHour"/>
+        <result column="plan_duty_total_hour" property="planDutyTotalHour"/>
+        <result column="plan_daily_check_others" property="planDailyCheckOthers"/>
+        <result column="actual_scaffolding_status" property="actualScaffoldingStatus"/>
+        <result column="actual_duty_hour" property="actualDutyHour"/>
+        <result column="actual_duty_total_hour" property="actualDutyTotalHour"/>
+        <result column="actual_daily_check_others" property="actualDailyCheckOthers"/>
+        <result column="enginerun_problem_total" property="enginerunProblemTotal"/>
+        <result column="enginerun_problem_finish" property="enginerunProblemFinish"/>
+        <result column="enginerun_problem_unfinish" property="enginerunProblemUnfinish"/>
+        <result column="devicerun_problem_total" property="devicerunProblemTotal"/>
+        <result column="devicerun_problem_finish" property="devicerunProblemFinish"/>
+        <result column="devicerun_problem_unfinish" property="devicerunProblemUnfinish"/>
+        <result property="connectorId" column="connector_id"/>
+        <result property="connectTime" column="connect_time"/>
+        <result property="createName" column="create_name"/>
+        <result property="connectorName" column="connector_name"/>
+        <result property="trialTaskName" column="TITLE"/>
+        <result property="attachmentName" column="ATTACHMENT_NAME"/>
+        <result property="safetyDescribe" column="safety_describe"/>
+        
+        <result property="exchangeStatus" column="EXCHANGE_STATUS"/>
+        <result property="exchangeBy" column="EXCHANGE_BY"/>
+        <result property="exchangeName" column="EXCHANGE_NAME"/>
+        <result property="exchangeTime" column="EXCHANGE_TIME"/>
+    </resultMap>
+
+    <!-- EV_TRIAL_CONNECT table all fields -->
+    <sql id="Base_Column_List">
+            create_time, update_by, update_time, del_flag, remark, id, trialtask_id, create_by, daily_check_status,
+            engine_run_status, device_run_status, trial_change_status, trial_change_fileid, next_connect_notes, safety,
+            plan_scaffolding_status, plan_duty_hour, plan_duty_total_hour, plan_daily_check_others,
+            actual_scaffolding_status, actual_duty_hour, actual_duty_total_hour, actual_daily_check_others,
+            enginerun_problem_total, enginerun_problem_finish, enginerun_problem_unfinish, devicerun_problem_total,
+            devicerun_problem_finish, devicerun_problem_unfinish, connector_id, connect_time, safety_describe,
+            EXCHANGE_STATUS, EXCHANGE_BY, EXCHANGE_NAME, EXCHANGE_TIME
+            
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    and (etc.create_time LIKE '%'||#{keyWord}||'%' OR tu.usname LIKE '%'||#{keyWord}||'%' OR
+                    etc.daily_check_status LIKE '%'||#{keyWord}||'%' OR etc.engine_run_status LIKE '%'||#{keyWord}||'%'
+                    OR etc.device_run_status LIKE '%'||#{keyWord}||'%' OR
+                    etc.trial_change_status LIKE '%'||#{keyWord}||'%' OR etc.safety LIKE '%'||#{keyWord}||'%')
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="createTimeStart != null and createTimeStart != ''">
+                    AND etc.create_time >= #{createTimeStart}
+                </if>
+                <if test="createTimeEnd != null and createTimeEnd != ''">
+                    AND etc.create_time <![CDATA[<=]]> #{createTimeEnd}
+                </if>
+                <if test="createBy != null">
+                    AND tu.usname LIKE '%'||#{createBy}||'%'
+                </if>
+                <if test="dailyCheckStatus != null">
+                    AND etc.daily_check_status LIKE '%'||#{dailyCheckStatus}||'%'
+                </if>
+                <if test="engineRunStatus != null">
+                    AND etc.engine_run_status LIKE '%'||#{engineRunStatus}||'%'
+                </if>
+                <if test="deviceRunStatus != null">
+                    AND etc.device_run_status LIKE '%'||#{deviceRunStatus}||'%'
+                </if>
+                <if test="trialChangeStatus != null">
+                    AND etc.trial_change_status LIKE '%'||#{trialChangeStatus}||'%'
+                </if>
+                <if test="safety != null">
+                    AND etc.safety LIKE '%'||#{safety}||'%'
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.trial_execute.entity.TrialConnectEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_EV_TRIAL_CONNECT.NEXTVAL FROM DUAL
+    </selectKey> -->
+        INSERT INTO EV_TRIAL_CONNECT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="remark != null">remark,</if>
+            <if test="id != null">id,</if>
+            <if test="trialtaskId != null">trialtask_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="dailyCheckStatus != null">daily_check_status,</if>
+            <if test="engineRunStatus != null">engine_run_status,</if>
+            <if test="deviceRunStatus != null">device_run_status,</if>
+            <if test="trialChangeStatus != null">trial_change_status,</if>
+            <if test="trialChangeFileid != null">trial_change_fileid,</if>
+            <if test="nextConnectNotes != null">next_connect_notes,</if>
+            <if test="safety != null">safety,</if>
+            <if test="planScaffoldingStatus != null">plan_scaffolding_status,</if>
+            <if test="planDutyHour != null">plan_duty_hour,</if>
+            <if test="planDutyTotalHour != null">plan_duty_total_hour,</if>
+            <if test="planDailyCheckOthers != null">plan_daily_check_others,</if>
+            <if test="actualScaffoldingStatus != null">actual_scaffolding_status,</if>
+            <if test="actualDutyHour != null">actual_duty_hour,</if>
+            <if test="actualDutyTotalHour != null">actual_duty_total_hour,</if>
+            <if test="actualDailyCheckOthers != null">actual_daily_check_others,</if>
+            <if test="enginerunProblemTotal != null">enginerun_problem_total,</if>
+            <if test="enginerunProblemFinish != null">enginerun_problem_finish,</if>
+            <if test="enginerunProblemUnfinish != null">enginerun_problem_unfinish,</if>
+            <if test="devicerunProblemTotal != null">devicerun_problem_total,</if>
+            <if test="devicerunProblemFinish != null">devicerun_problem_finish,</if>
+            <if test="devicerunProblemUnfinish != null">devicerun_problem_unfinish,</if>
+            <if test="connectorId != null">CONNECTOR_ID,</if>
+            <if test="connectTime != null">CONNECT_TIME,</if>
+            <if test="safetyDescribe != null">SAFETY_DESCRIBE,</if>
+            
+            <if test="exchangeStatus != null">EXCHANGE_STATUS,</if>
+            <if test="exchangeBy != null">EXCHANGE_BY,</if>
+            <if test="exchangeName != null">EXCHANGE_NAME,</if>
+            <if test="exchangeTime != null">EXCHANGE_TIME,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="id != null">#{id},</if>
+            <if test="trialtaskId != null">#{trialtaskId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="dailyCheckStatus != null">#{dailyCheckStatus},</if>
+            <if test="engineRunStatus != null">#{engineRunStatus},</if>
+            <if test="deviceRunStatus != null">#{deviceRunStatus},</if>
+            <if test="trialChangeStatus != null">#{trialChangeStatus},</if>
+            <if test="trialChangeFileid != null">#{trialChangeFileid},</if>
+            <if test="nextConnectNotes != null">#{nextConnectNotes},</if>
+            <if test="safety != null">#{safety},</if>
+            <if test="planScaffoldingStatus != null">#{planScaffoldingStatus},</if>
+            <if test="planDutyHour != null">#{planDutyHour},</if>
+            <if test="planDutyTotalHour != null">#{planDutyTotalHour},</if>
+            <if test="planDailyCheckOthers != null">#{planDailyCheckOthers},</if>
+            <if test="actualScaffoldingStatus != null">#{actualScaffoldingStatus},</if>
+            <if test="actualDutyHour != null">#{actualDutyHour},</if>
+            <if test="actualDutyTotalHour != null">#{actualDutyTotalHour},</if>
+            <if test="actualDailyCheckOthers != null">#{actualDailyCheckOthers},</if>
+            <if test="enginerunProblemTotal != null">#{enginerunProblemTotal},</if>
+            <if test="enginerunProblemFinish != null">#{enginerunProblemFinish},</if>
+            <if test="enginerunProblemUnfinish != null">#{enginerunProblemUnfinish},</if>
+            <if test="devicerunProblemTotal != null">#{devicerunProblemTotal},</if>
+            <if test="devicerunProblemFinish != null">#{devicerunProblemFinish},</if>
+            <if test="devicerunProblemUnfinish != null">#{devicerunProblemUnfinish},</if>
+            <if test="connectorId != null">#{connectorId},</if>
+            <if test="connectTime != null">#{connectTime},</if>
+            <if test="safetyDescribe != null">#{safetyDescribe},</if>
+            
+            <if test="exchangeStatus != null">#{exchangeStatus},</if>
+            <if test="exchangeBy != null">#{exchangeBy},</if>
+            <if test="exchangeName != null">#{exchangeName},</if>
+            <if test="exchangeTime != null">#{exchangeTime},</if>
+        </trim>
+    </insert>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_execute.entity.TrialConnectEO">
+        UPDATE EV_TRIAL_CONNECT
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="trialtaskId != null">
+                trialtask_id = #{trialtaskId},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="dailyCheckStatus != null">
+                daily_check_status = #{dailyCheckStatus},
+            </if>
+            <if test="engineRunStatus != null">
+                engine_run_status = #{engineRunStatus},
+            </if>
+            <if test="deviceRunStatus != null">
+                device_run_status = #{deviceRunStatus},
+            </if>
+            <if test="trialChangeStatus != null">
+                trial_change_status = #{trialChangeStatus},
+            </if>
+            <if test="trialChangeFileid != null">
+                trial_change_fileid = #{trialChangeFileid},
+            </if>
+            <if test="nextConnectNotes != null">
+                next_connect_notes = #{nextConnectNotes},
+            </if>
+            <if test="safety != null">
+                safety = #{safety},
+            </if>
+            <if test="planScaffoldingStatus != null">
+                plan_scaffolding_status = #{planScaffoldingStatus},
+            </if>
+            <if test="planDutyHour != null">
+                plan_duty_hour = #{planDutyHour},
+            </if>
+            <if test="planDutyTotalHour != null">
+                plan_duty_total_hour = #{planDutyTotalHour},
+            </if>
+            <if test="planDailyCheckOthers != null">
+                plan_daily_check_others = #{planDailyCheckOthers},
+            </if>
+            <if test="actualScaffoldingStatus != null">
+                actual_scaffolding_status = #{actualScaffoldingStatus},
+            </if>
+            <if test="actualDutyHour != null">
+                actual_duty_hour = #{actualDutyHour},
+            </if>
+            <if test="actualDutyTotalHour != null">
+                actual_duty_total_hour = #{actualDutyTotalHour},
+            </if>
+            <if test="actualDailyCheckOthers != null">
+                actual_daily_check_others = #{actualDailyCheckOthers},
+            </if>
+            <if test="enginerunProblemTotal != null">
+                enginerun_problem_total = #{enginerunProblemTotal},
+            </if>
+            <if test="enginerunProblemFinish != null">
+                enginerun_problem_finish = #{enginerunProblemFinish},
+            </if>
+            <if test="enginerunProblemUnfinish != null">
+                enginerun_problem_unfinish = #{enginerunProblemUnfinish},
+            </if>
+            <if test="devicerunProblemTotal != null">
+                devicerun_problem_total = #{devicerunProblemTotal},
+            </if>
+            <if test="devicerunProblemFinish != null">
+                devicerun_problem_finish = #{devicerunProblemFinish},
+            </if>
+            <if test="connectorId != null">
+                CONNECTOR_ID = #{connectorId},
+            </if>
+            <if test="devicerunProblemUnfinish != null">
+                devicerun_problem_unfinish = #{devicerunProblemUnfinish},
+            </if>
+            <if test="connectTime != null">
+                CONNECT_TIME = #{connectTime},
+            </if>
+            <if test="safetyDescribe != null">
+                SAFETY_DESCRIBE = #{safetyDescribe} ,
+            </if>
+            
+            <if test="exchangeStatus != null">
+                EXCHANGE_STATUS = #{exchangeStatus} ,
+            </if>
+            <if test="exchangeBy != null">
+                EXCHANGE_BY = #{exchangeBy} ,
+            </if>
+            <if test="exchangeName != null">
+                EXCHANGE_NAME = #{exchangeName} ,
+            </if>
+            <if test="exchangeTime != null">
+                EXCHANGE_TIME = #{exchangeTime} ,
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据id查询 EV_TRIAL_CONNECT -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM EV_TRIAL_CONNECT
+        WHERE id = #{value} AND DEL_FLAG = 0
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        DELETE FROM EV_TRIAL_CONNECT
+        WHERE id = #{value}
+
+    </delete>
+
+    <!-- EV_TRIAL_CONNECT 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        SELECT COUNT(1)
+        FROM EV_TRIAL_CONNECT ETC LEFT JOIN TS_USER TU ON ETC.CREATE_BY = TU.USID
+        WHERE ETC.TRIALTASK_ID = #{trialtaskId} AND ETC.DEL_FLAG = 0
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询EV_TRIAL_CONNECT列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT
+        ID,
+        CREATE_TIME,
+        CREATE_NAME,
+        DAILY_CHECK_STATUS,
+        ENGINE_RUN_STATUS,
+        DEVICE_RUN_STATUS,
+        TRIAL_CHANGE_STATUS,
+        SAFETY,
+        ACTUAL_DUTY_TOTAL_HOUR,
+  		EXCHANGE_STATUS,
+		EXCHANGE_BY,
+		EXCHANGE_NAME,
+		EXCHANGE_TIME
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        ETC.ID,
+        ETC.CREATE_TIME,
+        TU.USNAME AS CREATE_NAME,
+        ETC.DAILY_CHECK_STATUS,
+        ETC.ENGINE_RUN_STATUS,
+        ETC.DEVICE_RUN_STATUS,
+        ETC.TRIAL_CHANGE_STATUS,
+        ETC.SAFETY,
+        ETC.ACTUAL_DUTY_TOTAL_HOUR,
+        ETC.EXCHANGE_STATUS,
+        ETC.EXCHANGE_BY,
+        ETC.EXCHANGE_NAME,
+        ETC.EXCHANGE_TIME
+        FROM EV_TRIAL_CONNECT ETC LEFT JOIN TS_USER TU ON ETC.CREATE_BY = TU.USID
+        WHERE ETC.TRIALTASK_ID = #{trialtaskId} AND ETC.DEL_FLAG = 0
+        <include refid="Base_Where_Clause"/>
+        order by ETC.CREATE_TIME  desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex}
+        )
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <sql id="Export_Column_List">
+            etc.create_time, tu.usname as create_name, etc.update_time, etc.del_flag, etc.remark, etc.id, etc.trialtask_id,
+            etc.create_by, e.TITLE, A2.ATTACHMENT_NAME, ETC.SAFETY_DESCRIBE,
+            etc.daily_check_status, etc.engine_run_status, etc.device_run_status, etc.trial_change_status,
+            etc.trial_change_fileid,
+            etc.next_connect_notes, etc.safety,
+            etc.plan_scaffolding_status, etc.plan_duty_hour, etc.plan_duty_total_hour, etc.plan_daily_check_others,
+            etc.actual_scaffolding_status, etc.actual_duty_hour, etc.actual_duty_total_hour,
+            etc.actual_daily_check_others,
+            etc.enginerun_problem_total, etc.enginerun_problem_finish, etc.enginerun_problem_unfinish,
+            etc.devicerun_problem_total,
+            etc.devicerun_problem_finish, etc.devicerun_problem_unfinish, tu2.usname as connector_name, etc.connect_time
+    </sql>
+    <select id="selectListByTaskId" resultMap="BaseResultMap">
+        select
+        <include refid="Export_Column_List"/>
+        FROM EV_TRIAL_CONNECT ETC LEFT JOIN TS_USER TU ON ETC.CREATE_BY = TU.USID
+        LEFT JOIN TS_USER TU2 ON ETC.CONNECTOR_ID = TU2.USID
+        LEFT JOIN EV_TRIAL_TASK E ON ETC.TRIALTASK_ID = E.ID
+        LEFT JOIN TS_ATTACHMENT A2 ON ETC.TRIAL_CHANGE_FILEID = A2.ID
+        WHERE ETC.TRIALTASK_ID = #{trialtaskId} AND ETC.DEL_FLAG = 0
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <select id="selectOrgIds" resultType="java.lang.String">
+        select SCAFFOLDING_ID
+        from EV_TRIALTASK_SAMPLE WHERE TRIALTASK_ID = #{taskId}
+    </select>
+
+    <select id="selectOrgIdsByUserId" resultType="java.lang.String">
+        select ORG_ID
+        from TR_USER_ORG WHERE USER_ID = #{userId}
+    </select>
+
+	<select id="selectByTrialTaskId" resultType="java.lang.String" >
+        select
+        actual_scaffolding_status
+        FROM EV_TRIAL_CONNECT ETC
+        WHERE ETC.trialtask_id = #{trialtaskId} AND DEL_FLAG = 0
+        ORDER BY ETC.update_time DESC
+    </select>
+
+    <select id="selectTrialTaskIds" resultType="java.lang.String">
+        select
+        ETC.ID
+        FROM EV_TRIAL_CONNECT ETC
+        WHERE ETC.trialtask_id = #{taskId} AND DEL_FLAG = 0
+        ORDER BY ETC.update_time DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.task.dao.SupplierTaskApplyEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.task.entity.SupplierTaskApplyEO">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="apply_id" property="applyId"/>
+        <result column="apply_name" property="applyName"/>
+        <result column="be_apply_for_id" property="beApplyForId"/>
+        <result column="apply_time" property="applyTime"/>
+        <result column="apply_no" property="applyNo"/>
+        <result column="task_source" property="taskSource"/>
+        <result column="plan_start_time" property="planStartTime"/>
+        <result column="plan_end_time" property="planEndTime"/>
+        <result column="frequency" property="frequency"/>
+        <result column="frequency_unit" property="frequencyUnit"/>
+        <result column="task_type" property="taskType"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="idea" property="idea"/>
+        <result column="whether_accept" property="whetherAccept"/>
+        <result property="supplierPeopleId" column="supplier_people_id"/>
+        <result column="pv_or_ev" property="pvOrEv"/>
+        <result property="trialTaskId" column="trial_task_id"/>
+    </resultMap>
+
+    <!-- 查询列表 -->
+    <resultMap id="taskApplyListVOMap" type="com.adc.da.task.vo.SupplierTaskApplyPageVO">
+        <id property="id" column="id"/>
+        <result property="beApplyForName" column="SUP_NAME"/>
+        <result property="applyTime" column="apply_time"/>
+        <result property="applyNo" column="apply_no"/>
+        <result property="taskSource" column="task_source"/>
+        <result property="planStartTime" column="plan_start_time"/>
+        <result property="planEndTime" column="plan_end_time"/>
+        <result property="frequency" column="frequency"/>
+        <result property="status" column="status"/>
+        <result property="createByName" column="USNAME"/>
+        <result property="taskType" column="task_type"/>
+        <!--<collection property="saCarDataVOList" resultMap="saCarTypeVOMap"/>-->
+        <result property="carType" column="car_name"/>
+        <result property="underpanNO" column="car_vin"/>
+        <result property="trialTaskId" column="trial_task_id"/>
+    </resultMap>
+    <!-- 查询列表(taskApplyListVOMap)  样车信息 -->
+    <!--<resultMap id="saCarTypeVOMap" type="com.adc.da.task.vo.SaCarTypeVO">-->
+    <!--<result property="carType" column="car_name"/>-->
+    <!--<result property="underpanNO" column="car_vin"/>-->
+    <!--</resultMap>-->
+
+    <!-- 查询详情 -->
+    <resultMap id="taskApplyVO" type="com.adc.da.task.vo.SupplierTaskApplyVO">
+        <id property="id" column="id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createByName" column="create_by_name"/>
+        <result property="applyId" column="apply_id"/>
+        <result property="applyName" column="apply_name"/>
+        <result property="beApplyForId" column="be_apply_for_id"/>
+        <result property="beApplyForName" column="SUP_NAME"/>
+        <result property="applyTime" column="apply_time"/>
+        <result property="applyNo" column="apply_no"/>
+        <result property="taskSource" column="task_source"/>
+        <result property="planStartTime" column="plan_start_time"/>
+        <result property="planEndTime" column="plan_end_time"/>
+        <result property="frequency" column="frequency"/>
+        <result property="frequencyUnit" column="frequency_unit"/>
+        <result property="taskType" column="task_type"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+        <result property="idea" column="idea"/>
+        <result property="whetherAccept" column="whether_accept"/>
+        <result property="feddbackTime" column="FEEDBACK_TIME"/>
+        <result property="supplierPeopleId" column="SUPPLIER_PEOPLE_ID"/>
+        <result property="supplierPeopleName" column="SUPPLIER_PEOPLE_NAME"/>
+        <result property="trialTaskId" column="trial_task_id"/>
+        <collection property="supplierTaskInfoVOS" resultMap="taskApplyInfoVO"/>
+    </resultMap>
+    <!-- 查询详情(SupplierTaskApplyVO) 任务信息 -->
+    <resultMap id="taskApplyInfoVO" type="com.adc.da.task.vo.SupplierTaskInfoVO">
+        <id property="id" column="info_id"/>
+        <result property="infoId" column="info_id"/>
+        <result property="type" column="type"/>
+        <result property="project" column="project"/>
+        <result property="jobContent" column="job_content"/>
+        <result property="peopleNumber" column="people_number"/>
+        <result property="workHour" column="work_hour"/>
+        <result property="workHourUnit" column="work_hour_unit"/>
+        <result property="outputContent" column="output_content"/>
+        <result property="carType" column="CAR_NAME"/>
+        <result property="underpanNO" column="CAR_VIN"/>
+        <result property="applyNo" column="apply_no"/>
+        <result property="saCarId" column="sa_car_id"/>
+        <result property="attachmentId" column="attachment_id"/>
+        <result property="taskStatus" column="task_status"/>
+        <result property="taskFinishInfoId" column="task_finishInfo_id"/>
+        <result property="pcPartNo" column="pc_part_no" />
+        <result column="task_implementer_id" property="taskImplementerId" />
+        <result property="taskImplementerName" column="task_implementer_name" />
+        <result property="unitPrice" column="UNIT_PRICE"/>
+    </resultMap>
+
+    <!-- 查询详情使用 -->
+    <sql id="Base_Column_VO">
+            SSTA.ID,
+            SSTA.CREATE_BY,
+            TO2.SUP_NAME,
+            tu2.usname AS create_by_name,
+            SSTA.APPLY_ID,
+            SSTA.APPLY_NAME,
+            SSTA.BE_APPLY_FOR_ID,
+            SSTA.APPLY_TIME,
+            SSTA.APPLY_NO,
+            SSTA.TASK_SOURCE,
+            SSTA.PLAN_START_TIME,
+            SSTA.PLAN_END_TIME,
+            SSTA.FREQUENCY,
+            SSTA.FREQUENCY_UNIT,
+            SSTA.TASK_TYPE,
+            SSTA.STATUS,
+            SSTA.REMARK,
+            SSTA.IDEA,
+            SSTA.WHETHER_ACCEPT,
+            SSTI.id    AS INFO_ID,
+            SSTI.TASK_STATUS,
+            SSTI.pc_part_No,
+            ssti.task_implementer_id,
+            ssti.TASK_IMPLEMENTER_NAME,
+            type,
+            project,
+            job_content,
+            people_number,
+            work_hour,
+            work_hour_unit,
+            output_content,
+            scd.CAR_NAME,
+            SCD.CAR_VIN,
+            SCD.ID as sa_car_id,
+            SSTA.FEEDBACK_TIME,
+            SSTA.SUPPLIER_PEOPLE_ID,
+            TU.USNAME  AS SUPPLIER_PEOPLE_NAME,
+            SSTFI.ATTACHMENT_ID,
+            SSTA.trial_task_id,
+            SSTFI.ID as task_finishInfo_id,
+            SSTI.UNIT_PRICE as UNIT_PRICE
+    </sql>
+
+    <!-- SUP_SUPPLIER_TASK_APPLY table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            del_flag,
+            apply_id,
+            apply_name,
+            be_apply_for_id,
+            apply_time,
+            apply_no,
+            task_source,
+            plan_start_time,
+            plan_end_time,
+            frequency,
+            frequency_unit,
+            task_type,
+            status,
+            remark,
+            idea,
+            whether_accept,
+            trial_task_id
+    </sql>
+
+    <!-- 分页查询使用 -->
+    <sql id="Page_Column_List">
+            SSTA.ID,
+            ssta.APPLY_NO,
+            TO2.SUP_NAME,
+            tu.USNAME,
+            SSTA.APPLY_TIME,
+            SSTA.TASK_SOURCE,
+            SSTA.FREQUENCY,
+            SSTA.PLAN_START_TIME,
+            SSTA.PLAN_END_TIME,
+            SSTA.STATUS,
+            car.CAR_NAME,
+            car.CAR_VIN,
+            ssta.task_type,
+            SSTA.trial_task_id
+    </sql>
+
+    <!-- 映射 taskApplyListVOMap 使用 -->
+    <sql id="Column_List">
+            ID,
+            APPLY_NO,
+            SUP_NAME,
+            USNAME,
+            APPLY_TIME,
+            TASK_SOURCE,
+            FREQUENCY,
+            PLAN_START_TIME,
+            PLAN_END_TIME,
+            STATUS,
+            CAR_NAME,
+            CAR_VIN,
+            task_type,
+            trial_task_id
+    </sql>
+
+    <sql id="Base_From_List">
+        FROM SUP_SUPPLIER_TASK_APPLY SSTA
+                 LEFT JOIN SUP_ABILITY TO2 ON SSTA.BE_APPLY_FOR_ID = TO2.ID
+                 LEFT JOIN TS_USER TU ON SSTA.CREATE_BY = tu.USID
+                 LEFT JOIN (SELECT SSTA.ID,
+                                   WM_CONCAT(SCD.CAR_NAME) CAR_NAME,
+                                   WM_CONCAT(SCD.CAR_VIN)  CAR_VIN
+                            FROM SUP_SUPPLIER_TASK_APPLY SSTA
+                                     LEFT JOIN SUP_SUPPLIER_TASK_INFO SSTI ON SSTA.ID = SSTI.SUP_APPLY_ID
+                                     LEFT JOIN SA_CAR_DATA SCD ON SSTI.SA_CAR_ID = SCD.ID
+                            WHERE SSTA.del_flag = 0
+                            GROUP BY SSTA.ID) car ON SSTA.ID = car.ID
+    </sql>
+
+    <sql id="Execution_Where_Clause">
+        WHERE SSTA.del_flag = 0 AND STATUS != 0
+        <if test="status != null and status != ''">
+            AND SSTA.STATUS LIKE '%'||#{status}||'%'
+        </if>
+        <if test=" beApplyForId != null and beApplyForId != ''">
+            and SSTA.be_apply_for_id = #{beApplyForId}
+        </if>
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    AND (APPLY_NO LIKE '%'||#{keyWord}||'%' OR APPLY_TIME LIKE '%'||#{keyWord}||'%' )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="trustcode != null and trustcode != ''">
+                    AND APPLY_NO LIKE '%'||#{trustcode}||'%'
+                </if>
+                <if test="applyTime1 != null and applyTime1 != ''">
+                    AND APPLY_TIME &gt;= #{applyTime1}
+                </if>
+                <if test="applyTime2 != null and applyTime2 != ''">
+                    AND APPLY_TIME &lt;= #{applyTime2}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        WHERE SSTA.del_flag = 0 AND SSTA.create_by = #{createBy}
+        <if test="trialTaskId != null and trialTaskId != ''">
+            AND SSTA.trial_task_id= #{trialTaskId}
+        </if>
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    AND (ssta.APPLY_NO LIKE '%'||#{keyWord}||'%' OR TO2.SUP_NAME LIKE '%'||#{keyWord}||'%' OR
+                    tu.USNAME LIKE '%'||#{keyWord}||'%' OR SSTA.APPLY_TIME LIKE '%'||#{keyWord}||'%' OR
+                    SSTA.TASK_SOURCE LIKE '%'||#{keyWord}||'%' OR SSTA.FREQUENCY LIKE '%'||#{keyWord}||'%' OR
+                    SSTA.PLAN_START_TIME LIKE '%'||#{keyWord}||'%' OR SSTA.PLAN_END_TIME LIKE '%'||#{keyWord}||'%' OR
+                    ssta.task_type LIKE '%'||#{keyWord}||'%' OR SSTA.STATUS LIKE '%'||#{keyWord}||'%'
+                    OR car.CAR_NAME LIKE '%'||#{keyWord}||'%' OR car.CAR_VIN LIKE '%'||#{keyWord}||'%')
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="beApplyForName != null and beApplyForName != ''">
+                    AND TO2.SUP_NAME LIKE '%'||#{beApplyForName}||'%'
+                </if>
+                <if test="applyNo != null and applyNo != ''">
+                    AND ssta.APPLY_NO LIKE '%'||#{applyNo}||'%'
+                </if>
+                <if test="taskSource != null and taskSource != ''">
+                    AND SSTA.TASK_SOURCE LIKE '%'||#{taskSource}||'%'
+                </if>
+                <if test="createTime1 != null and createTime1 != ''">
+                    AND SSTA.APPLY_TIME >= #{createTime1}
+                </if>
+                <if test="createTime2 != null and createTime2 != ''">
+                    AND SSTA.APPLY_TIME <![CDATA[<=]]> #{createTime2}
+                </if>
+                <if test="planStartTime != null and planStartTime != ''">
+                    AND ssta.PLAN_START_TIME >= #{planStartTime}
+                </if>
+                <if test="planStartTimeEnd != null and planStartTimeEnd != ''">
+                    AND SSTA.PLAN_START_TIME <![CDATA[<=]]> #{planStartTimeEnd}
+                </if>
+                <if test="planEndTime != null and planEndTime != ''">
+                    AND SSTA.PLAN_END_TIME >= #{planEndTime}
+                </if>
+                <if test="planEndTimeEnd != null and planEndTimeEnd != ''">
+                    AND SSTA.PLAN_END_TIME <![CDATA[<=]]> #{planEndTimeEnd}
+                </if>
+                <if test="frequency != null and frequency != ''">
+                    AND SSTA.FREQUENCY LIKE '%'||#{frequency}||'%'
+                </if>
+                <if test="status != null ">
+                    AND SSTA.STATUS = #{status}
+                </if>
+                <if test="createByName != null and createByName != ''">
+                    AND tu.USNAME LIKE '%'||#{createByName}||'%'
+                </if>
+                <if test="carType != null and carType != ''">
+                    AND car.CAR_NAME LIKE '%'||#{carType}||'%'
+                </if>
+                <if test="underpanNO != null and underpanNO != ''">
+                    AND car.CAR_VIN LIKE '%'||#{underpanNO}||'%'
+                </if>
+                <if test="applyTime != null and applyTime != ''">
+                    AND ssta.apply_time &gt;= '${applyTime} 00:00:00'
+                </if>
+                <if test="applyTimeEnd != null and applyTimeEnd != ''">
+                    AND ssta.apply_time &lt;= '${applyTimeEnd} 23:59:59'
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.task.entity.SupplierTaskApplyEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_SUP_SUPPLIER_TASK_APPLY.NEXTVAL FROM DUAL
+    </selectKey> -->
+        INSERT INTO SUP_SUPPLIER_TASK_APPLY
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="applyId != null">apply_id,</if>
+            <if test="applyName != null">apply_name,</if>
+            <if test="beApplyForId != null">be_apply_for_id,</if>
+            <if test="applyTime != null">apply_time,</if>
+            <if test="applyNo != null">apply_no,</if>
+            <if test="taskSource != null">task_source,</if>
+            <if test="planStartTime != null">plan_start_time,</if>
+            <if test="planEndTime != null">plan_end_time,</if>
+            <if test="frequency != null">frequency,</if>
+            <if test="frequencyUnit != null">frequency_unit,</if>
+            <if test="taskType != null">task_type,</if>
+            <if test="status != null">status,</if>
+            <if test="remark != null">remark,</if>
+            <if test="idea != null">idea,</if>
+            <if test="supplierPeopleId != null">SUPPLIER_PEOPLE_ID,</if>
+            <if test="whetherAccept != null">whether_accept,</if>
+            <if test="pvOrEv != null">PV_OR_EV,</if>
+            <if test="trialTaskId != null">TRIAL_TASK_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="applyId != null">#{applyId},</if>
+            <if test="applyName != null">#{applyName},</if>
+            <if test="beApplyForId != null">#{beApplyForId},</if>
+            <if test="applyTime != null">#{applyTime},</if>
+            <if test="applyNo != null">#{applyNo},</if>
+            <if test="taskSource != null">#{taskSource},</if>
+            <if test="planStartTime != null">#{planStartTime},</if>
+            <if test="planEndTime != null">#{planEndTime},</if>
+            <if test="frequency != null">#{frequency},</if>
+            <if test="frequencyUnit != null">#{frequencyUnit},</if>
+            <if test="taskType != null">#{taskType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="idea != null">#{idea},</if>
+            <if test="supplierPeopleId != null">#{supplierPeopleId},</if>
+            <if test="whetherAccept != null">#{whetherAccept},</if>
+            <if test="pvOrEv != null">#{pvOrEv} ,</if>
+            <if test="trialTaskId != null">#{trialTaskId} ,</if>
+        </trim>
+    </insert>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.task.entity.SupplierTaskApplyEO">
+        UPDATE SUP_SUPPLIER_TASK_APPLY
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="applyId != null">
+                apply_id = #{applyId},
+            </if>
+            <if test="applyName != null">
+                apply_name = #{applyName},
+            </if>
+            <if test="beApplyForId != null">
+                be_apply_for_id = #{beApplyForId},
+            </if>
+            <if test="applyTime != null">
+                apply_time = #{applyTime},
+            </if>
+            <if test="applyNo != null">
+                apply_no = #{applyNo},
+            </if>
+            <if test="taskSource != null">
+                task_source = #{taskSource},
+            </if>
+            <if test="planStartTime != null">
+                plan_start_time = #{planStartTime},
+            </if>
+            <if test="planEndTime != null">
+                plan_end_time = #{planEndTime},
+            </if>
+            <if test="frequency != null">
+                frequency = #{frequency},
+            </if>
+            <if test="frequencyUnit != null">
+                frequency_unit = #{frequencyUnit},
+            </if>
+            <if test="taskType != null">
+                task_type = #{taskType},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="idea != null">
+                idea = #{idea},
+            </if>
+            <if test="supplierPeopleId != null">
+                SUPPLIER_PEOPLE_ID = #{supplierPeopleId},
+            </if>
+            <if test="whetherAccept != null">
+                whether_accept = #{whetherAccept},
+            </if>
+            <if test="pvOrEv != null">
+                whether_accept = #{pvOrEv} ,
+            </if>
+            <if test="trialTaskId != null">
+                TRIAL_TASK_ID = #{trialTaskId} ,
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据id查询 SUP_SUPPLIER_TASK_APPLY -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SUP_SUPPLIER_TASK_APPLY
+        WHERE id = #{value} AND DEL_FLAG = 0
+
+    </select>
+
+    <!-- SUP_SUPPLIER_TASK_APPLY 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        SELECT count(1)
+        <include refid="Base_From_List"/>
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SUP_SUPPLIER_TASK_APPLY
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <select id="selectByPage" resultMap="taskApplyListVOMap">
+        SELECT
+        <include refid="Column_List"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="Page_Column_List"/>
+        <include refid="Base_From_List"/>
+        <include refid="Base_Where_Clause"/>
+        order by SSTA.APPLY_TIME desc
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="selectVOById" resultMap="taskApplyVO">
+        SELECT
+        <include refid="Base_Column_VO"/>
+        FROM SUP_SUPPLIER_TASK_APPLY SSTA LEFT JOIN SUP_SUPPLIER_TASK_INFO SSTI ON SSTA.ID = SSTI.SUP_APPLY_ID
+        LEFT JOIN SUP_ABILITY TO2 ON SSTA.BE_APPLY_FOR_ID = TO2.ID
+        LEFT JOIN TS_USER TU ON SSTA.SUPPLIER_PEOPLE_ID = TU.USID
+        LEFT JOIN TS_USER TU2 ON SSTA.CREATE_BY = TU2.USID
+        LEFT JOIN SA_CAR_DATA SCD ON SSTI.SA_CAR_ID = SCD.ID
+        LEFT JOIN SUP_SUPPLIER_TASK_FINISH_INFO SSTFI ON SSTFI.SUP_TASK_INFO_ID = SSTI.ID
+        WHERE SSTA.DEL_FLAG = 0 AND SSTA.ID = #{id}
+    </select>
+
+    <!-- 查询任务执行列表 -->
+    <select id="selectTaskExecutionByPage" resultType="com.adc.da.task.vo.SupplierTaskExecutionPageVO">
+        SELECT
+        ID, applyNO, applyTime, STATUS
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT distinct SSTA.ID, APPLY_NO AS applyNO, APPLY_TIME AS applyTime, STATUS
+        FROM SUP_SUPPLIER_TASK_APPLY SSTA
+        <include refid="Execution_Where_Clause"/>
+        order by APPLY_TIME desc
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <!-- 查询任务执行条数 -->
+    <select id="selectTaskExecutionByCount" resultType="java.lang.Integer"
+            parameterType="com.adc.da.base.page.BasePage">
+        SELECT count(1)
+        FROM SUP_SUPPLIER_TASK_APPLY SSTA
+        <include refid="Execution_Where_Clause"/>
+    </select>
+
+    <select id="getTaskStandard" resultType="com.adc.da.task.vo.SupplierTaskInfoVO">
+        SELECT
+        SSTA.APPLY_NO AS applyNo,
+        SCD.CAR_NAME AS carType,
+        SCD.CAR_VIN AS underpanNO,
+        SSTI.ID AS id,
+        SSTI.OUTPUT_CONTENT AS outputContent,
+        SSTI.WORK_HOUR AS workHour,
+        SSTI.WORK_HOUR_UNIT AS workHourUnit,
+        SSTI.PEOPLE_NUMBER AS peopleNumber,
+        SSTI.JOB_CONTENT AS jobContent,
+        SSTI.PROJECT AS project,
+        SSTI.TYPE AS type,
+        SSTFI.ATTACHMENT_ID AS attachmentId
+        FROM SUP_SUPPLIER_TASK_INFO SSTI LEFT JOIN SUP_SUPPLIER_TASK_APPLY SSTA ON SSTI.SUP_APPLY_ID = SSTA.ID
+        LEFT JOIN SA_CAR_DATA SCD ON SSTI.SA_CAR_ID = SCD.ID
+        LEFT JOIN SUP_SUPPLIER_TASK_FINISH_INFO SSTFI ON SSTFI.SUP_TASK_INFO_ID = SSTI.ID
+        WHERE SSTI.DEL_FLAG = 0 AND SSTA.ID = #{id}
+        <if test="status != null">
+            AND SSTI.TASK_STATUS = #{status}
+        </if>
+        ORDER BY SSTI.UPDATE_TIME DESC
+    </select>
+
+    <update id="updateStatus">
+        UPDATE SUP_SUPPLIER_TASK_APPLY
+        SET STATUS = #{status}
+        WHERE ID = #{businessId}
+    </update>
+
+    <update id="updateFeddbackTime">
+        UPDATE SUP_SUPPLIER_TASK_APPLY
+        SET FEEDBACK_TIME = #{feddbackTime}
+        WHERE ID = #{businessId}
+    </update>
+    <!-- 根据trialTaskId查询 SUP_SUPPLIER_TASK_APPLY -->
+    <select id="selectByTrialTaskId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SUP_SUPPLIER_TASK_APPLY
+        WHERE trial_task_id = #{trialTaskId} AND DEL_FLAG = 0
+    </select>
+</mapper>

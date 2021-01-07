@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_loan_application.dao.PcCarLoanApplicationEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_loan_application.entity.PcCarLoanApplicationEO" >
+    <id column="id" property="id" />
+    <result column="task_id" property="taskId" />
+    <result column="process_status" property="processStatus" />
+    <result column="pcv_status" property="pcvStatus" />
+    <result column="list_type" property="listType" />
+    <result column="applicant" property="applicant" />
+    <result column="department" property="department" />
+    <result column="contact_info" property="contactInfo" />
+    <result column="purpose" property="purpose" />
+    <result column="item_category" property="itemCategory" />
+    <result column="experimental_area" property="experimentalArea" />
+    <result column="experimental_type" property="experimentalType" />
+    <result column="start_date" property="startDate" />
+    <result column="end_date" property="endDate" />
+    <result column="vehicle_type" property="vehicleType" />
+    <result column="experimental_route" property="experimentalRoute" />
+    <result column="project_number" property="projectNumber" />
+      <result column="departmentId" property="departmentId"/>
+      <result column="applicantId" property="applicantId"/>
+      <result column="LOAN_CAR_CODE" property="loanCarCode"/>
+      <result column="task_number" property="taskNumber"/>
+      <result column="TASK_OR_PLAN" property="taskOrPlan"/>
+  </resultMap>
+
+  <!-- PC_CAR_LOAN_APPLICATION table all fields -->
+  <sql id="Base_Column_List" >
+     task_id, process_status, pcv_status, id, list_type, applicant, department, contact_info,
+     purpose, item_category, experimental_area, experimental_type, start_date, end_date, vehicle_type,
+     experimental_route, project_number,loan_car_code,task_number,TASK_OR_PLAN
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="taskId != null" >
+        and task_id ${taskIdOperator} #{taskId}
+      </if>
+        <if test="taskNumber != null" >
+        and task_number ${taskNumberOperator} #{taskNumber}
+      </if>
+      <if test="processStatus != null" >
+        and process_status ${processStatusOperator} #{processStatus}
+      </if>
+      <if test="pcvStatus != null" >
+        and pcv_status ${pcvStatusOperator} #{pcvStatus}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="listType != null" >
+        and list_type ${listTypeOperator} #{listType}
+      </if>
+      <if test="applicant != null" >
+        and applicant ${applicantOperator} #{applicant}
+      </if>
+      <if test="department != null" >
+        and department ${departmentOperator} #{department}
+      </if>
+      <if test="contactInfo != null" >
+        and contact_info ${contactInfoOperator} #{contactInfo}
+      </if>
+      <if test="purpose != null" >
+        and purpose ${purposeOperator} #{purpose}
+      </if>
+      <if test="itemCategory != null" >
+        and item_category ${itemCategoryOperator} #{itemCategory}
+      </if>
+      <if test="experimentalArea != null" >
+        and experimental_area ${experimentalAreaOperator} #{experimentalArea}
+      </if>
+      <if test="experimentalType != null" >
+        and experimental_type ${experimentalTypeOperator} #{experimentalType}
+      </if>
+      <if test="startDate != null" >
+        and start_date ${startDateOperator} #{startDate}
+      </if>
+      <if test="endDate != null" >
+        and end_date ${endDateOperator} #{endDate}
+      </if>
+      <if test="vehicleType != null" >
+        and vehicle_type ${vehicleTypeOperator} #{vehicleType}
+      </if>
+      <if test="experimentalRoute != null" >
+        and experimental_route ${experimentalRouteOperator} #{experimentalRoute}
+      </if>
+      <if test="projectNumber != null" >
+        and project_number ${projectNumberOperator} #{projectNumber}
+      </if>
+        <if test="loanCarCode != null" >
+            and LOAN_CAR_CODE ${projectNumberOperator} #{projectNumber}
+        </if>
+    </trim>
+  </sql>
+
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_loan_application.entity.PcCarLoanApplicationEO" >
+    <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SYS_GUID() FROM DUAL
+    </selectKey>
+        insert into PC_CAR_LOAN_APPLICATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="taskId != null" >task_id,</if>
+                <if test="processStatus != null" >process_status,</if>
+                <if test="pcvStatus != null" >pcv_status,</if>
+                <if test="id != null" >id,</if>
+                <if test="listType != null" >list_type,</if>
+                <if test="applicant != null" >applicant,</if>
+                <if test="department != null" >department,</if>
+                <if test="contactInfo != null" >contact_info,</if>
+                <if test="purpose != null" >purpose,</if>
+                <if test="itemCategory != null" >item_category,</if>
+                <if test="experimentalArea != null" >experimental_area,</if>
+                <if test="experimentalType != null" >experimental_type,</if>
+                <if test="startDate != null" >start_date,</if>
+                <if test="endDate != null" >end_date,</if>
+                <if test="vehicleType != null" >vehicle_type,</if>
+                <if test="experimentalRoute != null" >experimental_route,</if>
+                <if test="projectNumber != null" >project_number,</if>
+                <if test="departmentId != null" >departmentId,</if>
+                <if test="applicantId != null" >applicantId,</if>
+                <if test="loanCarCode != null" >loan_Car_Code,</if>
+                <if test="taskNumber != null" >task_number,</if>
+                <if test="taskOrPlan != null" >TASK_OR_PLAN,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="taskId != null" >#{taskId, jdbcType=VARCHAR},</if>
+                <if test="processStatus != null" >#{processStatus, jdbcType=VARCHAR},</if>
+                <if test="pcvStatus != null" >#{pcvStatus, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="listType != null" >#{listType, jdbcType=VARCHAR},</if>
+                <if test="applicant != null" >#{applicant, jdbcType=VARCHAR},</if>
+                <if test="department != null" >#{department, jdbcType=VARCHAR},</if>
+                <if test="contactInfo != null" >#{contactInfo, jdbcType=VARCHAR},</if>
+                <if test="purpose != null" >#{purpose, jdbcType=VARCHAR},</if>
+                <if test="itemCategory != null" >#{itemCategory, jdbcType=VARCHAR},</if>
+                <if test="experimentalArea != null" >#{experimentalArea, jdbcType=VARCHAR},</if>
+                <if test="experimentalType != null" >#{experimentalType, jdbcType=VARCHAR},</if>
+                <if test="startDate != null" >#{startDate, jdbcType=VARCHAR},</if>
+                <if test="endDate != null" >#{endDate, jdbcType=VARCHAR},</if>
+                <if test="vehicleType != null" >#{vehicleType, jdbcType=VARCHAR},</if>
+                <if test="experimentalRoute != null" >#{experimentalRoute, jdbcType=VARCHAR},</if>
+                <if test="projectNumber != null" >#{projectNumber, jdbcType=VARCHAR},</if>
+                <if test="departmentId != null" >#{departmentId, jdbcType=VARCHAR},</if>
+                <if test="applicantId != null" >#{applicantId, jdbcType=VARCHAR},</if>
+                <if test="loanCarCode != null" >#{loanCarCode, jdbcType=VARCHAR},</if>
+                <if test="taskNumber != null" >#{taskNumber, jdbcType=VARCHAR},</if>
+                <if test="taskOrPlan != null" >#{taskOrPlan, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_loan_application.entity.PcCarLoanApplicationEO" >
+    update PC_CAR_LOAN_APPLICATION
+       set  task_id = #{taskId},
+            process_status = #{processStatus},
+            pcv_status = #{pcvStatus},
+            list_type = #{listType},
+            applicant = #{applicant},
+            department = #{department},
+            contact_info = #{contactInfo},
+            purpose = #{purpose},
+            item_category = #{itemCategory},
+            experimental_area = #{experimentalArea},
+            experimental_type = #{experimentalType},
+            start_date = #{startDate},
+            end_date = #{endDate},
+            vehicle_type = #{vehicleType},
+            experimental_route = #{experimentalRoute},
+            project_number = #{projectNumber},
+            departmentId = #{departmentId},
+            applicantId = #{applicantId},
+            loan_car_code = #{loanCarCode},
+            TASK_OR_PLAN = #{taskOrPlan}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_loan_application.entity.PcCarLoanApplicationEO" >
+    update PC_CAR_LOAN_APPLICATION
+    <set >
+      <if test="taskId != null" >
+        task_id = #{taskId},
+      </if>
+      <if test="processStatus != null" >
+        process_status = #{processStatus},
+      </if>
+      <if test="pcvStatus != null" >
+        pcv_status = #{pcvStatus},
+      </if>
+      <if test="listType != null" >
+        list_type = #{listType},
+      </if>
+      <if test="applicant != null" >
+        applicant = #{applicant},
+      </if>
+      <if test="department != null" >
+        department = #{department},
+      </if>
+      <if test="contactInfo != null" >
+        contact_info = #{contactInfo},
+      </if>
+      <if test="purpose != null" >
+        purpose = #{purpose},
+      </if>
+      <if test="itemCategory != null" >
+        item_category = #{itemCategory},
+      </if>
+      <if test="experimentalArea != null" >
+        experimental_area = #{experimentalArea},
+      </if>
+      <if test="experimentalType != null" >
+        experimental_type = #{experimentalType},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate},
+      </if>
+      <if test="endDate != null" >
+        end_date = #{endDate},
+      </if>
+      <if test="vehicleType != null" >
+        vehicle_type = #{vehicleType},
+      </if>
+      <if test="experimentalRoute != null" >
+        experimental_route = #{experimentalRoute},
+      </if>
+      <if test="projectNumber != null" >
+        project_number = #{projectNumber},
+      </if>
+        <if test="applicantId != null" >
+            applicantId = #{applicantId},
+        </if>
+        <if test="departmentId != null" >
+            departmentId = #{departmentId},
+        </if>
+        <if test="loanCarCode != null" >
+            loan_Car_Code = #{loanCarCode},
+        </if>
+        <if test="taskOrPlan != null" >
+            TASK_OR_PLAN = #{taskOrPlan},
+        </if>
+    </set>
+     where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 根据id查询 PC_CAR_LOAN_APPLICATION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PC_CAR_LOAN_APPLICATION
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_CAR_LOAN_APPLICATION
+     where id = #{value}
+
+  </delete>
+
+  <!-- PC_CAR_LOAN_APPLICATION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PC_CAR_LOAN_APPLICATION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PC_CAR_LOAN_APPLICATION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PC_CAR_LOAN_APPLICATION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PC_CAR_LOAN_APPLICATION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+    <resultMap id="pcCarLoanApplicationVO" type="com.adc.da.pc_loan_application.vo.PcCarLoanFindVo">
+
+        <id column="id" property="id" />
+        <result column="task_id" property="taskId" />
+        <result column="process_status" property="processStatus" />
+        <result column="pcv_status" property="pcvStatus" />
+        <result column="list_type" property="listType" />
+        <result column="applicant" property="applicant" />
+        <result column="department" property="department" />
+        <result column="contact_info" property="contactInfo" />
+        <result column="purpose" property="purpose" />
+        <result column="item_category" property="itemCategory" />
+        <result column="experimental_area" property="experimentalArea" />
+        <result column="experimental_type" property="experimentalType" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="vehicle_type" property="vehicleType" />
+        <result column="experimental_route" property="experimentalRoute" />
+        <result column="project_number" property="projectNumber" />
+        <result column="departmentId" property="departmentId"/>
+        <result column="applicantId" property="applicantId"/>
+        <result column="loan_Car_Code" property="loanCarCode"/>
+        <result column="TASK_OR_PLAN" property="taskOrPlan"/>
+        <collection property="list" ofType="com.adc.da.pc_loan_application.entity.PcCarLoanInformationEO">
+            <id column="iid" property="id" />
+            <result column="chassis_code" property="chassisCode" />
+            <result column="engine_num" property="engineNum" />
+            <result column="VEHICLE_MODEL" property="vehicleModel" />
+            <result column="brand" property="brand" />
+            <result column="emission_type" property="emissionType" />
+            <result column="production_date" property="productionDate" />
+            <result column="purchase_date" property="purchaseDate" />
+            <result column="prototype_status" property="prototypeStatus" />
+            <result column="return_date" property="returnDate" />
+            <result column="load_application_id" property="loadApplicationId" />
+            <result column="SA_CAR_DATA_ID" property="saCarDataId"/>
+        </collection>
+    </resultMap>
+    <select id="findPcCarLoanApplication" resultMap="pcCarLoanApplicationVO" parameterType="java.lang.String">
+       select a.*,i.id iid,i.BRAND,i.CHASSIS_CODE,i.EMISSION_TYPE,i.ENGINE_NUM,i.LOAD_APPLICATION_ID,i.PRODUCTION_DATE,i.PROTOTYPE_STATUS,i.PURCHASE_DATE,i.RETURN_DATE,i.SA_CAR_DATA_ID,i.VEHICLE_MODEL
+        from PC_CAR_LOAN_APPLICATION a
+            LEFT JOIN PC_CAR_LOAN_INFORMATION i
+            on a."ID" = i.load_application_id
+            where a.TASK_ID =#{0,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findPcCarIDByTaskID" resultType="java.lang.String" parameterType="java.lang.String">
+        select id from PC_CAR_LOAN_APPLICATION  where TASK_ID = #{0,jdbcType=VARCHAR}
+
+    </select>
+
+    <select id="findActProcId" parameterType="java.lang.String" resultType="java.lang.String">
+        select ahp.PROC_INST_ID_ procId from TS_BASEBUS tb
+        left join ACT_HI_PROCINST ahp on ahp.BUSINESS_KEY_ = tb.id
+         where tb.BUSINESS_ID = #{value,jdbcType=VARCHAR}
+    </select>
+
+    <update id="changeStatus" parameterType="java.lang.String">
+        update PC_CAR_LOAN_APPLICATION
+        set PROCESS_STATUS = #{status,jdbcType=VARCHAR}
+        where id=#{id,jdbcType=VARCHAR}
+    </update>
+    
+    <select id="findPcCarDataById" parameterType="java.lang.String" resultMap="pcCarLoanApplicationVO">
+         select a.*,i.id iid,i.BRAND,i.CHASSIS_CODE,i.EMISSION_TYPE,i.ENGINE_NUM,i.LOAD_APPLICATION_ID,i.PRODUCTION_DATE,i.PROTOTYPE_STATUS,i.PURCHASE_DATE,i.RETURN_DATE,i.SA_CAR_DATA_ID,i.VEHICLE_MODEL
+          from PC_CAR_LOAN_APPLICATION a
+            LEFT JOIN PC_CAR_LOAN_INFORMATION i
+            on a."ID" = i.load_application_id
+            where a.id =#{0,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findLoanCarCodeBy" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(*) FROM PC_CAR_LOAN_APPLICATION where TASK_ID =#{0}
+    </select>
+    <select id="findListTypeByTaskIdAndLoanCarCode" parameterType="java.lang.String" resultType="java.lang.String">
+        select VEHICLE_TYPE from PC_CAR_LOAN_APPLICATION
+        where TASK_ID=#{0} and LOAN_CAR_CODE = #{1}
+    </select>
+
+</mapper>

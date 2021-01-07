@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.calender.dao.PersonCalenderEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.calender.entity.PersonCalenderEO" >
+    <id column="id" property="id" />
+    <result column="endremind" property="endremind" />
+    <result column="endtime" property="endtime" />
+    <result column="startremind" property="startremind" />
+    <result column="starttime" property="starttime" />
+    <result column="title" property="title" />
+    <result column="cc_create_by_id" property="ccCreateById" />
+    <result column="is_endre" property="isEndre" />
+    <result column="is_startre" property="isStartre" />
+      <result column="content" property="content" />
+  </resultMap>
+
+  <!-- TP_PERSON_CALENDER table all fields -->
+  <sql id="Base_Column_List" >
+     id, endremind, endtime, startremind, starttime, title, cc_create_by_id, is_endre, is_startre, content
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="endtime != null" >
+        and endtime ${endtimeOperator} #{endtime}
+      </if>
+      <if test="endtime1 != null" >
+        and endtime &gt;= #{endtime1}
+      </if>
+      <if test="endtime2 != null" >
+        and endtime &lt;= #{endtime2}
+      </if>
+      <if test="starttime != null" >
+        and starttime ${starttimeOperator} #{starttime}
+      </if>
+      <if test="starttime1 != null" >
+        and starttime &gt;= #{starttime1}
+      </if>
+      <if test="starttime2 != null" >
+        and starttime &lt;= #{starttime2}
+      </if>
+      <if test="title != null" >
+        and title like '%${title}%'
+      </if>
+      <if test="ccCreateById != null" >
+        and cc_create_by_id ${ccCreateByIdOperator} #{ccCreateById}
+      </if>
+    </trim>
+  </sql>
+
+<!--批量插入-->
+    <insert id="insertBatch">
+        insert  into TP_PERSON_CALENDER
+        (id,   starttime, title, cc_create_by_id,  content) values
+        <foreach collection="list" item="item" index="index" close=" )" open="( " separator=" union ">
+            select #{item.id} ,#{item.starttime},#{item.title},#{item.ccCreateById},#{item.content} from dual
+        </foreach>
+    </insert>
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.calender.entity.PersonCalenderEO" >
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            select sys_guid() from dual
+    </selectKey>
+        insert into TP_PERSON_CALENDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="endremind != null" >endremind,</if>
+                <if test="endtime != null" >endtime,</if>
+                <if test="startremind != null" >startremind,</if>
+                <if test="starttime != null" >starttime,</if>
+                <if test="title != null" >title,</if>
+                <if test="ccCreateById != null" >cc_create_by_id,</if>
+                <if test="isEndre != null" >is_endre,</if>
+                <if test="isStartre != null" >is_startre,</if>
+                <if test="content != null" >content,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="endremind != null" >#{endremind, jdbcType=VARCHAR},</if>
+                <if test="endtime != null" >#{endtime, jdbcType=VARCHAR},</if>
+                <if test="startremind != null" >#{startremind, jdbcType=VARCHAR},</if>
+                <if test="starttime != null" >#{starttime, jdbcType=VARCHAR},</if>
+                <if test="title != null" >#{title, jdbcType=VARCHAR},</if>
+                <if test="ccCreateById != null" >#{ccCreateById, jdbcType=VARCHAR},</if>
+                <if test="isEndre != null" >#{isEndre, jdbcType=VARCHAR},</if>
+                <if test="isStartre != null" >#{isStartre, jdbcType=VARCHAR},</if>
+                <if test="content != null" >#{content, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.calender.entity.PersonCalenderEO" >
+    update TP_PERSON_CALENDER
+    <set >
+      <if test="endremind != null" >
+        endremind = #{endremind},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime},
+      </if>
+      <if test="startremind != null" >
+        startremind = #{startremind},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime},
+      </if>
+      <if test="title != null" >
+        title = #{title},
+      </if>
+      <if test="ccCreateById != null" >
+        cc_create_by_id = #{ccCreateById},
+      </if>
+      <if test="isEndre != null" >
+        is_endre = #{isEndre},
+      </if>
+      <if test="isStartre != null" >
+        is_startre = #{isStartre},
+      </if>
+        <if test="content != null" >
+            content = #{content},
+        </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 TP_PERSON_CALENDER -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from TP_PERSON_CALENDER
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TP_PERSON_CALENDER
+     where id = #{value}
+
+  </delete>
+
+  <!-- TP_PERSON_CALENDER 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from TP_PERSON_CALENDER
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询TP_PERSON_CALENDER列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from TP_PERSON_CALENDER
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from TP_PERSON_CALENDER
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

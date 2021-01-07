@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.PipelineNumberEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.PipelineNumberEO">
+    <id column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="PARTICULAR_YEAR" jdbcType="VARCHAR" property="particularYear" />
+    <result column="TALLY" jdbcType="DECIMAL" property="tally" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    TYPE, PARTICULAR_YEAR, TALLY
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TS_PIPELINE_NUMBER
+    where TYPE = #{type,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TS_PIPELINE_NUMBER
+    where TYPE = #{type,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.sys.entity.PipelineNumberEO">
+    insert into TS_PIPELINE_NUMBER (
+    	TYPE, 
+    	PARTICULAR_YEAR, 
+    	TALLY
+      )
+    values (
+    	#{type,jdbcType=VARCHAR}, 
+    	#{particularYear,jdbcType=VARCHAR}, 
+    	#{tally,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.sys.entity.PipelineNumberEO">
+    insert into TS_PIPELINE_NUMBER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="particularYear != null">
+        PARTICULAR_YEAR,
+      </if>
+      <if test="tally != null">
+        TALLY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="particularYear != null">
+        #{particularYear,jdbcType=VARCHAR},
+      </if>
+      <if test="tally != null">
+        #{tally,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.sys.entity.PipelineNumberEO">
+    update TS_PIPELINE_NUMBER
+    <set>
+      <if test="particularYear != null">
+        PARTICULAR_YEAR = #{particularYear,jdbcType=VARCHAR},
+      </if>
+      <if test="tally != null">
+        TALLY = #{tally,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where TYPE = #{type,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.sys.entity.PipelineNumberEO">
+    update TS_PIPELINE_NUMBER
+    set 
+      PARTICULAR_YEAR = #{particularYear,jdbcType=VARCHAR},
+      TALLY = #{tally,jdbcType=DECIMAL}
+    where TYPE = #{type,jdbcType=VARCHAR}
+  </update>
+</mapper>

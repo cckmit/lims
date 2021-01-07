@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCBudgetTestEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_execute.entity.PCBudgetTestEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="ITEMS_NAME" jdbcType="VARCHAR" property="itemsName" />
+    <result column="ITEMS_CODE" jdbcType="VARCHAR" property="itemsCode" />
+    <result column="STD_PRICE" jdbcType="VARCHAR" property="stdPrice" />
+    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+    <result column="COUNTNUM" jdbcType="VARCHAR" property="countnum" />
+    <result column="CAR_COUNT" jdbcType="VARCHAR" property="carCount" />
+    <result column="TOTAL" jdbcType="VARCHAR" property="total" />
+    <result column="INIT_TASK_ID" jdbcType="VARCHAR" property="initTaskId" />
+    <result column="TRIAL_TASK_ID" jdbcType="VARCHAR" property="trialTaskId" />
+    <result column="TASK_NUMBER" property="taskNumber" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, REMARK, ITEMS_NAME, ITEMS_CODE, STD_PRICE, UNIT, COUNTNUM, CAR_COUNT, 
+    TOTAL, INIT_TASK_ID, TRIAL_TASK_ID, TASK_NUMBER
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_BUDGET_TEST
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_BUDGET_TEST
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.pc_execute.entity.PCBudgetTestEO">
+    insert into PC_BUDGET_TEST (
+    	ID, 
+    	DEL_FLAG, 
+    	REMARK, 
+      	ITEMS_NAME, 
+      	ITEMS_CODE, 
+      	STD_PRICE, 
+      	UNIT, 
+      	COUNTNUM, 
+      	CAR_COUNT, 
+      	TOTAL, 
+      	INIT_TASK_ID,
+      	TRIAL_TASK_ID,
+      	TASK_NUMBER
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{remark,jdbcType=VARCHAR}, 
+      	#{itemsName,jdbcType=VARCHAR}, 
+      	#{itemsCode,jdbcType=VARCHAR}, 
+      	#{stdPrice,jdbcType=VARCHAR}, 
+      	#{unit,jdbcType=VARCHAR}, 
+      	#{countnum,jdbcType=VARCHAR}, 
+      	#{carCount,jdbcType=VARCHAR}, 
+      	#{total,jdbcType=VARCHAR}, 
+      	#{initTaskId,jdbcType=VARCHAR},
+      	#{trialTaskId,jdbcType=VARCHAR},
+      	#{taskNumber,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_execute.entity.PCBudgetTestEO">
+    insert into PC_BUDGET_TEST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="itemsName != null">
+        ITEMS_NAME,
+      </if>
+      <if test="itemsCode != null">
+        ITEMS_CODE,
+      </if>
+      <if test="stdPrice != null">
+        STD_PRICE,
+      </if>
+      <if test="unit != null">
+        UNIT,
+      </if>
+      <if test="countnum != null">
+        COUNTNUM,
+      </if>
+      <if test="carCount != null">
+        CAR_COUNT,
+      </if>
+      <if test="total != null">
+        TOTAL,
+      </if>
+      <if test="initTaskId != null">
+        INIT_TASK_ID,
+      </if>
+      <if test="trialTaskId != null">
+        TRIAL_TASK_ID,
+      </if>
+      <if test="taskNumber != null">
+        TASK_NUMBER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsName != null">
+        #{itemsName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsCode != null">
+        #{itemsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stdPrice != null">
+        #{stdPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="countnum != null">
+        #{countnum,jdbcType=VARCHAR},
+      </if>
+      <if test="carCount != null">
+        #{carCount,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=VARCHAR},
+      </if>
+      <if test="initTaskId != null">
+        #{initTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumber != null">
+        #{taskNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_execute.entity.PCBudgetTestEO">
+    update PC_BUDGET_TEST
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsName != null">
+        ITEMS_NAME = #{itemsName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemsCode != null">
+        ITEMS_CODE = #{itemsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stdPrice != null">
+        STD_PRICE = #{stdPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        UNIT = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="countnum != null">
+        COUNTNUM = #{countnum,jdbcType=VARCHAR},
+      </if>
+      <if test="carCount != null">
+        CAR_COUNT = #{carCount,jdbcType=VARCHAR},
+      </if>
+      <if test="total != null">
+        TOTAL = #{total,jdbcType=VARCHAR},
+      </if>
+      <if test="initTaskId != null">
+        INIT_TASK_ID = #{initTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        ITRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="taskNumber != null">
+        TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_execute.entity.PCBudgetTestEO">
+    update PC_BUDGET_TEST
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      ITEMS_NAME = #{itemsName,jdbcType=VARCHAR},
+      ITEMS_CODE = #{itemsCode,jdbcType=VARCHAR},
+      STD_PRICE = #{stdPrice,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      COUNTNUM = #{countnum,jdbcType=VARCHAR},
+      CAR_COUNT = #{carCount,jdbcType=VARCHAR},
+      TOTAL = #{total,jdbcType=VARCHAR},
+      INIT_TASK_ID = #{initTaskId,jdbcType=VARCHAR},
+      TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findListByInitTaskId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List"/> 
+    from PC_BUDGET_TEST
+    where DEL_FLAG = 0
+    and
+    INIT_TASK_ID = #{initTaskId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByInitTaskId" parameterType="java.lang.String">
+    delete from PC_BUDGET_TEST
+    where INIT_TASK_ID = #{initTaskId,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <select id="findListByTrialTaskId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List"/> 
+    from PC_BUDGET_TEST
+    where DEL_FLAG = 0
+    and
+    TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="findListByTrialTaskNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List"/> 
+    from PC_BUDGET_TEST
+    where DEL_FLAG = 0
+    and
+    TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <delete id="deleteByTrialTaskId" parameterType="java.lang.String">
+    delete from PC_BUDGET_TEST
+    where TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR}
+  </delete>
+  
+  
+  <delete id="deleteByTrialTaskNumber" parameterType="java.lang.String">
+    delete from PC_BUDGET_TEST
+    where TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

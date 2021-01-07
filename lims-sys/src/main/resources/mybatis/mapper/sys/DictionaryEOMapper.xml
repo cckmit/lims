@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.DicEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.DictionaryEO">
+        <id column="id" property="id"/>
+        <result column="dictionary_code" property="dictionaryCode"/>
+        <result column="dictionary_name" property="dictionaryName"/>
+        <result column="del_flag" property="delFlag"/>
+    </resultMap>
+
+    <!-- TS_DICTIONARY table all fields -->
+    <sql id="Base_Column_List">
+		id, dictionary_code, dictionary_name, del_flag
+	</sql>
+
+    <!--对应字段匹配-->
+    <resultMap id="DicTypeMap" extends="BaseResultMap" type="com.adc.da.sys.entity.DictionaryEO">
+        <collection property="dicTypeEOList" ofType="com.adc.da.sys.entity.DicTypeEO">
+            <id column="type_id" property="id"/>
+            <result column="dic_type_code" property="dicTypeCode"/>
+            <result column="dic_type_name" property="dicTypeName"/>
+            <result column="dic_id" property="dicId"/>
+            <result column="type_del_flag" property="delFlag"/>
+        </collection>
+    </resultMap>
+
+    <!--基本字段-->
+    <sql id="Dic_Type_List">
+		u.*, ur.id as type_id,
+		ur.dic_type_code as dic_type_code,
+		ur.dic_type_name as dic_type_name,
+		ur.dic_id as dic_id,
+		ur.del_flag as type_del_flag
+	</sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and u0.id ${idOperator} #{id}
+            </if>
+            <if test="dictionaryCode != null">
+                and u0.dictionary_code ${dictionaryCodeOperator} '%${dictionaryCode}%'
+            </if>
+            <if test="dictionaryName != null">
+                and u0.dictionary_name ${dictionaryNameOperator} '%${dictionaryName}%'
+            </if>
+
+        </trim>
+    </sql>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.sys.entity.DictionaryEO">
+        update TS_DICTIONARY
+        <set>
+            dictionary_code = #{dictionaryCode},dictionary_name = #{dictionaryName}
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <update id="deleteLogicInBatch" parameterType="java.util.List">
+        update TS_USER
+        set del_flag = 1
+        where usid in
+        <foreach item="usid" collection="list" open="(" separator=","
+                 close=")" index="index">
+            #{usid}
+        </foreach>
+    </update>
+
+    <!--获取字典信息-->
+    <select id="getDictionaryEOById" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_DICTIONARY
+        where id = #{id}
+    </select>
+
+    <!--获取字典信息，用字典编码-->
+    <select id="getDictionaryEOByDicCode" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_DICTIONARY
+        where dictionary_code = #{dictionaryCode}
+    </select>
+
+    <!--获取字典信息，用字典名-->
+    <select id="getDictionaryEOByDicName" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_DICTIONARY
+        where dictionary_name = #{dictionaryName}
+    </select>
+
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.sys.entity.DictionaryEO">
+        insert into TS_DICTIONARY(
+        <include refid="Base_Column_List"/>
+        )
+        values (#{id}, #{dictionaryCode}, #{dictionaryName}, #{delFlag})
+    </insert>
+
+    <!-- 删除记录 字典表-->
+    <delete id="deleteDic" parameterType="java.lang.String">
+		delete from
+		TS_DICTIONARY
+		where id = #{id}
+	</delete>
+    <!-- 删除记录 字典类型表-->
+    <delete id="deleteDicAndDicType" parameterType="java.lang.String">
+		delete from
+		TS_DICTYPE
+		where dic_id = #{id}
+	</delete>
+
+    <!-- TS_DICTIONARY 列表总数 -->
+    <select id="queryByCount" resultType="java.lang.Integer"
+            parameterType="com.adc.da.base.page.BasePage">
+        select count(distinct u0.id) from TS_DICTIONARY u0
+        left join TS_DICTYPE ur0 on u0.id = ur0.dic_id
+        <include refid="Base_Where_Clause"/>
+        and u0.del_flag != 1
+    </select>
+
+    <!-- 查询TS_USER列表 -->
+    <select id="queryByPage" resultMap="DicTypeMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Dic_Type_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select distinct u0.* from TS_DICTIONARY u0
+        left join TS_DICTYPE ur0 on u0.id = ur0.dic_id
+        <include refid="Base_Where_Clause"/>
+        and u0.del_flag != 1
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex}) u
+        left join TS_DICTYPE ur on u.id = ur.dic_id
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+
+    <!-- 查询TS_USER列表
+     date 2019-01-18
+     @author Lee Kwanho 李坤澔-->
+    <select id="queryByPage" resultMap="DicTypeMap" parameterType="com.adc.da.base.page.BasePage" databaseId="mysql">
+        select
+        <include refid="Dic_Type_List"/>
+        from
+        (select distinct u0.* from TS_DICTIONARY u0
+        left join TS_DICTYPE ur0 on u0.id = ur0.dic_id
+        <include refid="Base_Where_Clause"/>
+        and u0.del_flag != 1
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        limit ${pager.startIndex}, ${pager.pageSize}
+        ) u
+        left join TS_DICTYPE ur on u.id = ur.dic_id
+    </select>
+
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_USER
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <select id="getDictionaryEOBySearchPhrase" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select A.* , rownum rn  from
+        (select
+        <include refid="Base_Column_List"></include>
+        from TS_DICTIONARY
+        <where>
+            1=1
+            <foreach collection="searchPhrase" item="phrase">
+                and (
+                dictionary_code like '%${phrase}%'
+                or
+                dictionary_name like '%${phrase}%'
+                )
+            </foreach>
+            and del_flag = 0
+        </where>) A where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="getDictionaryEOCountBySearchPhrase" resultType="Integer" parameterType="com.adc.da.base.page.BasePage">
+        select
+        count (distinct (id))
+        from TS_DICTIONARY
+        <where>
+            1=1
+            <foreach collection="searchPhrase" item="phrase">
+                and (
+                dictionary_code like '%${phrase}%'
+                or
+                dictionary_name like '%${phrase}%'
+                )
+            </foreach>
+            and del_flag = 0
+        </where>
+    </select>
+    
+    <select id="getTypeCodesBySearch" resultType="java.lang.String">
+    	select type_.dic_type_code from ts_dictype type_
+    		left join ts_dictionary dic_ on type_.dic_id = dic_.id
+    		where dic_.dictionary_code = #{0}
+    		and type_.dic_type_name like '%'||#{1}||'%'
+    		and type_.del_flag = 0
+    		and dic_.del_flag = 0
+    </select>
+</mapper>

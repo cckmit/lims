@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.materiel.dao.BorrowRecordEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.materiel.entity.BorrowRecordEO" >
+    <id column="id" property="id" />
+    <result column="use_department" property="useDepartment" />
+    <result column="borrowing_quantity" property="borrowingQuantity" />
+    <result column="borrowing_time" property="borrowingTime" />
+    <result column="borrowing_remakes" property="borrowingRemakes" />
+    <result column="returner" property="returner" />
+    <result column="return_department" property="returnDepartment" />
+    <result column="return_quantity" property="returnQuantity" />
+    <result column="return_time" property="returnTime" />
+    <result column="return_remakes" property="returnRemakes" />
+    <result column="materiel_id" property="materielId" />
+    <result column="borrower_id" property="borrowerId" />
+    <result column="borrower" property="borrower" />
+  </resultMap>
+
+  <!-- RES_BORROW_RECORD table all fields -->
+  <sql id="Base_Column_List" >
+     use_department, borrowing_quantity, borrowing_time, borrowing_remakes, returner, return_department, return_quantity, return_time, return_remakes, id, materiel_id, borrower_id, borrower
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="useDepartment != null" >
+        and use_department ${useDepartmentOperator} #{useDepartment}
+      </if>
+      <if test="borrowingQuantity != null" >
+        and borrowing_quantity ${borrowingQuantityOperator} #{borrowingQuantity}
+      </if>
+      <if test="borrowingTime != null" >
+        and borrowing_time ${borrowingTimeOperator} #{borrowingTime}
+      </if>
+      <if test="borrowingRemakes != null" >
+        and borrowing_remakes ${borrowingRemakesOperator} #{borrowingRemakes}
+      </if>
+      <if test="returner != null" >
+        and returner ${returnerOperator} #{returner}
+      </if>
+      <if test="returnDepartment != null" >
+        and return_department ${returnDepartmentOperator} #{returnDepartment}
+      </if>
+      <if test="returnQuantity != null" >
+        and return_quantity ${returnQuantityOperator} #{returnQuantity}
+      </if>
+      <if test="returnTime != null" >
+        and return_time ${returnTimeOperator} #{returnTime}
+      </if>
+      <if test="returnRemakes != null" >
+        and return_remakes ${returnRemakesOperator} #{returnRemakes}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="materielId != null" >
+        and materiel_id ${materielIdOperator} #{materielId}
+      </if>
+      <if test="borrowerId != null" >
+        and borrower_id ${borrowerIdOperator} #{borrowerId}
+      </if>
+      <if test="borrower != null" >
+        and borrower ${borrowerOperator} #{borrower}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.materiel.entity.BorrowRecordEO" >
+    insert into RES_BORROW_RECORD(<include refid="Base_Column_List" />)
+    values (
+      #{useDepartment, jdbcType=VARCHAR},
+      #{borrowingQuantity, jdbcType=VARCHAR},
+      #{borrowingTime, jdbcType=VARCHAR},
+      #{borrowingRemakes, jdbcType=VARCHAR},
+      #{returner, jdbcType=VARCHAR},
+      #{returnDepartment, jdbcType=VARCHAR},
+      #{returnQuantity, jdbcType=VARCHAR},
+      #{returnTime, jdbcType=VARCHAR},
+      #{returnRemakes, jdbcType=VARCHAR},
+      #{id, jdbcType=VARCHAR},
+      #{materielId, jdbcType=VARCHAR},
+      #{borrowerId, jdbcType=VARCHAR},
+      #{borrower, jdbcType=VARCHAR})
+  </insert>
+  <!--根据当前用户id以及物料id获取用户应还的物料数量-->
+  <select id="selectReturnedNums" resultType="java.lang.Double">
+      SELECT RES_BORROW_RECORD.borrowing_quantity
+      FROM RES_BORROW_RECORD
+      WHERE RES_BORROW_RECORD.materiel_id = #{0, jdbcType=VARCHAR}
+      AND RES_BORROW_RECORD.borrower_id = #{1, jdbcType=VARCHAR}
+  </select>
+  <!--根据用户id以及物料id查询用户借用数据-->
+    <select id="selectReturned" resultMap="BaseResultMap">
+      SELECT <include refid="Base_Column_List" />
+      FROM RES_BORROW_RECORD
+      WHERE RES_BORROW_RECORD.materiel_id = #{0, jdbcType=VARCHAR}
+      AND RES_BORROW_RECORD.borrower_id = #{1, jdbcType=VARCHAR}
+  </select>
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.materiel.entity.BorrowRecordEO" >
+        insert into RES_BORROW_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="useDepartment != null" >use_department,</if>
+                <if test="borrowingQuantity != null" >borrowing_quantity,</if>
+                <if test="borrowingTime != null" >borrowing_time,</if>
+                <if test="borrowingRemakes != null" >borrowing_remakes,</if>
+                <if test="returner != null" >returner,</if>
+                <if test="returnDepartment != null" >return_department,</if>
+                <if test="returnQuantity != null" >return_quantity,</if>
+                <if test="returnTime != null" >return_time,</if>
+                <if test="returnRemakes != null" >return_remakes,</if>
+                <if test="id != null" >id,</if>
+                <if test="materielId != null" >materiel_id,</if>
+                <if test="borrowerId != null" >borrower_id,</if>
+                <if test="borrower != null" >borrower,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="useDepartment != null" >#{useDepartment, jdbcType=VARCHAR},</if>
+                <if test="borrowingQuantity != null" >#{borrowingQuantity, jdbcType=VARCHAR},</if>
+                <if test="borrowingTime != null" >#{borrowingTime, jdbcType=VARCHAR},</if>
+                <if test="borrowingRemakes != null" >#{borrowingRemakes, jdbcType=VARCHAR},</if>
+                <if test="returner != null" >#{returner, jdbcType=VARCHAR},</if>
+                <if test="returnDepartment != null" >#{returnDepartment, jdbcType=VARCHAR},</if>
+                <if test="returnQuantity != null" >#{returnQuantity, jdbcType=VARCHAR},</if>
+                <if test="returnTime != null" >#{returnTime, jdbcType=VARCHAR},</if>
+                <if test="returnRemakes != null" >#{returnRemakes, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="materielId != null" >#{materielId, jdbcType=VARCHAR},</if>
+                <if test="borrowerId != null" >#{borrowerId, jdbcType=VARCHAR},</if>
+                <if test="borrower != null" >#{borrower, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.materiel.entity.BorrowRecordEO" >
+    update RES_BORROW_RECORD
+       set  use_department = #{useDepartment},
+            borrowing_quantity = #{borrowingQuantity},
+            borrowing_time = #{borrowingTime},
+            borrowing_remakes = #{borrowingRemakes},
+            returner = #{returner},
+            return_department = #{returnDepartment},
+            return_quantity = #{returnQuantity},
+            return_time = #{returnTime},
+            return_remakes = #{returnRemakes},
+            materiel_id = #{materielId},
+            borrower_id = #{borrowerId},
+            borrower = #{borrower}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.materiel.entity.BorrowRecordEO" >
+    update RES_BORROW_RECORD
+    <set >
+      <if test="useDepartment != null" >
+        use_department = #{useDepartment},
+      </if>
+      <if test="borrowingQuantity != null" >
+        borrowing_quantity = #{borrowingQuantity},
+      </if>
+      <if test="borrowingTime != null" >
+        borrowing_time = #{borrowingTime},
+      </if>
+      <if test="borrowingRemakes != null" >
+        borrowing_remakes = #{borrowingRemakes},
+      </if>
+      <if test="returner != null" >
+        returner = #{returner},
+      </if>
+      <if test="returnDepartment != null" >
+        return_department = #{returnDepartment},
+      </if>
+      <if test="returnQuantity != null" >
+        return_quantity = #{returnQuantity},
+      </if>
+      <if test="returnTime != null" >
+        return_time = #{returnTime},
+      </if>
+      <if test="returnRemakes != null" >
+        return_remakes = #{returnRemakes},
+      </if>
+      <if test="materielId != null" >
+        materiel_id = #{materielId},
+      </if>
+      <if test="borrowerId != null" >
+        borrower_id = #{borrowerId},
+      </if>
+      <if test="borrower != null" >
+        borrower = #{borrower},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 RES_BORROW_RECORD -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from RES_BORROW_RECORD
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from RES_BORROW_RECORD
+     where id = #{value}
+
+  </delete>
+
+  <!-- RES_BORROW_RECORD 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from RES_BORROW_RECORD
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询RES_BORROW_RECORD列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from RES_BORROW_RECORD
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from RES_BORROW_RECORD
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

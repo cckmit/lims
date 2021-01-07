@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.internalcost.dao.InternalCostEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.internalcost.entity.InternalCostEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="DECIMAL" property="delFlag" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy.usid" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy.usid" />
+    <result column="INSPRO_ID" jdbcType="VARCHAR" property="insproId" />
+    <result column="COST_PRICE" jdbcType="VARCHAR" property="costPrice" />
+    <result column="COST_UNIT" jdbcType="VARCHAR" property="costUnit" />
+    <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+    <result column="COST_STD_NOS" jdbcType="VARCHAR" property="costStdNos" />
+    <result column="COST_STD_NAMES" jdbcType="VARCHAR" property="costStdNames" />
+  </resultMap>
+  
+  <resultMap id="SearchResultMap" type="com.adc.da.internalcost.entity.InternalCostEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="INSPRO_ID" jdbcType="VARCHAR" property="insproId" />
+  	<result column="COST_PRICE" jdbcType="VARCHAR" property="costPrice" />
+    <result column="COST_UNIT" jdbcType="VARCHAR" property="costUnit" />
+    <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+    <result column="COST_STD_NOS" jdbcType="VARCHAR" property="costStdNos" />
+    <result column="COST_STD_NAMES" jdbcType="VARCHAR" property="costStdNames" />
+    <result column="PRO_NAME" jdbcType="VARCHAR" property="proName" />
+    <result column="PRO_CODE" jdbcType="VARCHAR" property="proCode" />
+    <result column="LAB_NAME" jdbcType="VARCHAR" property="labName" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, INSPRO_ID, COST_PRICE, 
+    COST_UNIT, REMARKS, COST_STD_NOS, COST_STD_NAMES
+  </sql>
+  
+  <sql id="Search_Column_List">
+    incost.ID, INSPRO_ID, COST_PRICE, 
+    COST_UNIT, REMARKS, COST_STD_NOS, COST_STD_NAMES
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="SearchResultMap">
+    SELECT
+       	incost.ID, 
+       	INSPRO_ID, 
+       	COST_PRICE, 
+    	COST_UNIT, 
+    	incost.REMARKS, 
+    	COST_STD_NOS, 
+    	COST_STD_NAMES,
+       	org.ORG_NAME AS LAB_NAME,
+		pro.PRO_NAME AS PRO_NAME,
+		PRO.PRO_CODE AS PRO_CODE
+       FROM CM_INTERNAL_COST incost
+       LEFT JOIN BM_INSPECT_PROJECT pro ON PRO."ID" = INCOST.INSPRO_ID
+	   LEFT JOIN TS_ORG org ON org."ID" = PRO.LAB_ID
+	 where incost.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    update CM_INTERNAL_COST
+    set DEL_FLAG = 1
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.internalcost.entity.InternalCostEO">
+    insert into CM_INTERNAL_COST (
+    	ID, 
+    	DEL_FLAG, 
+    	CREATE_TIME, 
+      	CREATE_BY, 
+      	UPDATE_TIME, 
+      	UPDATE_BY, 
+      	INSPRO_ID, 
+      	COST_PRICE, 
+      	COST_UNIT, 
+      	REMARKS, 
+      	COST_STD_NOS, 
+      	COST_STD_NAMES
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=DECIMAL}, 
+    	#{createTime,jdbcType=VARCHAR}, 
+      	#{createBy.usid,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{updateBy.usid,jdbcType=VARCHAR}, 
+      	#{insproId,jdbcType=VARCHAR}, 
+      	#{costPrice,jdbcType=VARCHAR}, 
+      	#{costUnit,jdbcType=VARCHAR}, 
+      	#{remarks,jdbcType=VARCHAR}, 
+      	#{costStdNos,jdbcType=VARCHAR}, 
+      	#{costStdNames,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.internalcost.entity.InternalCostEO">
+    insert into CM_INTERNAL_COST
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="insproId != null">
+        INSPRO_ID,
+      </if>
+      <if test="costPrice != null">
+        COST_PRICE,
+      </if>
+      <if test="costUnit != null">
+        COST_UNIT,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+      <if test="costStdNos != null">
+        COST_STD_NOS,
+      </if>
+      <if test="costStdNames != null">
+        COST_STD_NAMES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="insproId != null">
+        #{insproId,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null">
+        #{costPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="costUnit != null">
+        #{costUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="costStdNos != null">
+        #{costStdNos,jdbcType=VARCHAR},
+      </if>
+      <if test="costStdNames != null">
+        #{costStdNames,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.internalcost.entity.InternalCostEO">
+    update CM_INTERNAL_COST
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="insproId != null">
+        INSPRO_ID = #{insproId,jdbcType=VARCHAR},
+      </if>
+      <if test="costPrice != null">
+        COST_PRICE = #{costPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="costUnit != null">
+        COST_UNIT = #{costUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="costStdNos != null">
+        COST_STD_NOS = #{costStdNos,jdbcType=VARCHAR},
+      </if>
+      <if test="costStdNames != null">
+        COST_STD_NAMES = #{costStdNames,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.internalcost.entity.InternalCostEO">
+    update CM_INTERNAL_COST
+    set DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      INSPRO_ID = #{insproId,jdbcType=VARCHAR},
+      COST_PRICE = #{costPrice,jdbcType=VARCHAR},
+      COST_UNIT = #{costUnit,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      COST_STD_NOS = #{costStdNos,jdbcType=VARCHAR},
+      COST_STD_NAMES = #{costStdNames,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+  <!-- 列表总数-->
+   <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT count(1) FROM CM_INTERNAL_COST incost
+       LEFT JOIN BM_INSPECT_PROJECT pro ON PRO."ID" = INCOST.INSPRO_ID
+	   LEFT JOIN TS_ORG org ON org."ID" = PRO.LAB_ID
+       <include refid="Base_Where_Clause"/>
+   </select>
+
+   <!-- 查询条件 -->
+   <sql id="Base_Where_Clause">
+       WHERE incost.DEL_FLAG != 1
+       <choose>
+           <when test="searchPhrase != null">
+               <foreach collection="searchPhrase" item="search">
+                   AND (
+	                   org.ORG_NAME LIKE '%${search}%' 
+	                   OR pro.PRO_NAME LIKE '%${search}%' 
+	                   OR PRO.PRO_CODE LIKE '%${search}%' 
+	                   OR COST_PRICE LIKE '%${search}%' 
+	                   OR COST_UNIT LIKE '%${search}%'
+	                   OR COST_STD_NOS LIKE '%${search}%'
+	                   OR COST_STD_NAMES LIKE '%${search}%'
+                   )
+               </foreach>
+           </when>
+           <otherwise>
+               <if test="labName != null and labName != ''">
+                   AND org.ORG_NAME LIKE '%${labName}%'
+               </if>
+               <if test="proName != null and proName != ''">
+                   AND pro.PRO_NAME LIKE '%${proName}%'
+               </if>
+               <if test="proCode != null and proCode != ''">
+                   AND pro.PRO_CODE LIKE '%${proCode}%'
+               </if>
+               <if test="costPrice != null and costPrice != ''">
+                   AND COST_PRICE LIKE '%${costPrice}%'
+               </if>
+               <if test="costUnit != null and costUnit != ''">
+                   AND COST_UNIT LIKE '%${costUnit}%'
+               </if>
+               <if test="costStdNos != null and costStdNos != ''">
+                   AND COST_STD_NOS LIKE '%${costStdNos}%'
+               </if>
+               <if test="costStdNames != null and costStdNames != ''">
+                   AND COST_STD_NAMES LIKE '%${costStdNames}%'
+               </if>
+           </otherwise>
+       </choose>
+   </sql>
+  
+  
+     <!-- 分页查询列表 -->
+   <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+       	INCOST.ID, 
+       	INSPRO_ID, 
+       	COST_PRICE, 
+    	COST_UNIT, 
+    	INCOST.REMARKS, 
+    	COST_STD_NOS, 
+    	COST_STD_NAMES,
+       	ORG.ORG_NAME AS LAB_NAME,
+		PRO.PRO_NAME AS PRO_NAME,
+		PRO.PRO_CODE AS PRO_CODE
+       FROM CM_INTERNAL_COST INCOST
+       LEFT JOIN BM_INSPECT_PROJECT PRO ON PRO."ID" = INCOST.INSPRO_ID
+	   LEFT JOIN TS_ORG ORG ON ORG."ID" = PRO.LAB_ID
+       <include refid="Base_Where_Clause"/>
+       ORDER BY INCOST.UPDATE_TIME DESC
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+   
+   <!-- 查询所有 -->
+   <select id="findAll"  resultMap="SearchResultMap">
+	   SELECT
+	       	INCOST.ID, 
+	       	INSPRO_ID, 
+	       	COST_PRICE, 
+	    	COST_UNIT, 
+	    	INCOST.REMARKS, 
+	    	COST_STD_NOS, 
+	    	COST_STD_NAMES,
+	       	ORG.ORG_NAME AS LAB_NAME,
+			PRO.PRO_NAME AS PRO_NAME,
+			PRO.PRO_CODE AS PRO_CODE
+	       FROM CM_INTERNAL_COST INCOST
+	       LEFT JOIN BM_INSPECT_PROJECT PRO ON PRO."ID" = INCOST.INSPRO_ID
+		   LEFT JOIN TS_ORG ORG ON ORG."ID" = PRO.LAB_ID
+		 WHERE INCOST.DEL_FLAG != 1
+	</select>
+</mapper>

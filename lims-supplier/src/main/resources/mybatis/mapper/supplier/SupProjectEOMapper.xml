@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.supplier.dao.SupProjectEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.supplier.entity.SupProjectEO" >
+    <id column="id" property="id" />
+    <result column="sup_project_id" property="supProjectId" />
+    <result column="sup_ability_id" property="supAbilityId" />
+    <result column="sup_unit" property="supUnit" />
+    <result column="sup_price" property="supPrice" />
+    <result column="contract_project_name" property="contractProjectName" />
+    <result column="sup_discount" property="supDiscount" />
+    <result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+    <result column="TEST_OBJ" jdbcType="VARCHAR" property="testObj" />
+    <result column="TEST_PROJECT" jdbcType="VARCHAR" property="testProject" />
+    <result column="TEST_STANDARD" jdbcType="VARCHAR" property="testStandard" />
+    <result column="TEST_METHOD" jdbcType="VARCHAR" property="testMethod" />
+    <result column="TEST_TYPE" jdbcType="VARCHAR" property="testType" />
+    <result column="TEST_STANDARD_NAME" jdbcType="VARCHAR" property="testStandardName" />
+  	<result column="SUP_DISCOUNT_PRICE" property="supDiscountPrice" />
+  	<result column="del_flag" property="delFlag"/>
+  	<result column="RATIO" property="ratio"/>
+  	<result column="REMARK" property="remark"/>
+  </resultMap>
+
+
+  <resultMap id="SearchResultMap" type="com.adc.da.supplier.entity.SupProjectEO" >
+  	<id column="id" property="id" />
+    <result column="sup_price" property="supPrice" />
+    <result column="sup_discount" property="supDiscount" />
+    <result column="TEST_PROJECT" jdbcType="VARCHAR" property="testProject" />
+  	<result column="SUP_NAME" property="supName" />
+  	<result column="SUP_MANAGER_ID" property="supManagerId" />
+  	<result column="SUP_DISCOUNT_PRICE" property="supDiscountPrice" />
+  	<result column="PROJECT_CODE" jdbcType="VARCHAR" property="projectCode" />
+    <result column="TEST_OBJ" jdbcType="VARCHAR" property="testObj" />
+    <result column="TEST_PROJECT" jdbcType="VARCHAR" property="testProject" />
+    <result column="TEST_STANDARD" jdbcType="VARCHAR" property="testStandard" />
+    <result column="TEST_METHOD" jdbcType="VARCHAR" property="testMethod" />
+    <result column="TEST_TYPE" jdbcType="VARCHAR" property="testType" />
+    <result column="TEST_STANDARD_NAME" jdbcType="VARCHAR" property="testStandardName" />
+  	<result column="del_flag" property="delFlag"/>
+  	<result column="RATIO" property="ratio"/>
+  	<result column="REMARK" property="remark"/>
+  </resultMap>
+
+  <!-- SUP_PROJECT table all fields -->
+  <sql id="Base_Column_List" >
+     id, sup_project_id, sup_ability_id, sup_unit, sup_price, sup_discount, contract_project_name,
+     PROJECT_CODE, TEST_OBJ, TEST_PROJECT, TEST_STANDARD, TEST_METHOD, TEST_TYPE, TEST_STANDARD_NAME,
+     SUP_DISCOUNT_PRICE, del_flag, RATIO, REMARK
+  </sql>
+
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1 and del_flag = 0
+    <trim suffixOverrides="," >
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="supProjectId != null" >
+        and sup_project_id ${supProjectIdOperator} #{supProjectId}
+      </if>
+      <if test="supAbilityId != null" >
+        and sup_ability_id ${supAbilityIdOperator} #{supAbilityId}
+      </if>
+      <if test="supUnit != null" >
+        and sup_unit ${supUnitOperator} #{supUnit}
+      </if>
+      <if test="supPrice != null" >
+        and sup_price ${supPriceOperator} #{supPrice}
+      </if>
+      <if test="supDiscount != null" >
+        and sup_discount ${supDiscountOperator} #{supDiscount}
+      </if>
+    </trim>
+  </sql>
+
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.supplier.entity.SupProjectEO" >
+    <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT sys_guid() FROM DUAL
+    </selectKey>
+        insert into SUP_PROJECT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="supProjectId != null" >sup_project_id,</if>
+                <if test="supAbilityId != null" >sup_ability_id,</if>
+                <if test="supUnit != null" >sup_unit,</if>
+                <if test="supPrice != null" >sup_price,</if>
+                <if test="supDiscount != null" >sup_discount,</if>
+                <if test="contractProjectName != null" >contract_project_name,</if>
+                <if test="projectCode != null">PROJECT_CODE,</if>
+		        <if test="testObj != null">TEST_OBJ,</if>
+		        <if test="testProject != null">TEST_PROJECT,</if>
+		        <if test="testStandard != null">TEST_STANDARD,</if>
+		        <if test="testMethod != null">TEST_METHOD,</if>
+		        <if test="testType != null">TEST_TYPE,</if>
+		        <if test="testStandardName != null">TEST_STANDARD_NAME,</if>
+		        <if test="supDiscountPrice != null">SUP_DISCOUNT_PRICE,</if>
+		        <if test="delFlag != null">del_flag,</if>
+		        
+		        <if test="ratio != null">RATIO,</if>
+		        <if test="remark != null">REMARK,</if>
+		        
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="supProjectId != null" >#{supProjectId, jdbcType=VARCHAR},</if>
+                <if test="supAbilityId != null" >#{supAbilityId, jdbcType=VARCHAR},</if>
+                <if test="supUnit != null" >#{supUnit, jdbcType=VARCHAR},</if>
+                <if test="supPrice != null" >#{supPrice, jdbcType=VARCHAR},</if>
+                <if test="supDiscount != null" >#{supDiscount, jdbcType=VARCHAR},</if>
+        		<if test="contractProjectName != null" >#{contractProjectName, jdbcType=VARCHAR},</if>
+	            <if test="projectCode != null">#{projectCode,jdbcType=VARCHAR},</if>
+	            <if test="testObj != null">#{testObj,jdbcType=VARCHAR},</if>
+		        <if test="testProject != null">#{testProject,jdbcType=VARCHAR},</if>
+		        <if test="testStandard != null">#{testStandard,jdbcType=VARCHAR},</if>
+		        <if test="testMethod != null">#{testMethod,jdbcType=VARCHAR},</if>
+		        <if test="testType != null">#{testType,jdbcType=VARCHAR},</if>
+		        <if test="testStandardName != null">#{testStandardName,jdbcType=VARCHAR},</if>
+            	<if test="supDiscountPrice != null">#{supDiscountPrice,jdbcType=VARCHAR},</if>
+            	<if test="delFlag != null">#{delFlag, jdbcType=VARCHAR},</if>
+            	<if test="ratio != null">#{ratio, jdbcType=VARCHAR},</if>
+            	<if test="remark != null">#{remark, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+
+	<insert id="insertBatchSelective" parameterType="java.util.List" useGeneratedKeys="false">
+		INSERT ALL
+		<foreach item="item" index="index" collection="supProjectList">
+			INTO SUP_PROJECT
+			(
+				ID, 
+				SUP_PROJECT_ID, 
+				SUP_ABILITY_ID, 
+				SUP_UNIT, 
+				SUP_PRICE, 
+				SUP_DISCOUNT, 
+				CONTRACT_PROJECT_NAME,
+     			PROJECT_CODE, 
+     			TEST_OBJ, 
+     			TEST_PROJECT, 
+     			TEST_STANDARD, 
+     			TEST_METHOD, 
+     			TEST_TYPE, 
+     			TEST_STANDARD_NAME,
+     			SUP_DISCOUNT_PRICE, 
+     			DEL_FLAG,
+     			RATIO,
+     			REMARK
+			) VALUES
+			(
+				#{item.id, jdbcType=VARCHAR},
+				#{item.supProjectId, jdbcType=VARCHAR},
+				#{item.supAbilityId, jdbcType=VARCHAR},
+				#{item.supUnit, jdbcType=VARCHAR},
+				#{item.supPrice, jdbcType=VARCHAR},
+				#{item.supDiscount, jdbcType=VARCHAR},
+				#{item.contractProjectName, jdbcType=VARCHAR},
+				#{item.projectCode, jdbcType=VARCHAR},
+				#{item.testObj, jdbcType=VARCHAR},
+				#{item.testProject, jdbcType=VARCHAR},
+				#{item.testStandard, jdbcType=VARCHAR},
+				#{item.testMethod, jdbcType=VARCHAR},
+				#{item.testType, jdbcType=VARCHAR},
+				#{item.testStandardName, jdbcType=VARCHAR},
+				#{item.supDiscountPrice, jdbcType=VARCHAR},
+				#{item.delFlag, jdbcType=VARCHAR},
+				#{item.ratio, jdbcType=VARCHAR},
+				#{item.remark, jdbcType=VARCHAR}
+			)
+		</foreach>
+		SELECT 1 FROM DUAL
+	</insert>
+
+
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.supplier.entity.SupProjectEO" >
+    update SUP_PROJECT
+    <set >
+      <if test="supProjectId != null" >
+        sup_project_id = #{supProjectId},
+      </if>
+      <if test="supAbilityId != null" >
+        sup_ability_id = #{supAbilityId},
+      </if>
+      <if test="supUnit != null" >
+        sup_unit = #{supUnit},
+      </if>
+      <if test="supPrice != null" >
+        sup_price = #{supPrice},
+      </if>
+      <if test="supDiscount != null" >
+        sup_discount = #{supDiscount},
+      </if>
+      <if test="contractProjectName != null" >
+        contract_project_name = #{contractProjectName},
+      </if>
+      <if test="projectCode != null">
+       	PROJECT_CODE = #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="testObj != null">
+      	TEST_OBJ = #{testObj,jdbcType=VARCHAR},
+      </if>
+      <if test="testProject != null">
+      	TEST_PROJECT = #{testProject,jdbcType=VARCHAR},
+      </if>
+      <if test="testStandard != null">
+      	TEST_STANDARD = #{testStandard,jdbcType=VARCHAR},
+      </if>
+      <if test="testMethod != null">
+      	TEST_METHOD = #{testMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="testType != null">
+      	TEST_TYPE = #{testType,jdbcType=VARCHAR},
+      </if>
+      <if test="testStandardName != null">
+      	TEST_STANDARD_NAME = #{testStandardName,jdbcType=VARCHAR},
+      </if>
+      <if test="supDiscountPrice != null">
+      	SUP_DISCOUNT_PRICE = #{supDiscountPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+          del_flag = #{delFlag},
+      </if>
+      <if test="ratio != null">
+          RATIO = #{ratio},
+      </if>
+      <if test="remark != null">
+          REMARK = #{remark},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 SUP_PROJECT -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from SUP_PROJECT
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SUP_PROJECT
+     where id = #{value}
+  </delete>
+
+    <!-- 删除批量 -->
+    <delete id="batchDelete" parameterType="java.lang.String">
+     delete from SUP_PROJECT
+     where sup_ability_id = #{value}
+  </delete>
+  <!-- SUP_PROJECT 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from SUP_PROJECT
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+    <select id="findListBySupId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select sp.*, bp.pro_name from sup_project sp left join BM_INSPECT_PROJECT bp on sp.sup_project_id = bp.id where sup_Ability_Id = #{supId}
+    </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from SUP_PROJECT
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+
+  <select id="selectSupProjectByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from SUP_ABILITY SAB
+	LEFT JOIN SUP_PROJECT SP ON SAB.ID = SP.SUP_ABILITY_ID
+    WHERE SAB.DEL_FLAG = 0 AND SP.DEL_FLAG = 0
+	<if test="supName != null and supName != ''">
+        AND SAB.SUP_NAME LIKE '%${supName}%'
+    </if>
+    <if test="testProject != null and testProject != ''">
+        AND SP.TEST_PROJECT LIKE '%${testProject}%'
+    </if>
+    <if test="supAbilityId != null and supAbilityId != ''">
+        AND SAB.ID = #{supAbilityId}
+    </if>
+    <if test="projectCode != null and projectCode != ''">
+        AND SP.PROJECT_CODE = #{projectCode}
+    </if>
+  </select>
+
+   <!-- 分页查询列表 -->
+   <select id="selectSupProjectByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+			SAB.SUP_NAME,
+			SAB.SUP_MANAGER_ID,
+			SP.TEST_PROJECT,
+			SP.SUP_PRICE,
+			SP.SUP_DISCOUNT,
+			SP.SUP_DISCOUNT_PRICE,
+			SP.PROJECT_CODE, 
+   			SP.TEST_OBJ, 
+   			SP.TEST_STANDARD, 
+   			SP.TEST_METHOD, 
+   			SP.TEST_TYPE, 
+   			SP.TEST_STANDARD_NAME,
+   			SP.ID,
+   			SP.RATIO,
+   			SP.REMARK
+			FROM SUP_ABILITY SAB
+			LEFT JOIN SUP_PROJECT SP ON SAB.ID = SP.SUP_ABILITY_ID
+			WHERE SAB.DEL_FLAG = 0 AND SP.DEL_FLAG = 0
+			<if test="supName != null and supName != ''">
+                AND SAB.SUP_NAME LIKE '%${supName}%'
+            </if>
+            <if test="testProject != null and testProject != ''">
+                AND SP.TEST_PROJECT LIKE '%${testProject}%'
+            </if>
+            <if test="supAbilityId != null and supAbilityId != ''">
+                AND SAB.ID = #{supAbilityId}
+            </if>
+            <if test="projectCode != null and projectCode != ''">
+                AND SP.PROJECT_CODE = #{projectCode}
+            </if>
+            
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+
+</mapper>

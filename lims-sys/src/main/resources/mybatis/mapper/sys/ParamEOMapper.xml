@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.ParamEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.ParamEO">
+        <!-- 主键 -->
+        <id column="id" property="id"/>
+        <!-- 表属性 -->
+        <result column="usid" property="usId"/>
+        <result column="org_id" property="orgId"/>
+        <result column="CREATEDATE" property="createDate"/>
+        <result column="PARAMCODE" property="paramCode"/>
+        <result column="PARAMNAME" property="paramName"/>
+        <result column="PARAMVALUE" property="paramValue"/>
+        <result column="DEL" property="del"/>
+        <result column="PARAMTYPE" property="paramType"/>
+        <result column="pic_path" property="picPath"/>
+        <result column="attach_name" property="attachName"/>
+    </resultMap>
+
+    <!-- 【表名】 table all fields -->
+    <sql id="Base_Column_List">
+        id,usid,org_id,CREATEDATE,PARAMCODE,PARAMNAME,PARAMVALUE,DEL,PARAMTYPE
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="searchPhrase != null">
+                <!--通用查询-->
+                <foreach collection="searchPhrase" item="phrase" index="i">
+                    <if test="i==0">and(</if>
+                    <if test="i!=0">or(</if>
+                    p0.PARAMCODE ${searchPhraseOperation} '%${phrase}%'
+                    or
+                    p0.PARAMNAME ${searchPhraseOperation} '%${phrase}%'
+                    or
+                    p0.PARAMVALUE ${searchPhraseOperation} '%${phrase}%'
+                    )
+                </foreach>
+            </if>
+            <if test="searchPhrase == null">
+                <!--普通查询-->
+                <if test="createDateStart != null and createDateEnd !=null">
+                    and p0.CREATEDATE BETWEEN to_date(#{createDateStart},'yyyy-MM-dd hh24:mi:ss')
+                    and to_date(#{createDateEnd},'yyyy-MM-dd hh24:mi:ss')
+                </if>
+                <if test="paramCode != null">
+                    and p0.PARAMCODE ${paramCodeOperation} #{paramCode}
+                </if>
+                <if test="paramName != null">
+                    and p0.PARAMNAME ${paramNameOperation} #{paramName}
+                </if>
+                <if test="paramValue != null">
+                    and p0.PARAMVALUE ${paramValueOperation} #{paramValue}
+                </if>
+            </if>
+        </trim>
+    </sql>
+
+    <!--新增参数管理-->
+    <insert id="insertParam" parameterType="com.adc.da.sys.entity.ParamEO">
+        insert into TS_PARAM (<include refid="Base_Column_List"/>)
+        values (#{id},#{usId},#{orgId},to_date(#{createDate} , 'yyyy-mm-dd hh24:mi:ss'),#{paramCode},#{paramName},#{paramValue},#{del},#{paramType})
+    </insert>
+
+    <!--修改参数管理-->
+    <update id="updateParam" parameterType="com.adc.da.sys.entity.ParamEO">
+        update TS_PARAM
+        <set>
+            <if test="usId!=null">usid = #{usId},</if>
+            <if test="orgId!=null">org_id = #{orgId},</if>
+            <if test="createDate!=null">CREATEDATE = to_date(#{createDate} , 'yyyy-mm-dd hh24:mi:ss'),</if>
+            <if test="paramCode!=null">PARAMCODE = #{paramCode},</if>
+            <if test="paramName!=null">PARAMNAME = #{paramName},</if>
+            <if test="paramValue!=null">PARAMVALUE = #{paramValue},</if>
+            <if test="del!=null">DEL = #{del}</if>
+            <if test="paramType!=null"> PARAMTYPE=#{paramType}</if>
+        </set>
+        where id = #{id}
+    </update>
+    <!--删除参数管理-->
+    <delete id="deleteParam" parameterType="java.lang.String">
+        delete from TS_PARAM where id = #{id}
+    </delete>
+
+    <!--查询参数管理-->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.sys.page.ParamEOPage">
+        select
+        <include refid="Base_Column_List"/>,
+        pic_path
+        from
+        (select tmp_tb.* , rownum rn from
+        (select distinct p0.*, att.save_path as pic_path from TS_PARAM p0 
+         left join ts_attachment att on  att.id = p0.paramvalue
+        <include refid="Base_Where_Clause"/> and p0.del != 1
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex}) u
+        where rn &gt;= ${pager.startIndex}
+    </select>
+    <!--查询参数管理 总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.sys.page.ParamEOPage">
+        select count (distinct (id)) from TS_PARAM p0 <include refid="Base_Where_Clause"/> and del != 1
+    </select>
+
+    <!--根据id查询参数的详细信息-->
+    <select id="getParamById" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select p0.*, att.save_path as pic_path, att.attachment_name as attach_name
+        from TS_PARAM p0
+        left join ts_attachment att on att.id = p0.paramvalue
+        where p0.id = #{id} and p0.del != 1
+    </select>
+
+    <!--根据code查询参数的详细信息-->
+    <select id="getParamByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from TS_PARAM where PARAMCODE = #{code} and del != 1
+    </select>
+
+    <!--查询数据库参数coed是否重复-->
+    <!--验证物料编码数据库是否存在-->
+    <select id="checkNum" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(1)
+        FROM TS_PARAM
+        WHERE TS_PARAM.del != 1
+        AND TS_PARAM.PARAMCODE = #{code, jdbcType=VARCHAR}
+        <if test='id != null and id != ""'>
+            AND TS_PARAM.id != #{id, jdbcType=VARCHAR}
+        </if>
+    </select>
+    <!--根据id只是更新参数值-->
+    <update id="updateById" parameterType="java.lang.String">
+        update TS_PARAM
+        <set>
+           PARAMVALUE = #{paramValue}
+        </set>
+        where id = #{id}
+    </update>
+    <!--根据name查询参数的详细信息-->
+    <select id="getParamByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from TS_PARAM where PARAMNAME = #{name} and del = '1'
+    </select>
+
+    <!--根据id更新参数值-->
+    <update id="updatePreById" parameterType="com.adc.da.sys.entity.ParamEO">
+        update TS_PARAM
+        <set>
+            PARAMCODE = #{paramCode},
+            PARAMVALUE = #{paramValue},
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

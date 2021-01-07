@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_execute.dao.TrialSpotCheckEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.trial_execute.entity.TrialSpotCheckEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="FILE_ID" jdbcType="VARCHAR" property="fileId" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <resultMap id="SearchResultMap" type="com.adc.da.trial_execute.entity.TrialSpotCheckEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="FILE_ID" jdbcType="VARCHAR" property="fileId" />
+    <result column="TYPE" jdbcType="VARCHAR" property="type" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="USNAME" jdbcType="VARCHAR" property="createName" />
+      <collection property="attachmentVOList" ofType="com.adc.da.trial_execute.vo.AttachmentVO">
+          <result column="ATTACHMENT_NAME" jdbcType="VARCHAR" property="attachmentName" />
+          <result column="SAVE_PATH" jdbcType="VARCHAR" property="attachmentPath" />
+      </collection>
+  </resultMap>
+    <resultMap id="AttachMap" type="com.adc.da.trial_execute.vo.AttachmentVO">
+        <id column="ID" jdbcType="VARCHAR" property="fileId" />
+        <result column="attachment_name" jdbcType="VARCHAR" property="attachmentName" />
+        <result column="save_path" jdbcType="VARCHAR" property="attachmentPath" />
+    </resultMap>
+  <sql id="Base_Column_List">
+    ID, FILE_ID, TYPE, TRIALTASK_ID, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, 
+    DEL_FLAG, REMARK
+  </sql>
+
+    <select id="selectByTrialSpotCheckEO" parameterType="java.lang.String" resultMap="SearchResultMap">
+    SELECT
+    EV_TRIAL_SPOTCHECK.ID,
+    EV_TRIAL_SPOTCHECK.CREATE_TIME,
+    EV_TRIAL_SPOTCHECK.FILE_ID,
+    EV_TRIAL_SPOTCHECK.CREATE_BY,
+    EV_TRIAL_SPOTCHECK.TYPE,
+    EV_TRIAL_SPOTCHECK.TRIALTASK_ID,
+    TS_USER.USNAME
+    FROM
+    EV_TRIAL_SPOTCHECK
+    LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_SPOTCHECK.CREATE_BY
+    where EV_TRIAL_SPOTCHECK.ID = #{id,jdbcType=VARCHAR}
+</select>
+
+    <select id="selectAttachVO"  resultMap="AttachMap">
+    SELECT
+    TS_ATTACHMENT.ID,
+    TS_ATTACHMENT.attachment_name,
+    TS_ATTACHMENT.save_path
+    FROM
+    TS_ATTACHMENT
+    where TS_ATTACHMENT.ID in
+        <foreach collection="list" item="fileIdArray" open="(" close=")" separator=",">
+            #{fileIdArray}
+        </foreach>
+</select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="SearchResultMap">
+    SELECT
+		EV_TRIAL_SPOTCHECK.ID,
+		EV_TRIAL_SPOTCHECK.CREATE_TIME,
+		EV_TRIAL_SPOTCHECK.FILE_ID,
+		EV_TRIAL_SPOTCHECK.CREATE_BY,
+		EV_TRIAL_SPOTCHECK.TYPE,
+		EV_TRIAL_SPOTCHECK.TRIALTASK_ID,
+		TS_USER.USNAME,
+		TS_ATTACHMENT.ATTACHMENT_NAME,
+		TS_ATTACHMENT.SAVE_PATH
+		FROM
+		EV_TRIAL_SPOTCHECK
+		LEFT JOIN TS_ATTACHMENT ON TS_ATTACHMENT.ID = EV_TRIAL_SPOTCHECK.FILE_ID
+		LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_SPOTCHECK.CREATE_BY
+    where EV_TRIAL_SPOTCHECK.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from EV_TRIAL_SPOTCHECK
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.trial_execute.entity.TrialSpotCheckEO">
+    insert into EV_TRIAL_SPOTCHECK (
+    	ID, 
+    	FILE_ID, 
+    	TYPE, 
+      	TRIALTASK_ID, 
+      	CREATE_BY, 
+      	CREATE_TIME, 
+     	UPDATE_BY, 
+     	UPDATE_TIME, 
+     	DEL_FLAG, 
+     	REMARK
+     )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{fileId,jdbcType=VARCHAR}, 
+    	#{type,jdbcType=VARCHAR}, 
+      	#{trialtaskId,jdbcType=VARCHAR}, 
+      	#{createBy,jdbcType=VARCHAR},
+      	#{createTime,jdbcType=VARCHAR}, 
+      	#{updateBy,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{delFlag,jdbcType=VARCHAR}, 
+     	#{remark,jdbcType=VARCHAR}
+     )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.trial_execute.entity.TrialSpotCheckEO">
+    insert into EV_TRIAL_SPOTCHECK
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="fileId != null">
+        FILE_ID,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_execute.entity.TrialSpotCheckEO">
+    update EV_TRIAL_SPOTCHECK
+    <set>
+      <if test="fileId != null">
+        FILE_ID = #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.trial_execute.entity.TrialSpotCheckEO">
+    update EV_TRIAL_SPOTCHECK
+    set FILE_ID = #{fileId,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+    <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+       WHERE EV_TRIAL_SPOTCHECK.DEL_FLAG != 1
+       	<if test="createName != null and createName != ''">
+          AND TS_USER.USNAME LIKE '%${createName}%'
+      	</if>
+      	<if test="createDate1 != null and createDate1 != ''">
+          AND EV_TRIAL_SPOTCHECK.CREATE_TIME <![CDATA[>=]]> #{createDate1}
+       </if>
+       <if test="createDate2 != null and createDate2 != ''">
+          AND EV_TRIAL_SPOTCHECK.CREATE_TIME <![CDATA[<=]]> #{createDate2}
+       </if>
+       <if test="type != null and type != ''">
+          AND EV_TRIAL_SPOTCHECK.TYPE = #{type}
+       </if>
+       <if test="trialtaskId != null and trialtaskId != ''">
+          AND EV_TRIAL_SPOTCHECK.TRIALTASK_ID = #{trialtaskId}
+       </if>
+   </sql>
+  
+  <!-- EV_TRIAL_SPOTCHECK 列表总数-->
+ <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from EV_TRIAL_SPOTCHECK
+    LEFT JOIN TS_ATTACHMENT ON TS_ATTACHMENT.ID = EV_TRIAL_SPOTCHECK.FILE_ID
+	LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_SPOTCHECK.CREATE_BY
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询EV_TRIAL_SPOTCHECK列表 -->
+  <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+	SELECT *
+	FROM
+		(select tmp_tb.* , rownum rn from
+			(SELECT
+				EV_TRIAL_SPOTCHECK.ID,
+				EV_TRIAL_SPOTCHECK.CREATE_TIME,
+				EV_TRIAL_SPOTCHECK.FILE_ID,
+				EV_TRIAL_SPOTCHECK.CREATE_BY,
+				EV_TRIAL_SPOTCHECK.TYPE,
+				EV_TRIAL_SPOTCHECK.TRIALTASK_ID,
+				TS_USER.USNAME,
+				TS_ATTACHMENT.ATTACHMENT_NAME,
+				TS_ATTACHMENT.SAVE_PATH
+				FROM
+				EV_TRIAL_SPOTCHECK
+				LEFT JOIN TS_ATTACHMENT ON TS_ATTACHMENT.ID = EV_TRIAL_SPOTCHECK.FILE_ID
+				LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_SPOTCHECK.CREATE_BY
+			 <include refid="Base_Where_Clause"/>
+			 ORDER BY EV_TRIAL_SPOTCHECK.UPDATE_TIME DESC
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+		where rn &gt;= ${pager.startIndex}
+  </select>
+  
+  <!-- 查询EV_TRIAL_SPOTCHECK列表 不分页 -->
+  <select id="findByList" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+	SELECT
+		EV_TRIAL_SPOTCHECK.ID,
+		EV_TRIAL_SPOTCHECK.CREATE_TIME,
+		EV_TRIAL_SPOTCHECK.TYPE,
+		TS_USER.USNAME
+		FROM
+		EV_TRIAL_SPOTCHECK
+		LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_SPOTCHECK.CREATE_BY
+	<include refid="Base_Where_Clause"/>
+  </select>
+  
+</mapper>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.supplier.dao.SupSupplierTaskStandardEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.supplier.entity.SupSupplierTaskStandardEO">
+        <id column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="project" property="project"/>
+        <result column="job_content" property="jobContent"/>
+        <result column="people_number" property="peopleNumber"/>
+        <result column="work_hour" property="workHour"/>
+        <result column="work_hour_unit" property="workHourUnit"/>
+        <result column="output_content" property="outputContent"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="UNIT_PRICE" property="unitPrice"/>
+    </resultMap>
+
+    <!-- SUP_SUPPLIER_TASK_STANDARD table all fields -->
+    <sql id="Base_Column_List">
+            id, type, project, job_content, people_number, work_hour, work_hour_unit, output_content, create_time,
+            create_by, update_time, update_by, del_flag, UNIT_PRICE
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        WHERE DEL_FLAG = 0
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    and (TYPE LIKE '%'|| #{keyWord}||'%' OR PROJECT LIKE '%'||#{keyWord}||'%' OR job_content
+                 LIKE '%'||#{keyWord}||'%' or people_number LIKE '%'||#{keyWord}||'%' or work_hour
+                 LIKE '%'||#{keyWord}||'%' or work_hour_unit LIKE '%'||#{keyWord}||'%' or
+                 output_content LIKE '%'||#{keyWord}||'%')
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="type != null">
+                    AND TYPE LIKE '%'||#{type}||'%'
+                </if>
+                <if test="project != null">
+                    AND PROJECT LIKE '%'||#{project}||'%'
+                </if>
+                <if test="jobContent != null">
+                    AND job_content LIKE '%'||#{jobContent}||'%'
+                </if>
+                <if test="peopleNumber != null">
+                    AND people_number LIKE '%'||#{peopleNumber}||'%'
+                </if>
+                <if test="workHour != null">
+                    AND work_hour LIKE '%'||#{workHour}||'%'
+                </if>
+                <if test="workHourUnit != null">
+                    AND work_hour_unit LIKE '%'||#{workHourUnit}||'%'
+                </if>
+                <if test="outputContent != null">
+                    AND output_content LIKE '%'||#{outputContent}||'%'
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.supplier.entity.SupSupplierTaskStandardEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SEQ_SUP_SUPPLIER_TASK_STANDARD.NEXTVAL FROM DUAL
+        </selectKey> -->
+        INSERT INTO SUP_SUPPLIER_TASK_STANDARD(<include refid="Base_Column_List"/>)
+        VALUES (#{id}, #{type}, #{project}, #{jobContent}, #{peopleNumber}, #{workHour}, #{workHourUnit},
+        #{outputContent}, #{createTime}, #{createBy}, #{updateTime}, #{updateBy}, #{delFlag})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.supplier.entity.SupSupplierTaskStandardEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_SUP_SUPPLIER_TASK_STANDARD.NEXTVAL FROM DUAL
+    </selectKey> -->
+        INSERT INTO SUP_SUPPLIER_TASK_STANDARD
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="type != null">type,</if>
+            <if test="project != null">project,</if>
+            <if test="jobContent != null">job_content,</if>
+            <if test="peopleNumber != null">people_number,</if>
+            <if test="workHour != null">work_hour,</if>
+            <if test="workHourUnit != null">work_hour_unit,</if>
+            <if test="outputContent != null">output_content,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="unitPrice != null">UNIT_PRICE,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="type != null">#{type},</if>
+            <if test="project != null">#{project},</if>
+            <if test="jobContent != null">#{jobContent},</if>
+            <if test="peopleNumber != null">#{peopleNumber},</if>
+            <if test="workHour != null">#{workHour},</if>
+            <if test="workHourUnit != null">#{workHourUnit},</if>
+            <if test="outputContent != null">#{outputContent},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.supplier.entity.SupSupplierTaskStandardEO">
+        UPDATE SUP_SUPPLIER_TASK_STANDARD
+        SET type           = #{type},
+            project        = #{project},
+            job_content    = #{jobContent},
+            people_number  = #{peopleNumber},
+            work_hour      = #{workHour},
+            work_hour_unit = #{workHourUnit},
+            output_content = #{outputContent},
+            create_time    = #{createTime},
+            create_by      = #{createBy},
+            update_time    = #{updateTime},
+            update_by      = #{updateBy},
+            del_flag       = #{delFlag},
+            UNIT_PRICE       = #{unitPrice}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.supplier.entity.SupSupplierTaskStandardEO">
+        UPDATE SUP_SUPPLIER_TASK_STANDARD
+        <set>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="project != null">
+                project = #{project},
+            </if>
+            <if test="jobContent != null">
+                job_content = #{jobContent},
+            </if>
+            <if test="peopleNumber != null">
+                people_number = #{peopleNumber},
+            </if>
+            <if test="workHour != null">
+                work_hour = #{workHour},
+            </if>
+            <if test="workHourUnit != null">
+                work_hour_unit = #{workHourUnit},
+            </if>
+            <if test="outputContent != null">
+                output_content = #{outputContent},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="unitPrice != null">
+                UNIT_PRICE = #{unitPrice},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据id查询 SUP_SUPPLIER_TASK_STANDARD -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SUP_SUPPLIER_TASK_STANDARD
+        WHERE id = #{value} AND DEL_FLAG = 0
+
+    </select>
+
+    <!-- SUP_SUPPLIER_TASK_STANDARD 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        SELECT count(1) FROM SUP_SUPPLIER_TASK_STANDARD
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询SUP_SUPPLIER_TASK_STANDARD列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from SUP_SUPPLIER_TASK_STANDARD
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from SUP_SUPPLIER_TASK_STANDARD
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>

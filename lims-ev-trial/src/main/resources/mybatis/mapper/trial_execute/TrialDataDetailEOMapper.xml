@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_execute.dao.TrialDataDetailEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.trial_execute.entity.TrialDataDetailEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="TRIALDATA_ID" jdbcType="VARCHAR" property="trialdataId" />
+    <result column="TOTAL_HOURS" jdbcType="VARCHAR" property="totalHours" />
+    <result column="OPERATION_TIME" jdbcType="VARCHAR" property="operationTime" />
+    <result column="SPEED" jdbcType="VARCHAR" property="speed" />
+    <result column="TORQUE" jdbcType="VARCHAR" property="torque" />
+    <result column="P" jdbcType="VARCHAR" property="p" />
+    <result column="T_EC" jdbcType="VARCHAR" property="tEc" />
+    <result column="P_EC" jdbcType="VARCHAR" property="pEc" />
+    <result column="FB_RATE" jdbcType="VARCHAR" property="fbRate" />
+    <result column="FUELCOSP" jdbcType="VARCHAR" property="fuelcosp" />
+    <result column="BLOW_VAL" jdbcType="VARCHAR" property="blowVal" />
+    <result column="TWO" jdbcType="VARCHAR" property="two" />
+    <result column="PWO" jdbcType="VARCHAR" property="pwo" />
+    <result column="TWI" jdbcType="VARCHAR" property="twi" />
+    <result column="PWI" jdbcType="VARCHAR" property="pwi" />
+    <result column="T_EXH" jdbcType="VARCHAR" property="tExh" />
+    <result column="P_EXH" jdbcType="VARCHAR" property="pExh" />
+    <result column="T_FUEL" jdbcType="VARCHAR" property="tFuel" />
+    <result column="P_FUEL" jdbcType="VARCHAR" property="pFuel" />
+    <result column="T_INLET" jdbcType="VARCHAR" property="tInlet" />
+    <result column="P_INLET" jdbcType="VARCHAR" property="pInlet" />
+    <result column="T_OIL" jdbcType="VARCHAR" property="tOil" />
+    <result column="P_OIL" jdbcType="VARCHAR" property="pOil" />
+    <result column="P_CRANK" jdbcType="VARCHAR" property="pCrank" />
+    <result column="P_AIR" jdbcType="VARCHAR" property="pAir" />
+    <result column="T_AIR" jdbcType="VARCHAR" property="tAir" />
+    <result column="PHI" jdbcType="VARCHAR" property="phi" />
+    <result column="T_EXH_WQ" jdbcType="VARCHAR" property="tExhWq" />
+    <result column="P_EXH_WQ" jdbcType="VARCHAR" property="pExhWq" />
+    <result column="T_EXH_CH" jdbcType="VARCHAR" property="tExhCh" />
+    <result column="P_EXH_CH" jdbcType="VARCHAR" property="pExhCh" />
+    <result column="T_EXC_C_ONE" jdbcType="VARCHAR" property="tExcCOne" />
+    <result column="T_EXC_C_TWO" jdbcType="VARCHAR" property="tExcCTwo" />
+    <result column="T_EXC_C_THREE" jdbcType="VARCHAR" property="tExcCThree" />
+    <result column="T_EXC_C_FOUR" jdbcType="VARCHAR" property="tExcCFour" />
+    <result column="T_IC_I" jdbcType="VARCHAR" property="tIcI" />
+    <result column="P_IC_I" jdbcType="VARCHAR" property="pIcI" />
+    <result column="T_IC_O" jdbcType="VARCHAR" property="tIcO" />
+    <result column="P_IC_O" jdbcType="VARCHAR" property="pIcO" />
+    <result column="ALPHA" jdbcType="VARCHAR" property="alpha" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="USNAME" jdbcType="VARCHAR" property="createName" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, TRIALDATA_ID, TOTAL_HOURS, OPERATION_TIME, SPEED, TORQUE, P, T_EC, P_EC, FB_RATE, 
+    FUELCOSP, BLOW_VAL, TWO, PWO, TWI, PWI, T_EXH, P_EXH, T_FUEL, P_FUEL, T_INLET, P_INLET, 
+    T_OIL, P_OIL, P_CRANK, P_AIR, T_AIR, PHI, T_EXH_WQ, P_EXH_WQ, T_EXH_CH, P_EXH_CH, 
+    T_EXC_C_ONE, T_EXC_C_TWO, T_EXC_C_THREE, T_EXC_C_FOUR, T_IC_I, P_IC_I, T_IC_O, P_IC_O, 
+    ALPHA, CREATE_BY, CREATE_TIME, DEL_FLAG, TRIALTASK_ID
+  </sql>
+  
+  <sql id="Search_Column_List">
+    EV_TRIALDATA_DETAIL.ID, TRIALDATA_ID, TOTAL_HOURS, OPERATION_TIME, SPEED, TORQUE, P, T_EC, P_EC, FB_RATE, 
+    FUELCOSP, BLOW_VAL, TWO, PWO, TWI, PWI, T_EXH, P_EXH, T_FUEL, P_FUEL, T_INLET, P_INLET, 
+    T_OIL, P_OIL, P_CRANK, P_AIR, T_AIR, PHI, T_EXH_WQ, P_EXH_WQ, T_EXH_CH, P_EXH_CH, 
+    T_EXC_C_ONE, T_EXC_C_TWO, T_EXC_C_THREE, T_EXC_C_FOUR, T_IC_I, P_IC_I, T_IC_O, P_IC_O, 
+    ALPHA, EV_TRIALDATA_DETAIL.CREATE_BY, EV_TRIALDATA_DETAIL.CREATE_TIME, EV_TRIALDATA_DETAIL.TRIALTASK_ID
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from EV_TRIALDATA_DETAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from EV_TRIALDATA_DETAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByTrialdataId" parameterType="java.lang.String">
+    delete from EV_TRIALDATA_DETAIL
+    where TRIALDATA_ID = #{trialdataId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.adc.da.trial_execute.entity.TrialDataDetailEO">
+    insert into EV_TRIALDATA_DETAIL (
+    	ID, 
+    	TRIALDATA_ID, 
+    	TOTAL_HOURS, 
+      	OPERATION_TIME, 
+      	SPEED, 
+      	TORQUE, 
+      	P, 
+      	T_EC, 
+      	P_EC, 
+      	FB_RATE, 
+      	FUELCOSP, 
+      	BLOW_VAL, 
+      	TWO, 
+      	PWO, 
+      	TWI, 
+      	PWI, 
+      	T_EXH, 
+      	P_EXH,
+      	T_FUEL, 
+      	P_FUEL, 
+      	T_INLET, 
+      	P_INLET, 
+      	T_OIL, 
+      	P_OIL, 
+      	P_CRANK, 
+      	P_AIR, 
+      	T_AIR, 
+      	PHI, 
+      	T_EXH_WQ, 
+      	P_EXH_WQ, 
+      	T_EXH_CH, 
+      	P_EXH_CH, 
+      	T_EXC_C_ONE, 
+      	T_EXC_C_TWO, 
+      	T_EXC_C_THREE, 
+      	T_EXC_C_FOUR, 
+      	T_IC_I, 
+      	P_IC_I, 
+      	T_IC_O, 
+      	P_IC_O, 
+      	ALPHA, 
+      	CREATE_BY, 
+      	CREATE_TIME,
+      	DEL_FLAG,
+      	TRIALTASK_ID
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{trialdataId,jdbcType=VARCHAR}, 
+    	#{totalHours,jdbcType=VARCHAR}, 
+      	#{operationTime,jdbcType=VARCHAR}, 
+      	#{speed,jdbcType=VARCHAR}, 
+      	#{torque,jdbcType=VARCHAR}, 
+      	#{p,jdbcType=VARCHAR}, 
+      	#{tEc,jdbcType=VARCHAR}, 
+      	#{pEc,jdbcType=VARCHAR}, 
+      	#{fbRate,jdbcType=VARCHAR}, 
+      	#{fuelcosp,jdbcType=VARCHAR}, 
+      	#{blowVal,jdbcType=VARCHAR}, 
+      	#{two,jdbcType=VARCHAR}, 
+      	#{pwo,jdbcType=VARCHAR}, 
+      	#{twi,jdbcType=VARCHAR}, 
+      	#{pwi,jdbcType=VARCHAR}, 
+      	#{tExh,jdbcType=VARCHAR}, 
+      	#{pExh,jdbcType=VARCHAR}, 
+      	#{tFuel,jdbcType=VARCHAR}, 
+      	#{pFuel,jdbcType=VARCHAR}, 
+      	#{tInlet,jdbcType=VARCHAR}, 
+      	#{pInlet,jdbcType=VARCHAR}, 
+      	#{tOil,jdbcType=VARCHAR}, 
+      	#{pOil,jdbcType=VARCHAR}, 
+      	#{pCrank,jdbcType=VARCHAR}, 
+      	#{pAir,jdbcType=VARCHAR}, 
+      	#{tAir,jdbcType=VARCHAR}, 
+      	#{phi,jdbcType=VARCHAR}, 
+      	#{tExhWq,jdbcType=VARCHAR}, 
+      	#{pExhWq,jdbcType=VARCHAR}, 
+      	#{tExhCh,jdbcType=VARCHAR}, 
+      	#{pExhCh,jdbcType=VARCHAR}, 
+      	#{tExcCOne,jdbcType=VARCHAR}, 
+      	#{tExcCTwo,jdbcType=VARCHAR}, 
+      	#{tExcCThree,jdbcType=VARCHAR}, 
+      	#{tExcCFour,jdbcType=VARCHAR}, 
+      	#{tIcI,jdbcType=VARCHAR}, 
+      	#{pIcI,jdbcType=VARCHAR}, 
+      	#{tIcO,jdbcType=VARCHAR}, 
+      	#{pIcO,jdbcType=VARCHAR}, 
+      	#{alpha,jdbcType=VARCHAR}, 
+      	#{createBy,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=VARCHAR},
+      	#{delFlag,jdbcType=VARCHAR},
+      	#{trialtaskId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.trial_execute.entity.TrialDataDetailEO">
+    insert into EV_TRIALDATA_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="trialdataId != null">
+        TRIALDATA_ID,
+      </if>
+      <if test="totalHours != null">
+        TOTAL_HOURS,
+      </if>
+      <if test="operationTime != null">
+        OPERATION_TIME,
+      </if>
+      <if test="speed != null">
+        SPEED,
+      </if>
+      <if test="torque != null">
+        TORQUE,
+      </if>
+      <if test="p != null">
+        P,
+      </if>
+      <if test="tEc != null">
+        T_EC,
+      </if>
+      <if test="pEc != null">
+        P_EC,
+      </if>
+      <if test="fbRate != null">
+        FB_RATE,
+      </if>
+      <if test="fuelcosp != null">
+        FUELCOSP,
+      </if>
+      <if test="blowVal != null">
+        BLOW_VAL,
+      </if>
+      <if test="two != null">
+        TWO,
+      </if>
+      <if test="pwo != null">
+        PWO,
+      </if>
+      <if test="twi != null">
+        TWI,
+      </if>
+      <if test="pwi != null">
+        PWI,
+      </if>
+      <if test="tExh != null">
+        T_EXH,
+      </if>
+      <if test="pExh != null">
+        P_EXH,
+      </if>
+      <if test="tFuel != null">
+        T_FUEL,
+      </if>
+      <if test="pFuel != null">
+        P_FUEL,
+      </if>
+      <if test="tInlet != null">
+        T_INLET,
+      </if>
+      <if test="pInlet != null">
+        P_INLET,
+      </if>
+      <if test="tOil != null">
+        T_OIL,
+      </if>
+      <if test="pOil != null">
+        P_OIL,
+      </if>
+      <if test="pCrank != null">
+        P_CRANK,
+      </if>
+      <if test="pAir != null">
+        P_AIR,
+      </if>
+      <if test="tAir != null">
+        T_AIR,
+      </if>
+      <if test="phi != null">
+        PHI,
+      </if>
+      <if test="tExhWq != null">
+        T_EXH_WQ,
+      </if>
+      <if test="pExhWq != null">
+        P_EXH_WQ,
+      </if>
+      <if test="tExhCh != null">
+        T_EXH_CH,
+      </if>
+      <if test="pExhCh != null">
+        P_EXH_CH,
+      </if>
+      <if test="tExcCOne != null">
+        T_EXC_C_ONE,
+      </if>
+      <if test="tExcCTwo != null">
+        T_EXC_C_TWO,
+      </if>
+      <if test="tExcCThree != null">
+        T_EXC_C_THREE,
+      </if>
+      <if test="tExcCFour != null">
+        T_EXC_C_FOUR,
+      </if>
+      <if test="tIcI != null">
+        T_IC_I,
+      </if>
+      <if test="pIcI != null">
+        P_IC_I,
+      </if>
+      <if test="tIcO != null">
+        T_IC_O,
+      </if>
+      <if test="pIcO != null">
+        P_IC_O,
+      </if>
+      <if test="alpha != null">
+        ALPHA,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="trialdataId != null">
+        #{trialdataId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalHours != null">
+        #{totalHours,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTime != null">
+        #{operationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="speed != null">
+        #{speed,jdbcType=VARCHAR},
+      </if>
+      <if test="torque != null">
+        #{torque,jdbcType=VARCHAR},
+      </if>
+      <if test="p != null">
+        #{p,jdbcType=VARCHAR},
+      </if>
+      <if test="tEc != null">
+        #{tEc,jdbcType=VARCHAR},
+      </if>
+      <if test="pEc != null">
+        #{pEc,jdbcType=VARCHAR},
+      </if>
+      <if test="fbRate != null">
+        #{fbRate,jdbcType=VARCHAR},
+      </if>
+      <if test="fuelcosp != null">
+        #{fuelcosp,jdbcType=VARCHAR},
+      </if>
+      <if test="blowVal != null">
+        #{blowVal,jdbcType=VARCHAR},
+      </if>
+      <if test="two != null">
+        #{two,jdbcType=VARCHAR},
+      </if>
+      <if test="pwo != null">
+        #{pwo,jdbcType=VARCHAR},
+      </if>
+      <if test="twi != null">
+        #{twi,jdbcType=VARCHAR},
+      </if>
+      <if test="pwi != null">
+        #{pwi,jdbcType=VARCHAR},
+      </if>
+      <if test="tExh != null">
+        #{tExh,jdbcType=VARCHAR},
+      </if>
+      <if test="pExh != null">
+        #{pExh,jdbcType=VARCHAR},
+      </if>
+      <if test="tFuel != null">
+        #{tFuel,jdbcType=VARCHAR},
+      </if>
+      <if test="pFuel != null">
+        #{pFuel,jdbcType=VARCHAR},
+      </if>
+      <if test="tInlet != null">
+        #{tInlet,jdbcType=VARCHAR},
+      </if>
+      <if test="pInlet != null">
+        #{pInlet,jdbcType=VARCHAR},
+      </if>
+      <if test="tOil != null">
+        #{tOil,jdbcType=VARCHAR},
+      </if>
+      <if test="pOil != null">
+        #{pOil,jdbcType=VARCHAR},
+      </if>
+      <if test="pCrank != null">
+        #{pCrank,jdbcType=VARCHAR},
+      </if>
+      <if test="pAir != null">
+        #{pAir,jdbcType=VARCHAR},
+      </if>
+      <if test="tAir != null">
+        #{tAir,jdbcType=VARCHAR},
+      </if>
+      <if test="phi != null">
+        #{phi,jdbcType=VARCHAR},
+      </if>
+      <if test="tExhWq != null">
+        #{tExhWq,jdbcType=VARCHAR},
+      </if>
+      <if test="pExhWq != null">
+        #{pExhWq,jdbcType=VARCHAR},
+      </if>
+      <if test="tExhCh != null">
+        #{tExhCh,jdbcType=VARCHAR},
+      </if>
+      <if test="pExhCh != null">
+        #{pExhCh,jdbcType=VARCHAR},
+      </if>
+      <if test="tExcCOne != null">
+        #{tExcCOne,jdbcType=VARCHAR},
+      </if>
+      <if test="tExcCTwo != null">
+        #{tExcCTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="tExcCThree != null">
+        #{tExcCThree,jdbcType=VARCHAR},
+      </if>
+      <if test="tExcCFour != null">
+        #{tExcCFour,jdbcType=VARCHAR},
+      </if>
+      <if test="tIcI != null">
+        #{tIcI,jdbcType=VARCHAR},
+      </if>
+      <if test="pIcI != null">
+        #{pIcI,jdbcType=VARCHAR},
+      </if>
+      <if test="tIcO != null">
+        #{tIcO,jdbcType=VARCHAR},
+      </if>
+      <if test="pIcO != null">
+        #{pIcO,jdbcType=VARCHAR},
+      </if>
+      <if test="alpha != null">
+        #{alpha,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_execute.entity.TrialDataDetailEO">
+    update EV_TRIALDATA_DETAIL
+    <set>
+      <if test="trialdataId != null">
+        TRIALDATA_ID = #{trialdataId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalHours != null">
+        TOTAL_HOURS = #{totalHours,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTime != null">
+        OPERATION_TIME = #{operationTime,jdbcType=VARCHAR},
+      </if>
+      <if test="speed != null">
+        SPEED = #{speed,jdbcType=VARCHAR},
+      </if>
+      <if test="torque != null">
+        TORQUE = #{torque,jdbcType=VARCHAR},
+      </if>
+      <if test="p != null">
+        P = #{p,jdbcType=VARCHAR},
+      </if>
+      <if test="tEc != null">
+        T_EC = #{tEc,jdbcType=VARCHAR},
+      </if>
+      <if test="pEc != null">
+        P_EC = #{pEc,jdbcType=VARCHAR},
+      </if>
+      <if test="fbRate != null">
+        FB_RATE = #{fbRate,jdbcType=VARCHAR},
+      </if>
+      <if test="fuelcosp != null">
+        FUELCOSP = #{fuelcosp,jdbcType=VARCHAR},
+      </if>
+      <if test="blowVal != null">
+        BLOW_VAL = #{blowVal,jdbcType=VARCHAR},
+      </if>
+      <if test="two != null">
+        TWO = #{two,jdbcType=VARCHAR},
+      </if>
+      <if test="pwo != null">
+        PWO = #{pwo,jdbcType=VARCHAR},
+      </if>
+      <if test="twi != null">
+        TWI = #{twi,jdbcType=VARCHAR},
+      </if>
+      <if test="pwi != null">
+        PWI = #{pwi,jdbcType=VARCHAR},
+      </if>
+      <if test="tExh != null">
+        T_EXH = #{tExh,jdbcType=VARCHAR},
+      </if>
+      <if test="pExh != null">
+        P_EXH = #{pExh,jdbcType=VARCHAR},
+      </if>
+      <if test="tFuel != null">
+        T_FUEL = #{tFuel,jdbcType=VARCHAR},
+      </if>
+      <if test="pFuel != null">
+        P_FUEL = #{pFuel,jdbcType=VARCHAR},
+      </if>
+      <if test="tInlet != null">
+        T_INLET = #{tInlet,jdbcType=VARCHAR},
+      </if>
+      <if test="pInlet != null">
+        P_INLET = #{pInlet,jdbcType=VARCHAR},
+      </if>
+      <if test="tOil != null">
+        T_OIL = #{tOil,jdbcType=VARCHAR},
+      </if>
+      <if test="pOil != null">
+        P_OIL = #{pOil,jdbcType=VARCHAR},
+      </if>
+      <if test="pCrank != null">
+        P_CRANK = #{pCrank,jdbcType=VARCHAR},
+      </if>
+      <if test="pAir != null">
+        P_AIR = #{pAir,jdbcType=VARCHAR},
+      </if>
+      <if test="tAir != null">
+        T_AIR = #{tAir,jdbcType=VARCHAR},
+      </if>
+      <if test="phi != null">
+        PHI = #{phi,jdbcType=VARCHAR},
+      </if>
+      <if test="tExhWq != null">
+        T_EXH_WQ = #{tExhWq,jdbcType=VARCHAR},
+      </if>
+      <if test="pExhWq != null">
+        P_EXH_WQ = #{pExhWq,jdbcType=VARCHAR},
+      </if>
+      <if test="tExhCh != null">
+        T_EXH_CH = #{tExhCh,jdbcType=VARCHAR},
+      </if>
+      <if test="pExhCh != null">
+        P_EXH_CH = #{pExhCh,jdbcType=VARCHAR},
+      </if>
+      <if test="tExcCOne != null">
+        T_EXC_C_ONE = #{tExcCOne,jdbcType=VARCHAR},
+      </if>
+      <if test="tExcCTwo != null">
+        T_EXC_C_TWO = #{tExcCTwo,jdbcType=VARCHAR},
+      </if>
+      <if test="tExcCThree != null">
+        T_EXC_C_THREE = #{tExcCThree,jdbcType=VARCHAR},
+      </if>
+      <if test="tExcCFour != null">
+        T_EXC_C_FOUR = #{tExcCFour,jdbcType=VARCHAR},
+      </if>
+      <if test="tIcI != null">
+        T_IC_I = #{tIcI,jdbcType=VARCHAR},
+      </if>
+      <if test="pIcI != null">
+        P_IC_I = #{pIcI,jdbcType=VARCHAR},
+      </if>
+      <if test="tIcO != null">
+        T_IC_O = #{tIcO,jdbcType=VARCHAR},
+      </if>
+      <if test="pIcO != null">
+        P_IC_O = #{pIcO,jdbcType=VARCHAR},
+      </if>
+      <if test="alpha != null">
+        ALPHA = #{alpha,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.trial_execute.entity.TrialDataDetailEO">
+    update EV_TRIALDATA_DETAIL
+    set TRIALDATA_ID = #{trialdataId,jdbcType=VARCHAR},
+      TOTAL_HOURS = #{totalHours,jdbcType=VARCHAR},
+      OPERATION_TIME = #{operationTime,jdbcType=VARCHAR},
+      SPEED = #{speed,jdbcType=VARCHAR},
+      TORQUE = #{torque,jdbcType=VARCHAR},
+      P = #{p,jdbcType=VARCHAR},
+      T_EC = #{tEc,jdbcType=VARCHAR},
+      P_EC = #{pEc,jdbcType=VARCHAR},
+      FB_RATE = #{fbRate,jdbcType=VARCHAR},
+      FUELCOSP = #{fuelcosp,jdbcType=VARCHAR},
+      BLOW_VAL = #{blowVal,jdbcType=VARCHAR},
+      TWO = #{two,jdbcType=VARCHAR},
+      PWO = #{pwo,jdbcType=VARCHAR},
+      TWI = #{twi,jdbcType=VARCHAR},
+      PWI = #{pwi,jdbcType=VARCHAR},
+      T_EXH = #{tExh,jdbcType=VARCHAR},
+      P_EXH = #{pExh,jdbcType=VARCHAR},
+      T_FUEL = #{tFuel,jdbcType=VARCHAR},
+      P_FUEL = #{pFuel,jdbcType=VARCHAR},
+      T_INLET = #{tInlet,jdbcType=VARCHAR},
+      P_INLET = #{pInlet,jdbcType=VARCHAR},
+      T_OIL = #{tOil,jdbcType=VARCHAR},
+      P_OIL = #{pOil,jdbcType=VARCHAR},
+      P_CRANK = #{pCrank,jdbcType=VARCHAR},
+      P_AIR = #{pAir,jdbcType=VARCHAR},
+      T_AIR = #{tAir,jdbcType=VARCHAR},
+      PHI = #{phi,jdbcType=VARCHAR},
+      T_EXH_WQ = #{tExhWq,jdbcType=VARCHAR},
+      P_EXH_WQ = #{pExhWq,jdbcType=VARCHAR},
+      T_EXH_CH = #{tExhCh,jdbcType=VARCHAR},
+      P_EXH_CH = #{pExhCh,jdbcType=VARCHAR},
+      T_EXC_C_ONE = #{tExcCOne,jdbcType=VARCHAR},
+      T_EXC_C_TWO = #{tExcCTwo,jdbcType=VARCHAR},
+      T_EXC_C_THREE = #{tExcCThree,jdbcType=VARCHAR},
+      T_EXC_C_FOUR = #{tExcCFour,jdbcType=VARCHAR},
+      T_IC_I = #{tIcI,jdbcType=VARCHAR},
+      P_IC_I = #{pIcI,jdbcType=VARCHAR},
+      T_IC_O = #{tIcO,jdbcType=VARCHAR},
+      P_IC_O = #{pIcO,jdbcType=VARCHAR},
+      ALPHA = #{alpha,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+        <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+ 		WHERE EV_TRIALDATA_DETAIL.DEL_FLAG != 1
+ 		<if test="trialdataId != null and trialdataId != ''">
+          AND EV_TRIALDATA_DETAIL.TRIALDATA_ID = #{trialdataId}
+      	</if>
+       	<if test="createName != null and createName != ''">
+          AND TS_USER.USNAME LIKE '%${createName}%'
+      	</if>
+      	<if test="createDate1 != null and createDate1 != ''">
+          AND EV_TRIALDATA_DETAIL.CREATE_TIME <![CDATA[>=]]> #{createDate1}
+       </if>
+       <if test="createDate2 != null and createDate2 != ''">
+          AND EV_TRIALDATA_DETAIL.CREATE_TIME <![CDATA[<=]]> #{createDate2}
+       </if>
+       <if test="trialtaskId != null and trialtaskId != ''">
+          AND EV_TRIALDATA_DETAIL.TRIALTASK_ID = #{trialtaskId}
+       </if>
+   </sql>
+  
+  <!-- 列表总数-->
+ <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from EV_TRIALDATA_DETAIL
+	LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIALDATA_DETAIL.CREATE_BY
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询列表 分页 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	SELECT *
+	FROM
+		(select tmp_tb.* , rownum rn from
+			(SELECT
+				<include refid="Search_Column_List" />,
+				TS_USER.USNAME
+				FROM
+				EV_TRIALDATA_DETAIL
+				LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIALDATA_DETAIL.CREATE_BY
+			 <include refid="Base_Where_Clause"/>
+			 ORDER BY EV_TRIALDATA_DETAIL.CREATE_TIME DESC
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+		where rn &gt;= ${pager.startIndex}
+  </select>
+  
+  <!-- 查询列表 不分页-->
+  <select id="findByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	SELECT
+		<include refid="Search_Column_List" />
+		FROM
+		EV_TRIALDATA_DETAIL
+	 LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIALDATA_DETAIL.CREATE_BY
+	 <include refid="Base_Where_Clause"/>
+	 ORDER BY EV_TRIALDATA_DETAIL.CREATE_TIME DESC
+  </select>
+  
+</mapper>

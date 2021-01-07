@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.car.dao.CarDepotDAO">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.car.entity.SaCarDepotEO">
+        <id property="id" column="id"/>
+        <result property="carDepotId" column="car_depot_id"/>
+        <result property="depotName" column="depot_name"/>
+        <result property="depotNumber" column="depot_number"/>
+        <result property="rowNumber" column="row_number"/>
+        <result property="carSpaceNumber" column="car_space_number"/>
+        <result property="startNumber" column="start_number"/>
+        <result property="carSpaceStatus" column="car_space_status"/>
+        <result property="usedCarSpace" column="used_car_space"/>
+        <result property="delFlag" column="del_flag"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="unUseCarSpaceNumber" column="UNUSE_CAR_SAPCE_NUMBER"/>
+    </resultMap>
+
+    <!-- TS_HISTORY table all fields -->
+    <sql id="Base_Column_List">
+            id, DEPOT_NAME, DEPOT_NUMBER, UPDATE_TIME, UNUSE_CAR_SAPCE_NUMBER, CREATE_BY, CREATE_TIME, UPDATE_BY,
+            CAR_DEPOT_ID, ROW_NUMBER, CAR_SPACE_NUMBER, START_NUMBER, CAR_SPACE_STATUS, USED_CAR_SPACE, DEL_FLAG
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        WHERE del_flag = 0 AND car_space_status = 0
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    and (depot_name LIKE '%'||#{keyWord}||'%' OR depot_number LIKE '%'||#{keyWord}||'%' OR update_time
+                    LIKE '%'||#{keyWord}||'%')
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="depotName != null and depotName != ''">
+                    AND depot_name LIKE '%'||#{depotName}||'%'
+                </if>
+                <if test="depotNumber != null and depotNumber != ''">
+                    AND depot_number LIKE '%'||#{depotNumber}||'%'
+                </if>
+                <if test="updateTime1 != null and updateTime1 != ''">
+                    AND update_time <![CDATA[<=]]> #{updateTime1}
+                </if>
+                <if test="updateTime2 != null and updateTime2 != ''">
+                    AND update_time <![CDATA[>=]]> #{updateTime2}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.car.page.CarDepotEOPage">
+        SELECT count(1) FROM SA_CAR_DEPOT
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.car.page.CarDepotEOPage">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_CAR_DEPOT
+        <include refid="Base_Where_Clause"/>
+        ORDER BY UPDATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByDepotNuhmber" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_CAR_DEPOT WHERE DEL_FLAG = 0 AND CAR_SPACE_STATUS = 0 AND DEPOT_NUMBER = #{depotNumber}
+    </select>
+
+    <select id="getCarSpacePage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_CAR_DEPOT
+        WHERE DEL_FLAG = 0 AND CAR_SPACE_STATUS = 1 AND CAR_DEPOT_ID = #{id}
+        ORDER BY UPDATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByRowNumber" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_CAR_DEPOT WHERE DEL_FLAG = 0 AND CAR_SPACE_STATUS = 1 AND ROW_NUMBER = #{rowNumber}
+        AND car_depot_id = #{carDepotId}
+    </select>
+
+    <select id="selectByParam" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_CAR_DEPOT WHERE ID = #{id} AND DEL_FLAG = 0 AND car_space_status = #{carSpaceStatus}
+    </select>
+
+    <update id="deletePartByParentId">
+        UPDATE SA_CAR_DEPOT
+        SET DEL_FLAG    = 1,
+            UPDATE_BY   = #{userId},
+            UPDATE_TIME = #{date}
+        WHERE CAR_DEPOT_ID = #{id}
+    </update>
+
+    <update id="deleteById">
+        UPDATE SA_CAR_DEPOT
+        SET DEL_FLAG    = 1,
+            UPDATE_BY   = #{userId},
+            UPDATE_TIME = #{date}
+        WHERE ID = #{id}
+    </update>
+
+    <select id="queryUnUseCarSpaceNumber" resultType="java.lang.Integer">
+        SELECT sum(UNUSE_CAR_SAPCE_NUMBER) AS UNUSE_CAR_SAPCE_NUMBER
+        FROM SA_CAR_DEPOT
+        WHERE CAR_DEPOT_ID = #{id} AND DEL_FLAG = 0
+    </select>
+
+    <select id="getPartSpaceStatus" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_CAR_DEPOT WHERE DEL_FLAG = 0 AND CAR_DEPOT_ID = #{carDepotId}
+    </select>
+
+    <select id="selectByParkNameAndRowNumber" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_CAR_DEPOT
+        WHERE DEL_FLAG = 0 AND CAR_DEPOT_ID = (SELECT ID
+        FROM SA_CAR_DEPOT
+        WHERE DEL_FLAG = 0 AND DEPOT_NUMBER = #{parkName}) AND ROW_NUMBER = #{rowNumber}
+    </select>
+
+    <!--<insert id="insertSelective" keyColumn="ID" keyProperty="id" parameterType="com.adc.da.car.entity.SaCarDepotEO" useGeneratedKeys="true">-->
+    <insert id="insertSelective" parameterType="com.adc.da.car.entity.SaCarDepotEO">
+        <!--@mbg.generated-->
+        INSERT INTO SA_CAR_DEPOT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="carDepotId != null">
+                CAR_DEPOT_ID,
+            </if>
+            <if test="depotName != null">
+                DEPOT_NAME,
+            </if>
+            <if test="depotNumber != null">
+                DEPOT_NUMBER,
+            </if>
+            <if test="rowNumber != null">
+                "ROW_NUMBER",
+            </if>
+            <if test="carSpaceNumber != null">
+                CAR_SPACE_NUMBER,
+            </if>
+            <if test="startNumber != null">
+                START_NUMBER,
+            </if>
+            <if test="carSpaceStatus != null">
+                CAR_SPACE_STATUS,
+            </if>
+            <if test="usedCarSpace != null">
+                USED_CAR_SPACE,
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG,
+            </if>
+            <if test="createBy != null">
+                CREATE_BY,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="unUseCarSpaceNumber != null">
+                UNUSE_CAR_SAPCE_NUMBER,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="carDepotId != null">
+                #{carDepotId},
+            </if>
+            <if test="depotName != null">
+                #{depotName},
+            </if>
+            <if test="depotNumber != null">
+                #{depotNumber},
+            </if>
+            <if test="rowNumber != null">
+                #{rowNumber},
+            </if>
+            <if test="carSpaceNumber != null">
+                #{carSpaceNumber},
+            </if>
+            <if test="startNumber != null">
+                #{startNumber},
+            </if>
+            <if test="carSpaceStatus != null">
+                #{carSpaceStatus},
+            </if>
+            <if test="usedCarSpace != null">
+                #{usedCarSpace},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="unUseCarSpaceNumber != null">
+                #{unUseCarSpaceNumber} ,
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.car.entity.SaCarDepotEO">
+        <!--@mbg.generated-->
+        UPDATE SA_CAR_DEPOT
+        <set>
+            <if test="carDepotId != null">
+                CAR_DEPOT_ID = #{carDepotId},
+            </if>
+            <if test="depotName != null">
+                DEPOT_NAME = #{depotName},
+            </if>
+            <if test="depotNumber != null">
+                DEPOT_NUMBER = #{depotNumber},
+            </if>
+            <if test="rowNumber != null">
+                "ROW_NUMBER" = #{rowNumber},
+            </if>
+            <if test="carSpaceNumber != null">
+                CAR_SPACE_NUMBER = #{carSpaceNumber},
+            </if>
+            <if test="startNumber != null">
+                START_NUMBER = #{startNumber},
+            </if>
+            <if test="carSpaceStatus != null">
+                CAR_SPACE_STATUS = #{carSpaceStatus},
+            </if>
+            <if test="usedCarSpace != null">
+                USED_CAR_SPACE = #{usedCarSpace},
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG = #{delFlag},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY = #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime},
+            </if>
+            <if test="unUseCarSpaceNumber != null">
+                UNUSE_CAR_SAPCE_NUMBER = #{unUseCarSpaceNumber} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <!-- 查询车位数量 -->
+    <select id="getCarSpaceByCount" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM SA_CAR_DEPOT
+        WHERE DEL_FLAG = 0 AND CAR_SPACE_STATUS = 1 AND CAR_DEPOT_ID = #{id}
+        ORDER BY UPDATE_TIME DESC
+    </select>
+
+</mapper>

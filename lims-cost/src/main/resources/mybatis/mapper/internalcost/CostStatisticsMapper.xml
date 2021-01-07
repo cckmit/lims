@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.internalcost.dao.CostStatisticsDao">
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where PTT.DEL_FLAG = 0 and TU.DEL_FLAG = 0
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    AND (PTT.TASK_CODE LIKE '%'||#{keyWord}||'%' OR TU.USNAME LIKE '%'||#{keyWord}||'%' OR
+                    Ptt.CREATE_TIME LIKE '%'||#{keyWord}||'%'
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="trialTaskCode != null and trialTaskCode != ''">
+                    AND PTT.TASK_CODE LIKE '%'||#{trialTaskCode}||'%'
+                </if>
+                <if test="applyUser != null and applyUser != ''">
+                    AND TU.USNAME LIKE '%'||#{applyUser}||'%'
+                </if>
+                <if test="applyEndTimeStart != null and applyEndTimeStart != ''">
+                    AND Ptt.CREATE_TIME >= #{applyEndTimeStart}
+                </if>
+                <if test="applyEndTimeEnd != null and applyEndTimeEnd != ''">
+                    AND Ptt.CREATE_TIME <![CDATA[<=]]> #{applyEndTimeEnd}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="getTrialTaskBudget" resultType="com.adc.da.internalcost.vo.TrialTaskCostBudgetVO">
+        select
+        ID, trialTaskCode, applyTime, applyUser
+        from
+        (
+        select tmp_tb.* , rownum rn from
+        (
+        select PTT.ID,
+        PTT.TASK_CODE as trialTaskCode,
+        Ptt.CREATE_TIME as applyTime,
+        TU.USNAME as applyUser
+        from PC_TRIAL_TASK PTT
+        left join TS_USER TU on TU.USID = PTT.CREATE_BY
+        <include refid="Base_Where_Clause"/>
+        ) tmp_tb
+        where rownum &lt;= ${pager.endIndex}
+        )
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="getTrialTaskBudgetCount" resultType="java.lang.Integer">
+        select count(1) from PC_TRIAL_TASK PTT
+        left join TS_USER TU on TU.USID = PTT.CREATE_BY
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <select id="selectSampleByTrialId" resultType="java.lang.String">
+        select WM_CONCAT(scd.CAR_ENGINE_NO)
+        from sa_car_data scd
+                 left join PC_TRIAL_ITEMS PTI on PTI.SAMPLE_ID = scd.ID
+        where scd.DEL_FLAG = 0
+          and PTI.DEL_FLAG = 0
+          and PTI.SAMPLE_TYPE = 0
+          and PTI.TRIAL_TASK_ID = #{id}
+    </select>
+
+    <select id="getBudgetByTaskId" resultType="com.adc.da.internalcost.vo.TrialTaskCostBudgetVO">
+        select ITEMS_CODE as itemsCode, ITEMS_NAME as itemsName, TOTAL as total
+        from PC_BUDGET_TEST temp
+                 left join PC_RELIABLE_INITTASK PRI on PRI.ID = temp.INIT_TASK_ID
+        where PRI.TRIAL_TASK_ID = #{taskId}
+          and PRI.DEL_FLAG = 0
+          and temp.DEL_FLAG = 0
+    </select>
+
+    <select id="getBudgetPersonByTaskId" resultType="com.adc.da.internalcost.vo.TrialTaskCostBudgetVO">
+        select ITEMS_CODE as itemsCode, ITEMS_NAME as itemsName, TOTAL as total
+        from PC_BUDGET_PERSON temp
+                 left join PC_RELIABLE_INITTASK PRI on PRI.ID = temp.INIT_TASK_ID
+        where PRI.TRIAL_TASK_ID = #{taskId}
+          and PRI.DEL_FLAG = 0
+          and temp.DEL_FLAG = 0
+    </select>
+
+    <resultMap id="getTrialProduct" type="com.adc.da.internalcost.vo.PcTrialProductVO">
+        <result property="rId" column="r_id"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="startPoint" column="start_point"/>
+        <result property="endPoint" column="end_point"/>
+        <result property="departOdometer" column="depart_odometer"/>
+        <result property="underpanNo" column="underpan_no"/>
+        <result property="accommodationCost" column="accommodation_cost"/>
+        <result property="accommodationApply" column="accommodation_apply"/>
+        <result property="accommodationTotal" column="accommodation_total"/>
+        <result property="accommodationDayNmber" column="accommodation_day_nmber"/>
+        <result property="highSpeedCost" column="high_speed_cost"/>
+        <result property="highSpeedApply" column="high_speed_apply"/>
+        <result property="highSpeedTotal" column="high_speed_total"/>
+        <result property="passWayCost" column="pass_way_cost"/>
+        <result property="passWayApply" column="pass_way_apply"/>
+        <result property="passWayTotal" column="pass_way_total"/>
+        <result property="refuelCost" column="refuel_cost"/>
+        <result property="refuelApply" column="refuel_apply"/>
+        <result property="refuelTotal" column="refuel_total"/>
+        <result property="chargeCost" column="charge_cost"/>
+        <result property="chargeApply" column="charge_apply"/>
+        <result property="chargeTotal" column="charge_total"/>
+        <result property="airEntrappingCost" column="air_entrapping_cost"/>
+        <result property="airEntrappingApply" column="air_entrapping_apply"/>
+        <result property="airEntrappingTotal" column="air_entrapping_total"/>
+        <result property="maintainCost" column="maintain_cost"/>
+        <result property="maintainApply" column="maintain_apply"/>
+        <result property="maintainTotal" column="maintain_total"/>
+        <result property="upkeepCost" column="upkeep_cost"/>
+        <result property="upkeepApply" column="upkeep_apply"/>
+        <result property="upkeepTotal" column="upkeep_total"/>
+        <result property="parkCost" column="park_cost"/>
+        <result property="parkApply" column="park_apply"/>
+        <result property="parkTotal" column="park_total"/>
+        <result property="expressCost" column="express_cost"/>
+        <result property="expressApply" column="express_apply"/>
+        <result property="expressTotal" column="express_total"/>
+        <result property="hireCost" column="hire_cost"/>
+        <result property="hireApply" column="hire_apply"/>
+        <result property="hireTotal" column="hire_total"/>
+        <result property="pcOtherCost" column="pc_other_cost"/>
+        <result property="pcOtherApply" column="pc_other_apply"/>
+        <result property="pcOtherTotal" column="pc_other_total"/>
+    </resultMap>
+    <select id="getReimbursement" resultMap="getTrialProduct">
+        select PTP.*
+        from PC_TRIAL_PRODUCT PTP
+                 left join PC_BUDGET_REIMBURSEMENT PBR on PBR.ID = PTP.R_ID
+        where PBR.TRIAL_ID = #{id}
+          and PBR.DEL_FLAG = 0
+          and PTP.DEL_FLAG = 0
+        order by PTP.CREATE_TIME desc
+    </select>
+
+    <resultMap id="getInfo" type="com.adc.da.internalcost.vo.PcBudgetUseInfoVO">
+        <result property="buId" column="bu_id"/>
+        <result property="buProject" column="bu_project"/>
+        <result property="buContent" column="bu_content"/>
+        <result property="buUnitPrice" column="bu_unit_price"/>
+        <result property="buCount" column="bu_count"/>
+        <result property="buSubtotal" column="bu_subtotal"/>
+        <result property="buSupplier" column="bu_supplier"/>
+    </resultMap>
+    <select id="getBudgetUseInfo" resultMap="getInfo">
+        select PBUI.*
+        from PC_BUDGET_USE_INFO PBUI
+                 left join PC_BUDGET_USE PBU on PBU.ID = PBUI.BU_ID
+        where PBU.TRIAL_ID = #{id}
+          and PBU.DEL_FLAG = 0
+          and PBUI.DEL_FLAG = 0
+    </select>
+
+    <select id="getStatusByTrialId" resultType="java.lang.String">
+        select STATUS
+        from PC_BUDGET_SETTLE_STATUS
+        where TRIAL_ID = #{id}
+          and TYPE = #{type}
+        GROUP BY STATUS
+    </select>
+    <insert id="insertSettleStatus">
+        insert into PC_BUDGET_SETTLE_STATUS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="createBy != null">
+                CREATE_BY,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY,
+            </if>
+            <if test="status != null">
+                STATUS,
+            </if>
+            <if test="trialId != null">
+                TRIAL_ID,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="settleTime != null">
+                SETTLE_TIME,
+            </if>
+            <if test="settleUserId != null">
+                SETTLE_USER_ID,
+            </if>
+            <if test="settleUserNam != null">
+                SETTLE_USER_NAME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=VARCHAR},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="trialId != null">
+                #{trialId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="settleTime != null">
+                #{settleTime,jdbcType=VARCHAR},
+            </if>
+            <if test="settleUserId != null">
+                #{settleUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="settleUserNam != null">
+                #{settleUserNam,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--
+        PC_BUDGET_SUBSIDYPC（PC试验补贴预算）
+        PC_RELIABLE_INITTASK（PC试验可靠性立项单）
+        STD_PRICE （每公里补助标准）
+        TRIAL_KM（试验里程）
+    -->
+    <select id="getSubsidyByTaskId" resultType="com.adc.da.internalcost.vo.PCBudgetSubsidyVO">
+        select
+        PBS.ITEMS_CODE itemsCode, PBS.ITEMS_NAME itemsName, PBS.STD_PRICE stdPrice ,PBS.TRIAL_KM trialKm
+        from PC_BUDGET_SUBSIDY PBS
+        left join PC_RELIABLE_INITTASK PRI
+        on PRI.ID = PBS.INIT_TASK_ID
+        where PRI.TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR}
+        and PBS.DEL_FLAG = 0
+        and PRI.DEL_FLAG = 0
+    </select>
+
+</mapper>

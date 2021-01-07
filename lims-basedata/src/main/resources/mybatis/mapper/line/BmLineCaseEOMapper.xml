@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.line.dao.BmLineCaseEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.line.entity.BmLineCaseEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="line_code" property="lineCode"/>
+        <result column="line_name" property="lineName"/>
+        <result column="line_desc" property="lineDesc"/>
+        <result column="usname" property="createByName"/>
+        <collection property="bmLineCaseInfoEOList" resultMap="Case_Info_Result"/>
+    </resultMap>
+
+    <resultMap id="Case_Info_Result" type="com.adc.da.line.entity.BmLineCaseInfoEO">
+        <id property="id" column="infoId"/>
+        <result property="dayNo" column="day_no"/>
+        <result property="lineStart" column="line_start"/>
+        <result property="lineEnd" column="line_end"/>
+        <result property="lineType" column="line_type"/>
+        <result property="oneDayKm" column="one_day_km"/>
+        <result property="remarks" column="remarks"/>
+        <result property="driveDays" column="drive_days"/>
+        <result property="lineCycle" column="line_cycle"/>
+        <result property="caseId" column="case_id"/>
+        <result property="driveOrder" column="drive_order"/>
+        <result property="cycleNumber" column="cycle_number"/>
+    </resultMap>
+
+    <!-- BM_LINE_CASE table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            line_code,
+            line_name,
+            line_desc
+    </sql>
+
+    <sql id="Case_Info_Column_List">
+            BLC.id,
+            BLC.del_flag,
+            BLC.create_time,
+            BLC.create_by,
+            BLC.update_time,
+            BLC.update_by,
+            BLC.line_code,
+            BLC.line_name,
+            BLC.line_desc,
+            TU.usname,
+            BLCI.id as infoId,
+            BLCI.day_no,
+            BLCI.line_start,
+            BLCI.line_end,
+            BLCI.line_type,
+            BLCI.one_day_km,
+            BLCI.remarks,
+            BLCI.drive_days,
+            BLCI.line_cycle,
+            BLCI.CASE_ID,
+            BLCI.drive_order,
+            BLCI.CYCLE_NUMBER
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where BLC.del_flag = 0
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    AND (USNAME LIKE '%'||#{keyWord}||'%' OR line_code LIKE '%'||#{keyWord}||'%' OR
+                    line_name LIKE '%'||#{keyWord}||'%' OR line_desc LIKE '%'||#{keyWord}||'%'
+                    OR BLC.create_time >= #{keyWord})
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="createByName != null and createByName != ''">
+                    AND USNAME LIKE '%'||#{createByName}||'%'
+                </if>
+                <if test="lineCode != null and lineCode != ''">
+                    AND line_code LIKE '%'||#{lineCode}||'%'
+                </if>
+                <if test="lineName != null and lineName != ''">
+                    AND line_name LIKE '%'||#{lineName}||'%'
+                </if>
+                <if test="lineDesc != null and lineDesc != ''">
+                    AND line_desc LIKE '%'||#{lineDesc}||'%'
+                </if>
+                <if test="createTimeStart != null and createTimeStart != ''">
+                    AND BLC.create_time >= #{createTimeStart}
+                </if>
+                <if test="createTimeEnd != null and createTimeEnd != ''">
+                    AND BLC.create_time <![CDATA[<=]]> #{createTimeEnd}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.line.entity.BmLineCaseEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SEQ_BM_LINE_CASE.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into BM_LINE_CASE(<include refid="Base_Column_List"/>)
+        values (#{id, jdbcType=VARCHAR}, #{delFlag, jdbcType=INTEGER}, #{createTime, jdbcType=VARCHAR},
+        #{createBy, jdbcType=VARCHAR}, #{updateTime, jdbcType=VARCHAR}, #{updateBy, jdbcType=VARCHAR},
+        #{lineCode, jdbcType=VARCHAR}, #{lineName, jdbcType=VARCHAR}, #{lineDesc, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.line.entity.BmLineCaseEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_BM_LINE_CASE.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into BM_LINE_CASE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="lineCode != null">line_code,</if>
+            <if test="lineName != null">line_name,</if>
+            <if test="lineDesc != null">line_desc,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="lineCode != null">#{lineCode, jdbcType=VARCHAR},</if>
+            <if test="lineName != null">#{lineName, jdbcType=VARCHAR},</if>
+            <if test="lineDesc != null">#{lineDesc, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.line.entity.BmLineCaseEO">
+        update BM_LINE_CASE
+        set del_flag    = #{delFlag},
+            create_time = #{createTime},
+            create_by   = #{createBy},
+            update_time = #{updateTime},
+            update_by   = #{updateBy},
+            line_code   = #{lineCode},
+            line_name   = #{lineName},
+            line_desc   = #{lineDesc}
+        where id = #{id}
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.line.entity.BmLineCaseEO">
+        update BM_LINE_CASE
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="lineCode != null">
+                line_code = #{lineCode},
+            </if>
+            <if test="lineName != null">
+                line_name = #{lineName},
+            </if>
+            <if test="lineDesc != null">
+                line_desc = #{lineDesc},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 BM_LINE_CASE -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Case_Info_Column_List"/>
+        from BM_LINE_CASE BLC
+        left join BM_LINE_CASE_INFO BLCI on BLCI.CASE_ID = BLC.ID
+        left join TS_USER TU on TU.USID = BLC.CREATE_BY
+        where BLC.id = #{value} and BLC.DEL_FLAG = 0 and BLCI.DEL_FLAG = 0
+        order by BLCI.DAY_NO, BLCI.DRIVE_ORDER
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from BM_LINE_CASE
+        where id = #{value}
+
+    </delete>
+
+    <!-- BM_LINE_CASE 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from BM_LINE_CASE BLC left join TS_USER TU on BLC.CREATE_BY = tu.USID
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询BM_LINE_CASE列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        , usname
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        BLC.id,
+        BLC.del_flag,
+        BLC.create_time,
+        BLC.create_by,
+        BLC.update_time,
+        BLC.update_by,
+        line_code,
+        line_name,
+        line_desc,
+        USNAME
+        from BM_LINE_CASE BLC left join TS_USER TU on BLC.CREATE_BY = tu.USID
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+</mapper>

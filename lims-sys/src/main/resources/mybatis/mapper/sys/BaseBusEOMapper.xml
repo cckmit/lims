@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.BaseBusEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.BaseBusEO">
+        <!-- 主键 -->
+        <id column="ID" property="id"/>
+        <!-- 表属性 -->
+        <result column="BUSINESS_ID" property="businessId"/>
+        <result column="TITLE" property="title"/>
+        <result column="BUSINESS_TYPE" property="businessType"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="COLLECTION_STATUS" property="collectionStatus"/>
+    </resultMap>
+
+    <!-- 【表名】 table all fields -->
+    <sql id="Base_Column_List">
+        ID,CREATE_TIME,CREATE_BY,BUSINESS_ID,TITLE,BUSINESS_TYPE, COLLECTION_STATUS
+    </sql>
+
+    <!--插入业务数据信息-->
+    <insert id="insertBaseBus" parameterType="com.adc.da.sys.entity.BaseBusEO">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id" >
+            select sys_guid() from dual
+        </selectKey>
+        insert into  TS_BASEBUS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">ID,</if>
+            <if test="businessId!=null">BUSINESS_ID,</if>
+            <if test="title!=null">TITLE,</if>
+            <if test="businessType!=null">BUSINESS_TYPE,</if>
+            <if test="createBy!=null">CREATE_BY,</if>
+            <if test="createTime!=null">CREATE_TIME,</if>
+            <if test="collectionStatus!=null">COLLECTION_STATUS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="businessId!=null">#{businessId},</if>
+            <if test="title!=null">#{title},</if>
+            <if test="businessType!=null">#{businessType},</if>
+            <if test="createBy!=null">#{createBy},</if>
+            <if test="createTime!=null">#{createTime},</if>
+            <if test="collectionStatus!=null">#{collectionStatus},</if>
+        </trim>
+
+    </insert>
+
+    <update id="collectionStatus" parameterType="java.lang.String">
+        update TS_BASEBUS set COLLECTION_STATUS = #{status} where id = #{id}
+    </update>
+
+    <!--根据主键查询数据-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from TS_BASEBUS where id = #{id}
+    </select>
+
+    <!--根据主键查询数据-->
+    <select id="selectByBusinessId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from TS_BASEBUS where BUSINESS_ID = #{id} order by CREATE_TIME desc
+    </select>
+
+    <!--判断流程是否结束-->
+    <select id="isFinishied" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from ACT_HI_PROCINST where proc_inst_id_ = #{id} and end_time_ is not null
+    </select>
+
+    <!--获取下一待办人ids-->
+    <select id="fingNextUserId" parameterType="java.lang.String" resultType="java.lang.String">
+        select fun_proc_current_users_ids(#{id}) from dual
+    </select>
+
+    <!--获取下一待办人names-->
+    <select id="fingNextUserNames" parameterType="java.lang.String" resultType="java.lang.String">
+        select fun_proc_current_users_names(#{id}) from dual
+    </select>
+
+</mapper>

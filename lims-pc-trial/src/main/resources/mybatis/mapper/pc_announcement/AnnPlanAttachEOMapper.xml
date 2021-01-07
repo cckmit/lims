@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_announcement.dao.AnnPlanAttachEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_announcement.entity.AnnPlanAttachEO" >
+    <id column="id" property="id" />
+    <result column="ann_create_time" property="annCreateTime" />
+    <result column="ann_create_by" property="annCreateBy" />
+    <result column="ann_relative_path" property="annRelativePath" />
+    <result column="ann_absolute_path" property="annAbsolutePath" />
+    <result column="ann_file_name" property="annFileName" />
+    <result column="ann_pl_id" property="annPlId" />
+  </resultMap>
+
+  <!-- ANN_PLAN_ATTACH table all fields -->
+  <sql id="Base_Column_List" >
+     ann_create_time, ann_create_by, ann_relative_path, ann_absolute_path, ann_file_name, ann_pl_id, id
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="annCreateTime != null" >
+        and ann_create_time ${annCreateTimeOperator} #{annCreateTime}
+      </if>
+      <if test="annCreateBy != null" >
+        and ann_create_by ${annCreateByOperator} #{annCreateBy}
+      </if>
+      <if test="annRelativePath != null" >
+        and ann_relative_path ${annRelativePathOperator} #{annRelativePath}
+      </if>
+      <if test="annAbsolutePath != null" >
+        and ann_absolute_path ${annAbsolutePathOperator} #{annAbsolutePath}
+      </if>
+      <if test="annFileName != null" >
+        and ann_file_name ${annFileNameOperator} #{annFileName}
+      </if>
+      <if test=" annPlId != null" >
+        and ann_pl_id ${annPlIdOperator} #{annPlId}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.pc_announcement.entity.AnnPlanAttachEO" >
+    insert into ANN_PLAN_ATTACH(<include refid="Base_Column_List" />)
+    values (#{annCreateTime, jdbcType=VARCHAR}, #{annCreateBy, jdbcType=VARCHAR}, #{annRelativePath, jdbcType=VARCHAR}, #{annAbsolutePath, jdbcType=VARCHAR}, #{annFileName, jdbcType=VARCHAR}, #{annPlId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_announcement.entity.AnnPlanAttachEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_ANN_PLAN_ATTACH.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ANN_PLAN_ATTACH
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="annCreateTime != null" >ann_create_time,</if>
+                <if test="annCreateBy != null" >ann_create_by,</if>
+                <if test="annRelativePath != null" >ann_relative_path,</if>
+                <if test="annAbsolutePath != null" >ann_absolute_path,</if>
+                <if test="annFileName != null" >ann_file_name,</if>
+                <if test="annPlId != null" >ann_pl_id,</if>
+                <if test="id != null" >id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="annCreateTime != null" >#{annCreateTime, jdbcType=VARCHAR},</if>
+                <if test="annCreateBy != null" >#{annCreateBy, jdbcType=VARCHAR},</if>
+                <if test="annRelativePath != null" >#{annRelativePath, jdbcType=VARCHAR},</if>
+                <if test="annAbsolutePath != null" >#{annAbsolutePath, jdbcType=VARCHAR},</if>
+                <if test="annFileName != null" >#{annFileName, jdbcType=VARCHAR},</if>
+                <if test="annPlId != null" >#{annPlId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_announcement.entity.AnnPlanAttachEO" >
+    update ANN_PLAN_ATTACH
+       set  ann_create_time = #{annCreateTime},
+            ann_create_by = #{annCreateBy},
+            ann_relative_path = #{annRelativePath},
+            ann_absolute_path = #{annAbsolutePath},
+            ann_file_name = #{annFileName},
+            ann_pl_id = #{annPlId}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_announcement.entity.AnnPlanAttachEO" >
+    update ANN_PLAN_ATTACH
+    <set >
+      <if test="annCreateTime != null" >
+        ann_create_time = #{annCreateTime},
+      </if>
+      <if test="annCreateBy != null" >
+        ann_create_by = #{annCreateBy},
+      </if>
+      <if test="annRelativePath != null" >
+        ann_relative_path = #{annRelativePath},
+      </if>
+      <if test="annAbsolutePath != null" >
+        ann_absolute_path = #{annAbsolutePath},
+      </if>
+      <if test="annFileName != null" >
+        ann_file_name = #{annFileName},
+      </if>
+      <if test=" annPlId != null" >
+        ann_pl_id = #{annPlId},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 ANN_PLAN_ATTACH -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from ANN_PLAN_ATTACH
+     where id = #{value}
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ANN_PLAN_ATTACH
+     where id = #{value}
+
+  </delete>
+
+  <!-- ANN_PLAN_ATTACH 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from ANN_PLAN_ATTACH
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询ANN_PLAN_ATTACH列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from ANN_PLAN_ATTACH
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from ANN_PLAN_ATTACH
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+  <!--根据计划ID获取相关的所有委托单-->
+  <select id="selectByPlId" resultMap="BaseResultMap" parameterType="java.lang.String">
+      select <include refid="Base_Column_List" />
+      from ANN_PLAN_ATTACH
+      where ann_pl_id = #{annPlId}
+      ORDER BY ANN_PLAN_ATTACH.ann_create_time desc
+  </select>
+</mapper>

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.part.dao.SaPartSequenceDAO">
+    <resultMap id="BaseResultMap" type="com.adc.da.part.entity.SaPartSequenceEO">
+        <!--@mbg.generated-->
+        <id column="ID" property="id"/>
+        <result column="SAMPLE_SEQUENCE" property="sampleSequence"/>
+        <result column="RECEVIER" property="recevier"/>
+        <result column="RECEVIER_DEPARTMENT" property="recevierDepartment"/>
+        <result column="OPERATOR" property="operator"/>
+        <result column="OPERATOR_DEPARTMENT" property="operatorDepartment"/>
+        <result column="TRIAL_APPLY_NO" property="trialApplyNo"/>
+        <result column="TRANSFER_DATE" property="transferDate"/>
+        <result column="SAMPLE_STATUS" property="sampleStatus"/>
+        <result column="PART_ID" property="partId"/>
+        <result column="STATUS" property="status"/>
+        <result column="OR_EXIT" property="orExit"/>
+        <result column="REMARK" property="remark"/>
+        <result column="REPORT_RESULT" property="reportResult"/>
+        <result column="END_DATE" property="endDate"/>
+        <result column="SCRAP_DATE" property="scrapDate"/>
+        <result column="PROCESS_NUM" property="processNum"/>
+        <result column="OTHER" property="other"/>
+        <result column="OPERATION" property="operation"/>
+        <result column="DEL" property="del"/>
+        <result column="DISMANTLE_DATE" property="dismantleDate"/>
+        <result column="CIRCULATE_DATE" property="circulateDate"/>
+        <result column="SEALING_DATE" property="sealingDate"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        ID, SAMPLE_SEQUENCE, RECEVIER, RECEVIER_DEPARTMENT, "OPERATOR", OPERATOR_DEPARTMENT,
+        TRIAL_APPLY_NO, TRANSFER_DATE, SAMPLE_STATUS, PART_ID, "STATUS", OR_EXIT, REMARK,
+        REPORT_RESULT, END_DATE, SCRAP_DATE, PROCESS_NUM, OTHER, "OPERATION", DEL, DISMANTLE_DATE,
+        CIRCULATE_DATE, SEALING_DATE
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_SEQUENCE
+        WHERE ID = #{id}
+    </select>
+    <insert id="insertSelective" parameterType="com.adc.da.part.entity.SaPartSequenceEO">
+        <!--@mbg.generated-->
+        INSERT INTO SA_PART_SEQUENCE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="sampleSequence != null">
+                SAMPLE_SEQUENCE,
+            </if>
+            <if test="recevier != null">
+                RECEVIER,
+            </if>
+            <if test="recevierDepartment != null">
+                RECEVIER_DEPARTMENT,
+            </if>
+            <if test="operator != null">
+                "OPERATOR",
+            </if>
+            <if test="operatorDepartment != null">
+                OPERATOR_DEPARTMENT,
+            </if>
+            <if test="trialApplyNo != null">
+                TRIAL_APPLY_NO,
+            </if>
+            <if test="transferDate != null">
+                TRANSFER_DATE,
+            </if>
+            <if test="sampleStatus != null">
+                SAMPLE_STATUS,
+            </if>
+            <if test="partId != null">
+                PART_ID,
+            </if>
+            <if test="status != null">
+                "STATUS",
+            </if>
+            <if test="orExit != null">
+                OR_EXIT,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="reportResult != null">
+                REPORT_RESULT,
+            </if>
+            <if test="endDate != null">
+                END_DATE,
+            </if>
+            <if test="scrapDate != null">
+                SCRAP_DATE,
+            </if>
+            <if test="processNum != null">
+                PROCESS_NUM,
+            </if>
+            <if test="other != null">
+                OTHER,
+            </if>
+            <if test="operation != null">
+                "OPERATION",
+            </if>
+            <if test="del != null">
+                DEL,
+            </if>
+            <if test="dismantleDate != null">
+                DISMANTLE_DATE,
+            </if>
+            <if test="circulateDate != null">
+                CIRCULATE_DATE,
+            </if>
+            <if test="sealingDate != null">
+                SEALING_DATE,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="sampleSequence != null">
+                #{sampleSequence},
+            </if>
+            <if test="recevier != null">
+                #{recevier},
+            </if>
+            <if test="recevierDepartment != null">
+                #{recevierDepartment},
+            </if>
+            <if test="operator != null">
+                #{operator},
+            </if>
+            <if test="operatorDepartment != null">
+                #{operatorDepartment},
+            </if>
+            <if test="trialApplyNo != null">
+                #{trialApplyNo},
+            </if>
+            <if test="transferDate != null">
+                #{transferDate},
+            </if>
+            <if test="sampleStatus != null">
+                #{sampleStatus},
+            </if>
+            <if test="partId != null">
+                #{partId},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="orExit != null">
+                #{orExit},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="reportResult != null">
+                #{reportResult},
+            </if>
+            <if test="endDate != null">
+                #{endDate},
+            </if>
+            <if test="scrapDate != null">
+                #{scrapDate},
+            </if>
+            <if test="processNum != null">
+                #{processNum},
+            </if>
+            <if test="other != null">
+                #{other},
+            </if>
+            <if test="operation != null">
+                #{operation},
+            </if>
+            <if test="del != null">
+                #{del},
+            </if>
+            <if test="dismantleDate != null">
+                #{dismantleDate},
+            </if>
+            <if test="circulateDate != null">
+                #{circulateDate},
+            </if>
+            <if test="sealingDate != null">
+                #{sealingDate},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.part.entity.SaPartSequenceEO">
+        <!--@mbg.generated-->
+        UPDATE SA_PART_SEQUENCE
+        <set>
+            <if test="sampleSequence != null">
+                SAMPLE_SEQUENCE = #{sampleSequence},
+            </if>
+            <if test="recevier != null">
+                RECEVIER = #{recevier},
+            </if>
+            <if test="recevierDepartment != null">
+                RECEVIER_DEPARTMENT = #{recevierDepartment},
+            </if>
+            <if test="operator != null">
+                "OPERATOR" = #{operator},
+            </if>
+            <if test="operatorDepartment != null">
+                OPERATOR_DEPARTMENT = #{operatorDepartment},
+            </if>
+            <if test="trialApplyNo != null">
+                TRIAL_APPLY_NO = #{trialApplyNo},
+            </if>
+            <if test="transferDate != null">
+                TRANSFER_DATE = #{transferDate},
+            </if>
+            <if test="sampleStatus != null">
+                SAMPLE_STATUS = #{sampleStatus},
+            </if>
+            <if test="partId != null">
+                PART_ID = #{partId},
+            </if>
+            <if test="status != null">
+                "STATUS" = #{status},
+            </if>
+            <if test="orExit != null">
+                OR_EXIT = #{orExit},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark},
+            </if>
+            <if test="reportResult != null">
+                REPORT_RESULT = #{reportResult},
+            </if>
+            <if test="endDate != null">
+                END_DATE = #{endDate},
+            </if>
+            <if test="scrapDate != null">
+                SCRAP_DATE = #{scrapDate},
+            </if>
+            <if test="processNum != null">
+                PROCESS_NUM = #{processNum},
+            </if>
+            <if test="other != null">
+                OTHER = #{other},
+            </if>
+            <if test="operation != null">
+                "OPERATION" = #{operation},
+            </if>
+            <if test="del != null">
+                DEL = #{del},
+            </if>
+            <if test="dismantleDate != null">
+                DISMANTLE_DATE = #{dismantleDate},
+            </if>
+            <if test="circulateDate != null">
+                CIRCULATE_DATE = #{circulateDate},
+            </if>
+            <if test="sealingDate != null">
+                SEALING_DATE = #{sealingDate},
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="selectByPartDataId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_SEQUENCE
+        WHERE PART_ID = #{id} AND DEL = 0
+    </select>
+
+    <select id="selectByPartDataIdAndStatus" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_SEQUENCE
+        WHERE PART_ID = #{id} AND DEL = 0
+        <!--收样操作获取待收样状态的序列号-->
+        <if test="partStatus == 1">
+            and status = 7
+        </if>
+        <!--领样操作获取接收或者在库状态的序列号-->
+        <if test="partStatus == 2">
+            and status in (0,2)
+        </if>
+        <!--退样操作获取接收或者在库以及封存状态的序列号-->
+        <if test="partStatus == 3">
+            and status in (0,2,5)
+        </if>
+        <!--归还操作获取领样或者拆机状态的序列号-->
+        <if test="partStatus == 4">
+            and status in (1,6)
+        </if>
+        <!--报废操作获取在库或者封存状态的序列号-->
+        <if test="partStatus == 5">
+            and status in (2,5)
+        </if>
+        <!--封存操作获取在库状态的序列号-->
+        <if test="partStatus == 6">
+            and status = 5
+        </if>
+        <!--拆机操作获取领样状态的序列号-->
+        <if test="partStatus == 7">
+            and status = 1
+        </if>
+        <!--流转操作获取领样状态的序列号-->
+        <if test="partStatus == 8">
+            and status = 1
+        </if>
+    </select>
+
+    <update id="deleteById">
+        UPDATE SA_PART_SEQUENCE
+        SET DEL = 1
+        WHERE ID = #{id}
+    </update>
+    <!--查询当前序列号状态的个数-->
+    <select id="selectByStatus" resultType="java.lang.Integer">
+      select count(1)
+      from SA_PART_SEQUENCE
+      where PART_ID = #{partId}
+      and STATUS = #{status}
+    </select>
+</mapper>

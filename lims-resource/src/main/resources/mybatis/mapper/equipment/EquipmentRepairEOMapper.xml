@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.equipment.dao.EquipmentRepairEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.equipment.entity.EquipmentRepairEO" >
+    <id column="id" property="id" />
+    <result column="rep_attachment_id" property="repAttachmentId" />
+    <result column="rep_attachment_name" property="repAttachmentName" />
+    <result column="rep_maintenance_content" property="repMaintenanceContent" />
+    <result column="rep_fault_content" property="repFaultContent" />
+    <result column="rep_maintenance_price" property="repMaintenancePrice" />
+    <result column="rep_maintenance_date" property="repMaintenanceDate" />
+    <result column="rep_maintenance_staff" property="repMaintenanceStaff" />
+    <result column="rep_fault_date" property="repFaultDate" />
+    <result column="rep_principal" property="repPrincipal" />
+    <result column="eq_name" property="eqName" />
+    <result column="eq_no" property="eqNo" />
+    <result column="eq_id" property="eqId" />
+  </resultMap>
+
+  <!-- RES_EQUIPMENT_REPAIR table all fields -->
+  <sql id="Base_Column_List" >
+     rep_attachment_id, rep_attachment_name, rep_maintenance_content, rep_fault_content, rep_maintenance_price, rep_maintenance_date, rep_maintenance_staff, rep_fault_date, rep_principal, eq_name, eq_no, eq_id, id
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="repAttachmentId != null" >
+        and rep_attachment_id ${repAttachmentIdOperator} #{repAttachmentId}
+      </if>
+      <if test="repAttachmentName != null" >
+        and rep_attachment_name ${repAttachmentNameOperator} #{repAttachmentName}
+      </if>
+      <if test="repMaintenanceContent != null" >
+        and rep_maintenance_content ${repMaintenanceContentOperator} #{repMaintenanceContent}
+      </if>
+      <if test="repFaultContent != null" >
+        and rep_fault_content ${repFaultContentOperator} #{repFaultContent}
+      </if>
+      <if test="repMaintenancePrice != null" >
+        and rep_maintenance_price ${repMaintenancePriceOperator} #{repMaintenancePrice}
+      </if>
+      <if test="repMaintenanceDate != null" >
+        and rep_maintenance_date ${repMaintenanceDateOperator} #{repMaintenanceDate}
+      </if>
+      <if test="repMaintenanceStaff != null" >
+        and rep_maintenance_staff ${repMaintenanceStaffOperator} #{repMaintenanceStaff}
+      </if>
+      <if test="repFaultDate != null" >
+        and rep_fault_date ${repFaultDateOperator} #{repFaultDate}
+      </if>
+      <if test="repPrincipal != null" >
+        and rep_principal ${repPrincipalOperator} #{repPrincipal}
+      </if>
+      <if test="eqName != null" >
+        and eq_name ${eqNameOperator} #{eqName}
+      </if>
+      <if test="eqNo != null" >
+        and eq_no ${eqNoOperator} #{eqNo}
+      </if>
+      <if test="eqId != null" >
+        and eq_id ${eqIdOperator} #{eqId}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.equipment.entity.EquipmentRepairEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_RES_EQUIPMENT_REPAIR.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into RES_EQUIPMENT_REPAIR(<include refid="Base_Column_List" />)
+    values (#{repAttachmentId, jdbcType=VARCHAR}, #{repAttachmentName, jdbcType=VARCHAR}, #{repMaintenanceContent, jdbcType=VARCHAR}, #{repFaultContent, jdbcType=VARCHAR}, #{repMaintenancePrice, jdbcType=VARCHAR}, #{repMaintenanceDate, jdbcType=VARCHAR}, #{repMaintenanceStaff, jdbcType=VARCHAR}, #{repFaultDate, jdbcType=VARCHAR}, #{repPrincipal, jdbcType=VARCHAR}, #{eqName, jdbcType=VARCHAR}, #{eqNo, jdbcType=VARCHAR}, #{eqId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.equipment.entity.EquipmentRepairEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_RES_EQUIPMENT_REPAIR.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into RES_EQUIPMENT_REPAIR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="repAttachmentId != null" >rep_attachment_id,</if>
+                <if test="repAttachmentName != null" >rep_attachment_name,</if>
+                <if test="repMaintenanceContent != null" >rep_maintenance_content,</if>
+                <if test="repFaultContent != null" >rep_fault_content,</if>
+                <if test="repMaintenancePrice != null" >rep_maintenance_price,</if>
+                <if test="repMaintenanceDate != null" >rep_maintenance_date,</if>
+                <if test="repMaintenanceStaff != null" >rep_maintenance_staff,</if>
+                <if test="repFaultDate != null" >rep_fault_date,</if>
+                <if test="repPrincipal != null" >rep_principal,</if>
+                <if test="eqName != null" >eq_name,</if>
+                <if test="eqNo != null" >eq_no,</if>
+                <if test="eqId != null" >eq_id,</if>
+                <if test="id != null" >id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="repAttachmentId != null" >#{repAttachmentId, jdbcType=VARCHAR},</if>
+                <if test="repAttachmentName != null" >#{repAttachmentName, jdbcType=VARCHAR},</if>
+                <if test="repMaintenanceContent != null" >#{repMaintenanceContent, jdbcType=VARCHAR},</if>
+                <if test="repFaultContent != null" >#{repFaultContent, jdbcType=VARCHAR},</if>
+                <if test="repMaintenancePrice != null" >#{repMaintenancePrice, jdbcType=VARCHAR},</if>
+                <if test="repMaintenanceDate != null" >#{repMaintenanceDate, jdbcType=VARCHAR},</if>
+                <if test="repMaintenanceStaff != null" >#{repMaintenanceStaff, jdbcType=VARCHAR},</if>
+                <if test="repFaultDate != null" >#{repFaultDate, jdbcType=VARCHAR},</if>
+                <if test="repPrincipal != null" >#{repPrincipal, jdbcType=VARCHAR},</if>
+                <if test="eqName != null" >#{eqName, jdbcType=VARCHAR},</if>
+                <if test="eqNo != null" >#{eqNo, jdbcType=VARCHAR},</if>
+                <if test="eqId != null" >#{eqId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.equipment.entity.EquipmentRepairEO" >
+    update RES_EQUIPMENT_REPAIR
+       set  rep_attachment_id = #{repAttachmentId},
+            rep_attachment_name = #{repAttachmentName},
+            rep_maintenance_content = #{repMaintenanceContent},
+            rep_fault_content = #{repFaultContent},
+            rep_maintenance_price = #{repMaintenancePrice},
+            rep_maintenance_date = #{repMaintenanceDate},
+            rep_maintenance_staff = #{repMaintenanceStaff},
+            rep_fault_date = #{repFaultDate},
+            rep_principal = #{repPrincipal},
+            eq_name = #{eqName},
+            eq_no = #{eqNo},
+            eq_id = #{eqId}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.equipment.entity.EquipmentRepairEO" >
+    update RES_EQUIPMENT_REPAIR
+    <set >
+      <if test="repAttachmentId != null" >
+        rep_attachment_id = #{repAttachmentId},
+      </if>
+      <if test="repAttachmentName != null" >
+        rep_attachment_name = #{repAttachmentName},
+      </if>
+      <if test="repMaintenanceContent != null" >
+        rep_maintenance_content = #{repMaintenanceContent},
+      </if>
+      <if test="repFaultContent != null" >
+        rep_fault_content = #{repFaultContent},
+      </if>
+      <if test="repMaintenancePrice != null" >
+        rep_maintenance_price = #{repMaintenancePrice},
+      </if>
+      <if test="repMaintenanceDate != null" >
+        rep_maintenance_date = #{repMaintenanceDate},
+      </if>
+      <if test="repMaintenanceStaff != null" >
+        rep_maintenance_staff = #{repMaintenanceStaff},
+      </if>
+      <if test="repFaultDate != null" >
+        rep_fault_date = #{repFaultDate},
+      </if>
+      <if test="repPrincipal != null" >
+        rep_principal = #{repPrincipal},
+      </if>
+      <if test="eqName != null" >
+        eq_name = #{eqName},
+      </if>
+      <if test="eqNo != null" >
+        eq_no = #{eqNo},
+      </if>
+      <if test="eqId != null" >
+        eq_id = #{eqId},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 RES_EQUIPMENT_REPAIR -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from RES_EQUIPMENT_REPAIR
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from RES_EQUIPMENT_REPAIR
+     where id = #{value}
+
+  </delete>
+
+  <!-- RES_EQUIPMENT_REPAIR 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from RES_EQUIPMENT_REPAIR
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询RES_EQUIPMENT_REPAIR列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from RES_EQUIPMENT_REPAIR
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from RES_EQUIPMENT_REPAIR
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+    <!-- 对应设备维修记录列表总数-->
+    <select id="queryCountForRepairRecord" resultType="java.lang.Integer" parameterType="com.adc.da.equipment.page.EquipmentRepairEOPage">
+        SELECT count(1) FROM RES_EQUIPMENT_REPAIR
+        where RES_EQUIPMENT_REPAIR.eq_id = #{eqId,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询,查询出对应设备的所有维修记录 -->
+    <select id="getRepairRecordByPage" resultMap="BaseResultMap" parameterType="com.adc.da.equipment.page.EquipmentRepairEOPage">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        ( select <include refid="Base_Column_List"/>
+        from RES_EQUIPMENT_REPAIR
+        where RES_EQUIPMENT_REPAIR.eq_id = #{eqId,jdbcType=VARCHAR}
+        order by REP_MAINTENANCE_DATE desc
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+
+
+    </select>
+</mapper>

@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_trial_problem.dao.PcTrialProblemEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_trial_problem.entity.PcTrialProblemEO" >
+    <id column="id" property="id" />
+    <result column="image_names" property="imageNames" />
+    <result column="image_ids" property="imageIds" />
+    <result column="processcomments" property="processcomments" />
+    <result column="startuser" property="startuser" />
+    <result column="psqc_xslc" property="psqcXslc" />
+    <result column="status" property="status" />
+    <result column="resposible_person" property="resposiblePerson" />
+    <result column="implement_dept_id" property="implementDeptId" />
+    <result column="solution_adopt_time" property="solutionAdoptTime" />
+    <result column="solution_desc" property="solutionDesc" />
+    <result column="pro_solution" property="proSolution" />
+    <result column="kkx_gzms" property="kkxGzms" />
+    <result column="kkx_cxgzlc" property="kkxCxgzlc" />
+    <result column="kkx_dqsylk" property="kkxDqsylk" />
+    <result column="kkx_dqsyzzl" property="kkxDqsyzzl" />
+    <result column="kkx_syzlc" property="kkxSyzlc" />
+    <result column="psqc_jcr" property="psqcJcr" />
+    <result column="psqc_fstj" property="psqcFstj" />
+    <result column="psqc_zml" property="psqcZml" />
+    <result column="psqc_hd" property="psqcHd" />
+    <result column="psqc_hw" property="psqcHw" />
+    <result column="psqc_hs" property="psqcHs" />
+    <result column="distinguish" property="distinguish" />
+    <result column="fault_mileage" property="faultMileage" />
+    <result column="pro_title" property="proTitle" />
+    <result column="main_user" property="mainUser" />
+    <result column="main_dept" property="mainDept" />
+    <result column="problem_level" property="problemLevel" />
+    <result column="model_no" property="modelNo" />
+    <result column="vin_code" property="vinCode" />
+    <result column="part_name" property="partName" />
+    <result column="part_no" property="partNo" />
+    <result column="ask_time" property="askTime" />
+    <result column="evaluation_date" property="evaluationDate" />
+    <result column="problem_type" property="problemType" />
+    <result column="tpp_code" property="tppCode" />
+    <result column="evaluate_person" property="evaluatePerson" />
+    <result column="pro_property_two" property="proPropertyTwo" />
+    <result column="pro_property" property="proProperty" />
+    <result column="task_id" property="taskId" />
+    <result column="psqc_cbyy" property="psqcCbyy" />
+    <result column="implement_dept_id_tem" property="implementDeptIdTem" />
+    <result column="solution_adopt_time_tem" property="solutionAdoptTimeTem" />
+    <result column="solution_desc_tem" property="solutionDescTem" />
+    <result column="problem_code" property="problemCode" />
+    <result column="resposible_person_tem" property="resposiblePersonTem" />
+    <result column="PRO_QXXPD" property="proQxxpd" />
+    <result column="IMPLEMENT_DEPT_NAME" property="implementDeptName" />
+    <result column="RESPOSIBLE_PERSON_NAME" property="resposiblePersonName" />
+    <result column="IMPLEMENT_DEPT_NAME_TEM" property="implementDeptNameTem" />
+    <result column="RESPOSIBLE_PERSON_NAME_TEM" property="resposiblePersonNameTem" />
+    <result column="XCCLGZ_PERSON" property="xcclgzPerson" />
+    
+  </resultMap>
+
+    <resultMap id="TpmUserMap" type="com.adc.da.pc_trial_problem.entity.TpmUserEO">
+      <result column="user_fullname" property="tpmUserNameCN" />
+      <result property="getTpmUserNameEN" column="user_account" />
+      <result property="tpmDepartName" column="dept_name" />
+    </resultMap>
+    
+    
+    <resultMap id="TpmOrgMap" type="com.adc.da.pc_trial_problem.entity.TpmOrgEO">
+      <result column="DEPT_ID" property="deptId" />
+      <result property="FULL_NAME" column="fullName" />
+      <result property="DEPT_TYPE" column="deptType" />
+    </resultMap>
+
+  <!-- PC_TRIAL_PROBLEM table all fields -->
+  <sql id="Base_Column_List" >
+     image_names, image_ids, processcomments, startuser, psqc_xslc, status, resposible_person, implement_dept_id, solution_adopt_time, solution_desc, pro_solution, kkx_gzms, kkx_cxgzlc, kkx_dqsylk, kkx_dqsyzzl, kkx_syzlc, psqc_jcr, psqc_fstj, psqc_zml, psqc_hd, psqc_hw, psqc_hs, distinguish, fault_mileage, pro_title, main_user, main_dept, problem_level, model_no, vin_code, part_name, part_no, ask_time, evaluation_date, problem_type, tpp_code, evaluate_person, pro_property_two, pro_property, task_id, id, psqc_cbyy, implement_dept_id_tem, solution_adopt_time_tem, solution_desc_tem, problem_code, resposible_person_tem
+  	 , PRO_QXXPD, IMPLEMENT_DEPT_NAME, RESPOSIBLE_PERSON_NAME, IMPLEMENT_DEPT_NAME_TEM, RESPOSIBLE_PERSON_NAME_TEM, XCCLGZ_PERSON
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1 and task_id = #{taskId}
+    <trim suffixOverrides="," >
+      <if test="imageNames != null" >
+        and image_names ${imageNamesOperator} #{imageNames}
+      </if>
+      <if test="imageIds != null" >
+        and image_ids ${imageIdsOperator} #{imageIds}
+      </if>
+      <if test="processcomments != null" >
+        and processcomments ${processcommentsOperator} #{processcomments}
+      </if>
+      <if test="startuser != null" >
+        and startuser ${startuserOperator} #{startuser}
+      </if>
+      <if test="psqcXslc != null" >
+        and psqc_xslc ${psqcXslcOperator} #{psqcXslc}
+      </if>
+      <if test="status != null" >
+        and status ${statusOperator} #{status}
+      </if>
+      <if test="resposiblePerson != null" >
+        and resposible_person ${resposiblePersonOperator} #{resposiblePerson}
+      </if>
+      <if test="implementDeptId != null" >
+        and implement_dept_id ${implementDeptIdOperator} #{implementDeptId}
+      </if>
+      <if test="solutionAdoptTime != null" >
+        and solution_adopt_time ${solutionAdoptTimeOperator} #{solutionAdoptTime}
+      </if>
+      <if test="solutionAdoptTime1 != null" >
+        and solution_adopt_time &gt;= #{solutionAdoptTime1}
+      </if>
+      <if test="solutionAdoptTime2 != null" >
+        and solution_adopt_time &lt;= #{solutionAdoptTime2}
+      </if>
+      <if test="solutionDesc != null" >
+        and solution_desc ${solutionDescOperator} #{solutionDesc}
+      </if>
+      <if test="proSolution != null" >
+        and pro_solution ${proSolutionOperator} #{proSolution}
+      </if>
+      <if test="kkxGzms != null" >
+        and kkx_gzms ${kkxGzmsOperator} #{kkxGzms}
+      </if>
+      <if test="kkxCxgzlc != null" >
+        and kkx_cxgzlc ${kkxCxgzlcOperator} #{kkxCxgzlc}
+      </if>
+      <if test="kkxDqsylk != null" >
+        and kkx_dqsylk ${kkxDqsylkOperator} #{kkxDqsylk}
+      </if>
+      <if test="kkxDqsyzzl != null" >
+        and kkx_dqsyzzl ${kkxDqsyzzlOperator} #{kkxDqsyzzl}
+      </if>
+      <if test="kkxSyzlc != null" >
+        and kkx_syzlc ${kkxSyzlcOperator} #{kkxSyzlc}
+      </if>
+      <if test="psqcJcr != null" >
+        and psqc_jcr ${psqcJcrOperator} #{psqcJcr}
+      </if>
+      <if test="psqcFstj != null" >
+        and psqc_fstj ${psqcFstjOperator} #{psqcFstj}
+      </if>
+      <if test="psqcZml != null" >
+        and psqc_zml ${psqcZmlOperator} #{psqcZml}
+      </if>
+      <if test="psqcHd != null" >
+        and psqc_hd ${psqcHdOperator} #{psqcHd}
+      </if>
+      <if test="psqcHw != null" >
+        and psqc_hw ${psqcHwOperator} #{psqcHw}
+      </if>
+      <if test="psqcHs != null" >
+        and psqc_hs ${psqcHsOperator} #{psqcHs}
+      </if>
+      <if test="distinguish != null" >
+        and distinguish ${distinguishOperator} #{distinguish}
+      </if>
+      <if test="faultMileage != null" >
+        and fault_mileage ${faultMileageOperator} #{faultMileage}
+      </if>
+      <if test="proTitle != null" >
+        and pro_title ${proTitleOperator} #{proTitle}
+      </if>
+      <if test="mainUser != null" >
+        and main_user ${mainUserOperator} #{mainUser}
+      </if>
+      <if test="mainDept != null" >
+        and main_dept ${mainDeptOperator} #{mainDept}
+      </if>
+      <if test="problemLevel != null" >
+        and problem_level ${problemLevelOperator} #{problemLevel}
+      </if>
+      <if test="modelNo != null" >
+        and model_no ${modelNoOperator} #{modelNo}
+      </if>
+      <if test="vinCode != null" >
+        and vin_code ${vinCodeOperator} #{vinCode}
+      </if>
+      <if test="partName != null" >
+        and part_name ${partNameOperator} #{partName}
+      </if>
+      <if test="partNo != null" >
+        and part_no ${partNoOperator} #{partNo}
+      </if>
+      <if test="askTime != null" >
+        and ask_time ${askTimeOperator} #{askTime}
+      </if>
+      <if test="askTime1 != null" >
+        and ask_time &gt;= #{askTime1}
+      </if>
+      <if test="askTime2 != null" >
+        and ask_time &lt;= #{askTime2}
+      </if>
+      <if test="evaluationDate != null" >
+        and evaluation_date ${evaluationDateOperator} #{evaluationDate}
+      </if>
+      <if test="evaluationDate1 != null" >
+        and evaluation_date &gt;= #{evaluationDate1}
+      </if>
+      <if test="evaluationDate2 != null" >
+        and evaluation_date &lt;= #{evaluationDate2}
+      </if>
+      <if test="problemType != null" >
+        and problem_type ${problemTypeOperator} #{problemType}
+      </if>
+      <if test="tppCode != null" >
+        and tpp_code ${tppCodeOperator} #{tppCode}
+      </if>
+      <if test="evaluatePerson != null" >
+        and evaluate_person ${evaluatePersonOperator} #{evaluatePerson}
+      </if>
+      <if test="proPropertyTwo != null" >
+        and pro_property_two ${proPropertyTwoOperator} #{proPropertyTwo}
+      </if>
+      <if test="proProperty != null" >
+        and pro_property ${proPropertyOperator} #{proProperty}
+      </if>
+      <if test="taskId != null" >
+        and task_id ${taskIdOperator} #{taskId}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="psqcCbyy != null" >
+        and psqc_cbyy ${psqcCbyyOperator} #{psqcCbyy}
+      </if>
+      <if test="implementDeptIdTem != null" >
+        and implement_dept_id_tem ${implementDeptIdTemOperator} #{implementDeptIdTem}
+      </if>
+      <if test="solutionAdoptTimeTem != null" >
+        and solution_adopt_time_tem ${solutionAdoptTimeTemOperator} #{solutionAdoptTimeTem}
+      </if>
+      <if test="solutionDescTem != null" >
+        and solution_desc_tem ${solutionDescTemOperator} #{solutionDescTem}
+      </if>
+      <if test="problemCode != null" >
+        and problem_code ${problemCodeOperator} #{problemCode}
+      </if>
+      <if test="resposiblePersonTem != null" >
+        and resposible_person_tem ${resposiblePersonTemOperator} #{resposiblePersonTem}
+      </if>
+    </trim>
+  </sql>
+
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_trial_problem.entity.PcTrialProblemEO" >
+    <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SYS_GUID() FROM DUAL
+    </selectKey>
+        insert into PC_TRIAL_PROBLEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="imageNames != null" >image_names,</if>
+                <if test="imageIds != null" >image_ids,</if>
+                <if test="processcomments != null" >processcomments,</if>
+                <if test="startuser != null" >startuser,</if>
+                <if test="psqcXslc != null" >psqc_xslc,</if>
+                <if test="status != null" >status,</if>
+                <if test="resposiblePerson != null" >resposible_person,</if>
+                <if test="implementDeptId != null" >implement_dept_id,</if>
+                <if test="solutionAdoptTime != null" >solution_adopt_time,</if>
+                <if test="solutionDesc != null" >solution_desc,</if>
+                <if test="proSolution != null" >pro_solution,</if>
+                <if test="kkxGzms != null" >kkx_gzms,</if>
+                <if test="kkxCxgzlc != null" >kkx_cxgzlc,</if>
+                <if test="kkxDqsylk != null" >kkx_dqsylk,</if>
+                <if test="kkxDqsyzzl != null" >kkx_dqsyzzl,</if>
+                <if test="kkxSyzlc != null" >kkx_syzlc,</if>
+                <if test="psqcJcr != null" >psqc_jcr,</if>
+                <if test="psqcFstj != null" >psqc_fstj,</if>
+                <if test="psqcZml != null" >psqc_zml,</if>
+                <if test="psqcHd != null" >psqc_hd,</if>
+                <if test="psqcHw != null" >psqc_hw,</if>
+                <if test="psqcHs != null" >psqc_hs,</if>
+                <if test="distinguish != null" >distinguish,</if>
+                <if test="faultMileage != null" >fault_mileage,</if>
+                <if test="proTitle != null" >pro_title,</if>
+                <if test="mainUser != null" >main_user,</if>
+                <if test="mainDept != null" >main_dept,</if>
+                <if test="problemLevel != null" >problem_level,</if>
+                <if test="modelNo != null" >model_no,</if>
+                <if test="vinCode != null" >vin_code,</if>
+                <if test="partName != null" >part_name,</if>
+                <if test="partNo != null" >part_no,</if>
+                <if test="askTime != null" >ask_time,</if>
+                <if test="evaluationDate != null" >evaluation_date,</if>
+                <if test="problemType != null" >problem_type,</if>
+                <if test="tppCode != null" >tpp_code,</if>
+                <if test="evaluatePerson != null" >evaluate_person,</if>
+                <if test="proPropertyTwo != null" >pro_property_two,</if>
+                <if test="proProperty != null" >pro_property,</if>
+                <if test="taskId != null" >task_id,</if>
+                <if test="id != null" >id,</if>
+                <if test="psqcCbyy != null" >psqc_cbyy,</if>
+                <if test="implementDeptIdTem != null" >implement_dept_id_tem,</if>
+                <if test="solutionAdoptTimeTem != null" >solution_adopt_time_tem,</if>
+                <if test="solutionDescTem != null" >solution_desc_tem,</if>
+                <if test="problemCode != null" >problem_code,</if>
+                <if test="resposiblePersonTem != null" >resposible_person_tem,</if>
+                <if test="proQxxpd != null" >PRO_QXXPD,</if>
+                <if test="implementDeptName != null" >IMPLEMENT_DEPT_NAME,</if>
+                <if test="resposiblePersonName != null" >RESPOSIBLE_PERSON_NAME,</if>
+                <if test="implementDeptNameTem != null" >IMPLEMENT_DEPT_NAME_TEM,</if>
+                <if test="resposiblePersonNameTem != null" >RESPOSIBLE_PERSON_NAME_TEM,</if>
+                <if test="xcclgzPerson != null" >XCCLGZ_PERSON,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="imageNames != null" >#{imageNames, jdbcType=VARCHAR},</if>
+                <if test="imageIds != null" >#{imageIds, jdbcType=VARCHAR},</if>
+                <if test="processcomments != null" >#{processcomments, jdbcType=VARCHAR},</if>
+                <if test="startuser != null" >#{startuser, jdbcType=VARCHAR},</if>
+                <if test="psqcXslc != null" >#{psqcXslc, jdbcType=VARCHAR},</if>
+                <if test="status != null" >#{status, jdbcType=VARCHAR},</if>
+                <if test="resposiblePerson != null" >#{resposiblePerson, jdbcType=VARCHAR},</if>
+                <if test="implementDeptId != null" >#{implementDeptId, jdbcType=VARCHAR},</if>
+                <if test="solutionAdoptTime != null" >#{solutionAdoptTime, jdbcType=VARCHAR},</if>
+                <if test="solutionDesc != null" >#{solutionDesc, jdbcType=VARCHAR},</if>
+                <if test="proSolution != null" >#{proSolution, jdbcType=VARCHAR},</if>
+                <if test="kkxGzms != null" >#{kkxGzms, jdbcType=VARCHAR},</if>
+                <if test="kkxCxgzlc != null" >#{kkxCxgzlc, jdbcType=VARCHAR},</if>
+                <if test="kkxDqsylk != null" >#{kkxDqsylk, jdbcType=VARCHAR},</if>
+                <if test="kkxDqsyzzl != null" >#{kkxDqsyzzl, jdbcType=VARCHAR},</if>
+                <if test="kkxSyzlc != null" >#{kkxSyzlc, jdbcType=VARCHAR},</if>
+                <if test="psqcJcr != null" >#{psqcJcr, jdbcType=VARCHAR},</if>
+                <if test="psqcFstj != null" >#{psqcFstj, jdbcType=VARCHAR},</if>
+                <if test="psqcZml != null" >#{psqcZml, jdbcType=VARCHAR},</if>
+                <if test="psqcHd != null" >#{psqcHd, jdbcType=VARCHAR},</if>
+                <if test="psqcHw != null" >#{psqcHw, jdbcType=VARCHAR},</if>
+                <if test="psqcHs != null" >#{psqcHs, jdbcType=VARCHAR},</if>
+                <if test="distinguish != null" >#{distinguish, jdbcType=VARCHAR},</if>
+                <if test="faultMileage != null" >#{faultMileage, jdbcType=VARCHAR},</if>
+                <if test="proTitle != null" >#{proTitle, jdbcType=VARCHAR},</if>
+                <if test="mainUser != null" >#{mainUser, jdbcType=VARCHAR},</if>
+                <if test="mainDept != null" >#{mainDept, jdbcType=INTEGER},</if>
+                <if test="problemLevel != null" >#{problemLevel, jdbcType=VARCHAR},</if>
+                <if test="modelNo != null" >#{modelNo, jdbcType=VARCHAR},</if>
+                <if test="vinCode != null" >#{vinCode, jdbcType=VARCHAR},</if>
+                <if test="partName != null" >#{partName, jdbcType=VARCHAR},</if>
+                <if test="partNo != null" >#{partNo, jdbcType=VARCHAR},</if>
+                <if test="askTime != null" >#{askTime, jdbcType=VARCHAR},</if>
+                <if test="evaluationDate != null" >#{evaluationDate, jdbcType=VARCHAR},</if>
+                <if test="problemType != null" >#{problemType, jdbcType=VARCHAR},</if>
+                <if test="tppCode != null" >#{tppCode, jdbcType=VARCHAR},</if>
+                <if test="evaluatePerson != null" >#{evaluatePerson, jdbcType=VARCHAR},</if>
+                <if test="proPropertyTwo != null" >#{proPropertyTwo, jdbcType=VARCHAR},</if>
+                <if test="proProperty != null" >#{proProperty, jdbcType=VARCHAR},</if>
+                <if test="taskId != null" >#{taskId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="psqcCbyy != null" >#{psqcCbyy, jdbcType=VARCHAR},</if>
+                <if test="implementDeptIdTem != null" >#{implementDeptIdTem, jdbcType=VARCHAR},</if>
+                <if test="solutionAdoptTimeTem != null" >#{solutionAdoptTimeTem, jdbcType=VARCHAR},</if>
+                <if test="solutionDescTem != null" >#{solutionDescTem, jdbcType=VARCHAR},</if>
+                <if test="problemCode != null" >#{problemCode, jdbcType=VARCHAR},</if>
+                <if test="resposiblePersonTem != null" >#{resposiblePersonTem, jdbcType=VARCHAR},</if>
+                <if test="proQxxpd != null" >#{proQxxpd, jdbcType=VARCHAR},</if>
+                <if test="implementDeptName != null" >#{implementDeptName, jdbcType=VARCHAR},</if>
+                <if test="resposiblePersonName != null" >#{resposiblePersonName, jdbcType=VARCHAR},</if>
+                <if test="implementDeptNameTem != null" >#{implementDeptNameTem, jdbcType=VARCHAR},</if>
+                <if test="resposiblePersonNameTem != null" >#{resposiblePersonNameTem, jdbcType=VARCHAR},</if>
+            	<if test="xcclgzPerson != null" >#{xcclgzPerson, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_trial_problem.entity.PcTrialProblemEO" >
+    update PC_TRIAL_PROBLEM
+       set  image_names = #{imageNames},
+            image_ids = #{imageIds},
+            processcomments = #{processcomments},
+            startuser = #{startuser},
+            psqc_xslc = #{psqcXslc},
+            status = #{status},
+            resposible_person = #{resposiblePerson},
+            implement_dept_id = #{implementDeptId},
+            solution_adopt_time = #{solutionAdoptTime},
+            solution_desc = #{solutionDesc},
+            pro_solution = #{proSolution},
+            kkx_gzms = #{kkxGzms},
+            kkx_cxgzlc = #{kkxCxgzlc},
+            kkx_dqsylk = #{kkxDqsylk},
+            kkx_dqsyzzl = #{kkxDqsyzzl},
+            kkx_syzlc = #{kkxSyzlc},
+            psqc_jcr = #{psqcJcr},
+            psqc_fstj = #{psqcFstj},
+            psqc_zml = #{psqcZml},
+            psqc_hd = #{psqcHd},
+            psqc_hw = #{psqcHw},
+            psqc_hs = #{psqcHs},
+            distinguish = #{distinguish},
+            fault_mileage = #{faultMileage},
+            pro_title = #{proTitle},
+            main_user = #{mainUser},
+            main_dept = #{mainDept},
+            problem_level = #{problemLevel},
+            model_no = #{modelNo},
+            vin_code = #{vinCode},
+            part_name = #{partName},
+            part_no = #{partNo},
+            ask_time = #{askTime},
+            evaluation_date = #{evaluationDate},
+            problem_type = #{problemType},
+            tpp_code = #{tppCode},
+            evaluate_person = #{evaluatePerson},
+            pro_property_two = #{proPropertyTwo},
+            pro_property = #{proProperty},
+            task_id = #{taskId},
+            psqc_cbyy = #{psqcCbyy},
+            implement_dept_id_tem = #{implementDeptIdTem},
+            solution_adopt_time_tem = #{solutionAdoptTimeTem},
+            solution_desc_tem = #{solutionDescTem},
+            problem_code = #{problemCode},
+            resposible_person_tem = #{resposiblePersonTem},
+            PRO_QXXPD = #{proQxxpd},
+            IMPLEMENT_DEPT_NAME = #{implementDeptName},
+            RESPOSIBLE_PERSON_NAME = #{resposiblePersonName},
+            IMPLEMENT_DEPT_NAME_TEM = #{implementDeptNameTem},
+            RESPOSIBLE_PERSON_NAME_TEM = #{resposiblePersonNameTem},
+            XCCLGZ_PERSON = #{xcclgzPerson}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_trial_problem.entity.PcTrialProblemEO" >
+    update PC_TRIAL_PROBLEM
+    <set >
+      <if test="imageNames != null" >
+        image_names = #{imageNames},
+      </if>
+      <if test="imageIds != null" >
+        image_ids = #{imageIds},
+      </if>
+      <if test="processcomments != null" >
+        processcomments = #{processcomments},
+      </if>
+      <if test="startuser != null" >
+        startuser = #{startuser},
+      </if>
+      <if test="psqcXslc != null" >
+        psqc_xslc = #{psqcXslc},
+      </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
+      <if test="resposiblePerson != null" >
+        resposible_person = #{resposiblePerson},
+      </if>
+      <if test="implementDeptId != null" >
+        implement_dept_id = #{implementDeptId},
+      </if>
+      <if test="solutionAdoptTime != null" >
+        solution_adopt_time = #{solutionAdoptTime},
+      </if>
+      <if test="solutionDesc != null" >
+        solution_desc = #{solutionDesc},
+      </if>
+      <if test="proSolution != null" >
+        pro_solution = #{proSolution},
+      </if>
+      <if test="kkxGzms != null" >
+        kkx_gzms = #{kkxGzms},
+      </if>
+      <if test="kkxCxgzlc != null" >
+        kkx_cxgzlc = #{kkxCxgzlc},
+      </if>
+      <if test="kkxDqsylk != null" >
+        kkx_dqsylk = #{kkxDqsylk},
+      </if>
+      <if test="kkxDqsyzzl != null" >
+        kkx_dqsyzzl = #{kkxDqsyzzl},
+      </if>
+      <if test="kkxSyzlc != null" >
+        kkx_syzlc = #{kkxSyzlc},
+      </if>
+      <if test="psqcJcr != null" >
+        psqc_jcr = #{psqcJcr},
+      </if>
+      <if test="psqcFstj != null" >
+        psqc_fstj = #{psqcFstj},
+      </if>
+      <if test="psqcZml != null" >
+        psqc_zml = #{psqcZml},
+      </if>
+      <if test="psqcHd != null" >
+        psqc_hd = #{psqcHd},
+      </if>
+      <if test="psqcHw != null" >
+        psqc_hw = #{psqcHw},
+      </if>
+      <if test="psqcHs != null" >
+        psqc_hs = #{psqcHs},
+      </if>
+      <if test="distinguish != null" >
+        distinguish = #{distinguish},
+      </if>
+      <if test="faultMileage != null" >
+        fault_mileage = #{faultMileage},
+      </if>
+      <if test="proTitle != null" >
+        pro_title = #{proTitle},
+      </if>
+      <if test="mainUser != null" >
+        main_user = #{mainUser},
+      </if>
+      <if test="mainDept != null" >
+        main_dept = #{mainDept},
+      </if>
+      <if test="problemLevel != null" >
+        problem_level = #{problemLevel},
+      </if>
+      <if test="modelNo != null" >
+        model_no = #{modelNo},
+      </if>
+      <if test="vinCode != null" >
+        vin_code = #{vinCode},
+      </if>
+      <if test="partName != null" >
+        part_name = #{partName},
+      </if>
+      <if test="partNo != null" >
+        part_no = #{partNo},
+      </if>
+      <if test="askTime != null" >
+        ask_time = #{askTime},
+      </if>
+      <if test="evaluationDate != null" >
+        evaluation_date = #{evaluationDate},
+      </if>
+      <if test="problemType != null" >
+        problem_type = #{problemType},
+      </if>
+      <if test="tppCode != null" >
+        tpp_code = #{tppCode},
+      </if>
+      <if test="evaluatePerson != null" >
+        evaluate_person = #{evaluatePerson},
+      </if>
+      <if test="proPropertyTwo != null" >
+        pro_property_two = #{proPropertyTwo},
+      </if>
+      <if test="proProperty != null" >
+        pro_property = #{proProperty},
+      </if>
+      <if test="taskId != null" >
+        task_id = #{taskId},
+      </if>
+      <if test="psqcCbyy != null" >
+        psqc_cbyy = #{psqcCbyy},
+      </if>
+      <if test="implementDeptIdTem != null" >
+        implement_dept_id_tem = #{implementDeptIdTem},
+      </if>
+      <if test="solutionAdoptTimeTem != null" >
+        solution_adopt_time_tem = #{solutionAdoptTimeTem},
+      </if>
+      <if test="solutionDescTem != null" >
+        solution_desc_tem = #{solutionDescTem},
+      </if>
+      <if test="problemCode != null" >
+        problem_code = #{problemCode},
+      </if>
+      <if test="resposiblePersonTem != null" >
+        resposible_person_tem = #{resposiblePersonTem},
+      </if>
+      <if test="proQxxpd != null" >
+        PRO_QXXPD = #{proQxxpd},
+      </if>
+      <if test="implementDeptName != null" >
+        IMPLEMENT_DEPT_NAME = #{implementDeptName},
+      </if>
+      <if test="resposiblePersonName != null" >
+        RESPOSIBLE_PERSON_NAME = #{resposiblePersonName},
+      </if>
+      <if test="implementDeptNameTem != null" >
+        IMPLEMENT_DEPT_NAME_TEM = #{implementDeptNameTem},
+      </if>
+      <if test="resposiblePersonNameTem != null" >
+        RESPOSIBLE_PERSON_NAME_TEM = #{resposiblePersonNameTem},
+      </if>
+      <if test="xcclgzPerson != null" >
+        XCCLGZ_PERSON = #{xcclgzPerson},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 PC_TRIAL_PROBLEM -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PC_TRIAL_PROBLEM
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_TRIAL_PROBLEM
+     where id = #{value}
+  </delete>
+
+  <!-- PC_TRIAL_PROBLEM 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PC_TRIAL_PROBLEM
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PC_TRIAL_PROBLEM列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PC_TRIAL_PROBLEM
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PC_TRIAL_PROBLEM
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+    <!--新品协同人员查询接口-->
+    <select id="findUserFromTpm" resultMap="TpmUserMap" parameterType="java.lang.String">
+        select t.user_account,t.user_fullname,t.dept_name,t.dept_id
+        from tpm.v_valid_deptuser@xp_tpm t where USER_ACCOUNT NOT LIKE '%admin%'
+    </select>
+
+
+	<!--新品协同人员查询接口 - 新-->
+    <select id="findUserFromTpmNew" resultMap="TpmUserMap">
+        SELECT DISTINCT		
+			T.USER_ACCOUNT,	
+			T.USER_FULLNAME FULL_NAME,	
+			T.DEPT_NAME	
+		FROM		
+			tpm.V_VALID_DUR@dflqDBLink T,	
+			tpm.TM_DEPARTMENT@dflqDBLink TD	
+		WHERE		
+			T.DEPT_ID = TD.DEPT_ID
+    </select>
+    
+    
+    <!--新品协同组织机构查询接口-->
+    <select id="findOrgFromTpm" resultMap="TpmOrgMap">
+        SELECT		
+			T.DEPT_ID,	
+			T.FULL_NAME,	
+			T.DEPT_TYPE	
+		FROM		
+			tpm.TM_DEPARTMENT@dflqDBLink T	
+		WHERE		
+			T.DEPT_TYPE IS NOT NULL
+    </select>
+
+</mapper>

@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.project.dao.ProjectEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.project.entity.ProjectEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" property="delFlag" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy.usid" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy.usid" />
+    <result column="PRO_NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PRO_NUM" jdbcType="VARCHAR" property="num" />
+    <result column="PROJECT_MANAGER_ID" jdbcType="VARCHAR" property="projectManagerId" />
+    <result column="PROJECT_MANAGER_NAME" jdbcType="VARCHAR" property="projectManagerName" />
+    <result column="PRODUCE_MANAGER_ID" jdbcType="VARCHAR" property="produceManagerId" />
+    <result column="PRODUCE_MANAGER_NAME" jdbcType="VARCHAR" property="produceManagerName" />
+    <result column="PRO_BUDGETER_ID" jdbcType="VARCHAR" property="budgeterId" />
+    <result column="PRO_BUDGETER_NAME" jdbcType="VARCHAR" property="budgeterName" />
+    <result column="PRO_CHIEF_ID" jdbcType="VARCHAR" property="chiefId" />
+    <result column="PRO_CHIEF_NAME" jdbcType="VARCHAR" property="chiefName" />
+    <result column="PRO_TRACKER_ID" jdbcType="VARCHAR" property="trackerId" />
+    <result column="PRO_TRACKER_NAME" jdbcType="VARCHAR" property="trackerName" />
+    <result column="PRO_TESTPLAN_ID" jdbcType="VARCHAR" property="testPlanId" />
+    <result column="PRO_TESTPLAN_NAME" jdbcType="VARCHAR" property="testPlanName" />
+    <result column="PRO_START_DATE" jdbcType="VARCHAR" property="startDate" />
+    <result column="PRO_DESCRIBE" jdbcType="VARCHAR" property="proDescribe" />
+    <result column="PRO_PARENT_ID" jdbcType="VARCHAR" property="proParentId" />
+    <result column="PM_DATE" jdbcType="VARCHAR" property="PMDate" />
+    <result column="PP_DATE" jdbcType="VARCHAR" property="PPDate" />
+    <result column="PD_DATE" jdbcType="VARCHAR" property="PDDate" />
+    <result column="PF_DATE" jdbcType="VARCHAR" property="PFDate" />
+    <result column="KE_DATE" jdbcType="VARCHAR" property="KEDate" />
+    <result column="DE_DATE" jdbcType="VARCHAR" property="DEDate" />
+    <result column="DF_DATE" jdbcType="VARCHAR" property="DFDate" />
+    <result column="BF_DATE" jdbcType="VARCHAR" property="BFDate" />
+    <result column="LF_DATE" jdbcType="VARCHAR" property="LFDate" />
+    <result column="VFF_DATE" jdbcType="VARCHAR" property="VFFDate" />
+    <result column="PVS_DATE" jdbcType="VARCHAR" property="PVSDate" />
+    <result column="OS_DATE" jdbcType="VARCHAR" property="OSDate" />
+  </resultMap>
+
+	<resultMap id="peoNumResult" type="java.lang.String" >
+	    <result column="PRO_NUM" jdbcType="VARCHAR" property="num" />
+	</resultMap>
+  
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, PRO_NAME, PRO_NUM, 
+    PROJECT_MANAGER_ID, PRODUCE_MANAGER_ID, 
+    PRO_BUDGETER_ID, PRO_CHIEF_ID, PRO_TRACKER_ID, PRO_TESTPLAN_ID, PRO_TESTPLAN_NAME,
+    PRO_START_DATE, PRO_DESCRIBE, PRO_PARENT_ID, PM_DATE, PP_DATE, PD_DATE, PF_DATE, KE_DATE, 
+    DE_DATE, DF_DATE, BF_DATE, LF_DATE, VFF_DATE, PVS_DATE, OS_DATE, PROJECT_MANAGER_NAME,
+    PRODUCE_MANAGER_NAME, PRO_BUDGETER_NAME, PRO_CHIEF_NAME, PRO_TRACKER_NAME
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BM_PROJECT
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    UPDATE BM_PROJECT
+    SET DEL_FLAG = 1
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.project.entity.ProjectEO">
+    insert into BM_PROJECT (
+      ID, 
+      DEL_FLAG, 
+      CREATE_TIME, 
+      CREATE_BY, 
+      UPDATE_TIME, 
+      UPDATE_BY, 
+      PRO_NAME, 
+      PRO_NUM, 
+      PROJECT_MANAGER_ID, 
+      PRODUCE_MANAGER_ID, 
+      PRO_BUDGETER_ID, 
+      PRO_CHIEF_ID, 
+      PRO_TRACKER_ID, 
+      PRO_TESTPLAN_ID, 
+      PRO_START_DATE, 
+      PRO_DESCRIBE, 
+      PRO_PARENT_ID, 
+      PM_DATE, 
+      PP_DATE, 
+      PD_DATE, 
+      PF_DATE, 
+      KE_DATE, 
+      DE_DATE, 
+      DF_DATE, 
+      BF_DATE, 
+      LF_DATE, 
+      VFF_DATE, 
+      PVS_DATE, 
+      OS_DATE,
+      PROJECT_MANAGER_NAME,
+      PRODUCE_MANAGER_NAME, 
+      PRO_BUDGETER_NAME, 
+      PRO_CHIEF_NAME, 
+      PRO_TRACKER_NAME,
+      PRO_TESTPLAN_NAME
+    )
+    values (
+      #{id,jdbcType=VARCHAR}, 
+      #{delFlag}, 
+      #{createTime,jdbcType=VARCHAR}, 
+      #{createBy.usid,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR}, 
+      #{updateBy.usid,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, 
+      #{num,jdbcType=VARCHAR}, 
+      #{projectManagerId,jdbcType=VARCHAR}, 
+      #{produceManagerId,jdbcType=VARCHAR}, 
+      #{budgeterId,jdbcType=VARCHAR}, 
+      #{chiefId,jdbcType=VARCHAR}, 
+      #{trackerId,jdbcType=VARCHAR},
+      #{testPlanId,jdbcType=VARCHAR}, 
+      #{startDate,jdbcType=VARCHAR}, 
+      #{proDescribe,jdbcType=VARCHAR},      
+      #{proParentId,jdbcType=VARCHAR},
+      #{PMDate,jdbcType=VARCHAR}, 
+      #{PPDate,jdbcType=VARCHAR}, 
+      #{PDDate,jdbcType=VARCHAR}, 
+      #{PFDate,jdbcType=VARCHAR}, 
+      #{KEDate,jdbcType=VARCHAR}, 
+      #{DEDate,jdbcType=VARCHAR}, 
+      #{DFDate,jdbcType=VARCHAR}, 
+      #{BFDate,jdbcType=VARCHAR}, 
+      #{LFDate,jdbcType=VARCHAR}, 
+      #{VFFDate,jdbcType=VARCHAR}, 
+      #{PVSDate,jdbcType=VARCHAR}, 
+      #{OSDate,jdbcType=VARCHAR},
+      #{projectManagerName,jdbcType=VARCHAR}, 
+      #{produceManagerName,jdbcType=VARCHAR}, 
+      #{budgeterName,jdbcType=VARCHAR}, 
+      #{chiefName,jdbcType=VARCHAR}, 
+      #{trackerName,jdbcType=VARCHAR},
+      #{testPlanName,jdbcType=VARCHAR}
+   )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.project.entity.ProjectEO">
+    insert into BM_PROJECT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="name != null">
+        PRO_NAME,
+      </if>
+      <if test="num != null">
+        PRO_NUM,
+      </if>
+      <if test="projectManagerId != null">
+        PROJECT_MANAGER_ID,
+      </if>
+      <if test="produceManagerId != null">
+        PRODUCE_MANAGER_ID,
+      </if>
+      <if test="budgeterId != null">
+        PRO_BUDGETER_ID,
+      </if>
+      <if test="chiefId != null">
+        PRO_CHIEF_ID,
+      </if>
+      <if test="trackerId != null">
+        PRO_TRACKER_ID,
+      </if>
+      <if test="testPlanId != null">
+        PRO_TESTPLAN_ID,
+      </if>
+      <if test="startDate != null">
+        PRO_START_DATE,
+      </if>
+      <if test="proDescribe != null">
+        PRO_DESCRIBE,
+      </if>
+      <if test="proParentId != null">
+        PRO_PARENT_ID,
+      </if>
+      <if test="PMDate != null">
+        PM_DATE,
+      </if>
+      <if test="PPDate != null">
+        PP_DATE,
+      </if>
+      <if test="PDDate != null">
+        PD_DATE,
+      </if>
+      <if test="PFDate != null">
+        PF_DATE,
+      </if>
+      <if test="KEDate != null">
+        KE_DATE,
+      </if>
+      <if test="DEDate != null">
+        DE_DATE,
+      </if>
+      <if test="DFDate != null">
+        DF_DATE,
+      </if>
+      <if test="BFDate != null">
+        BF_DATE,
+      </if>
+      <if test="LFDate != null">
+        LF_DATE,
+      </if>
+      <if test="VFFDate != null">
+        VFF_DATE,
+      </if>
+      <if test="PVSDate != null">
+        PVS_DATE,
+      </if>
+      <if test="OSDate != null">
+        OS_DATE,
+      </if>
+      <if test="projectManagerName != null">
+        PROJECT_MANAGER_NAME,
+      </if>
+      <if test="produceManagerName != null">
+        PRODUCE_MANAGER_NAME,
+      </if>
+      <if test="budgeterName != null">
+        PRO_BUDGETER_NAME,
+      </if>
+      <if test="chiefName != null">
+        PRO_CHIEF_NAME,
+      </if>
+      <if test="trackerName != null">
+        PRO_TRACKER_NAME,
+      </if>
+      <if test="testPlanName != null">
+      	PRO_TESTPLAN_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="projectManagerId != null">
+        #{projectManagerId,jdbcType=VARCHAR},
+      </if>
+      <if test="produceManagerId != null">
+        #{produceManagerId,jdbcType=VARCHAR},
+      </if>
+      <if test="budgeterId != null">
+        #{budgeterId,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefId != null">
+        #{chiefId,jdbcType=VARCHAR},
+      </if>
+      <if test="trackerId != null">
+        #{trackerId,jdbcType=VARCHAR},
+      </if>
+      <if test="testPlan != null">
+        #{testPlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="proDescribe != null">
+        #{proDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="proParentId != null" >
+        #{proParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="PMDate != null">
+        #{PMDate,jdbcType=VARCHAR},
+      </if>
+      <if test="PPDate != null">
+        #{PPDate,jdbcType=VARCHAR},
+      </if>
+      <if test="PDDate != null">
+        #{PDDate,jdbcType=VARCHAR},
+      </if>
+      <if test="PFDate != null">
+        #{PFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="KEDate != null">
+        #{KEDate,jdbcType=VARCHAR},
+      </if>
+      <if test="DEDate != null">
+        #{DEDate,jdbcType=VARCHAR},
+      </if>
+      <if test="DFDate != null">
+        #{DFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="BFDate != null">
+        #{BFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="LFDate != null">
+        #{LFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="VFFDate != null">
+        #{VFFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="PVSDate != null">
+        #{PVSDate,jdbcType=VARCHAR},
+      </if>
+      <if test="OSDate != null">
+        #{OSDate,jdbcType=VARCHAR},
+      </if>
+      <if test="projectManagerName != null">
+        #{projectManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="produceManagerName != null">
+        #{produceManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="budgeterName != null">
+        #{budgeterName,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefName != null">
+        #{chiefName,jdbcType=VARCHAR},
+      </if>
+      <if test="trackerName != null">
+        #{trackerName,jdbcType=VARCHAR},
+      </if>
+      <if test="testPlanName != null">
+      	#{testPlanName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.project.entity.ProjectEO">
+    update BM_PROJECT
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        PRO_NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null">
+        PRO_NUM = #{num,jdbcType=VARCHAR},
+      </if>
+      <if test="projectManagerId != null">
+        PROJECT_MANAGER_ID = #{projectManagerId,jdbcType=VARCHAR},
+      </if>
+      <if test="produceManagerId != null">
+        PRODUCE_MANAGER_ID = #{produceManagerId,jdbcType=VARCHAR},
+      </if>
+      <if test="budgeterId != null">
+        PRO_BUDGETER_ID = #{budgeterId,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefId != null">
+        PRO_CHIEF_ID = #{chiefId,jdbcType=VARCHAR},
+      </if>
+      <if test="trackerId != null">
+        PRO_TRACKER_ID = #{trackerId,jdbcType=VARCHAR},
+      </if>
+      <if test="testPlanId != null">
+        PRO_TESTPLAN_ID = #{testPlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        PRO_START_DATE = #{startDate,jdbcType=VARCHAR},
+      </if>
+      <if test="proDescribe != null">
+        PRO_DESCRIBE = #{proDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="proParentId != null">
+        PRO_PARENT_ID = #{proParentId,jdbcType=VARCHAR},
+      </if>
+      <if test="PMDate != null">
+        PM_DATE = #{PMDate,jdbcType=VARCHAR},
+      </if>
+      <if test="PPDate != null">
+        PP_DATE = #{PPDate,jdbcType=VARCHAR},
+      </if>
+      <if test="PDDate != null">
+        PD_DATE = #{PDDate,jdbcType=VARCHAR},
+      </if>
+      <if test="PFDate != null">
+        PF_DATE = #{PFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="KEDate != null">
+        KE_DATE = #{KEDate,jdbcType=VARCHAR},
+      </if>
+      <if test="DEDate != null">
+        DE_DATE = #{DEDate,jdbcType=VARCHAR},
+      </if>
+      <if test="DFDate != null">
+        DF_DATE = #{DFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="BFDate != null">
+        BF_DATE = #{BFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="LFDate != null">
+        LF_DATE = #{LFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="VFFDate != null">
+        VFF_DATE = #{VFFDate,jdbcType=VARCHAR},
+      </if>
+      <if test="PVSDate != null">
+        PVS_DATE = #{PVSDate,jdbcType=VARCHAR},
+      </if>
+      <if test="OSDate != null">
+        OS_DATE = #{OSDate,jdbcType=VARCHAR},
+      </if>
+      <if test="projectManagerName != null">
+        PROJECT_MANAGER_NAME = #{projectManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="produceManagerName != null">
+        PRODUCE_MANAGER_NAME = #{produceManagerName,jdbcType=VARCHAR},
+      </if>
+      <if test="budgeterName != null">
+        PRO_BUDGETER_NAME = #{budgeterName,jdbcType=VARCHAR},
+      </if>
+      <if test="chiefName != null">
+        PRO_CHIEF_NAME = #{chiefName,jdbcType=VARCHAR},
+      </if>
+      <if test="trackerName != null">
+        PRO_TRACKER_NAME = #{trackerName,jdbcType=VARCHAR},
+      </if>
+      <if test="testPlanName != null">
+      	PRO_TESTPLAN_NAME = #{testPlanName,jdbcType=VARCHAR}
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.project.entity.ProjectEO">
+    update BM_PROJECT
+    set
+      DEL_FLAG = #{delFlag},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      PRO_NAME = #{name,jdbcType=VARCHAR},
+      PRO_NUM = #{num,jdbcType=VARCHAR},
+      PRO_GROUP_ID = #{groupId,jdbcType=VARCHAR},
+      PROJECT_MANAGER_ID = #{projectManagerId,jdbcType=VARCHAR},
+      PRODUCE_MANAGER_ID = #{produceManagerId,jdbcType=VARCHAR},
+      PRO_BUDGETER_ID = #{budgeterId,jdbcType=VARCHAR},
+      PRO_CHIEF_ID = #{chiefId,jdbcType=VARCHAR},
+      PRO_TRACKER_ID = #{trackerId,jdbcType=VARCHAR},
+      PRO_TESTPLAN_ID = #{testPlanId,jdbcType=VARCHAR},
+      PRO_START_DATE = #{startDate,jdbcType=VARCHAR},
+      PRO_DESCRIBE = #{proDescribe,jdbcType=VARCHAR},
+      PRO_PARENT_ID = #{proParentId,jdbcType=VARCHAR},
+      PM_DATE = #{PMDate,jdbcType=VARCHAR},
+      PP_DATE = #{PPDate,jdbcType=VARCHAR},
+      PD_DATE = #{PDDate,jdbcType=VARCHAR},
+      PF_DATE = #{PFDate,jdbcType=VARCHAR},
+      KE_DATE = #{KEDate,jdbcType=VARCHAR},
+      DE_DATE = #{DEDate,jdbcType=VARCHAR},
+      DF_DATE = #{DFDate,jdbcType=VARCHAR},
+      BF_DATE = #{BFDate,jdbcType=VARCHAR},
+      LF_DATE = #{LFDate,jdbcType=VARCHAR},
+      VFF_DATE = #{VFFDate,jdbcType=VARCHAR},
+      PVS_DATE = #{PVSDate,jdbcType=VARCHAR},
+      OS_DATE = #{OSDate,jdbcType=VARCHAR},
+      PROJECT_MANAGER_NAME = #{projectManagerName,jdbcType=VARCHAR},
+      PRODUCE_MANAGER_NAME = #{produceManagerName,jdbcType=VARCHAR},
+      PRO_BUDGETER_NAME = #{budgeterName,jdbcType=VARCHAR},
+      PRO_CHIEF_NAME = #{chiefName,jdbcType=VARCHAR},
+      PRO_TRACKER_NAME = #{trackerName,jdbcType=VARCHAR},
+      PRO_TESTPLAN_NAME = #{testPlanName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <!--查询所有记录-->
+  <select id="findAll" resultMap="BaseResultMap">
+       SELECT
+        	<include refid="Base_Column_List"/>
+       FROM BM_PROJECT
+       WHERE DEL_FLAG != 1
+       ORDER BY UPDATE_TIME DESC
+  </select>
+  
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+    	WHERE DEL_FLAG = 0
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="phrase">
+                    AND (
+                    	PRO_NAME LIKE '%${phrase}%' 
+                    	OR PRO_NUM LIKE '%${phrase}%'
+                    	OR PRO_START_DATE LIKE '%${phrase}%'
+                    	OR PRO_DESCRIBE LIKE '%${phrase}%'
+                    	OR PROJECT_MANAGER_NAME LIKE '%${phrase}%'
+                    	OR PRODUCE_MANAGER_NAME LIKE '%${phrase}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="name != null and name != ''">
+                    AND PRO_NAME LIKE '%${name}%'
+                </if>
+                <if test="num != null and num != ''">
+                    AND PRO_NUM LIKE '%${num}%'
+                </if>
+                <if test="startDate1 != null and startDate1 != ''">
+                    AND PRO_START_DATE <![CDATA[>=]]> #{startDate1}
+                </if>
+                <if test="startDate2 != null and startDate2 != ''">
+                    AND PRO_START_DATE <![CDATA[<=]]> #{startDate2}
+                </if>
+                <if test="proDescribe != null and proDescribe != ''">
+                    AND PRO_DESCRIBE LIKE '%${proDescribe}%'
+                </if>
+                <if test="projectManagerName != null and projectManagerName != ''">
+                    AND PROJECT_MANAGER_NAME LIKE '%${projectManagerName}%'
+                </if>
+                <if test="produceManagerName != null and produceManagerName != ''">
+                    AND PRODUCE_MANAGER_NAME LIKE '%${produceManagerName}%'
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+   <!-- 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        SELECT count(1) FROM BM_PROJECT
+        <include refid="Base_Where_Clause"/>
+    </select>
+    
+       <!-- 分页查询列表 -->
+   <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+       <include refid="Base_Column_List"/>
+       FROM BM_PROJECT
+       <include refid="Base_Where_Clause"/>
+       ORDER BY UPDATE_TIME DESC
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+
+      <!--查询当前记录是否有子节点-->
+	  <select id="selectChildsById" resultMap="BaseResultMap">
+	      SELECT
+	      <include refid="Base_Column_List"/>
+	      FROM BM_PROJECT
+	      WHERE DEL_FLAG = ${@com.adc.da.util.constant.DeleteFlagEnum@NORMAL.getValue()}
+	      AND PRO_PARENT_ID = #{proParentId,jdbcType=VARCHAR}
+	  </select>
+	  
+	  <!--查询所有编码记录-->
+	  <select id="checkNo" resultMap="peoNumResult">
+	       SELECT
+	        	PRO_NUM
+	       FROM BM_PROJECT
+	       WHERE DEL_FLAG != 1
+	       <if test="id != null and id != ''">
+               AND ID != #{id,jdbcType=VARCHAR}
+           </if>
+	  </select>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_task.dao.TrialtaskInsproEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.trial_task.entity.TrialtaskInsproEO">
+        <!-- 主键 -->
+        <id column="ID" property="id"/>
+        <!-- 表属性 -->
+        <result column="INSPRO_ID" property="insproId"/>
+        <result column="TRIALTASK_ID" property="trialtaskId"/>
+        <result column="REPORT_STATUS" property="reportStatus"/>
+        <result column="REPORT_FINISH_TIME" property="reportFinishTime"/>
+        <result column="INSPRO_STANDARD" property="insproStandard"/>
+        <result column="INSPRO_NAME" property="insproName"/>
+        <result column="REMARK" property="remark"/>
+        <result column="REPORT_ID" property="reportId"/>
+    </resultMap>
+
+    <!-- 【表名】 table all fields -->
+    <sql id="Base_Column_List">
+            ID,
+            INSPRO_ID,
+            TRIALTASK_ID,
+            REPORT_STATUS,
+            REPORT_FINISH_TIME,
+            INSPRO_STANDARD,
+            INSPRO_NAME,
+            REMARK,
+			REPORT_ID
+    </sql>
+
+    <!--添加试验任务检验项目-->
+    <insert id="insertTrialtaskInspro" parameterType="com.adc.da.trial_task.entity.TrialtaskInsproEO">
+        INSERT INTO EV_TRIALTASK_INSPRO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">ID,</if>
+            <if test="insproId!=null">INSPRO_ID,</if>
+            <if test="trialtaskId!=null">TRIALTASK_ID,</if>
+            <if test="reportStatus!=null">REPORT_STATUS,</if>
+            <if test="reportFinishTime!=null">REPORT_FINISH_TIME,</if>
+            <if test="insproStandard!=null">INSPRO_STANDARD,</if>
+            <if test="insproName!=null">INSPRO_NAME,</if>
+            <if test="remark!=null">REMARK,</if>
+            <if test="reportId!=null">REPORT_ID,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="insproId!=null">#{insproId},</if>
+            <if test="trialtaskId!=null">#{trialtaskId},</if>
+            <if test="reportStatus!=null">#{reportStatus},</if>
+            <if test="reportFinishTime!=null">#{reportFinishTime},</if>
+            <if test="insproStandard!=null">#{insproStandard},</if>
+            <if test="insproName!=null">#{insproName},</if>
+            <if test="remark!=null">#{remark},</if>
+            <if test="reportId!=null">#{reportId},</if>
+        </trim>
+    </insert>
+
+    <!--根据试验任务id删除试验任务检验项目信息-->
+    <delete id="deleteTrialtaskInsproByTrialTaskId" parameterType="java.lang.String">
+        DELETE
+        FROM EV_TRIALTASK_INSPRO
+        WHERE TRIALTASK_ID = #{trialtaskId}
+    </delete>
+
+    <select id="findTrialtaskInsproByTrialtaskId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM EV_TRIALTASK_INSPRO WHERE TRIALTASK_ID = #{trialtaskId}
+        AND REPORT_ID IS NULL
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM EV_TRIALTASK_INSPRO
+        WHERE ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.trial_report.entity.TrialReportEO">
+        UPDATE EV_TRIALTASK_INSPRO
+        SET INSPRO_ID          = #{insproId},
+            TRIALTASK_ID       = #{trialtaskId},
+            REPORT_STATUS      = #{reportStatus},
+            REPORT_FINISH_TIME = #{reportFinishTime},
+            INSPRO_STANDARD    = #{insproStandard},
+            INSPRO_NAME        = #{insproName},
+            REMARK             = #{remark},
+            REPORT_ID          = #{reportId}
+        WHERE ID = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_report.entity.TrialReportEO">
+        update EV_TRIALTASK_INSPRO
+        <set>
+            <if test="insproId != null">
+                INSPRO_ID = #{insproId,jdbcType=VARCHAR},
+            </if>
+            <if test="trialtaskId != null">
+                TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+            </if>
+            <if test="reportStatus != null">
+                REPORT_STATUS = #{reportStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="reportFinishTime != null">
+                REPORT_FINISH_TIME = #{reportFinishTime,jdbcType=VARCHAR},
+            </if>
+            <if test="insproStandard != null">
+                INSPRO_STANDARD = #{insproStandard,jdbcType=VARCHAR},
+            </if>
+            <if test="insproName != null">
+                INSPRO_NAME = #{insproName,jdbcType=VARCHAR},
+            </if>
+            
+                REPORT_ID = #{reportId,jdbcType=VARCHAR},
+            
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+	<select id="selectByReportId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+        <include refid="Base_Column_List"/>
+        FROM EV_TRIALTASK_INSPRO
+        WHERE REPORT_ID = #{report_Id,jdbcType=VARCHAR}
+	</select>
+</mapper>

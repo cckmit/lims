@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.materiel.dao.InventoryRecordEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.materiel.entity.InventoryRecordEO" >
+    <id column="id" property="id" />
+    <result column="materiel_id" property="materielId" />
+    <result column="sample_quantity" property="sampleQuantity" />
+    <result column="out_in_time" property="outInTime" />
+    <result column="borrower_returnee" property="borrowerReturnee" />
+    <result column="operation_type" property="operationType" />
+    <result column="total_price" property="totalPrice" />
+  </resultMap>
+
+    <resultMap id="detailInboundMap" type="com.adc.da.materiel.entity.MaterielEO">
+        <id column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="MATERIEL_NAME" jdbcType="VARCHAR" property="materielName" />
+        <result column="MATERIEL_CODE" jdbcType="VARCHAR" property="materielCode" />
+        <result column="MATERIEL_TYPE" jdbcType="VARCHAR" property="materielType" />
+        <result column="NORM_MODEL" jdbcType="VARCHAR" property="normModel" />
+        <result column="MANUFACTURER" jdbcType="VARCHAR" property="manufacturer" />
+        <result column="BRAND" jdbcType="VARCHAR" property="brand" />
+        <result column="SAMPLE_QUANTITY" jdbcType="VARCHAR" property="sampleQuantity" />
+        <result column="UNIT_PRICE" jdbcType="VARCHAR" property="unitPrice" />
+        <result column="PURPOSE" jdbcType="VARCHAR" property="purpose" />
+        <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+        <result column="PROCUREMENT_DATE" jdbcType="VARCHAR" property="procurementDate" />
+        <result column="MANUFACTURE_DATE" jdbcType="VARCHAR" property="manufactureDate" />
+        <result column="TERM_OF_VALIDITY" jdbcType="VARCHAR" property="termOfValidity" />
+        <result column="PURCHASE_PROCESS_NO" jdbcType="VARCHAR" property="purchaseProcessNo" />
+        <result column="LOCATION" jdbcType="VARCHAR" property="location" />
+        <result column="INVENTORY_CEILING" jdbcType="VARCHAR" property="inventoryCeiling" />
+        <result column="INVENTORY_FLOOR" jdbcType="VARCHAR" property="inventoryFloor" />
+        <result column="INVENTORY_SURPIUS" jdbcType="VARCHAR" property="inventorySurpius" />
+        <result column="MATERIAL_STATUS" jdbcType="VARCHAR" property="materialStatus" />
+        <result column="ENTRY_BY" jdbcType="VARCHAR" property="entryBy" />
+        <result column="ENTRY_TIME" jdbcType="VARCHAR" property="entryTime" />
+        <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+        <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+        <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+        <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+        <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+        <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+        <collection property="standardList" ofType="com.adc.da.materiel.entity.InventoryRecordEO">
+            <id column="ID" jdbcType="VARCHAR" property="id" />
+            <result column="MATERIEL_ID" jdbcType="VARCHAR" property="materielId" />
+            <result column="SAMPLE_QUANTITY" jdbcType="VARCHAR" property="sampleQuantity" />
+            <result column="OUT_IN_TIME" jdbcType="VARCHAR" property="outInTime" />
+            <result column="BORROWER_RETURNEE" jdbcType="VARCHAR" property="borrowerReturnee" />
+            <result column="OPERATION_TYPE" jdbcType="VARCHAR" property="operationType" />
+            <result column="TOTAL_PRICE" jdbcType="VARCHAR" property="totalPrice" />
+        </collection>
+    </resultMap>
+  <!-- RES_INVENTORY_RECORD table all fields -->
+  <sql id="Base_Column_List" >
+     id, materiel_id, sample_quantity, out_in_time, borrower_returnee, operation_type, total_price
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="materielId != null" >
+        and materiel_id ${materielIdOperator} #{materielId}
+      </if>
+      <if test="sampleQuantity!= null" >
+        and sample_quantity ${sampleQuantityOperator} #{sampleQuantity}
+      </if>
+      <if test="outInTime != null" >
+        and out_in_time ${outInTimeOperator} #{outInTime}
+      </if>
+      <if test="borrowerReturnee != null" >
+        and borrower_returnee ${borrowerReturneeOperator} #{borrowerReturnee}
+      </if>
+      <if test="operationType != null" >
+        and operation_type ${operationTypeOperator} #{operationType}
+      </if>
+      <if test="totalPrice != null" >
+        and total_price ${totalPriceOperator} #{totalPrice}
+      </if>
+    </trim>
+  </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.materiel.entity.InventoryRecordEO" >
+        insert into RES_INVENTORY_RECORD(<include refid="Base_Column_List" />)
+        values (#{id, jdbcType=VARCHAR},
+        #{materielId, jdbcType=VARCHAR},
+        #{sampleQuantity, jdbcType=VARCHAR},
+        #{outInTime, jdbcType=VARCHAR},
+        #{borrowerReturnee, jdbcType=VARCHAR},
+        #{operationType, jdbcType=VARCHAR},
+        #{totalPrice, jdbcType=VARCHAR})
+    </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.materiel.entity.InventoryRecordEO" >
+        insert into RES_INVENTORY_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="materielId != null" >materiel_id,</if>
+                <if test="sampleQuantity!= null" >sample_quantity,</if>
+                <if test="outInTime != null" >out_in_time,</if>
+                <if test="borrowerReturnee != null" >borrower_returnee,</if>
+                <if test="operationType != null" >operation_type,</if>
+                <if test="totalPrice != null" >total_price,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="materielId != null" >#{materielId, jdbcType=VARCHAR},</if>
+                <if test="sampleQuantity!= null" >#{sampleQuantity, jdbcType=VARCHAR},</if>
+                <if test="outInTime != null" >#{outInTime, jdbcType=VARCHAR},</if>
+                <if test="borrowerReturnee != null" >#{borrowerReturnee, jdbcType=VARCHAR},</if>
+                <if test="operationType != null" >#{operationType, jdbcType=VARCHAR},</if>
+                <if test="totalPrice != null" >#{totalPrice, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.materiel.entity.InventoryRecordEO" >
+    update RES_INVENTORY_RECORD
+       set  materiel_id = #{materielId},
+            sample_quantity = #{sampleQuantity},
+            out_in_time = #{outInTime},
+            borrower_returnee = #{borrowerReturnee},
+            operation_type = #{operationType},
+            total_price = #{totalPrice}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.materiel.entity.InventoryRecordEO" >
+    update RES_INVENTORY_RECORD
+    <set >
+      <if test="materielId != null" >
+        materiel_id = #{materielId},
+      </if>
+      <if test="sampleQuantity!= null" >
+        sample_quantity= #{sampleQuantity},
+      </if>
+      <if test="outInTime != null" >
+        out_in_time = #{outInTime},
+      </if>
+      <if test="borrowerReturnee != null" >
+        borrower_returnee = #{borrowerReturnee},
+      </if>
+      <if test="operationType != null" >
+        operation_type = #{operationType},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 RES_INVENTORY_RECORD -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from RES_INVENTORY_RECORD
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from RES_INVENTORY_RECORD
+     where id = #{value}
+
+  </delete>
+
+  <!-- RES_INVENTORY_RECORD 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from RES_INVENTORY_RECORD
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询RES_INVENTORY_RECORD列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from RES_INVENTORY_RECORD
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from RES_INVENTORY_RECORD
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

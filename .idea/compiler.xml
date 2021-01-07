@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="lims-personspace" />
+        <module name="lims-ev-trial" />
+        <module name="lims-main" />
+        <module name="lims-resource" />
+        <module name="lims-cost" />
+        <module name="lims-sample" />
+        <module name="lims-basedata" />
+        <module name="lims-pc-trial" />
+        <module name="lims-supplier" />
+        <module name="lims-login" />
+        <module name="lims-report" />
+        <module name="lims-questionnaire" />
+        <module name="lims-sys" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="lims" target="1.8" />
+      <module name="lims-basedata" target="1.7" />
+      <module name="lims-cost" target="1.7" />
+      <module name="lims-ev-trial" target="1.8" />
+      <module name="lims-login" target="1.7" />
+      <module name="lims-main" target="1.8" />
+      <module name="lims-pc-trial" target="1.8" />
+      <module name="lims-personspace" target="1.8" />
+      <module name="lims-questionnaire" target="1.7" />
+      <module name="lims-report" target="1.8" />
+      <module name="lims-resource" target="1.8" />
+      <module name="lims-sample" target="1.8" />
+      <module name="lims-supplier" target="1.8" />
+      <module name="lims-sys" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

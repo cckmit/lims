@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.materiel.dao.MaterielEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.materiel.entity.MaterielEO" >
+    <id column="id" property="id" />
+    <result column="materiel_name" jdbcType="VARCHAR" property="materielName" />
+    <result column="materiel_code" jdbcType="VARCHAR" property="materielCode" />
+    <result column="materiel_type" jdbcType="VARCHAR" property="materielType" />
+    <result column="norm_model" jdbcType="VARCHAR" property="normModel" />
+    <result column="manufacturer" jdbcType="VARCHAR" property="manufacturer" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="sample_quantity" jdbcType="DECIMAL" property="sampleQuantity" />
+    <result column="unit_price" jdbcType="DECIMAL" property="unitPrice" />
+    <result column="purpose" jdbcType="VARCHAR" property="purpose" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="procurement_date" jdbcType="VARCHAR" property="procurementDate" />
+    <result column="manufacture_date" jdbcType="VARCHAR" property="manufactureDate" />
+    <result column="term_of_validity" jdbcType="DECIMAL" property="termOfValidity" />
+    <result column="purchase_process_no" jdbcType="VARCHAR" property="purchaseProcessNo" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="inventory_ceiling" jdbcType="DECIMAL" property="inventoryCeiling" />
+    <result column="inventory_floor" jdbcType="DECIMAL" property="inventoryFloor" />
+    <result column="inventory_surpius" jdbcType="DECIMAL" property="inventorySurpius" />
+    <result column="material_status" jdbcType="VARCHAR" property="materialStatus" />
+    <result column="entry_by" jdbcType="VARCHAR" property="entryBy" />
+    <result column="entry_time" jdbcType="VARCHAR" property="entryTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="del_flag" jdbcType="DECIMAL" property="delFlag" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <resultMap id="detailInboundMap" type="com.adc.da.materiel.entity.MaterielEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="MATERIEL_NAME" jdbcType="VARCHAR" property="materielName" />
+    <result column="MATERIEL_CODE" jdbcType="VARCHAR" property="materielCode" />
+    <result column="MATERIEL_TYPE" jdbcType="VARCHAR" property="materielType" />
+    <result column="NORM_MODEL" jdbcType="VARCHAR" property="normModel" />
+    <result column="MANUFACTURER" jdbcType="VARCHAR" property="manufacturer" />
+    <result column="BRAND" jdbcType="VARCHAR" property="brand" />
+    <!--number-->
+    <result column="SAMPLE_QUANTITY" jdbcType="VARCHAR" property="sampleQuantity" />
+    <!--number-->
+    <result column="UNIT_PRICE" jdbcType="VARCHAR" property="unitPrice" />
+    <result column="PURPOSE" jdbcType="VARCHAR" property="purpose" />
+    <result column="UNIT" jdbcType="VARCHAR" property="unit" />
+    <result column="PROCUREMENT_DATE" jdbcType="VARCHAR" property="procurementDate" />
+    <result column="MANUFACTURE_DATE" jdbcType="VARCHAR" property="manufactureDate" />
+    <!--number-->
+    <result column="TERM_OF_VALIDITY" jdbcType="VARCHAR" property="termOfValidity" />
+    <result column="PURCHASE_PROCESS_NO" jdbcType="VARCHAR" property="purchaseProcessNo" />
+    <result column="LOCATION" jdbcType="VARCHAR" property="location" />
+    <!--number-->
+    <result column="INVENTORY_CEILING" jdbcType="VARCHAR" property="inventoryCeiling" />
+    <!--number-->
+    <result column="INVENTORY_FLOOR" jdbcType="VARCHAR" property="inventoryFloor" />
+    <!--NUMBER-->
+    <result column="INVENTORY_SURPIUS" jdbcType="VARCHAR" property="inventorySurpius" />
+    <result column="MATERIAL_STATUS" jdbcType="VARCHAR" property="materialStatus" />
+    <result column="ENTRY_BY" jdbcType="VARCHAR" property="entryBy" />
+    <result column="ENTRY_TIME" jdbcType="VARCHAR" property="entryTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <!--number-->
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+    <collection property="inventoryRecordEOList" ofType="com.adc.da.materiel.entity.InventoryRecordEO">
+        <id column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="MATERIEL_ID" jdbcType="VARCHAR" property="materielId" />
+        <!--number-->
+        <result column="SAMPLE_QUANTITY" jdbcType="VARCHAR" property="sampleQuantity" />
+        <result column="OUT_IN_TIME" jdbcType="VARCHAR" property="outInTime" />
+        <result column="BORROWER_RETURNEE" jdbcType="VARCHAR" property="borrowerReturnee" />
+        <result column="OPERATION_TYPE" jdbcType="VARCHAR" property="operationType" />
+        <!--number-->
+        <result column="TOTAL_PRICE" jdbcType="VARCHAR" property="totalPrice" />
+    </collection>
+  </resultMap>
+
+  <resultMap id="SearchResultMap" type="com.adc.da.materiel.entity.MaterielEO">
+    <id column="id" property="id" />
+    <result column="materiel_name" property="materielName" />
+    <result column="materiel_code" property="materielCode" />
+    <result column="materiel_type" property="materielType" />
+    <result column="norm_model" property="normModel" />
+    <result column="brand" property="brand" />
+    <result column="purpose" property="purpose" />
+    <result column="unit" property="unit" />
+    <result column="location" property="location" />
+    <result column="inventory_ceiling" property="inventoryCeiling" />
+    <result column="inventory_floor" property="inventoryFloor" />
+    <result column="inventory_surpius" property="inventorySurpius" />
+    <result column="material_status" property="materialStatus" />
+    <result column="entry_time" property="entryTime" />
+  </resultMap>
+  <resultMap id="ExamineResultMap" type="com.adc.da.materiel.entity.MaterielEO" >
+    <id column="id" property="id" />
+    <result column="materiel_name" property="materielName" />
+    <result column="materiel_code" property="materielCode" />
+    <result column="materiel_type" property="materielType" />
+    <result column="norm_model" property="normModel" />
+    <result column="manufacturer" property="manufacturer" />
+    <result column="brand" property="brand" />
+    <result column="sample_quantity" property="sampleQuantity" />
+    <result column="unit_price" property="unitPrice" />
+    <result column="purpose" property="purpose" />
+    <result column="unit" property="unit" />
+    <result column="procurement_date" property="procurementDate" />
+    <result column="manufacture_date" property="manufactureDate" />
+    <result column="term_of_validity" property="termOfValidity" />
+    <result column="purchase_process_no" property="purchaseProcessNo" />
+    <result column="location" property="location" />
+    <result column="inventory_ceiling" property="inventoryCeiling" />
+    <result column="inventory_floor" property="inventoryFloor" />
+    <result column="entry_by" property="entryBy" />
+    <result column="entry_time" property="entryTime" />
+    <result column="remarks" property="remarks" />
+  </resultMap>
+  <!-- RES_MATERIEL table all fields -->
+  <sql id="Base_Column_List" >
+     id, materiel_name, materiel_code, materiel_type, norm_model, manufacturer, brand, sample_quantity, unit_price, purpose, unit, procurement_date, manufacture_date, term_of_validity, purchase_process_no, location, inventory_ceiling, inventory_floor, inventory_surpius, material_status, entry_by, entry_time, create_by, create_time, update_by, update_time, del_flag, remarks
+  </sql>
+
+    <!-- 入库列表总数-->
+    <select id="queryForCount" resultType="java.lang.Integer" parameterType="com.adc.da.materiel.page.MaterielEOPage">
+        SELECT count(1) FROM RES_MATERIEL MATERIEL
+        LEFT JOIN RES_INVENTORY_RECORD INVEN ON MATERIEL.ID = INVEN.MATERIEL_ID
+        WHERE (INVEN .OPERATION_TYPE = '0' OR INVEN .OPERATION_TYPE = '1' OR INVEN .OPERATION_TYPE = '4' ) AND MATERIEL.ID=#{id,jdbcType=VARCHAR}
+        ORDER BY INVEN.OUT_IN_TIME DESC
+    </select>
+    <!-- 分页查询，查询入库清单 -->
+    <select id="getInventoryByPage" resultMap="detailInboundMap" parameterType="com.adc.da.materiel.page.MaterielEOPage">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        MATERIEL.MATERIEL_TYPE,
+	    MATERIEL.MATERIEL_CODE,
+	    MATERIEL.MATERIEL_NAME,
+	    MATERIEL.NORM_MODEL,
+	    MATERIEL.UNIT,
+	    MATERIEL.UNIT_PRICE,
+	    MATERIEL.MANUFACTURER,
+	    MATERIEL.PURCHASE_PROCESS_NO,
+	    INVEN.OPERATION_TYPE,
+	    INVEN.TOTAL_PRICE,
+	    INVEN.BORROWER_RETURNEE,
+	    INVEN.OUT_IN_TIME,
+	    INVEN.SAMPLE_QUANTITY
+        FROM RES_MATERIEL MATERIEL
+        LEFT JOIN RES_INVENTORY_RECORD INVEN ON MATERIEL.ID = INVEN.MATERIEL_ID
+         WHERE (INVEN .OPERATION_TYPE = '0' OR INVEN .OPERATION_TYPE = '1' OR INVEN .OPERATION_TYPE = '4' ) AND MATERIEL.ID=#{id,jdbcType=VARCHAR} AND MATERIEL.del_flag = 0
+                ORDER BY INVEN.OUT_IN_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+    <!-- 出库列表总数-->
+    <select id="queryForOutCount" resultType="java.lang.Integer" parameterType="com.adc.da.materiel.page.MaterielEOPage">
+        SELECT count(1) FROM RES_MATERIEL MATERIEL
+        LEFT JOIN RES_INVENTORY_RECORD INVEN ON MATERIEL.ID = INVEN.MATERIEL_ID
+        WHERE (INVEN .OPERATION_TYPE = '2' OR INVEN .OPERATION_TYPE = '3' ) AND MATERIEL.ID=#{id,jdbcType=VARCHAR}
+        ORDER BY INVEN.OUT_IN_TIME DESC
+    </select>
+
+    <!-- 分页查询,查询出库清单 -->
+    <select id="getOutventoryByPage" resultMap="detailInboundMap" parameterType="com.adc.da.materiel.page.MaterielEOPage">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        MATERIEL.MATERIEL_TYPE,
+	    MATERIEL.MATERIEL_CODE,
+	    MATERIEL.MATERIEL_NAME,
+	    MATERIEL.NORM_MODEL,
+	    MATERIEL.UNIT,
+	    MATERIEL.UNIT_PRICE,
+	    MATERIEL.MANUFACTURER,
+	    MATERIEL.PURCHASE_PROCESS_NO,
+	    INVEN.OPERATION_TYPE,
+	    INVEN.TOTAL_PRICE,
+	    INVEN.BORROWER_RETURNEE,
+	    INVEN.OUT_IN_TIME,
+	    INVEN.SAMPLE_QUANTITY
+        FROM RES_MATERIEL MATERIEL
+        LEFT JOIN RES_INVENTORY_RECORD INVEN ON MATERIEL.ID = INVEN.MATERIEL_ID
+         WHERE (INVEN .OPERATION_TYPE = '2' OR INVEN .OPERATION_TYPE = '3' ) AND MATERIEL.ID=#{id,jdbcType=VARCHAR} AND MATERIEL.del_flag = 0
+                ORDER BY INVEN.OUT_IN_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+
+
+    </select>
+  <!-- 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    SELECT count(1) FROM RES_MATERIEL materiel
+    <include refid="Base_Where_Clause"/>
+  </select>
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where materiel.del_flag = 0
+        <choose>
+            <when test="searchMap != null">
+                <foreach collection="searchMap" item="searchItem">
+                    AND (
+                    lower (materiel.materiel_name) LIKE lower('%${searchItem.search}%')
+                    OR lower(materiel.materiel_code) LIKE lower ('%${searchItem.search}%')
+                    OR lower(materiel.norm_model) LIKE lower ('%${searchItem.search}%')
+                    OR lower(materiel.brand) LIKE lower('%${searchItem.search}%')
+                    OR lower(materiel.purpose) LIKE lower('%${searchItem.search}%')
+                    OR lower (materiel.unit) LIKE lower ('%${searchItem.search}%')
+                    OR lower (materiel.location) LIKE lower ('%${searchItem.search}%')
+                    OR lower (materiel.inventory_surpius) LIKE lower ('%${searchItem.search}%')
+                    OR lower (materiel.entry_time) LIKE lower ('%${searchItem.search}%')
+                    <if test="searchItem.typeKeys != null">
+    					<foreach collection="searchItem.typeKeys" item="code">
+    						or materiel.materiel_type = #{code,jdbcType=VARCHAR}
+    					</foreach>
+    				</if>
+                    <if test="searchItem.statusKeys != null">
+    					<foreach collection="searchItem.statusKeys" item="code">
+    						or materiel.material_status = #{code,jdbcType=VARCHAR}
+    					</foreach>
+    				</if>
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="materielName != null and materielName != ''">
+                    AND lower (materiel.materiel_name) LIKE lower ('%${materielName}%')
+                </if>
+                <if test="materielCode != null and materielCode != ''">
+                    AND lower (materiel.materiel_code) LIKE lower ('%${materielCode}%')
+                </if>
+                <if test="materielType != null and materielType != ''">
+                    AND materiel.materiel_type = '${materielType}'
+                </if>
+                <if test="normModel != null and normModel != ''">
+                    AND lower (materiel.norm_model) LIKE lower ('%${normModel}%')
+                </if>
+                <if test="brand != null and brand != ''">
+                    AND lower (materiel.brand) LIKE lower ('%${brand}%')
+                </if>
+                <if test="purpose != null and purpose != ''">
+                    AND lower (materiel.purpose) LIKE lower ('%${purpose}%')
+                </if>
+                <if test="unit != null and unit != ''">
+                    AND lower (materiel.unit) LIKE lower ('%${unit}%')
+                </if>
+                <if test="location != null and location != ''">
+                    AND lower (materiel.location) LIKE lower ('%${location}%')
+                </if>
+                <if test="inventorySurpius != null and inventorySurpius != ''">
+                    AND lower (materiel.inventory_surpius) LIKE lower ('%${inventorySurpius}%')
+                </if>
+                <if test="materialStatus != null and materialStatus != ''">
+                    AND materiel.material_status = '${materialStatus}'
+                </if>
+                <if test="entryTime != null and entryTime != ''">
+                    AND lower(materiel.entry_time) LIKE lower('%${entryTime}%')
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+    <!-- 分页查询列表 -->
+    <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        materiel.id,
+        materiel.materiel_name,
+        materiel.materiel_code,
+        materiel.materiel_type,
+        materiel.norm_model,
+        materiel.brand,
+        materiel.purpose,
+        materiel.unit,
+        materiel.location,
+        materiel.inventory_ceiling,
+        materiel.inventory_floor,
+        materiel.inventory_surpius,
+        materiel.material_status,
+        materiel.entry_time
+        FROM RES_MATERIEL materiel
+        <include refid="Base_Where_Clause"/>
+        ORDER BY materiel.entry_time DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+    <!-- 根据id查询 RES_MATERIEL -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List" />
+       from RES_MATERIEL materiel
+       where materiel.del_flag = 0
+       and
+       materiel.id = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.materiel.entity.MaterielEO" >
+    insert into RES_MATERIEL(<include refid="Base_Column_List" />)
+    values (
+      #{id, jdbcType=VARCHAR},
+      #{materielName, jdbcType=VARCHAR},
+      #{materielCode, jdbcType=VARCHAR},
+      #{materielType, jdbcType=VARCHAR},
+      #{normModel, jdbcType=VARCHAR},
+      #{manufacturer, jdbcType=VARCHAR},
+      #{brand, jdbcType=VARCHAR},
+      #{sampleQuantity, jdbcType=DECIMAL},
+      #{unitPrice, jdbcType=DECIMAL},
+      #{purpose, jdbcType=VARCHAR},
+      #{unit, jdbcType=VARCHAR},
+      #{procurementDate, jdbcType=VARCHAR},
+      #{manufactureDate, jdbcType=VARCHAR},
+      #{termOfValidity, jdbcType=DECIMAL},
+      #{purchaseProcessNo, jdbcType=VARCHAR},
+      #{location, jdbcType=VARCHAR},
+      #{inventoryCeiling, jdbcType=DECIMAL},
+      #{inventoryFloor, jdbcType=DECIMAL},
+      #{inventorySurpius, jdbcType=DECIMAL},
+      #{materialStatus, jdbcType=VARCHAR},
+      #{entryBy, jdbcType=VARCHAR},
+      #{entryTime, jdbcType=VARCHAR},
+      #{createBy, jdbcType=VARCHAR},
+      #{createTime, jdbcType=VARCHAR},
+      #{updateBy, jdbcType=VARCHAR},
+      #{updateTime, jdbcType=VARCHAR},
+      #{delFlag, jdbcType=DECIMAL},
+      #{remarks, jdbcType=VARCHAR})
+  </insert>
+
+    <!--通过materielCode来查询出所有与之匹配的实体-->
+    <select id="getMaterielListByCode" resultMap="BaseResultMap" parameterType="java.lang.String">
+      SELECT
+      <include refid="Base_Column_List" />
+      FROM  RES_MATERIEL
+      WHERE RES_MATERIEL.del_flag = 0
+      AND RES_MATERIEL.materiel_code = #{0, jdbcType=VARCHAR}
+    </select>
+  <!--验证物料编码数据库是否存在-->
+  <select id="checkNum" resultType="java.lang.Integer" parameterType="java.lang.String">
+      SELECT COUNT(1)
+      FROM RES_MATERIEL
+      WHERE RES_MATERIEL.del_flag = 0
+      AND RES_MATERIEL.materiel_code = #{code, jdbcType=VARCHAR}
+      <if test='id != null and id != ""'>
+      AND RES_MATERIEL.id != #{id, jdbcType=VARCHAR}
+      </if>
+  </select>
+  <!--查询物料的原始样件数量-->
+  <select id="queryInventorySurpius" parameterType="java.lang.String" resultType="java.lang.Double">
+      SELECT RES_MATERIEL.inventory_surpius
+      FROM RES_MATERIEL
+      WHERE RES_MATERIEL.del_flag = 0
+      AND RES_MATERIEL.id = #{id, jdbcType=VARCHAR}
+  </select>
+   <!--查询物料的原始样件数量以及当前的剩余库存-->
+  <select id="SampleAndStock" parameterType="java.lang.String" resultMap="BaseResultMap">
+      SELECT RES_MATERIEL.sample_quantity,RES_MATERIEL.inventory_surpius
+      FROM RES_MATERIEL
+      WHERE RES_MATERIEL.del_flag = 0
+      AND RES_MATERIEL.id = #{id, jdbcType=VARCHAR}
+  </select>
+    <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.materiel.entity.MaterielEO" >
+        insert into RES_MATERIEL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="materielName != null" >materiel_name,</if>
+                <if test="materielCode != null" >materiel_code,</if>
+                <if test="materielType != null" >materiel_type,</if>
+                <if test="normModel != null" >norm_model,</if>
+                <if test="manufacturer != null" >manufacturer,</if>
+                <if test="brand != null" >brand,</if>
+                <if test="sampleQuantity != null" >sample_quantity,</if>
+                <if test="unitPrice != null" >unit_price,</if>
+                <if test="purpose != null" >purpose,</if>
+                <if test="unit != null" >unit,</if>
+                <if test="procurementDate != null" >procurement_date,</if>
+                <if test="manufactureDate != null" >manufacture_date,</if>
+                <if test="termOfValidity != null" >term_of_validity,</if>
+                <if test="purchaseProcessNo != null" >purchase_process_no,</if>
+                <if test="location != null" >location,</if>
+                <if test="inventoryCeiling != null" >inventory_ceiling,</if>
+                <if test="inventoryFloor != null" >inventory_floor,</if>
+                <if test="inventorySurpius != null" >inventory_surpius,</if>
+                <if test="materialStatus != null" >material_status,</if>
+                <if test="entryBy != null" >entry_by,</if>
+                <if test="entryTime != null" >entry_time,</if>
+                <if test="createBy != null" >create_by,</if>
+                <if test="createTime != null" >create_time,</if>
+                <if test="updateBy != null" >update_by,</if>
+                <if test="updateTime != null" >update_time,</if>
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="remarks != null" >remarks,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="materielName != null" >#{materielName, jdbcType=VARCHAR},</if>
+                <if test="materielCode != null" >#{materielCode, jdbcType=VARCHAR},</if>
+                <if test="materielType != null" >#{materielType, jdbcType=VARCHAR},</if>
+                <if test="normModel != null" >#{normModel, jdbcType=VARCHAR},</if>
+                <if test="manufacturer != null" >#{manufacturer, jdbcType=VARCHAR},</if>
+                <if test="brand != null" >#{brand, jdbcType=VARCHAR},</if>
+                <if test="sampleQuantity != null" >#{sampleQuantity, jdbcType=VARCHAR},</if>
+                <if test="unitPrice != null" >#{unitPrice, jdbcType=VARCHAR},</if>
+                <if test="purpose != null" >#{purpose, jdbcType=VARCHAR},</if>
+                <if test="unit != null" >#{unit, jdbcType=VARCHAR},</if>
+                <if test="procurementDate != null" >#{procurementDate, jdbcType=VARCHAR},</if>
+                <if test="manufactureDate != null" >#{manufactureDate, jdbcType=VARCHAR},</if>
+                <if test="termOfValidity != null" >#{termOfValidity, jdbcType=VARCHAR},</if>
+                <if test="purchaseProcessNo != null" >#{purchaseProcessNo, jdbcType=VARCHAR},</if>
+                <if test="location != null" >#{location, jdbcType=VARCHAR},</if>
+                <if test="inventoryCeiling != null" >#{inventoryCeiling, jdbcType=VARCHAR},</if>
+                <if test="inventoryFloor != null" >#{inventoryFloor, jdbcType=VARCHAR},</if>
+                <if test="inventorySurpius != null" >#{inventorySurpius, jdbcType=VARCHAR},</if>
+                <if test="materialStatus != null" >#{materialStatus, jdbcType=VARCHAR},</if>
+                <if test="entryBy != null" >#{entryBy, jdbcType=VARCHAR},</if>
+                <if test="entryTime != null" >#{entryTime, jdbcType=VARCHAR},</if>
+                <if test="createBy != null" >#{createBy, jdbcType=VARCHAR},</if>
+                <if test="createTime != null" >#{createTime, jdbcType=VARCHAR},</if>
+                <if test="updateBy != null" >#{updateBy, jdbcType=VARCHAR},</if>
+                <if test="updateTime != null" >#{updateTime, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="remarks != null" >#{remarks, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.materiel.entity.MaterielEO" >
+    update RES_MATERIEL
+       set  materiel_name = #{materielName},
+            materiel_code = #{materielCode},
+            materiel_type = #{materielType},
+            norm_model = #{normModel},
+            manufacturer = #{manufacturer},
+            brand = #{brand},
+            sample_quantity = #{sampleQuantity},
+            unit_price = #{unitPrice},
+            purpose = #{purpose},
+            unit = #{unit},
+            procurement_date = #{procurementDate},
+            manufacture_date = #{manufactureDate},
+            term_of_validity = #{termOfValidity},
+            purchase_process_no = #{purchaseProcessNo},
+            location = #{location},
+            inventory_ceiling = #{inventoryCeiling},
+            inventory_floor = #{inventoryFloor},
+            inventory_surpius = #{inventorySurpius},
+            entry_by = #{entryBy},
+            entry_time = #{entryTime},
+            update_by = #{updateBy},
+            update_time = #{updateTime},
+            remarks = #{remarks}
+     where  id = #{id}
+  </update>
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.materiel.entity.MaterielEO" >
+    update RES_MATERIEL
+    <set >
+      <if test="materielName != null" >
+        materiel_name = #{materielName},
+      </if>
+      <if test="materielCode != null" >
+        materiel_code = #{materielCode},
+      </if>
+      <if test="materielType != null" >
+        materiel_type = #{materielType},
+      </if>
+      <if test="normModel != null" >
+        norm_model = #{normModel},
+      </if>
+      <if test="manufacturer != null" >
+        manufacturer = #{manufacturer},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand},
+      </if>
+      <if test="sampleQuantity != null" >
+        sample_quantity = #{sampleQuantity},
+      </if>
+      <if test="unitPrice != null" >
+        unit_price = #{unitPrice},
+      </if>
+      <if test="purpose != null" >
+        purpose = #{purpose},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit},
+      </if>
+      <if test="procurementDate != null" >
+        procurement_date = #{procurementDate},
+      </if>
+      <if test="manufactureDate != null" >
+        manufacture_date = #{manufactureDate},
+      </if>
+      <if test="termOfValidity != null" >
+        term_of_validity = #{termOfValidity},
+      </if>
+      <if test="purchaseProcessNo != null" >
+        purchase_process_no = #{purchaseProcessNo},
+      </if>
+      <if test="location != null" >
+        location = #{location},
+      </if>
+      <if test="inventoryCeiling != null" >
+        inventory_ceiling = #{inventoryCeiling},
+      </if>
+      <if test="inventoryFloor != null" >
+        inventory_floor = #{inventoryFloor},
+      </if>
+      <if test="inventorySurpius != null" >
+        inventory_surpius = #{inventorySurpius},
+      </if>
+      <if test="materialStatus != null" >
+        material_status = #{materialStatus},
+      </if>
+      <if test="entryBy != null" >
+        entry_by = #{entryBy},
+      </if>
+      <if test="entryTime != null" >
+        entry_time = #{entryTime},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!--批量删除记录-->
+  <delete id="deleteByPrimaryKeyArray" >
+    UPDATE RES_MATERIEL
+    SET del_flag = 1
+    WHERE id IN 
+    <foreach collection="array" item="deleteId" open="(" close=")" separator=",">
+        #{deleteId}
+    </foreach>
+  </delete>
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    UPDATE RES_MATERIEL
+    SET del_flag = 1
+    WHERE id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <!--物料报废-->
+  <update id="scrapByPrimaryKey" parameterType="java.lang.String" >
+    UPDATE RES_MATERIEL
+    SET
+    material_status = '1',
+    inventory_surpius = 0
+    WHERE id = #{id,jdbcType=VARCHAR}
+  </update>
+  <!--查询物料表所有未删除记录的数据的有效期以及生产日期-->
+  <select id="queryValidity" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT RES_MATERIEL.*
+    FROM RES_MATERIEL
+    WHERE del_flag = 0 AND MANUFACTURE_DATE is not null AND TERM_OF_VALIDITY is not null
+  </select>
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from RES_MATERIEL
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+  <!--查询物料表所有到期的物料信息-->
+  <select id="dueOnMateriel" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT RES_MATERIEL.* 
+    FROM RES_MATERIEL 
+	WHERE 1=1
+	AND del_flag = 0
+	AND add_months(to_date(to_char(SYSDATE,'yyyy-MM-dd'),'yyyy-MM-dd'),-TERM_OF_VALIDITY) = to_date(MANUFACTURE_DATE,'yyyy-MM-dd')
+  </select>
+
+</mapper>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.TsAttachmentEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.TsAttachmentEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="ATTACHMENT_NAME" jdbcType="VARCHAR" property="attachmentName" />
+    <result column="ATTACHMENT_SIZE" jdbcType="VARCHAR" property="attachmentSize" />
+    <result column="ATTACHMENT_TYPE" jdbcType="VARCHAR" property="attachmentType" />
+    <result column="SAVE_PATH" jdbcType="VARCHAR" property="savePath" />
+    <result column="DEL_FLAG" jdbcType="DECIMAL" property="delFlag" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="WATERMARK_PATH" jdbcType="VARCHAR" property="waterMarkPath" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ATTACHMENT_NAME, ATTACHMENT_SIZE, ATTACHMENT_TYPE, SAVE_PATH, DEL_FLAG, CREATE_BY, 
+    CREATE_TIME, UPDATE_BY, UPDATE_TIME, WATERMARK_PATH
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TS_ATTACHMENT
+    where ID = #{id,jdbcType=VARCHAR} and DEL_FLAG = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    UPDATE TS_ATTACHMENT
+    SET DEL_FLAG = 1
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.sys.entity.TsAttachmentEO">
+    insert into TS_ATTACHMENT (
+    	ID, 
+    	ATTACHMENT_NAME, 
+    	ATTACHMENT_SIZE, 
+     	ATTACHMENT_TYPE, 
+     	SAVE_PATH, DEL_FLAG, 
+      	CREATE_BY, 
+      	CREATE_TIME, 
+      	UPDATE_BY, 
+      	UPDATE_TIME,
+      	WATERMARK_PATH
+    )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{attachmentName,jdbcType=VARCHAR}, 
+    	#{attachmentSize,jdbcType=VARCHAR}, 
+      	#{attachmentType,jdbcType=VARCHAR}, 
+      	#{savePath,jdbcType=VARCHAR}, 
+      	#{delFlag,jdbcType=DECIMAL}, 
+      	#{createBy,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=VARCHAR}, 
+      	#{updateBy,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR},
+      	#{waterMarkPath,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.sys.entity.TsAttachmentEO">
+    <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+      select sys_guid() from dual
+    </selectKey>
+    insert into TS_ATTACHMENT
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="attachmentName != null">
+        ATTACHMENT_NAME,
+      </if>
+      <if test="attachmentSize != null">
+        ATTACHMENT_SIZE,
+      </if>
+      <if test="attachmentType != null">
+        ATTACHMENT_TYPE,
+      </if>
+      <if test="savePath != null">
+        SAVE_PATH,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="waterMarkPath != null">
+      	WATERMARK_PATH,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentName != null">
+        #{attachmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentSize != null">
+        #{attachmentSize,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentType != null">
+        #{attachmentType,jdbcType=VARCHAR},
+      </if>
+      <if test="savePath != null">
+        #{savePath,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="waterMarkPath != null">
+      	#{waterMarkPath,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.sys.entity.TsAttachmentEO">
+    update TS_ATTACHMENT
+    <set>
+      <if test="attachmentName != null">
+        ATTACHMENT_NAME = #{attachmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentSize != null">
+        ATTACHMENT_SIZE = #{attachmentSize,jdbcType=VARCHAR},
+      </if>
+      <if test="attachmentType != null">
+        ATTACHMENT_TYPE = #{attachmentType,jdbcType=VARCHAR},
+      </if>
+      <if test="savePath != null">
+        SAVE_PATH = #{savePath,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="waterMarkPath != null">
+      	WATERMARK_PATH = #{waterMarkPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.sys.entity.TsAttachmentEO">
+    update TS_ATTACHMENT
+    set ATTACHMENT_NAME = #{attachmentName,jdbcType=VARCHAR},
+      ATTACHMENT_SIZE = #{attachmentSize,jdbcType=VARCHAR},
+      ATTACHMENT_TYPE = #{attachmentType,jdbcType=VARCHAR},
+      SAVE_PATH = #{savePath,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      WATERMARK_PATH = #{waterMarkPath,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_report.dao.TrialReportProcessEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.trial_report.entity.TrialReportProcessEO">
+        <!-- 主键 -->
+        <id column="ID" property="id"/>
+        <!-- 表属性 -->
+        <result column="TRIALTASK_INSPRO_ID" property="trialtaskInsproId"/>
+        <result column="TRIALPROJECT_LAB_ID" property="trialprojectLabId"/>
+        <result column="TRIALPROJECT_RATE" property="trialprojectRate"/>
+        <result column="TRIALPROJECT_STATUS" property="trialprojectStatus"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="UPDATE_BY" property="updateBy"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+        <result column="REMARK" property="remark"/>
+        <result column="FEEDBACK" property="feedback"/>
+    </resultMap>
+
+    <insert id="insertSelective" parameterType="com.adc.da.trial_report.entity.TrialReportProcessEO">
+        <!--@mbg.generated-->
+        INSERT INTO EV_TRIALREPORT_PROCESS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="trialtaskInsproId != null">
+                TRIALTASK_INSPRO_ID,
+            </if>
+            <if test="trialprojectLabId != null">
+                TRIALPROJECT_LAB_ID,
+            </if>
+            <if test="trialprojectRate != null">
+                TRIALPROJECT_RATE,
+            </if>
+            <if test="trialprojectStatus != null">
+                TRIALPROJECT_STATUS,
+            </if>
+            <if test="createBy != null">
+                CREATE_BY,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="feedback != null">
+                FEEDBACK,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="trialtaskInsproId != null">
+                #{trialtaskInsproId},
+            </if>
+            <if test="trialprojectLabId != null">
+                #{trialprojectLabId},
+            </if>
+            <if test="trialprojectRate != null">
+                #{trialprojectRate},
+            </if>
+            <if test="trialprojectStatus != null">
+                #{trialprojectStatus},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+            <if test="feedback != null">
+                #{feedback},
+            </if>
+        </trim>
+    </insert>
+    <resultMap id="evTrialreportProcessEO" type="com.adc.da.trial_report.vo.TrialScfeduleVO">
+        <id property="id" column="id"/>
+        <result property="trialprojectRate" column="trialproject_rate"/>
+        <result property="trialprojectStatus" column="trialproject_status"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createName" column="USNAME"/>
+        <result property="remarks" column="remark"/>
+        <result property="feedback" column="feedback"/>
+        <result property="trialprojectLabId" column="trialproject_lab_id"/>
+    </resultMap>
+    <sql id="trialreportProcessList">
+        <!--@mbg.generated-->
+        ETP.ID,
+        ETP.TRIALPROJECT_RATE,
+        ETP.TRIALPROJECT_STATUS,
+        ETP.CREATE_BY,
+        ETP.CREATE_TIME,
+        ETP.REMARK,
+        ETP.FEEDBACK,
+        ETP.TRIALPROJECT_LAB_ID,
+        T.USNAME
+    </sql>
+
+    <select id="selectScheduleList" resultMap="evTrialreportProcessEO">
+        SELECT
+        <include refid="trialreportProcessList"/>
+        FROM EV_TRIALREPORT_PROCESS ETP LEFT JOIN TS_USER T ON ETP.CREATE_BY = t.USID
+        WHERE ETP.TRIALTASK_INSPRO_ID = #{trialtaskInsproId} AND ETP.DEL_FLAG = 0
+        ORDER BY ETP.CREATE_TIME DESC
+    </select>
+
+    <!-- 列表总数-->
+    <select id="getTrialReportProcessByCount" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM EV_TRIALREPORT_PROCESS ETP LEFT JOIN TS_USER T ON ETP.CREATE_BY = t.USID
+        WHERE ETP.TRIALTASK_INSPRO_ID = #{trialtaskInsproId} AND ETP.DEL_FLAG = 0
+        ORDER BY ETP.CREATE_TIME DESC
+    </select>
+
+    <!-- 查询列表 -->
+    <select id="getTrialReportProcessByPage" resultMap="evTrialreportProcessEO">
+   	   SELECT
+   	   *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+        <include refid="trialreportProcessList"/>
+        FROM EV_TRIALREPORT_PROCESS ETP LEFT JOIN TS_USER T ON ETP.CREATE_BY = t.USID
+        WHERE ETP.TRIALTASK_INSPRO_ID = #{trialtaskInsproId} AND ETP.DEL_FLAG = 0
+        ORDER BY ETP.CREATE_TIME DESC
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+    
+</mapper>

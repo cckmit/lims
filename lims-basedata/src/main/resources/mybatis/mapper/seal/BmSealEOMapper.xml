@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.seal.dao.BmSealEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.seal.entity.BmSealEO" >
+    <id column="id" property="id" />
+    <result column="seal_name" property="sealName" />
+    <result column="seal_type" property="sealType" />
+    <result column="seal_style" property="sealStyle" />
+    <result column="seal_file_id" property="sealFileId" />
+    <result column="seal_file_extend" property="sealFileExtend" />
+    <result column="create_by_id" property="createById" />
+    <result column="create_time" property="createTime" />
+    <result column="del_flag" property="delFlag" />
+    <result column="seal_axesx" property="sealAxesx" />
+    <result column="seal_axesy" property="sealAxesy" />
+    <result column="seal_lengths" property="sealLengths" />
+    <result column="seal_status" property="sealStatus" />
+    <result column="seal_widths" property="sealWidths" />
+    <result column="seal_words" property="sealWords" />
+      <result column="seal_code" property="sealCode" />
+  </resultMap>
+
+  <!-- BM_SEAL table all fields -->
+  <sql id="Base_Column_List" >
+     id, seal_name, seal_type, seal_style, seal_file_id, seal_file_extend, create_by_id, create_time, del_flag, seal_axesx, seal_axesy, seal_lengths, seal_status, seal_widths, seal_words, seal_code
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+      <choose>
+          <when test="searchPhrase!=null" >
+              <foreach collection="searchPhrase" item="search">
+                  and (
+                  seal_name like '%${search}%' or
+                  seal_type like '%${search}%' or
+                  seal_file_extend  like '%${search}%'
+                  )
+              </foreach>
+          </when>
+          <otherwise>
+
+    <trim suffixOverrides="," >
+      <if test="sealName != null" >
+        and seal_name like '%${sealName}%'
+      </if>
+      <if test="sealType != null" >
+        and seal_type like  '%${sealType}%'
+      </if>
+        <if test="sealCode != null" >
+            and seal_code = #{sealCode}
+        </if>
+      <if test="sealFileExtend != null" >
+        and seal_file_extend like  '%${sealFileExtend}%'
+      </if>
+    </trim>
+          </otherwise>
+      </choose>
+  </sql>
+
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.seal.entity.BmSealEO" >
+       <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+           select sys_guid() from dual
+    </selectKey>
+        insert into BM_SEAL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="sealName != null" >seal_name,</if>
+                <if test="sealType != null" >seal_type,</if>
+                <if test="sealStyle != null" >seal_style,</if>
+                <if test="sealFileId != null" >seal_file_id,</if>
+                <if test="sealFileExtend != null" >seal_file_extend,</if>
+                <if test="createById != null" >create_by_id,</if>
+                <if test="createTime != null" >create_time,</if>
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="sealAxesx != null" >seal_axesx,</if>
+                <if test="sealAxesy != null" >seal_axesy,</if>
+                <if test="sealLengths != null" >seal_lengths,</if>
+                <if test="sealStatus != null" >seal_status,</if>
+                <if test="sealWidths != null" >seal_widths,</if>
+                <if test="sealWords != null" >seal_words,</if>
+        <if test="sealCode != null" >seal_code,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="sealName != null" >#{sealName, jdbcType=VARCHAR},</if>
+                <if test="sealType != null" >#{sealType, jdbcType=VARCHAR},</if>
+                <if test="sealStyle != null" >#{sealStyle, jdbcType=VARCHAR},</if>
+                <if test="sealFileId != null" >#{sealFileId, jdbcType=VARCHAR},</if>
+                <if test="sealFileExtend != null" >#{sealFileExtend, jdbcType=VARCHAR},</if>
+                <if test="createById != null" >#{createById, jdbcType=VARCHAR},</if>
+                <if test="createTime != null" >#{createTime, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="sealAxesx != null" >#{sealAxesx, jdbcType=VARCHAR},</if>
+                <if test="sealAxesy != null" >#{sealAxesy, jdbcType=VARCHAR},</if>
+                <if test="sealLengths != null" >#{sealLengths, jdbcType=VARCHAR},</if>
+                <if test="sealStatus != null" >#{sealStatus, jdbcType=VARCHAR},</if>
+                <if test="sealWidths != null" >#{sealWidths, jdbcType=VARCHAR},</if>
+                <if test="sealWords != null" >#{sealWords, jdbcType=VARCHAR},</if>
+        <if test="sealCode != null" >#{sealCode, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.seal.entity.BmSealEO" >
+    update BM_SEAL
+    <set >
+      <if test="sealName != null" >
+        seal_name = #{sealName},
+      </if>
+      <if test="sealType != null" >
+        seal_type = #{sealType},
+      </if>
+      <if test="sealStyle != null" >
+        seal_style = #{sealStyle},
+      </if>
+      <if test="sealFileId != null" >
+        seal_file_id = #{sealFileId},
+      </if>
+      <if test="sealFileExtend != null" >
+        seal_file_extend = #{sealFileExtend},
+      </if>
+      <if test="createById != null" >
+        create_by_id = #{createById},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+      <if test="sealAxesx != null" >
+        seal_axesx = #{sealAxesx},
+      </if>
+      <if test="sealAxesy != null" >
+        seal_axesy = #{sealAxesy},
+      </if>
+      <if test="sealLengths != null" >
+        seal_lengths = #{sealLengths},
+      </if>
+      <if test="sealStatus != null" >
+        seal_status = #{sealStatus},
+      </if>
+      <if test="sealWidths != null" >
+        seal_widths = #{sealWidths},
+      </if>
+      <if test="sealWords != null" >
+        seal_words = #{sealWords},
+      </if>
+        <if test="sealCode != null" >
+            seal_code = #{sealCode},
+        </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 BM_SEAL -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from BM_SEAL
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from BM_SEAL
+     where id = #{value}
+  </delete>
+
+    <!--更新公章是否启用状态-->
+    <update id="updateSealStatus" parameterType="java.lang.String">
+        update BM_SEAL set  seal_status = #{status}
+        where id = #{id}
+    </update>
+
+  <!-- BM_SEAL 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from BM_SEAL
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+    <select id="countSealCode" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from BM_SEAL where seal_code = #{sealCode}
+    </select>
+
+    <select id="findSealCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from BM_SEAL where seal_code = #{sealCode}
+    </select>
+
+  <!-- 查询BM_SEAL列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from BM_SEAL
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from BM_SEAL
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

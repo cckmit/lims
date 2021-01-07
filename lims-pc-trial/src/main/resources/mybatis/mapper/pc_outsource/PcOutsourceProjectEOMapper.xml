@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_outsource.dao.PcOutsourceProjectEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_outsource.entity.PcOutsourceProjectEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="op_code" property="code"/>
+        <result column="ins_project" property="insProject"/>
+        <result column="ins_type" property="insType"/>
+        <result column="ins_id" property="insId"/>
+        <result column="manager_org" property="managerOrg"/>
+        <result column="org_id" property="orgId"/>
+        <result column="manager_user" property="managerUser"/>
+        <result column="user_id" property="userId"/>
+        <result column="apply_date" property="applyDate"/>
+        <result column="op_desc" property="opDesc"/>
+        <result column="op_source_require" property="opSourceRequire"/>
+        <result column="op_cycle_plan" property="opCyclePlan"/>
+        <result column="op_budget_desc" property="opBudgetDesc"/>
+        <result column="file_id" property="fileId"/>
+        <result column="status" property="status"/>
+        <result column="pc_or_cv" property="pvOrCv"/>
+        <result column="supplier_name" property="supplierName"/>
+        <result column="supplier_id" property="supplierId"/>
+        <result column="unit_price" property="unitPrice"/>
+        <result column="numbers" property="numbers"/>
+        <result column="total_price" property="totalPrice"/>
+        <result column="op_file_id" property="opFileId"/>
+        <result column="trial_id" property="trialId"/>
+        <result column="trial_code" property="trialCode"/>
+    </resultMap>
+
+    <!-- PC_OUTSOURCE_PROJECT table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            op_code,
+            ins_project,
+            ins_type,
+            ins_id,
+            manager_org,
+            org_id,
+            manager_user,
+            user_id,
+            apply_date,
+            op_desc,
+            op_source_require,
+            op_cycle_plan,
+            op_budget_desc,
+            file_id,
+            status,
+            pc_or_cv,
+            supplier_name,
+            supplier_id,
+            unit_price,
+            numbers,
+            total_price,
+            op_file_id,
+            trial_id,
+            trial_code
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where del_flag = 0
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    AND (op_code LIKE '%'||#{keyWord}||'%' OR ins_project LIKE '%'||#{keyWord}||'%' OR
+                    ins_type LIKE '%'||#{keyWord}||'%' OR manager_org LIKE '%'||#{keyWord}||'%'
+                    OR manager_user LIKE '%'||#{keyWord}||'%' OR apply_date LIKE '%'||#{keyWord}||'%'
+                    OR op_desc LIKE '%'||#{keyWord}||'%')
+                </foreach>
+            </when>
+            <otherwise>
+            
+            	<if test="trialCode != null and trialCode != ''">
+                    AND trial_code LIKE '%'||#{trialCode}||'%'
+                </if>
+                <if test="trialId != null and trialId != ''">
+                    AND trial_id LIKE '%'||#{trialId}||'%'
+                </if>
+            
+                <if test="code != null and code != ''">
+                    AND op_code LIKE '%'||#{code}||'%'
+                </if>
+                <if test="insProject != null and insProject != ''">
+                    AND ins_project LIKE '%'||#{insProject}||'%'
+                </if>
+                <if test="insType != null and insType != ''">
+                    AND ins_type LIKE '%'||#{insType}||'%'
+                </if>
+                <if test="managerOrg != null and managerOrg != ''">
+                    AND manager_org LIKE '%'||#{managerOrg}||'%'
+                </if>
+                <if test="managerUser != null and managerUser != ''">
+                    AND manager_user LIKE '%'||#{managerUser}||'%'
+                </if>
+                <if test="applyDateStart != null and applyDateStart != ''">
+                    AND apply_date >= #{applyDateStart}
+                </if>
+                <if test="applyDateEnd != null and applyDateEnd != ''">
+                    AND apply_date <![CDATA[<=]]> #{applyDateEnd}
+                </if>
+                <if test="opDesc != null and opDesc != ''">
+                    AND op_desc LIKE '%'||#{opDesc}||'%'
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_outsource.entity.PcOutsourceProjectEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_OUTSOURCE_PROJECT.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PC_OUTSOURCE_PROJECT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="code != null">op_code,</if>
+            <if test="insProject != null">ins_project,</if>
+            <if test="insType != null">ins_type,</if>
+            <if test="insId != null">ins_id,</if>
+            <if test="managerOrg != null">manager_org,</if>
+            <if test="orgId != null">org_id,</if>
+            <if test="managerUser != null">manager_user,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="applyDate != null">apply_date,</if>
+            <if test="opDesc != null">op_desc,</if>
+            <if test="opSourceRequire != null">op_source_require,</if>
+            <if test="opCyclePlan != null">op_cycle_plan,</if>
+            <if test="opBudgetDesc != null">op_budget_desc,</if>
+            <if test="fileId != null">file_id,</if>
+            <if test="status != null">status,</if>
+            <if test="pvOrCv != null">pc_or_cv,</if>
+            <if test="supplierName != null">supplier_name,</if>
+            <if test="supplierId != null">supplier_id,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="numbers != null">numbers,</if>
+            <if test="totalPrice != null">total_price,</if>
+            <if test="opFileId != null">op_file_id,</if>
+            <if test="trialId != null">trial_id,</if>
+            <if test="trialCode != null">trial_code,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="code != null">#{code, jdbcType=VARCHAR},</if>
+            <if test="insProject != null">#{insProject, jdbcType=VARCHAR},</if>
+            <if test="insType != null">#{insType, jdbcType=VARCHAR},</if>
+            <if test="insId != null">#{insId, jdbcType=VARCHAR},</if>
+            <if test="managerOrg != null">#{managerOrg, jdbcType=VARCHAR},</if>
+            <if test="orgId != null">#{orgId, jdbcType=VARCHAR},</if>
+            <if test="managerUser != null">#{managerUser, jdbcType=VARCHAR},</if>
+            <if test="userId != null">#{userId, jdbcType=VARCHAR},</if>
+            <if test="applyDate != null">#{applyDate, jdbcType=VARCHAR},</if>
+            <if test="opDesc != null">#{opDesc, jdbcType=VARCHAR},</if>
+            <if test="opSourceRequire != null">#{opSourceRequire, jdbcType=VARCHAR},</if>
+            <if test="opCyclePlan != null">#{opCyclePlan, jdbcType=VARCHAR},</if>
+            <if test="opBudgetDesc != null">#{opBudgetDesc, jdbcType=VARCHAR},</if>
+            <if test="fileId != null">#{fileId, jdbcType=VARCHAR},</if>
+            <if test="status != null">#{status, jdbcType=VARCHAR},</if>
+            <if test="pvOrCv != null">#{pvOrCv, jdbcType=VARCHAR},</if>
+            <if test="supplierName != null">#{supplierName, jdbcType=VARCHAR},</if>
+            <if test="supplierId != null">#{supplierId, jdbcType=VARCHAR},</if>
+            <if test="unitPrice != null">#{unitPrice, jdbcType=VARCHAR},</if>
+            <if test="numbers != null">#{numbers, jdbcType=VARCHAR},</if>
+            <if test="totalPrice != null">#{totalPrice, jdbcType=VARCHAR},</if>
+            <if test="opFileId != null">#{opFileId, jdbcType=VARCHAR},</if>
+            <if test="trialId != null">#{trialId, jdbcType=VARCHAR},</if>
+            <if test="trialCode != null">#{trialCode, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_outsource.entity.PcOutsourceProjectEO">
+        update PC_OUTSOURCE_PROJECT
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="code != null">
+                op_code = #{code},
+            </if>
+            <if test="insProject != null">
+                ins_project = #{insProject},
+            </if>
+            <if test="insType != null">
+                ins_type = #{insType},
+            </if>
+            <if test="insId != null">
+                ins_id = #{insId},
+            </if>
+            <if test="managerOrg != null">
+                manager_org = #{managerOrg},
+            </if>
+            <if test="orgId != null">
+                org_id = #{orgId},
+            </if>
+            <if test="managerUser != null">
+                manager_user = #{managerUser},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="applyDate != null">
+                apply_date = #{applyDate},
+            </if>
+            <if test="opDesc != null">
+                op_desc = #{opDesc},
+            </if>
+            <if test="opSourceRequire != null">
+                op_source_require = #{opSourceRequire},
+            </if>
+            <if test="opCyclePlan != null">
+                op_cycle_plan = #{opCyclePlan},
+            </if>
+            <if test="opBudgetDesc != null">
+                op_budget_desc = #{opBudgetDesc},
+            </if>
+            <if test="fileId != null">
+                file_id = #{fileId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="pvOrCv != null">
+                pc_or_cv = #{pvOrCv} ,
+            </if>
+            <if test="supplierName != null">
+                supplier_name = #{supplierName},
+            </if>
+            <if test="supplierId != null">
+                supplier_id = #{supplierId},
+            </if>
+            <if test="unitPrice != null">
+                unit_price = #{unitPrice},
+            </if>
+            <if test="numbers != null">
+                numbers = #{numbers},
+            </if>
+            <if test="totalPrice != null">
+                total_price = #{totalPrice},
+            </if>
+            <if test="opFileId != null">
+                op_file_id = #{opFileId},
+            </if>
+            <if test="trialId != null">
+                trial_id = #{trialId},
+            </if>
+            <if test="trialCode != null">
+                trial_code = #{trialCode},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 PC_OUTSOURCE_PROJECT -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_OUTSOURCE_PROJECT
+        where id = #{value} and DEL_FLAG = 0
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from PC_OUTSOURCE_PROJECT
+        where id = #{value}
+
+    </delete>
+
+    <!-- PC_OUTSOURCE_PROJECT 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_OUTSOURCE_PROJECT
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_OUTSOURCE_PROJECT列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_OUTSOURCE_PROJECT
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="selectActProcIdById" resultType="java.lang.String">
+        SELECT ACT_HI_PROCINST.PROC_INST_ID_ AS ACT_PROC_ID
+        FROM PC_OUTSOURCE_PROJECT
+                 LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = PC_OUTSOURCE_PROJECT.ID
+                 LEFT JOIN ACT_HI_PROCINST ON TS_BASEBUS.ID = ACT_HI_PROCINST.BUSINESS_KEY_
+        WHERE PC_OUTSOURCE_PROJECT.ID = #{id,jdbcType=VARCHAR} and PC_OUTSOURCE_PROJECT.DEL_FLAG = 0
+    </select>
+
+
+</mapper>

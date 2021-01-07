@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_loan_application.dao.PcCarLoanInformationEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_loan_application.entity.PcCarLoanInformationEO" >
+    <id column="id" property="id" />
+    <result column="sa_car_data_id" property="saCarDataId" />
+    <result column="load_application_id" property="loadApplicationId" />
+    <result column="return_date" property="returnDate" />
+    <result column="prototype_status" property="prototypeStatus" />
+    <result column="purchase_date" property="purchaseDate" />
+    <result column="production_date" property="productionDate" />
+    <result column="emission_type" property="emissionType" />
+    <result column="brand" property="brand" />
+    <result column="vehicle_model" property="vehicleModel" />
+    <result column="engine_num" property="engineNum" />
+    <result column="chassis_code" property="chassisCode" />
+  </resultMap>
+
+  <!-- PC_CAR_LOAN_INFORMATION table all fields -->
+  <sql id="Base_Column_List" >
+     sa_car_data_id, load_application_id, return_date, prototype_status, purchase_date, production_date, emission_type, brand, vehicle_model, engine_num, chassis_code, id
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="saCarDataId != null" >
+        and sa_car_data_id ${saCarDataIdOperator} #{saCarDataId}
+      </if>
+      <if test="loadApplicationId != null" >
+        and load_application_id ${loadApplicationIdOperator} #{loadApplicationId}
+      </if>
+      <if test="returnDate != null" >
+        and return_date ${returnDateOperator} #{returnDate}
+      </if>
+      <if test="prototypeStatus != null" >
+        and prototype_status ${prototypeStatusOperator} #{prototypeStatus}
+      </if>
+      <if test="purchaseDate != null" >
+        and purchase_date ${purchaseDateOperator} #{purchaseDate}
+      </if>
+      <if test="productionDate != null" >
+        and production_date ${productionDateOperator} #{productionDate}
+      </if>
+      <if test="emissionType != null" >
+        and emission_type ${emissionTypeOperator} #{emissionType}
+      </if>
+      <if test="brand != null" >
+        and brand ${brandOperator} #{brand}
+      </if>
+      <if test="vehicleModel != null" >
+        and vehicle_model ${vehicleModelOperator} #{vehicleModel}
+      </if>
+      <if test="engineNum != null" >
+        and engine_num ${engineNumOperator} #{engineNum}
+      </if>
+      <if test="chassisCode != null" >
+        and chassis_code ${chassisCodeOperator} #{chassisCode}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.pc_loan_application.entity.PcCarLoanInformationEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_CAR_LOAN_INFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into PC_CAR_LOAN_INFORMATION(<include refid="Base_Column_List" />)
+    values (#{saCarDataId, jdbcType=VARCHAR}, #{loadApplicationId, jdbcType=VARCHAR}, #{returnDate, jdbcType=VARCHAR}, #{prototypeStatus, jdbcType=VARCHAR}, #{purchaseDate, jdbcType=VARCHAR}, #{productionDate, jdbcType=VARCHAR}, #{emissionType, jdbcType=VARCHAR}, #{brand, jdbcType=VARCHAR}, #{vehicleModel, jdbcType=VARCHAR}, #{engineNum, jdbcType=VARCHAR}, #{chassisCode, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_loan_application.entity.PcCarLoanInformationEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_CAR_LOAN_INFORMATION.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PC_CAR_LOAN_INFORMATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="saCarDataId != null" >sa_car_data_id,</if>
+                <if test="loadApplicationId != null" >load_application_id,</if>
+                <if test="returnDate != null" >return_date,</if>
+                <if test="prototypeStatus != null" >prototype_status,</if>
+                <if test="purchaseDate != null" >purchase_date,</if>
+                <if test="productionDate != null" >production_date,</if>
+                <if test="emissionType != null" >emission_type,</if>
+                <if test="brand != null" >brand,</if>
+                <if test="vehicleModel != null" >vehicle_model,</if>
+                <if test="engineNum != null" >engine_num,</if>
+                <if test="chassisCode != null" >chassis_code,</if>
+                <if test="id != null" >id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="saCarDataId != null" >#{saCarDataId, jdbcType=VARCHAR},</if>
+                <if test="loadApplicationId != null" >#{loadApplicationId, jdbcType=VARCHAR},</if>
+                <if test="returnDate != null" >#{returnDate, jdbcType=VARCHAR},</if>
+                <if test="prototypeStatus != null" >#{prototypeStatus, jdbcType=VARCHAR},</if>
+                <if test="purchaseDate != null" >#{purchaseDate, jdbcType=VARCHAR},</if>
+                <if test="productionDate != null" >#{productionDate, jdbcType=VARCHAR},</if>
+                <if test="emissionType != null" >#{emissionType, jdbcType=VARCHAR},</if>
+                <if test="brand != null" >#{brand, jdbcType=VARCHAR},</if>
+                <if test="vehicleModel != null" >#{vehicleModel, jdbcType=VARCHAR},</if>
+                <if test="engineNum != null" >#{engineNum, jdbcType=VARCHAR},</if>
+                <if test="chassisCode != null" >#{chassisCode, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_loan_application.entity.PcCarLoanInformationEO" >
+    update PC_CAR_LOAN_INFORMATION
+       set  sa_car_data_id = #{saCarDataId,jdbcType=VARCHAR},
+            load_application_id = #{loadApplicationId,jdbcType=VARCHAR},
+            return_date = #{returnDate,jdbcType=VARCHAR},
+            prototype_status = #{prototypeStatus,jdbcType=VARCHAR},
+            purchase_date = #{purchaseDate,jdbcType=VARCHAR},
+            production_date = #{productionDate,jdbcType=VARCHAR},
+            emission_type = #{emissionType,jdbcType=VARCHAR},
+            brand = #{brand,jdbcType=VARCHAR},
+            vehicle_model = #{vehicleModel,jdbcType=VARCHAR},
+            engine_num = #{engineNum,jdbcType=VARCHAR},
+            chassis_code = #{chassisCode,jdbcType=VARCHAR}
+     where  id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_loan_application.entity.PcCarLoanInformationEO" >
+    update PC_CAR_LOAN_INFORMATION
+    <set >
+      <if test="saCarDataId != null" >
+        sa_car_data_id = #{saCarDataId},
+      </if>
+      <if test="loadApplicationId != null" >
+        load_application_id = #{loadApplicationId},
+      </if>
+      <if test="returnDate != null" >
+        return_date = #{returnDate},
+      </if>
+      <if test="prototypeStatus != null" >
+        prototype_status = #{prototypeStatus},
+      </if>
+      <if test="purchaseDate != null" >
+        purchase_date = #{purchaseDate},
+      </if>
+      <if test="productionDate != null" >
+        production_date = #{productionDate},
+      </if>
+      <if test="emissionType != null" >
+        emission_type = #{emissionType},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand},
+      </if>
+      <if test="vehicleModel != null" >
+        vehicle_model = #{vehicleModel},
+      </if>
+      <if test="engineNum != null" >
+        engine_num = #{engineNum},
+      </if>
+      <if test="chassisCode != null" >
+        chassis_code = #{chassisCode},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 PC_CAR_LOAN_INFORMATION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PC_CAR_LOAN_INFORMATION
+     where id = #{value,jdbcType=VARCHAR}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_CAR_LOAN_INFORMATION
+     where id = #{value,jdbcType=VARCHAR}
+
+  </delete>
+
+  <!-- PC_CAR_LOAN_INFORMATION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PC_CAR_LOAN_INFORMATION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PC_CAR_LOAN_INFORMATION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PC_CAR_LOAN_INFORMATION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PC_CAR_LOAN_INFORMATION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+
+
+    <update id="updCarStatusById" parameterType="java.lang.String">
+        update SA_CAR_DATA set CAR_STATUS = '2' where id = #{0,jdbcType=VARCHAR}
+    </update>
+    <delete id="deleteLoanInformation" parameterType="java.lang.String">
+        delete from PC_CAR_LOAN_INFORMATION pc where PC.LOAD_APPLICATION_ID=#{0,jdbcType=VARCHAR}
+    </delete>
+
+
+    <select id="findAllEOByLoanID" parameterType="String" resultMap="BaseResultMap">
+        select * from PC_CAR_LOAN_INFORMATION where LOAD_APPLICATION_ID = #{pcLoadId,jdbcType=VARCHAR}
+    </select>
+</mapper>

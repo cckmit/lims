@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_drive.dao.PcDriveRecordEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_drive.entity.PcDriveRecordEO" >
+        <id column="id" property="id" />
+        <result column="real_road_test_mil" property="realRoadTestMil" />
+        <result column="real_road_mil" property="realRoadMil" />
+        <result column="plan_road_test_mil" property="planRoadTestMil" />
+        <result column="plan_road_mil" property="planRoadMil" />
+        <result column="end_mil_number" property="endMilNumber" />
+        <result column="start_mil_number" property="startMilNumber" />
+        <result column="entrust_related" property="entrustRelated" />
+        <result column="task_number" property="taskNumber" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="create_time" property="createTime" />
+        <result column="del_flag" property="delFlag" />
+      <result column="task_code" property="taskCode"/>
+      <result column="vehicle_type" property="vehicleType"/>
+      <result column="chassis_code" property="chassisCode"/>
+      <result column="driver_id" property="driverId"/>
+      <result column="trial_id" property="trialId"/>
+      <result column="task_or_plan" property="taskOrPlan"/>
+      <result column="car_id" property="carId"/>
+      <result column="horse_power" property="horsePower"/>
+      <result column="drive_state" property="driveState"/>
+      <result column="trial_project_Id" property="trialProjectId"/>
+  </resultMap>
+    <!--路送路试委托单信息-->
+    <resultMap id="getTrialProjectVOMap" type="com.adc.da.pc_drive.vo.TrialProjectVO">
+        <id column="id" property="id"/>
+        <result column="taskbookcode" property="taskbookcode"/>
+        <result column="at_taskbook" property="atTaskbook"/>
+        <result column="at_drive_record" property="atDriveRecord"/>
+        <result column="at_check" property="atCheck"/>
+        <result column="at_torque_record" property="atTorqueRecord"/>
+        <result column="at_hub_temperature" property="atHubTemperature"/>
+        <result column="at_luqiao_ticket" property="atLuqiaoTicket"/>
+        <result column="at_repair_updown" property="atRepairUpdown"/>
+        <result column="at_fourwheel_position" property="atFourwheelPosition"/>
+        <result column="at_trial_report" property="atTrialReport"/>
+        <result column="at_trial_summary" property="atTrialSummary"/>
+        <result column="at_taskbook_name" property="atTaskbookName"/>
+        <result column="at_drive_record_name" property="atDriveRecordName"/>
+        <result column="at_check_name" property="atCheckName"/>
+        <result column="at_torque_record_name" property="atTorqueRecordName"/>
+        <result column="at_hub_temperature_name" property="atHubTemperatureName"/>
+        <result column="at_luqiao_ticket_name" property="atLuqiaoTicketName"/>
+        <result column="at_repair_updown_name" property="atRepairUpdownName"/>
+        <result column="at_fourwheel_position_name" property="atFourwheelPositionName"/>
+        <result column="at_trial_report_name" property="atTrialReportName"/>
+        <result column="at_trial_summary_name" property="atTrialSummaryName"/>
+        <result column="approvalcode" property="approvalcode"/>
+        <result column="approvalcost" property="approvalcost"/>
+        <result column="trustcode" property="trustcode"/>
+        <result column="supid" property="supid"/>
+        <result column="supname" property="supname"/>
+        <result column="delegater" property="delegater"/>
+        <result column="applydate" property="applydate"/>
+        <result column="tasksource" property="tasksource"/>
+        <result column="frequency" property="frequency"/>
+        <result column="tasktype" property="tasktype"/>
+        <result column="taskstartdate" property="taskstartdate"/>
+        <result column="taskenddate" property="taskenddate"/>
+        <result column="vehicletype" property="vehicletype"/>
+        <result column="chassiscode" property="chassiscode"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="pvorcv" property="pvOrcv"/>
+        <result column="create_by_id" property="createById"/>
+        <result column="create_date" property="createDate"/>
+        <result column="confirm_person" property="confirmPerson"/>
+        <result property="pcId" column="pcID" />
+        <result property="operationId" column="OPERATION_ID" />
+        <result property="operationName" column="OPERATION_NAME" />
+        <result property="tower" column="tower" />
+        <result property="carType" column="car_Type" />
+        <result property="fuelType" column="fuel_Type" />
+        <result property="carId" column="car_id" />
+    </resultMap>
+    <!--供应商信息-->
+    <resultMap id="getAbilityVOMap" type="com.adc.da.pc_drive.vo.AbilityVO">
+        <id column="id" property="id"/>
+        <result column="sup_name" property="supName"/>
+        <result column="sup_type" property="supType"/>
+        <result column="sup_qualifications" property="supQualifications"/>
+        <result column="sup_indate" property="supIndate"/>
+        <result column="sup_changelog" property="supChangelog"/>
+        <result column="sup_contract_code" property="supContractCode"/>
+        <result column="sup_con_startdate" property="supConStartdate"/>
+        <result column="sup_con_enddate" property="supConEnddate"/>
+        <result column="sup_manager_name" property="supManagerName"/>
+        <result column="sup_telephone" property="supTelephone"/>
+        <result column="sup_mail" property="supMail"/>
+        <result column="sup_manager_id" property="supManagerId"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="attachment_Id" property="attachmentId"/>
+        <result column="attachment_name" property="attachmentName"/>
+        <result column="sup_code" property="supCode"/>
+    </resultMap>
+
+  <!-- PC_DRIVE_RECORD table all fields -->
+  <sql id="Base_Column_List" >
+     real_road_test_mil, real_road_mil, plan_road_test_mil, plan_road_mil, end_mil_number,
+     start_mil_number, entrust_related, task_number, update_by, update_time, create_by,
+     create_time, del_flag, id, task_code,vehicle_type,chassis_code,driver_id,trial_id,task_or_plan,car_id,
+     horse_power,drive_state,trial_project_Id
+  </sql>
+
+    <sql id="Road_Line_Column_List">
+        ID,DRIVER_RECORD_ID,DEL_FLAG,TRIAL_DATE,DR_TYPE,ROAD_LINE,TRIAL_STATE,CLASS_NUM,
+        LOAD,TEST_CONDITIONS,EXPERIMENTAL_METEOROLOGY,ROAD_TESTER,DRIVING_LOCATION,STOP_LOCATION,
+        START_TIME,END_TIME,DRIVING_MIL_NUM,STOP_MIL_NUM,METER_MILE,CORRECTION_FACTOR,CORRECTED_MILE,
+        MILE_PLUS,STATE,DRIVE_CAR_TYPE
+    </sql>
+
+    <sql id="Base_TrialProjectVO_List">
+     taskbookcode, at_taskbook, at_drive_record, at_check, at_torque_record, at_hub_temperature, at_luqiao_ticket, at_repair_updown, at_fourwheel_position, at_trial_report, at_trial_summary,pcID,
+      at_taskbook_name, at_drive_record_name, at_check_name, at_torque_record_name, at_hub_temperature_name, at_luqiao_ticket_name, at_repair_updown_name, at_fourwheel_position_name, at_trial_report_name, at_trial_summary_name,
+     approvalcode, approvalcost, trustcode, id, supid, supname, delegater, applydate, tasksource, frequency, tasktype, taskstartdate, taskenddate, vehicletype, chassiscode, status, remark, del_flag, pvorcv, create_by_id, create_date, confirm_person,
+     OPERATION_ID,OPERATION_NAME,tower,car_Type,fuel_Type,car_id
+    </sql>
+    <sql id="Base_AbilityVO_List">
+     sup_name, id, sup_type, sup_qualifications, sup_indate, sup_changelog, sup_contract_code, sup_con_startdate, sup_con_enddate, sup_manager_name, sup_telephone, sup_mail, sup_manager_id, del_flag, attachment_Id, attachment_Name, sup_code
+  </sql>
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+            where 1=1
+              <if test="taskNumber != null" >
+                  and task_number ${taskNumberOperator} #{taskNumber}
+              </if>
+              <if test="trialId != null" >
+                  and trial_id ${trialIdOperator} #{trialId}
+              </if>
+            and (create_by ${createByOperator} #{createBy}
+            or driver_id ${driverIdOperator} #{driverId}) and task_or_plan ${taskOrPlanOperator} #{taskOrPlan}
+      <choose>
+              <when test="searchPhrase != null">
+                  <foreach collection="searchPhrase" item="search">
+                      and (
+                      task_code like '%${search}%' or
+                      entrust_related like '%${search}%' or
+                      start_mil_number like '%${search}%' or
+                      end_mil_number like '%${search}%' or
+                      plan_road_mil like '%${search}%' or
+                      plan_road_test_mil like '%${search}%' or
+                      real_road_mil like '%${search}%' or
+                      real_road_test_mil like '%${search}%'
+                      )
+                  </foreach>
+              </when>
+          <otherwise>
+                <trim suffixOverrides="," >
+                      <if test="realRoadTestMil != null" >
+                        and real_road_test_mil ${realRoadTestMilOperator} #{realRoadTestMil}
+                      </if>
+                      <if test="realRoadMil != null" >
+                        and real_road_mil ${realRoadMilOperator} #{realRoadMil}
+                      </if>
+                      <if test="planRoadTestMil != null" >
+                        and plan_road_test_mil ${planRoadTestMilOperator} #{planRoadTestMil}
+                      </if>
+                      <if test="planRoadMil != null" >
+                        and plan_road_mil ${planRoadMilOperator} #{planRoadMil}
+                      </if>
+                      <if test="endMilNumber != null" >
+                        and end_mil_number ${endMilNumberOperator} #{endMilNumber}
+                      </if>
+                      <if test="startMilNumber != null" >
+                        and start_mil_number ${startMilNumberOperator} #{startMilNumber}
+                      </if>
+                      <if test="entrustRelated != null" >
+                        and entrust_related ${entrustRelatedOperator} #{entrustRelated}
+                      </if>
+                      <if test="taskCode != null" >
+                        and task_Code ${taskCodeOperator} #{taskCode}
+                      </if>
+                      <if test="vehicleType != null" >
+                        and vehicle_type ${vehicleTypeOperator} #{vehicleType}
+                      </if>
+                      <if test="chassisCode != null" >
+                        and chassis_code ${chassisCodeOperator} #{chassisCode}
+                      </if>
+                </trim>
+          </otherwise>
+      </choose>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.pc_drive.entity.PcDriveRecordEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_DRIVE_RECORD.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into PC_DRIVE_RECORD(<include refid="Base_Column_List" />)
+    values (#{realRoadTestMil, jdbcType=VARCHAR}, #{realRoadMil, jdbcType=VARCHAR},
+    #{planRoadTestMil, jdbcType=VARCHAR}, #{planRoadMil, jdbcType=VARCHAR},
+    #{endMilNumber, jdbcType=VARCHAR}, #{startMilNumber, jdbcType=VARCHAR},
+    #{entrustRelated, jdbcType=VARCHAR}, #{taskNumber, jdbcType=VARCHAR},
+    #{updateBy, jdbcType=VARCHAR}, #{updateTime, jdbcType=VARCHAR},
+    #{createBy, jdbcType=VARCHAR}, #{createTime, jdbcType=VARCHAR},
+    #{delFlag, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR},
+    #{taskNumberId, jdbcType=VARCHAR},#{vehicleType, jdbcType=VARCHAR},
+    #{chassisCode, jdbcType=VARCHAR},#{driverId, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_drive.entity.PcDriveRecordEO" >
+<!--        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">-->
+<!--            SELECT SYS_GUID() FROM DUAL-->
+<!--        </selectKey>-->
+        insert into PC_DRIVE_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="realRoadTestMil != null" >real_road_test_mil,</if>
+                <if test="realRoadMil != null" >real_road_mil,</if>
+                <if test="planRoadTestMil != null" >plan_road_test_mil,</if>
+                <if test="planRoadMil != null" >plan_road_mil,</if>
+                <if test="endMilNumber != null" >end_mil_number,</if>
+                <if test="startMilNumber != null" >start_mil_number,</if>
+                <if test="entrustRelated != null" >entrust_related,</if>
+                <if test="taskNumber != null" >task_number,</if>
+                <if test="updateBy != null" >update_by,</if>
+                <if test="updateTime != null" >update_time,</if>
+                <if test="createBy != null" >create_by,</if>
+                <if test="createTime != null" >create_time,</if>
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="id != null" >id,</if>
+                <if test="taskCode != null" >task_Code,</if>
+                <if test="vehicleType != null" >vehicle_type,</if>
+                <if test="chassisCode != null" >chassis_code,</if>
+                <if test="driverId != null" >driver_id,</if>
+                <if test="trialId != null" >trial_id,</if>
+                <if test="taskOrPlan != null" >task_or_plan,</if>
+                <if test="carId != null" >car_id,</if>
+                <if test="driveState != null" >drive_state,</if>
+                <if test="horsePower != null" >horse_power,</if>
+                <if test="trialProjectId != null" >trial_project_Id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="realRoadTestMil != null" >#{realRoadTestMil, jdbcType=VARCHAR},</if>
+                <if test="realRoadMil != null" >#{realRoadMil, jdbcType=VARCHAR},</if>
+                <if test="planRoadTestMil != null" >#{planRoadTestMil, jdbcType=VARCHAR},</if>
+                <if test="planRoadMil != null" >#{planRoadMil, jdbcType=VARCHAR},</if>
+                <if test="endMilNumber != null" >#{endMilNumber, jdbcType=VARCHAR},</if>
+                <if test="startMilNumber != null" >#{startMilNumber, jdbcType=VARCHAR},</if>
+                <if test="entrustRelated != null" >#{entrustRelated, jdbcType=VARCHAR},</if>
+                <if test="taskNumber != null" >#{taskNumber, jdbcType=VARCHAR},</if>
+                <if test="updateBy != null" >#{updateBy, jdbcType=VARCHAR},</if>
+                <if test="updateTime != null" >#{updateTime, jdbcType=VARCHAR},</if>
+                <if test="createBy != null" >#{createBy, jdbcType=VARCHAR},</if>
+                <if test="createTime != null" >#{createTime, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="taskCode != null" >#{taskCode, jdbcType=VARCHAR},</if>
+                <if test="vehicleType != null" >#{vehicleType, jdbcType=VARCHAR},</if>
+                <if test="chassisCode != null" >#{chassisCode, jdbcType=VARCHAR},</if>
+                <if test="driverId != null" >#{driverId, jdbcType=VARCHAR},</if>
+                <if test="trialId != null" >#{trialId, jdbcType=VARCHAR},</if>
+                <if test="taskOrPlan != null" >#{taskOrPlan, jdbcType=VARCHAR},</if>
+                <if test="carId != null" >#{carId, jdbcType=VARCHAR},</if>
+                <if test="driveState != null" >#{driveState, jdbcType=VARCHAR},</if>
+                <if test="horsePower != null" >#{horsePower, jdbcType=VARCHAR},</if>
+                <if test="trialProjectId != null" >#{trialProjectId, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_drive.entity.PcDriveRecordEO" >
+    update PC_DRIVE_RECORD
+       set  real_road_test_mil = #{realRoadTestMil},
+            real_road_mil = #{realRoadMil},
+            plan_road_test_mil = #{planRoadTestMil},
+            plan_road_mil = #{planRoadMil},
+            end_mil_number = #{endMilNumber},
+            start_mil_number = #{startMilNumber},
+            entrust_related = #{entrustRelated},
+            task_number = #{taskNumber},
+            update_by = #{updateBy},
+            update_time = #{updateTime},
+            create_by = #{createBy},
+            create_time = #{createTime},
+            del_flag = #{delFlag}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_drive.entity.PcDriveRecordEO" >
+    update PC_DRIVE_RECORD
+    <set >
+      <if test="realRoadTestMil != null" >
+        real_road_test_mil = #{realRoadTestMil},
+      </if>
+      <if test="realRoadMil != null" >
+        real_road_mil = #{realRoadMil},
+      </if>
+      <if test="planRoadTestMil != null" >
+        plan_road_test_mil = #{planRoadTestMil},
+      </if>
+      <if test="planRoadMil != null" >
+        plan_road_mil = #{planRoadMil},
+      </if>
+      <if test="endMilNumber != null" >
+        end_mil_number = #{endMilNumber},
+      </if>
+      <if test="startMilNumber != null" >
+        start_mil_number = #{startMilNumber},
+      </if>
+      <if test="entrustRelated != null" >
+        entrust_related = #{entrustRelated},
+      </if>
+      <if test="taskNumber != null" >
+        task_number = #{taskNumber},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+        <if test="taskCode != null" >
+            task_code = #{taskCode},
+        </if>
+        <if test="vehicleType != null" >
+            vehicle_type = #{vehicleType},
+        </if>
+        <if test="chassisCode != null" >
+            chassis_code = #{chassisCode},
+        </if>
+        <if test="driverId != null" >
+            driver_id = #{driverId},
+        </if>
+        <if test="trialId != null" >
+            trial_id = #{trialId},
+        </if>
+        <if test="carId != null" >
+            car_id = #{carId},
+        </if>
+        <if test="horsePower != null" >
+            horse_power = #{horsePower},
+        </if>
+        <if test="driveState != null" >
+            drive_state = #{driveState},
+        </if>
+        <if test="trialProjectId != null" >
+            trial_project_id = #{trialProjectId},
+        </if>
+
+
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 PC_DRIVE_RECORD -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" />
+      from PC_DRIVE_RECORD
+     where id = #{value}
+  </select>
+    <!-- 根据trial_project_id查询 PC_DRIVE_RECORD -->
+    <select id="selectByProjectId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List" />
+        from PC_DRIVE_RECORD
+        where trial_project_id = #{projectId}
+    </select>
+    <!-- 根据id查询 SUP_TRIAL_PROJECT -->
+    <select id="selectTrialProjectVO" resultMap="getTrialProjectVOMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_TrialProjectVO_List"/>
+        from SUP_TRIAL_PROJECT
+        where id = #{id}
+    </select>
+    <!-- 根据id查询 SUP_ABILITY -->
+    <select id="selectAbilityVO" resultMap="getAbilityVOMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_AbilityVO_List"/>
+        from SUP_ABILITY
+        where id = #{id}
+        and del_flag = 0
+    </select>
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from DRIVING_ROAD_LINE
+     where id = #{value}
+
+  </delete>
+
+  <!-- PC_DRIVE_RECORD 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PC_DRIVE_RECORD
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PC_DRIVE_RECORD列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PC_DRIVE_RECORD
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PC_DRIVE_RECORD
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+<!--    插入行车线路实体-->
+    <insert id="insertRoadLineEo" parameterType="com.adc.da.pc_drive.entity.RoadLineEO" >
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SYS_GUID() FROM DUAL
+        </selectKey>
+        insert into DRIVING_ROAD_LINE
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >id,</if>
+            <if test="driverRecordId != null" >DRIVER_RECORD_ID,</if>
+            <if test="delFlag != null" >del_flag,</if>
+            <if test="trialDate != null" >TRIAL_DATE,</if>
+            <if test="drType != null" >DR_TYPE,</if>
+            <if test="roadLine != null" >ROAD_LINE,</if>
+            <if test="trialState != null" >TRIAL_STATE,</if>
+            <if test="classNum != null" >CLASS_NUM,</if>
+            <if test="load != null" >LOAD,</if>
+            <if test="testConditions != null" >TEST_CONDITIONS,</if>
+            <if test="experimentalMeteorology != null" >EXPERIMENTAL_METEOROLOGY,</if>
+            <if test="roadTester != null" >ROAD_TESTER,</if>
+            <if test="drivingLocation != null" >DRIVING_LOCATION,</if>
+            <if test="stopLocation != null" >STOP_LOCATION,</if>
+            <if test="startTime != null" >START_TIME,</if>
+            <if test="endTime != null" >END_TIME,</if>
+            <if test="drivingMilNum != null" >DRIVING_MIL_NUM,</if>
+            <if test="stopMilNum != null" >STOP_MIL_NUM,</if>
+            <if test="meterMile != null" >METER_MILE,</if>
+            <if test="correctionFactor != null" >CORRECTION_FACTOR,</if>
+            <if test="correctedMile != null" >CORRECTED_MILE,</if>
+            <if test="milePlus != null" >MILE_PLUS,</if>
+            <if test="state != null" >STATE,</if>
+            <if test="countPrice != null" >COUNT_PRICE,</if>
+            <if test="createTime != null" >CREATE_TIME,</if>
+            <if test="carState != null" >car_state,</if>
+            <if test="hasFuelCost != null" >HAS_FUEL_COST,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            <if test="driverRecordId != null" >#{driverRecordId, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+            <if test="trialDate != null" >#{trialDate, jdbcType=VARCHAR},</if>
+            <if test="drType != null" >#{drType, jdbcType=VARCHAR},</if>
+            <if test="roadLine != null" >#{roadLine, jdbcType=VARCHAR},</if>
+            <if test="trialState != null" >#{trialState, jdbcType=VARCHAR},</if>
+            <if test="classNum != null" >#{classNum, jdbcType=VARCHAR},</if>
+            <if test="load != null" >#{load, jdbcType=VARCHAR},</if>
+            <if test="testConditions != null" >#{testConditions, jdbcType=VARCHAR},</if>
+            <if test="experimentalMeteorology != null" >#{experimentalMeteorology, jdbcType=VARCHAR},</if>
+            <if test="roadTester != null" >#{roadTester, jdbcType=VARCHAR},</if>
+            <if test="drivingLocation != null" >#{drivingLocation, jdbcType=VARCHAR},</if>
+            <if test="stopLocation != null" >#{stopLocation, jdbcType=VARCHAR},</if>
+            <if test="startTime != null" >#{startTime, jdbcType=VARCHAR},</if>
+            <if test="endTime != null" >#{endTime, jdbcType=VARCHAR},</if>
+            <if test="drivingMilNum != null" >#{drivingMilNum, jdbcType=VARCHAR},</if>
+            <if test="stopMilNum != null" >#{stopMilNum, jdbcType=VARCHAR},</if>
+            <if test="meterMile != null" >#{meterMile, jdbcType=VARCHAR},</if>
+            <if test="correctionFactor != null" >#{correctionFactor, jdbcType=VARCHAR},</if>
+            <if test="correctedMile != null" >#{correctedMile, jdbcType=VARCHAR},</if>
+            <if test="milePlus != null" >#{milePlus, jdbcType=VARCHAR},</if>
+            <if test="state != null" >#{state, jdbcType=VARCHAR},</if>
+            <if test="countPrice != null" >#{countPrice, jdbcType=VARCHAR},</if>
+            <if test="createTime != null" >#{createTime, jdbcType=VARCHAR},</if>
+            <if test="carState != null" >#{carState, jdbcType=VARCHAR},</if>
+            <if test="hasFuelCost != null" >#{hasFuelCost, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+<!--修改行车路线-->
+    <update id="updateRoadLineEo" parameterType="com.adc.da.pc_drive.entity.RoadLineEO" >
+        update DRIVING_ROAD_LINE
+        <set >
+            <if test="driverRecordId != null" >
+                DRIVER_RECORD_ID = #{driverRecordId},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag},
+            </if>
+            <if test="trialDate != null" >
+                TRIAL_DATE = #{trialDate},
+            </if>
+            <if test="drType != null" >
+                DR_TYPE = #{drType},
+            </if>
+            <if test="roadLine != null" >
+                ROAD_LINE = #{roadLine},
+            </if>
+            <if test="trialState != null" >
+                TRIAL_STATE = #{trialState},
+            </if>
+            <if test="classNum != null" >
+                CLASS_NUM = #{classNum},
+            </if>
+            <if test="load != null" >
+                LOAD = #{load},
+            </if>
+            <if test="testConditions != null" >
+                TEST_CONDITIONS = #{testConditions},
+            </if>
+            <if test="experimentalMeteorology != null" >
+                EXPERIMENTAL_METEOROLOGY = #{experimentalMeteorology},
+            </if>
+            <if test="roadTester != null" >
+                ROAD_TESTER = #{roadTester},
+            </if>
+            <if test="drivingLocation != null" >
+                DRIVING_LOCATION = #{drivingLocation},
+            </if>
+            <if test="stopLocation != null" >
+                STOP_LOCATION = #{stopLocation},
+            </if>
+            <if test="startTime != null" >
+                START_TIME = #{startTime},
+            </if>
+            <if test="endTime != null" >
+                END_TIME = #{endTime},
+            </if>
+            <if test="drivingMilNum != null" >
+                DRIVING_MIL_NUM = #{drivingMilNum},
+            </if>
+            <if test="stopMilNum != null" >
+                STOP_MIL_NUM = #{stopMilNum},
+            </if>
+            <if test="meterMile != null" >
+                METER_MILE = #{meterMile},
+            </if>
+            <if test="correctionFactor != null" >
+                CORRECTION_FACTOR = #{correctionFactor},
+            </if>
+            <if test="correctedMile != null" >
+                CORRECTED_MILE = #{correctedMile},
+            </if>
+            <if test="milePlus != null" >
+                MILE_PLUS = #{milePlus},
+            </if>
+            <if test="state != null" >
+                STATE = #{state},
+            </if>
+            <if test="countPrice != null" >
+                COUNT_PRICE = #{countPrice},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="carState != null" >
+                CAR_STATE = #{carState},
+            </if>
+            <if test="hasFuelCost != null">
+                HAS_FUEL_COST = #{hasFuelCost},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+<!--    查询行车路线-->
+    <select id="selectRoadLineEoByDriveRecordId" resultType="com.adc.da.pc_drive.entity.RoadLineEO">
+        select
+            ID,DRIVER_RECORD_ID driverRecordId,DEL_FLAG delFlag,
+            TRIAL_DATE trialDate,DR_TYPE drType,ROAD_LINE roadLine,
+            TRIAL_STATE trialState,CLASS_NUM classNum,LOAD load,
+            TEST_CONDITIONS testConditions,EXPERIMENTAL_METEOROLOGY experimentalMeteorology,
+            ROAD_TESTER roadTester,DRIVING_LOCATION drivingLocation,STOP_LOCATION stopLocation,
+            START_TIME startTime,END_TIME endTime,DRIVING_MIL_NUM drivingMilNum,
+            STOP_MIL_NUM stopMilNum,METER_MILE meterMile,CORRECTION_FACTOR correctionFactor,
+            CORRECTED_MILE correctedMile,MILE_PLUS milePlus,STATE state,HAS_FUEL_COST hasFuelCost,
+            create_time createTime,COUNT_PRICE countPrice,car_state carState
+        from
+            DRIVING_ROAD_LINE
+        where DRIVER_RECORD_ID = #{id}
+        order by create_time
+    </select>
+
+<!--    根据任务书编号查询委托方相关-->
+    <select id="getTrustByTaskNum" parameterType="java.lang.String" resultType="com.adc.da.pc_drive.vo.TrustRelated">
+        select rownum ,taskbookcode taskNum,SUPNAME trustRelatedName
+        from sup_trial_project where taskbookcode = #{taskNum} AND rownum = 1
+    </select>
+    <!--    根据底盘号查询是否存在行车记录-->
+    <select id="getDriveRecordsCountByChassisCode" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from PC_DRIVE_RECORD where car_id = #{carId} and task_or_plan = #{taskOrPlan}
+    </select>
+
+<!--    查询行车路线子表实体-->
+    <select id="getRoadLineEOById" parameterType="java.lang.String" resultType="com.adc.da.pc_drive.entity.RoadLineEO">
+        select
+        ID,DRIVER_RECORD_ID driverRecordId,DEL_FLAG delFlag,
+            TRIAL_DATE trialDate,DR_TYPE drType,ROAD_LINE roadLine,
+            TRIAL_STATE trialState,CLASS_NUM classNum,LOAD load,
+            TEST_CONDITIONS testConditions,EXPERIMENTAL_METEOROLOGY experimentalMeteorology,
+            ROAD_TESTER roadTester,DRIVING_LOCATION drivingLocation,STOP_LOCATION stopLocation,
+            START_TIME startTime,END_TIME endTime,DRIVING_MIL_NUM drivingMilNum,
+            STOP_MIL_NUM stopMilNum,METER_MILE meterMile,CORRECTION_FACTOR correctionFactor,
+            CORRECTED_MILE correctedMile,MILE_PLUS milePlus,STATE state,HAS_FUEL_COST hasFuelCost,
+            create_time createTime,COUNT_PRICE countPrice,car_state carState
+        from DRIVING_ROAD_LINE
+        where id = #{id}
+    </select>
+
+</mapper>

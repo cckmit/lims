@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.MenuEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.MenuEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="name" property="name"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="parent_ids" property="parentIds"/>
+        <result column="href" property="href"/>
+        <result column="icon" property="icon"/>
+        <result column="is_show" property="isShow"/>
+        <result column="permission" property="permission"/>
+        <result column="remarks" property="remarks"/>
+        <result column="sort" property="sort"/>
+        <result column="ext_info" property="extInfo" />
+    </resultMap>
+
+    <resultMap id="menuId" type="java.lang.String">
+        <result column="menu_Id" property="menuId"/>
+    </resultMap>
+
+    <!-- TS_MENU table all fields -->
+    <sql id="Base_Column_List">
+        id, del_flag, name, parent_id, parent_ids, href, icon, is_show, permission, remarks, sort, ext_info
+    </sql>
+    
+    <!-- 用于按名称查询记录时的sql，添加前缀TS_MENU -->
+    <!-- 2018-08-22 -->
+  <sql id="Base_Column_List_V2">
+        TS_MENU.id, TS_MENU.del_flag, TS_MENU.name, TS_MENU.parent_id, TS_MENU.parent_ids, TS_MENU.href, TS_MENU.icon, TS_MENU.is_show, TS_MENU.permission, TS_MENU.remarks, TS_MENU.sort, TS_MENU.ext_info
+    </sql>
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+            <if test="delFlag != null">
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+            <if test="name != null">
+                and name ${nameOperator} #{name}
+            </if>
+            <if test="parentId != null">
+                and parent_id ${parentIdOperator} #{parentId}
+            </if>
+            <if test="parentIds != null">
+                and parent_ids ${parentIdsOperator} #{parentIds}
+            </if>
+            <if test="href != null">
+                and href ${hrefOperator} #{href}
+            </if>
+            <if test="icon != null">
+                and icon ${iconOperator} #{icon}
+            </if>
+            <if test="isShow != null">
+                and is_show ${isShowOperator} #{isShow}
+            </if>
+            <if test="permission != null">
+                and permission ${permissionOperator} #{permission}
+            </if>
+            <if test="remarks != null">
+                and remarks ${remarksOperator} #{remarks}
+            </if>
+            <if test="sort != null">
+                and sort ${sortOperator} #{sort}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.sys.entity.MenuEO">
+		insert into TS_MENU(<include refid="Base_Column_List"/>)
+        values (#{id}, #{delFlag}, #{name}, #{parentId}, #{parentIds}, #{href}, #{icon}, #{isShow}, #{permission}, #{remarks}, #{sort}, #{extInfo})
+    </insert>
+
+	<!-- 动态插入记录 主键是序列 -->
+	<insert id="insertSelective" parameterType="com.adc.da.sys.entity.MenuEO" >
+		insert into TS_MENU
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+	        <if test="extInfo != null" >ext_info,</if>
+	        <if test="sort != null" >sort,</if>
+	        <if test="remarks != null" >remarks,</if>
+	        <if test="permission != null" >permission,</if>
+	        <if test="isShow != null" >is_show,</if>
+	        <if test="icon != null" >icon,</if>
+	        <if test="href != null" >href,</if>
+	        <if test="parentIds != null" >parent_ids,</if>
+	        <if test="parentId != null" >parent_id,</if>
+	        <if test="name != null" >name,</if>
+	        <if test="delFlag != null" >del_flag,</if>
+	        <if test="id != null" >id,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+	        <if test="extInfo != null" >#{extInfo},</if>
+	        <if test="sort != null" >#{sort},</if>
+	        <if test="remarks != null" >#{remarks},</if>
+	        <if test="permission != null" >#{permission},</if>
+	        <if test="isShow != null" >#{isShow},</if>
+	        <if test="icon != null" >#{icon},</if>
+	        <if test="href != null" >#{href},</if>
+	        <if test="parentIds != null" >#{parentIds},</if>
+	        <if test="parentId != null" >#{parentId},</if>
+	        <if test="name != null" >#{name},</if>
+	        <if test="delFlag != null" >#{delFlag},</if>
+	        <if test="id != null" >#{id},</if>
+		</trim>
+	</insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.sys.entity.MenuEO">
+        UPDATE TS_MENU
+        SET del_flag = #{delFlag},
+        NAME = #{name},
+        parent_id = #{parentId},
+        parent_ids = #{parentIds},
+        href = #{href},
+        icon = #{icon},
+        is_show = #{isShow},
+        PERMISSION = #{permission},
+        remarks = #{remarks},
+        SORT = #{sort}
+        WHERE ID = #{id}
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.sys.entity.MenuEO">
+        update TS_MENU
+        <set>
+			<if test="extInfo != null" >
+				ext_info = #{extInfo},
+			</if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="parentIds != null">
+                parent_ids = #{parentIds},
+            </if>
+            <if test="href != null">
+                href = #{href},
+            </if>
+            <if test="icon != null">
+                icon = #{icon},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow},
+            </if>
+            <if test="permission != null">
+                permission = #{permission},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--删除菜单
+        逻辑删除-->
+    <update id="deleteMenuLogic">
+        UPDATE TS_MENU set DEL_FLAG = ${@com.adc.da.util.constant.DeleteFlagEnum@DELETE.getValue()}
+        WHERE id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 根据id查询 TS_MENU -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_MENU
+        where id = #{value} and del_flag = ${@com.adc.da.util.constant.DeleteFlagEnum@NORMAL.getValue()}
+
+    </select>
+
+
+    <!--删除角色菜单信息-->
+    <delete id="deleteRoleMenus">
+        DELETE FROM TR_ROLE_MENU where MENU_ID in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        or MENU_ID in (
+          select ID from TS_MENU where
+            <foreach collection="array" item="id" open="" separator="or" close="">
+                PARENT_IDS like '%'||#{id}||'%'
+            </foreach>
+        )
+    </delete>
+
+    <!-- TS_MENU 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from TS_MENU
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询TS_MENU列表 -->
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from (select t.*,rownum rownu from TS_MENU t
+        where rownum&lt;=${pager.endIndex})tt
+        where tt.rownu>=${pager.startIndex}
+    </select>
+
+    <!--查询所有菜单记录-->
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM TS_MENU
+        WHERE del_flag = ${@com.adc.da.util.constant.DeleteFlagEnum@NORMAL.getValue()}
+    </select>
+<!--  -->
+    <select id="listMenuEOByUserId" resultMap="BaseResultMap">
+        SELECT distinct
+        <include refid="Base_Column_List"/>
+        FROM TS_MENU M
+            LEFT JOIN TR_ROLE_MENU RM ON RM.MENU_ID = M.ID
+            LEFT JOIN TR_USER_ROLE UR ON UR.ROLE_ID = RM.ROLE_ID
+        WHERE UR.USER_ID = #{userId}
+        order by m.permission, m.sort
+    </select>
+
+    <select id="getChildMenus" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM TS_MENU
+        WHERE PARENT_IDS like '%' || #{parentId} || '%'
+    </select>
+
+    <select id="isBelong" resultType="integer">
+        SELECT count(1) from TR_ROLE_MENU where ROLE_ID = #{roleId} and MENU_ID = #{menuId}
+    </select>
+
+    <select id="findMenuIds" resultMap="menuId">
+        SELECT MENU_ID from TR_ROLE_MENU where ROLE_ID = #{roleId}
+    </select>
+
+    <select id="listMenuEOByRoleID" resultType="com.adc.da.sys.entity.MenuEO">
+        SELECT <include refid="Base_Column_List"/> FROM TS_MENU M LEFT JOIN TR_ROLE_MENU RM ON M.ID = RM.MENU_ID where RM.ROLE_ID = #{roleId}
+    </select>
+
+
+    <!-- 2018-08-22 -->
+    <!-- Lee Kwanho -->
+    <!--查询菜单功能,根据菜单名进行查询，返回菜单以及上级信息-->
+    <select id="listMenuEOByMenuName" resultMap="BaseResultMap"  >
+        SELECT DISTINCT <include refid="Base_Column_List_V2"/> FROM TS_MENU right join (
+            SELECT <include refid="Base_Column_List"/> FROM TS_MENU
+            WHERE TS_MENU.del_flag !=1
+            <if test="menuName != null">
+                AND TS_MENU.NAME LIKE '%${menuName}%'
+            </if>
+        ) b on TS_MENU.id=b.id
+        <if test="menuName != null">
+            or b.parent_ids like '%'||TS_MENU.id||'%'
+        </if>
+    </select>
+</mapper>

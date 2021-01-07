@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.instype.dao.InsTypeEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.instype.entity.InsTypeEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="DECIMAL" property="delFlag" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy.usid" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy.usid" />
+    <result column="INS_TYPE_NAME" jdbcType="VARCHAR" property="insTypeName" />
+    <result column="INS_TYPE_PARENT_ID" jdbcType="VARCHAR" property="insTypeParentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, INS_TYPE_NAME, INS_TYPE_PARENT_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from BM_INSPECT_TYPE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    UPDATE  BM_INSPECT_TYPE
+    SET DEL_FLAG = 1
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.instype.entity.InsTypeEO">
+    insert into BM_INSPECT_TYPE (
+    	ID, 
+    	DEL_FLAG, 
+    	CREATE_TIME, 
+        CREATE_BY, 
+        UPDATE_TIME, 
+        UPDATE_BY, 
+      	INS_TYPE_NAME, 
+      	INS_TYPE_PARENT_ID
+    )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=DECIMAL}, 
+    	#{createTime,jdbcType=VARCHAR}, 
+      	#{createBy.usid,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{updateBy.usid,jdbcType=VARCHAR}, 
+      	#{insTypeName,jdbcType=VARCHAR}, 
+      	#{insTypeParentId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.instype.entity.InsTypeEO">
+    insert into BM_INSPECT_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="insTypeName != null">
+        INS_TYPE_NAME,
+      </if>
+      <if test="insTypeParentId != null">
+        INS_TYPE_PARENT_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="insTypeName != null">
+        #{insTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="insTypeParentId != null">
+        #{insTypeParentId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.instype.entity.InsTypeEO">
+    update BM_INSPECT_TYPE
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="insTypeName != null">
+        INS_TYPE_NAME = #{insTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="insTypeParentId != null">
+        INS_TYPE_PARENT_ID = #{insTypeParentId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.instype.entity.InsTypeEO">
+    update BM_INSPECT_TYPE
+    set DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      INS_TYPE_NAME = #{insTypeName,jdbcType=VARCHAR},
+      INS_TYPE_PARENT_ID = #{insTypeParentId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询列表 -->
+  <select id="findAll" resultMap="BaseResultMap" parameterType="com.adc.da.instype.entity.InsTypeEO">
+    select 
+    <include refid="Base_Column_List" />
+    from BM_INSPECT_TYPE
+    where DEL_FLAG != 1
+  </select>
+  
+    <!--查询当前记录是否有子节点-->
+  <select id="selectChildsById" resultMap="BaseResultMap">
+     SELECT
+     <include refid="Base_Column_List"/>
+     FROM BM_INSPECT_TYPE
+     WHERE DEL_FLAG != 1
+     AND INS_TYPE_PARENT_ID = #{insTypeParentId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByTypeName" resultType="java.lang.String">
+    	SELECT 
+    	ID
+   		FROM BM_INSPECT_TYPE
+   		WHERE DEL_FLAG != 1
+   		AND INS_TYPE_NAME  = #{insTypeName,jdbcType=VARCHAR}
+   </select>
+   
+   
+   <select id="findByTypeName" resultMap="BaseResultMap">
+    	SELECT 
+    	<include refid="Base_Column_List"/>
+   		FROM BM_INSPECT_TYPE
+   		WHERE DEL_FLAG != 1
+   		AND INS_TYPE_NAME  = #{insTypeName,jdbcType=VARCHAR}
+   </select>
+   
+   
+   <select id="findIdByName" resultType="java.lang.String">
+    	SELECT id FROM BM_INSPECT_TYPE WHERE INS_TYPE_NAME = #{threeTypeName}
+		AND INS_TYPE_PARENT_ID IN (
+			SELECT id FROM BM_INSPECT_TYPE WHERE INS_TYPE_NAME = #{twoTypeName}
+			AND INS_TYPE_PARENT_ID IN (
+				SELECT id FROM BM_INSPECT_TYPE WHERE INS_TYPE_NAME = #{oneTypeName}
+			)
+		)
+   </select>
+   
+</mapper>

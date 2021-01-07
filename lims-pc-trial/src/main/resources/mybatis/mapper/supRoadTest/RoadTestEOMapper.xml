@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.supRoadTest.dao.RoadTestEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.supRoadTest.entity.RoadTestEO" >
+    <id column="id" property="id" />
+    <result column="total" property="total" />
+    <result column="evection_subsidy" property="evectionSubsidy" />
+    <result column="subsidy_off" property="subsidyOff" />
+    <result column="evection_days" property="evectionDays" />
+    <result column="days_off" property="daysOff" />
+    <result column="trial_state" property="trialState" />
+    <result column="count_price" property="countPrice" />
+    <result column="mile_plus" property="milePlus" />
+    <result column="test_conditions" property="testConditions" />
+    <result column="dr_type" property="drType" />
+    <result column="car_state" property="carState" />
+    <result column="load" property="load" />
+    <result column="road_line_id" property="roadLineId" />
+    <result column="trial_id" property="trialId" />
+    <result column="tower" property="tower" />
+    <result column="fuel_type" property="fuelType" />
+    <result column="car_type" property="carType" />
+    <result column="vehicle_type" property="vehicleType" />
+    <result column="chassis_code" property="chassisCode" />
+    <result column="car_id" property="carId" />
+    <result column="sup_code" property="supCode" />
+    <result column="sup_name" property="supName" />
+    <result column="sup_id" property="supId" />
+    <result column="trial_project_code" property="trialProjectCode" />
+    <result column="trial_project_id" property="trialProjectId" />
+    <result column="task_book_name" property="taskBookName" />
+    <result column="task_book_code" property="taskBookCode" />
+    <result column="pc_id" property="pcId" />
+  </resultMap>
+
+  <!-- SUP_ROAD_TEST table all fields -->
+  <sql id="Base_Column_List" >
+     total, evection_subsidy, subsidy_off, evection_days, days_off, trial_state, count_price, mile_plus, test_conditions, dr_type, car_state, load, road_line_id, trial_id, tower, fuel_type, car_type, vehicle_type, chassis_code, car_id, sup_code, sup_name, sup_id, trial_project_code, trial_project_id, task_book_name, task_book_code, pc_id, id
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <choose>
+        <when test="searchMap != null">
+            <foreach collection="searchMap" item="searchItem">
+                AND(
+                lower (roadTest.task_book_code) LIKE lower('%${searchItem.search}%')
+                OR lower(roadTest.task_book_name) LIKE lower ('%${searchItem.search}%')
+                OR lower(roadTest.trial_project_code) LIKE lower ('%${searchItem.search}%')
+                OR lower(roadTest.sup_name) LIKE lower('%${searchItem.search}%')
+                OR lower(roadTest.car_type) LIKE lower('%${searchItem.search}%')
+                OR lower (roadTest.chassis_code) LIKE lower ('%${searchItem.search}%')
+                OR lower (roadTest.vehicle_type) LIKE lower ('%${searchItem.search}%')
+                OR lower (roadTest.fuel_type) LIKE lower ('%${searchItem.search}%')
+                OR lower (roadTest.dr_type) LIKE lower ('%${searchItem.search}%')
+                )
+            </foreach>
+        </when>
+        <otherwise>
+            <trim suffixOverrides="," >
+                <if test="drType != null and drType != ''" >
+                    AND lower (roadTest.dr_type) LIKE lower ('${drType}%')
+                </if>
+                <if test="fuelType != null and fuelType != ''" >
+                    AND lower (roadTest.fuel_type) LIKE lower ('%${fuelType}%')
+                </if>
+                <if test="carType != null and carType != ''" >
+                    AND lower (roadTest.car_type) LIKE lower ('%${carType}%')
+                </if>
+                <if test="vehicleType != null and vehicleType != ''" >
+                    AND lower (roadTest.vehicle_type) LIKE lower ('%${vehicleType}%')
+                </if>
+                <if test="chassisCode != null and chassisCode != ''" >
+                    AND lower (roadTest.chassis_code) LIKE lower ('%${chassisCode}%')
+                </if>
+                <if test="supName != null and supName != ''" >
+                    AND lower (roadTest.sup_name) LIKE lower ('%${supName}%')
+                </if>
+                <if test="trialProjectCode != null and trialProjectCode != ''" >
+                    AND lower (roadTest.trial_project_code) LIKE lower ('%${trialProjectCode}%')
+                </if>
+                <if test="taskBookName != null and taskBookName != ''" >
+                    AND lower (roadTest.task_book_name) LIKE lower ('%${taskBookName}%')
+                </if>
+                <if test="taskBookCode != null and taskBookCode != ''" >
+                    AND lower (roadTest.task_book_code) LIKE lower ('%${taskBookCode}%')
+                </if>
+            </trim>
+        </otherwise>
+    </choose>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.supRoadTest.entity.RoadTestEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_SUP_ROAD_TEST.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into SUP_ROAD_TEST(<include refid="Base_Column_List" />)
+    values (#{total, jdbcType=VARCHAR}, #{evectionSubsidy, jdbcType=VARCHAR}, #{subsidyOff, jdbcType=VARCHAR}, #{evectionDays, jdbcType=VARCHAR}, #{daysOff, jdbcType=VARCHAR}, #{trialState, jdbcType=VARCHAR}, #{countPrice, jdbcType=VARCHAR}, #{milePlus, jdbcType=VARCHAR}, #{testConditions, jdbcType=VARCHAR}, #{drType, jdbcType=VARCHAR}, #{carState, jdbcType=VARCHAR}, #{load, jdbcType=VARCHAR}, #{roadLineId, jdbcType=VARCHAR}, #{trialId, jdbcType=VARCHAR}, #{tower, jdbcType=VARCHAR}, #{fuelType, jdbcType=VARCHAR}, #{carType, jdbcType=VARCHAR}, #{vehicleType, jdbcType=VARCHAR}, #{chassisCode, jdbcType=VARCHAR}, #{carId, jdbcType=VARCHAR}, #{supCode, jdbcType=VARCHAR}, #{supName, jdbcType=VARCHAR}, #{supId, jdbcType=VARCHAR}, #{trialProjectCode, jdbcType=VARCHAR}, #{trialProjectId, jdbcType=VARCHAR}, #{taskBookName, jdbcType=VARCHAR}, #{taskBookCode, jdbcType=VARCHAR}, #{pcId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.supRoadTest.entity.RoadTestEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_SUP_ROAD_TEST.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into SUP_ROAD_TEST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="total != null" >total,</if>
+                <if test="evectionSubsidy != null" >evection_subsidy,</if>
+                <if test="subsidyOff != null" >subsidy_off,</if>
+                <if test="evectionDays != null" >evection_days,</if>
+                <if test="daysOff != null" >days_off,</if>
+                <if test="trialState != null" >trial_state,</if>
+                <if test="countPrice != null" >count_price,</if>
+                <if test="milePlus != null" >mile_plus,</if>
+                <if test="testConditions != null" >test_conditions,</if>
+                <if test="drType != null" >dr_type,</if>
+                <if test="carState != null" >car_state,</if>
+                <if test="load != null" >load,</if>
+                <if test="roadLineId != null" >road_line_id,</if>
+                <if test="trialId != null" >trial_id,</if>
+                <if test="tower != null" >tower,</if>
+                <if test="fuelType != null" >fuel_type,</if>
+                <if test="carType != null" >car_type,</if>
+                <if test="vehicleType != null" >vehicle_type,</if>
+                <if test="chassisCode != null" >chassis_code,</if>
+                <if test="carId != null" >car_id,</if>
+                <if test="supCode != null" >sup_code,</if>
+                <if test="supName != null" >sup_name,</if>
+                <if test="supId != null" >sup_id,</if>
+                <if test="trialProjectCode != null" >trial_project_code,</if>
+                <if test="trialProjectId != null" >trial_project_id,</if>
+                <if test="taskBookName != null" >task_book_name,</if>
+                <if test="taskBookCode != null" >task_book_code,</if>
+                <if test="pcId != null" >pc_id,</if>
+                <if test="id != null" >id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="total != null" >#{total, jdbcType=VARCHAR},</if>
+                <if test="evectionSubsidy != null" >#{evectionSubsidy, jdbcType=VARCHAR},</if>
+                <if test="subsidyOff != null" >#{subsidyOff, jdbcType=VARCHAR},</if>
+                <if test="evectionDays != null" >#{evectionDays, jdbcType=VARCHAR},</if>
+                <if test="daysOff != null" >#{daysOff, jdbcType=VARCHAR},</if>
+                <if test="trialState != null" >#{trialState, jdbcType=VARCHAR},</if>
+                <if test="countPrice != null" >#{countPrice, jdbcType=VARCHAR},</if>
+                <if test="milePlus != null" >#{milePlus, jdbcType=VARCHAR},</if>
+                <if test="testConditions != null" >#{testConditions, jdbcType=VARCHAR},</if>
+                <if test="drType != null" >#{drType, jdbcType=VARCHAR},</if>
+                <if test="carState != null" >#{carState, jdbcType=VARCHAR},</if>
+                <if test="load != null" >#{load, jdbcType=VARCHAR},</if>
+                <if test="roadLineId != null" >#{roadLineId, jdbcType=VARCHAR},</if>
+                <if test="trialId != null" >#{trialId, jdbcType=VARCHAR},</if>
+                <if test="tower != null" >#{tower, jdbcType=VARCHAR},</if>
+                <if test="fuelType != null" >#{fuelType, jdbcType=VARCHAR},</if>
+                <if test="carType != null" >#{carType, jdbcType=VARCHAR},</if>
+                <if test="vehicleType != null" >#{vehicleType, jdbcType=VARCHAR},</if>
+                <if test="chassisCode != null" >#{chassisCode, jdbcType=VARCHAR},</if>
+                <if test="carId != null" >#{carId, jdbcType=VARCHAR},</if>
+                <if test="supCode != null" >#{supCode, jdbcType=VARCHAR},</if>
+                <if test="supName != null" >#{supName, jdbcType=VARCHAR},</if>
+                <if test="supId != null" >#{supId, jdbcType=VARCHAR},</if>
+                <if test="trialProjectCode != null" >#{trialProjectCode, jdbcType=VARCHAR},</if>
+                <if test="trialProjectId != null" >#{trialProjectId, jdbcType=VARCHAR},</if>
+                <if test="taskBookName != null" >#{taskBookName, jdbcType=VARCHAR},</if>
+                <if test="taskBookCode != null" >#{taskBookCode, jdbcType=VARCHAR},</if>
+                <if test="pcId != null" >#{pcId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.supRoadTest.entity.RoadTestEO" >
+    update SUP_ROAD_TEST
+       set  total = #{total},
+            evection_subsidy = #{evectionSubsidy},
+            subsidy_off = #{subsidyOff},
+            evection_days = #{evectionDays},
+            days_off = #{daysOff},
+            trial_state = #{trialState},
+            count_price = #{countPrice},
+            mile_plus = #{milePlus},
+            test_conditions = #{testConditions},
+            dr_type = #{drType},
+            car_state = #{carState},
+            load = #{load},
+            road_line_id = #{roadLineId},
+            trial_id = #{trialId},
+            tower = #{tower},
+            fuel_type = #{fuelType},
+            car_type = #{carType},
+            vehicle_type = #{vehicleType},
+            chassis_code = #{chassisCode},
+            car_id = #{carId},
+            sup_code = #{supCode},
+            sup_name = #{supName},
+            sup_id = #{supId},
+            trial_project_code = #{trialProjectCode},
+            trial_project_id = #{trialProjectId},
+            task_book_name = #{taskBookName},
+            task_book_code = #{taskBookCode},
+            pc_id = #{pcId}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.supRoadTest.entity.RoadTestEO" >
+    update SUP_ROAD_TEST
+    <set >
+      <if test="total != null" >
+        total = #{total},
+      </if>
+      <if test="evectionSubsidy != null" >
+        evection_subsidy = #{evectionSubsidy},
+      </if>
+      <if test="subsidyOff != null" >
+        subsidy_off = #{subsidyOff},
+      </if>
+      <if test="evectionDays != null" >
+        evection_days = #{evectionDays},
+      </if>
+      <if test="daysOff != null" >
+        days_off = #{daysOff},
+      </if>
+      <if test="trialState != null" >
+        trial_state = #{trialState},
+      </if>
+      <if test="countPrice != null" >
+        count_price = #{countPrice},
+      </if>
+      <if test="milePlus != null" >
+        mile_plus = #{milePlus},
+      </if>
+      <if test="testConditions != null" >
+        test_conditions = #{testConditions},
+      </if>
+      <if test="drType != null" >
+        dr_type = #{drType},
+      </if>
+      <if test="carState != null" >
+        car_state = #{carState},
+      </if>
+      <if test="load != null" >
+        load = #{load},
+      </if>
+      <if test="roadLineId != null" >
+        road_line_id = #{roadLineId},
+      </if>
+      <if test="trialId != null" >
+        trial_id = #{trialId},
+      </if>
+      <if test="tower != null" >
+        tower = #{tower},
+      </if>
+      <if test="fuelType != null" >
+        fuel_type = #{fuelType},
+      </if>
+      <if test="carType != null" >
+        car_type = #{carType},
+      </if>
+      <if test="vehicleType != null" >
+        vehicle_type = #{vehicleType},
+      </if>
+      <if test="chassisCode != null" >
+        chassis_code = #{chassisCode},
+      </if>
+      <if test="carId != null" >
+        car_id = #{carId},
+      </if>
+      <if test="supCode != null" >
+        sup_code = #{supCode},
+      </if>
+      <if test="supName != null" >
+        sup_name = #{supName},
+      </if>
+      <if test="supId != null" >
+        sup_id = #{supId},
+      </if>
+      <if test="trialProjectCode != null" >
+        trial_project_code = #{trialProjectCode},
+      </if>
+      <if test="trialProjectId != null" >
+        trial_project_id = #{trialProjectId},
+      </if>
+      <if test="taskBookName != null" >
+        task_book_name = #{taskBookName},
+      </if>
+      <if test="taskBookCode != null" >
+        task_book_code = #{taskBookCode},
+      </if>
+      <if test="pcId != null" >
+        pc_id = #{pcId},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 SUP_ROAD_TEST -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from SUP_ROAD_TEST
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from SUP_ROAD_TEST
+     where id = #{value}
+
+  </delete>
+
+  <!-- SUP_ROAD_TEST 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from SUP_ROAD_TEST roadTest
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询SUP_ROAD_TEST列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" />
+              from SUP_ROAD_TEST roadTest
+			 <include refid="Base_Where_Clause"/>
+              ORDER BY roadTest.pc_id DESC, roadTest.trial_id DESC
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from SUP_ROAD_TEST
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

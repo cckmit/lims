@@ -1,0 +1,1127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.car.dao.SaCarDataDAO">
+    <resultMap id="BaseResultMap" type="com.adc.da.car.entity.SaCarDataEO">
+        <!--@mbg.generated-->
+        <id column="ID" property="id"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+        <result column="UPDATE_BY" property="updateBy"/>
+        <result column="BM_PROJECT_ID" property="bmProjectId"/>
+        <result column="SEND_CAR_USER_ID" property="sendCarUserId"/>
+        <result column="CAR_NAME" property="carName"/>
+        <result column="PASSENGER_NUMBER" property="passengerNumber"/>
+        <result column="CAR_VIN" property="carVin"/>
+        <result column="CAR_MILIEAGE" property="carMilieage"/>
+        <result column="CAR_ENGINE_NO" property="carEngineNo"/>
+        <result column="CAR_ENGINE_TYPE" property="carEngineType"/>
+        <result column="CAR_STAGE" property="carStage"/>
+        <result column="RECEIVED_USER_ID" property="receivedUserId"/>
+        <result column="PRODUCED_FACTORY" property="producedFactory"/>
+        <result column="PART_STATUS" property="partStatus"/>
+        <result column="CAR_STATUS" property="carStatus"/>
+        <result column="RECEIVED_TIME" property="receivedTime"/>
+        <result column="CAR_DEPOT_ID" property="carDepotId"/>
+        <result column="CAR_SPACE_NUMBER" property="carSpaceNumber"/>
+        <result column="TYRE_FACTORY" property="tyreFactory"/>
+        <result column="WHETHER_USE" property="whetherUse"/>
+        <result column="TYRE_TYPE" property="tyreType"/>
+        <result column="CAR_TYPE" property="carType"/>
+        <result column="PRODUCED_TIME" property="producedTime"/>
+        <result column="TYRE_PRESSURE" property="tyrePressure"/>
+        <result column="USE_CYCLE" property="useCycle"/>
+        <result column="CAR_WEIGHT" property="carWeight"/>
+        <result column="CAR_LOCATION" property="carLocation"/>
+        <result column="CAR_LOCATION_MANAGER_ID" property="carLocationManagerId"/>
+        <result column="ASSESS_ATTACHMENT_ID" property="assessAttachmentId"/>
+        <result column="REPORT_ASSESS_ATTACHMENT_ID" property="reportAssessAttachmentId"/>
+        <result column="RETURN_CAR_ATTACHMENT_ID" property="returnCarAttachmentId"/>
+        <result column="RECEIVE_CAR_ATTACHMENT_ID" property="receiveCarAttachmentId"/>
+        <result column="GET_CAR_USER_ID" property="getCarUserId"/>
+        <result column="CAR_SPACE_LOCATION" property="carSpaceLocation"/>
+        <result column="SEND_CAR_USER_NAME" property="sendCarUserName"/>
+        <result column="SEND_CAR_USER_PHONE" property="sendCarUserPhone"/>
+        <result column="SEND_CAR_USER_ORG" property="sendCarUserOrg"/>
+        <result column="RECEIVED_USER_NAME" property="receivedUserName"/>
+        <result column="CAR_LOCATION_MANAGER_NAME" property="carLocationManagerName"/>
+        <result column="BM_PROJECT_NAME" property="bmProjectName"/>
+        <result column="CREATE_BY_NAME" property="createByName"/>
+        <result property="chassisNumber" column="chassis_number"/>
+        <result property="motorNumber" column="motor_number"/>
+        <result property="batteryPack" column="battery_pack"/>
+        <result property="carCondition" column="car_condition"/>
+        <result property="carStatusE" column="car_status_e"/>
+        <result property="createByDepart" column="CREATE_BY_DEPART"/>
+    </resultMap>
+    
+    <resultMap id="chassisNoResult" type="java.lang.String" >
+    	<result property="chassisNumber" column="chassis_number"/>
+    </resultMap>
+    
+	<sql id="CarReturn_Column_List">
+			PCRA.ID,
+		PCRA.TASK_ID,
+		PTT.TASK_CODE,
+		PCRA.RETURN_CAR_CODE,
+		PCRA.CREATE_BY_NAME,
+		PCRA.RETURN_TIME
+	</sql>
+
+	<resultMap type="com.adc.da.car.page.SaCarReturnEOPage" id="getCarReturnPageList">
+		<id column="id" property="returnId"/>
+		<result column="TASK_ID" property="taskId"/>
+		<result column="TASK_CODE" property="taskNum"/>
+		<result column="RETURN_CAR_CODE" property="returnNum"/>
+		<result column="CREATE_BY_NAME" property="applicant"/>
+		<result column="RETURN_TIME" property="endTime"/>
+	</resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, BM_PROJECT_ID, SEND_CAR_USER_ID,
+        CAR_NAME, PASSENGER_NUMBER, CAR_VIN, CAR_MILIEAGE, CAR_ENGINE_NO, CAR_ENGINE_TYPE,
+        CAR_STAGE, RECEIVED_USER_ID, PRODUCED_FACTORY, PART_STATUS, CAR_STATUS, RECEIVED_TIME,
+        CAR_DEPOT_ID, CAR_SPACE_NUMBER, TYRE_FACTORY, WHETHER_USE, TYRE_TYPE, CAR_TYPE, PRODUCED_TIME,
+        TYRE_PRESSURE, USE_CYCLE, CAR_WEIGHT, CAR_LOCATION, CAR_LOCATION_MANAGER_ID, ASSESS_ATTACHMENT_ID,
+        REPORT_ASSESS_ATTACHMENT_ID, RETURN_CAR_ATTACHMENT_ID, RECEIVE_CAR_ATTACHMENT_ID,
+        GET_CAR_USER_ID, CAR_SPACE_LOCATION, SEND_CAR_USER_NAME, SEND_CAR_USER_PHONE, SEND_CAR_USER_ORG,
+        RECEIVED_USER_NAME, CAR_LOCATION_MANAGER_NAME, BM_PROJECT_NAME, CREATE_BY_NAME, CHASSIS_NUMBER, MOTOR_NUMBER, BATTERY_PACK, CAR_CONDITION, CAR_STATUS_E, CREATE_BY_DEPART
+    </sql>
+    <sql id="Column_List">
+        <!--@mbg.generated-->
+        SCD.ID, SCD.DEL_FLAG, SCD.CREATE_TIME, SCD.CREATE_BY, SCD.UPDATE_TIME, SCD.UPDATE_BY, BM_PROJECT_ID,
+        SEND_CAR_USER_ID,
+        CAR_NAME, PASSENGER_NUMBER, CAR_VIN, CAR_MILIEAGE, CAR_ENGINE_NO, CAR_ENGINE_TYPE,
+        CAR_STAGE, RECEIVED_USER_ID, PRODUCED_FACTORY, PART_STATUS, CAR_STATUS, RECEIVED_TIME,
+        CAR_DEPOT_ID, CAR_SPACE_NUMBER, TYRE_FACTORY, WHETHER_USE, TYRE_TYPE, CAR_TYPE, PRODUCED_TIME,
+        TYRE_PRESSURE, USE_CYCLE, CAR_WEIGHT, CAR_LOCATION, CAR_LOCATION_MANAGER_ID, ASSESS_ATTACHMENT_ID,
+        REPORT_ASSESS_ATTACHMENT_ID, RETURN_CAR_ATTACHMENT_ID, RECEIVE_CAR_ATTACHMENT_ID,
+        GET_CAR_USER_ID, CAR_SPACE_LOCATION, SEND_CAR_USER_NAME, SEND_CAR_USER_PHONE, SEND_CAR_USER_ORG,
+        RECEIVED_USER_NAME, CAR_LOCATION_MANAGER_NAME, BM_PROJECT_NAME, CREATE_BY_NAME, CHASSIS_NUMBER, MOTOR_NUMBER, BATTERY_PACK, CAR_CONDITION, CAR_STATUS_E
+    </sql>
+
+    <resultMap id="getPageList" type="com.adc.da.car.vo.SaCarDataListVO">
+        <id column="ID" property="id"/>
+        <result column="CAR_NAME" property="carName"/>
+        <result column="CAR_VIN" property="carVin"/>
+        <result column="PRODUCED_FACTORY" property="producedFactory"/>
+        <result column="car_space_location" property="carSpaceLocation"/>
+        <result column="BM_PROJECT_ID" property="bmProjectId"/>
+        <result column="PRO_NAME" property="bmProjectName"/>
+        <result column="SEND_CAR_USER_ID" property="sendCarUserId"/>
+        <result column="SEND_CAR_USER_NAME" property="sendCarUserName"/>
+        <result column="CAR_STATUS" property="carStatus"/>
+        <result column="GET_CAR_USER_ID" property="getCarUserId"/>
+        <result column="GET_CAR_USER_NAME" property="getCarUserName"/>
+        <result column="CAR_SPACE_LOCATION" property="carSpaceLocation"/>
+        <result property="producedTime" column="produced_time"/>
+        <result property="carEngineNo" column="car_engine_no"/>
+        <result property="carEngineType" column="car_engine_type"/>
+        <result property="carNO" column="SAMPLE_NO"/>
+        <result property="trialApplyId" column="TRIALTASK_ID"/>
+        <result property="trialApplyNO" column="EV_NUMBER"/>
+        <collection property="trialtaskSampleVOS" resultMap="trialtaskSampleVOS"/>
+    </resultMap>
+    <resultMap id="getPageLists" type="com.adc.da.car.vo.SaCarDataListVO">
+        <id column="ID" property="id"/>
+        <result column="CAR_NAME" property="carName"/>
+        <result column="CAR_VIN" property="carVin"/>
+        <result column="PRODUCED_FACTORY" property="producedFactory"/>
+        <result column="car_space_location" property="carSpaceLocation"/>
+        <result column="BM_PROJECT_ID" property="bmProjectId"/>
+        <result column="PRO_NAME" property="bmProjectName"/>
+        <result column="SEND_CAR_USER_ID" property="sendCarUserId"/>
+        <result column="SEND_CAR_USER_NAME" property="sendCarUserName"/>
+        <result column="CAR_STATUS" property="carStatus"/>
+        <result column="GET_CAR_USER_ID" property="getCarUserId"/>
+        <result column="GET_CAR_USER_NAME" property="getCarUserName"/>
+        <result column="CAR_SPACE_LOCATION" property="carSpaceLocation"/>
+        <result property="producedTime" column="produced_time"/>
+        <result property="carEngineNo" column="car_engine_no"/>
+        <result property="carEngineType" column="car_engine_type"/>
+        <result property="carNO" column="SAMPLE_NO"/>
+        <result property="trialApplyId" column="TRIALTASK_ID"/>
+        <result property="trialApplyNO" column="EV_NUMBER"/>
+        <result property="receivedUserId" column="RECEIVED_USER_ID"/>
+        <result property="chassisNumber" column="chassis_number"/>
+        <result column="CAR_MODEL" property="carModel"/>
+        <result column="CAR_TYPE" property="carType"/>
+        <collection property="trialtaskSampleVOS" resultMap="trialtaskSampleVOS"/>
+    </resultMap>
+    <resultMap id="trialtaskSampleVOS" type="com.adc.da.car.vo.TrialtaskSampleVO">
+        <!--
+          WARNING - @mbg.generated
+          This element is automatically generated by MyBatis Generator, do not modify.
+        -->
+        <result column="SAMPLE_NO" property="carNO"/>
+        <result column="TRIALTASK_ID" property="trialApplyId"/>
+        <result column="EV_NUMBER" property="trialApplyNO"/>
+    </resultMap>
+
+<!--    <sql id="getPageListFrom">           需求：样品关联发动机变为样品的任务编号和人员关联PC实验
+        FROM SA_CAR_DATA SCD
+                 LEFT JOIN (select SCD.ID,
+                                   WM_CONCAT(ETS.SAMPLE_NO)    SAMPLE_NO,
+                                   WM_CONCAT(ETS.TRIALTASK_ID) TRIALTASK_ID,
+                                   WM_CONCAT(ETT.EV_NUMBER)    EV_NUMBER
+                            from SA_CAR_DATA SCD
+                                     left join EV_TRIALTASK_SAMPLE ETS on SCD.ID = ETS.SAMPLE_ID
+                                     left join EV_TRIAL_TASK ETT on ETS.TRIALTASK_ID = ETT.ID
+                            where ETT.DEL_FLAG = 0
+                            GROUP BY SCD.ID) carNo on SCD.ID = carNo.ID
+                 LEFT JOIN BM_PROJECT BP ON SCD.BM_PROJECT_ID = BP.ID
+                 LEFT JOIN TS_USER TU ON SCD.SEND_CAR_USER_ID = TU.USID
+                 LEFT JOIN TS_USER TU2 ON SCD.get_car_user_id = TU2.USID
+    </sql>-->
+    <sql id="getPageListFrom">
+        FROM SA_CAR_DATA SCD
+                 LEFT JOIN (select SCD.ID,
+                    regexp_replace((LISTAGG(ETS.SAMPLE_NO,',')  within GROUP(ORDER BY ETS.SAMPLE_NO)),'([^,]+)(,\1)+', '\1')  SAMPLE_NO,
+                    regexp_replace((LISTAGG(ETS.TRIALTASK_ID,',')  within GROUP(ORDER BY ETS.TRIALTASK_ID)),'([^,]+)(,\1)+', '\1')  TRIALTASK_ID,
+                    regexp_replace((LISTAGG(PTT.TASK_CODE,',')  within GROUP(ORDER BY PTT.TASK_CODE)),'([^,]+)(,\1)+', '\1')  EV_NUMBER
+                            from SA_CAR_DATA SCD
+                                     left join EV_TRIALTASK_SAMPLE ETS on SCD.ID = ETS.SAMPLE_ID
+                                     left join PC_TRIAL_TASK PTT on ETS.TRIALTASK_ID = PTT.ID
+                            where PTT.DEL_FLAG = 0 and PTT.TASK_STATUS !='8' and PTT.TASK_STATUS !='0'
+                            GROUP BY SCD.ID) carNo on SCD.ID = carNo.ID
+                 LEFT JOIN BM_PROJECT BP ON SCD.BM_PROJECT_ID = BP.ID
+                 LEFT JOIN TS_USER TU ON SCD.SEND_CAR_USER_ID = TU.USID
+                 LEFT JOIN TS_USER TU2 ON SCD.get_car_user_id = TU2.USID
+    </sql>
+
+
+
+    <sql id="getPageColumn">
+            SCD.ID,
+            SCD.CAR_NAME,
+            SCD.CAR_VIN,
+            SAMPLE_NO,
+            SCD.PRODUCED_FACTORY,
+            SCD.CAR_DEPOT_ID,
+            SCD.CAR_SPACE_NUMBER,
+            scd.BM_PROJECT_ID,
+            BP.PRO_NAME,
+            TRIALTASK_ID,
+            EV_NUMBER,
+            TU.USID    AS SEND_CAR_USER_ID,
+            TU.USNAME  AS SEND_CAR_USER_NAME,
+            TU2.USID   AS GET_CAR_USER_ID,
+            TU2.USNAME AS GET_CAR_USER_NAME,
+            SCD.CAR_STATUS,
+            SCD.CAR_SPACE_LOCATION,
+            SCD.CREATE_TIME,
+            SCD.CAR_ENGINE_NO,
+            SCD.CAR_ENGINE_TYPE,
+            SCD.PRODUCED_TIME
+    </sql>
+
+    <sql id="getListColumn">
+            ID,
+            CAR_NAME,
+            CAR_VIN,
+            SAMPLE_NO,
+            PRODUCED_FACTORY,
+            BM_PROJECT_ID,
+            PRO_NAME,
+            TRIALTASK_ID,
+            EV_NUMBER,
+            SEND_CAR_USER_ID,
+            SEND_CAR_USER_NAME,
+            GET_CAR_USER_ID,
+            GET_CAR_USER_NAME,
+            CAR_STATUS,
+            CAR_SPACE_LOCATION,
+            CAR_ENGINE_NO,
+            CAR_ENGINE_TYPE,
+            PRODUCED_TIME
+    </sql>
+
+	<!-- 借车单查询条件 -->
+    <sql id="CarBrrow_Where_Clause">
+    	WHERE PROCESS_STATUS = '5' AND PCLA.task_id = PTT.id
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="phrase">
+                    AND (
+                    	PTT.TASK_CODE LIKE '%${phrase}%'
+                    	OR PCLA.LOAN_CAR_CODE LIKE '%${phrase}%'
+                    	OR PCLA.APPLICANT LIKE '%${phrase}%'
+                    	OR PCLA.END_DATE LIKE '%${phrase}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="taskNum != null and taskNum != ''">
+                    AND PTT.TASK_CODE LIKE '%${taskNum}%'
+                </if>
+                <if test="brrowNum != null and brrowNum != ''">
+                    AND PCLA.LOAN_CAR_CODE LIKE '%${brrowNum}%'
+                </if>
+                <if test="endTime1 != null and endTime1 != ''">
+                    AND PCLA.END_DATE <![CDATA[>=]]> #{endTime1}
+                </if>
+                <if test="endTime2 != null and endTime2 != ''">
+                    AND PCLA.END_DATE <![CDATA[<=]]> #{endTime2}
+                </if>
+                <if test="applicant != null and applicant != ''">
+                    AND PCLA.APPLICANT LIKE '%${applicant}%'
+                </if>
+                
+            </otherwise>
+        </choose>
+    </sql>
+    
+    <!-- 还车单查询条件 -->
+    <sql id="CarReturn_Where_Clause">
+    	WHERE STATUS = '5' AND PCRA.TASK_ID = PTT.ID
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="phrase">
+                    AND (
+                    	PTT.TASK_CODE LIKE '%${phrase}%'
+                    	OR PCRA.RETURN_CAR_CODE LIKE '%${phrase}%'
+                    	OR PCRA.CREATE_BY_NAME LIKE '%${phrase}%'
+                    	OR PCRA.RETURN_TIME LIKE '%${phrase}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="taskNum != null and taskNum != ''">
+                    AND PTT.TASK_CODE LIKE '%${taskNum}%'
+                </if>
+                <if test="returnNum != null and returnNum != ''">
+                    AND PCRA.RETURN_CAR_CODE LIKE '%${returnNum}%'
+                </if>
+                <if test="endTime1 != null and endTime1 != ''">
+                    AND PCRA.RETURN_TIME <![CDATA[>=]]> #{endTime1}
+                </if>
+                <if test="endTime2 != null and endTime2 != ''">
+                    AND PCRA.RETURN_TIME <![CDATA[<=]]> #{endTime2}
+                </if>
+                <if test="applicant != null and applicant != ''">
+                    AND PCRA.CREATE_BY_NAME LIKE '%${applicant}%'
+                </if>
+                
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="getPageListWhere">
+        WHERE SCD.DEL_FLAG = 0
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    AND (EV_NUMBER LIKE '%'||#{keyWord}||'%' OR SCD.CAR_NAME LIKE '%'||#{keyWord}||'%' OR
+                    BP.PRO_NAME LIKE '%'||#{keyWord}||'%' OR SCD.CAR_VIN LIKE '%'||#{keyWord}||'%' OR
+                    SCD.PRODUCED_FACTORY LIKE '%'||#{keyWord}||'%' OR TU.USNAME LIKE '%'||#{keyWord}||'%' OR
+                    TU2.USNAME LIKE '%'||#{keyWord}||'%' OR SCD.CAR_STATUS LIKE '%'||#{keyWord}||'%' OR
+                    SCD.CAR_SPACE_LOCATION LIKE '%'||#{keyWord}||'%' 
+                    OR SCD.CAR_ENGINE_NO LIKE '%'||#{keyWord}||'%'
+                    OR SCD.CAR_ENGINE_TYPE LIKE '%'||#{keyWord}||'%'
+                    OR SCD.chassis_number LIKE '%'||#{keyWord}||'%')
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="trialApplyNO != null and trialApplyNO != ''">
+                    AND EV_NUMBER LIKE '%'||#{trialApplyNO}||'%'
+                </if>
+                <if test="carName != null and carName != ''">
+                    AND SCD.CAR_NAME LIKE '%'||#{carName}||'%'
+                </if>
+                <if test="projectName != null and projectName != ''">
+                    AND BP.PRO_NAME LIKE '%'||#{projectName}||'%'
+                </if>
+                <if test="carVin != null and carVin != ''">
+                    AND SCD.CAR_VIN LIKE '%'||#{carVin}||'%'
+                </if>
+                <if test="producedFactory != null and producedFactory != ''">
+                    AND SCD.PRODUCED_FACTORY LIKE '%'||#{producedFactory}||'%'
+                </if>
+                <if test="sendCarUserName != null and sendCarUserName != ''">
+                    AND TU.USNAME LIKE '%'||#{sendCarUserName}||'%'
+                </if>
+                <if test="getCarUserName != null and getCarUserName != ''">
+                    AND TU2.USNAME LIKE '%'||#{getCarUserName}||'%'
+                </if>
+                <if test="carStatus != null and carStatus != ''">
+                    AND SCD.CAR_STATUS LIKE '%'||#{carStatus}||'%'
+                </if>
+                <if test="carSpaceLocation != null and carSpaceLocation != ''">
+                    AND SCD.CAR_SPACE_LOCATION LIKE '%'||#{carSpaceLocation}||'%'
+                </if>
+                <if test="carEngineNo != null and carEngineNo != ''">
+                    AND SCD.CAR_ENGINE_NO LIKE '%'||#{carEngineNo}||'%'
+                </if>
+                <if test="carEngineType != null and carEngineType != ''">
+                    AND SCD.CAR_ENGINE_TYPE LIKE '%'||#{carEngineType}||'%'
+                </if>
+                <if test="chassisNumber != null and chassisNumber != ''">
+                    AND SCD.chassis_number LIKE '%'||#{chassisNumber}||'%'
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="queryListForExcel" resultMap="BaseResultMap" parameterType="com.adc.da.car.page.SaCarDataEOPage">
+        SELECT
+        <include refid="Column_List"/>
+        <include refid="getPageListFrom"/>
+        <include refid="getPageListWhere"/>
+        ORDER BY scd.CREATE_TIME DESC
+    </select>
+
+    <!-- 根据id集合查询 PC_TRIAL_PERSON -->
+    <select id="selectByKeyArray"  resultType="java.lang.String">
+        SELECT userName FROM (
+        select trial_task_id,
+        LISTAGG(PERSON_NAME,',')  within GROUP(ORDER BY create_time)  userName
+        from PC_TRIAL_PERSON  where trial_task_id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group BY  trial_task_id)
+    </select>
+
+    <!-- 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.car.page.SaCarDataEOPage">
+        SELECT count(1)
+        <include refid="getPageListFrom"/>
+        <include refid="getPageListWhere"/>
+    </select>
+
+    <!-- 查询列表 -->
+    <select id="selectByPage" resultMap="getPageLists" parameterType="com.adc.da.car.page.SaCarDataEOPage">
+        SELECT
+        	*
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        	SCD.ID,
+            SCD.CAR_NAME,
+            SCD.CAR_VIN,
+            SAMPLE_NO,
+            SCD.PRODUCED_FACTORY,
+            SCD.CAR_DEPOT_ID,
+            SCD.CAR_SPACE_NUMBER,
+            scd.BM_PROJECT_ID,
+            BP.PRO_NAME,
+            TRIALTASK_ID,
+            EV_NUMBER,
+            TU.USID    AS SEND_CAR_USER_ID,
+            TU.USNAME  AS SEND_CAR_USER_NAME,
+            TU2.USID   AS GET_CAR_USER_ID,
+            TU2.USNAME AS GET_CAR_USER_NAME,
+            SCD.CAR_STATUS,
+            SCD.CAR_SPACE_LOCATION,
+            SCD.CREATE_TIME,
+            SCD.CAR_ENGINE_NO,
+            SCD.CAR_ENGINE_TYPE,
+            SCD.PRODUCED_TIME,
+            SCD.RECEIVED_USER_ID,
+            SCD.chassis_number,
+            SCD.CAR_TYPE,
+            SCD.CAR_MODEL
+        <include refid="getPageListFrom"/>
+        <include refid="getPageListWhere"/>
+        ORDER BY scd.CREATE_TIME DESC,SCD.ID DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--
+          WARNING - @mbg.generated
+          This element is automatically generated by MyBatis Generator, do not modify.
+        -->
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_CAR_DATA
+        WHERE ID = #{id} AND DEL_FLAG = 0
+    </select>
+
+    <update id="changeStatus" parameterType="java.lang.String">
+        update SA_CAR_DATA
+        set CAR_STATUS = #{status}
+        where id = #{id}
+    </update>
+
+    <insert id="insertSelective" parameterType="com.adc.da.car.entity.SaCarDataEO">
+        <!--@mbg.generated-->
+        INSERT INTO SA_CAR_DATA
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="createBy != null">
+                CREATE_BY,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY,
+            </if>
+            <if test="bmProjectId != null">
+                BM_PROJECT_ID,
+            </if>
+            <if test="sendCarUserId != null">
+                SEND_CAR_USER_ID,
+            </if>
+            <if test="carName != null">
+                CAR_NAME,
+            </if>
+            <if test="passengerNumber != null">
+                PASSENGER_NUMBER,
+            </if>
+            <if test="carVin != null">
+                CAR_VIN,
+            </if>
+            <if test="carMilieage != null">
+                CAR_MILIEAGE,
+            </if>
+            <if test="carEngineNo != null">
+                CAR_ENGINE_NO,
+            </if>
+            <if test="carEngineType != null">
+                CAR_ENGINE_TYPE,
+            </if>
+            <if test="carStage != null">
+                CAR_STAGE,
+            </if>
+            <if test="receivedUserId != null">
+                RECEIVED_USER_ID,
+            </if>
+            <if test="producedFactory != null">
+                PRODUCED_FACTORY,
+            </if>
+            <if test="partStatus != null">
+                PART_STATUS,
+            </if>
+            <if test="carStatus != null">
+                CAR_STATUS,
+            </if>
+            <if test="receivedTime != null">
+                RECEIVED_TIME,
+            </if>
+            <if test="carDepotId != null">
+                CAR_DEPOT_ID,
+            </if>
+            <if test="carSpaceNumber != null">
+                CAR_SPACE_NUMBER,
+            </if>
+            <if test="tyreFactory != null">
+                TYRE_FACTORY,
+            </if>
+            <if test="whetherUse != null">
+                WHETHER_USE,
+            </if>
+            <if test="tyreType != null">
+                TYRE_TYPE,
+            </if>
+            <if test="carType != null">
+                CAR_TYPE,
+            </if>
+            <if test="producedTime != null">
+                PRODUCED_TIME,
+            </if>
+            <if test="tyrePressure != null">
+                TYRE_PRESSURE,
+            </if>
+            <if test="useCycle != null">
+                USE_CYCLE,
+            </if>
+            <if test="carWeight != null">
+                CAR_WEIGHT,
+            </if>
+            <if test="carLocation != null">
+                CAR_LOCATION,
+            </if>
+            <if test="carLocationManagerId != null">
+                CAR_LOCATION_MANAGER_ID,
+            </if>
+            <if test="assessAttachmentId != null">
+                ASSESS_ATTACHMENT_ID,
+            </if>
+            <if test="reportAssessAttachmentId != null">
+                REPORT_ASSESS_ATTACHMENT_ID,
+            </if>
+            <if test="returnCarAttachmentId != null">
+                RETURN_CAR_ATTACHMENT_ID,
+            </if>
+            <if test="receiveCarAttachmentId != null">
+                RECEIVE_CAR_ATTACHMENT_ID,
+            </if>
+            <if test="getCarUserId != null">
+                GET_CAR_USER_ID,
+            </if>
+            <if test="carSpaceLocation != null">
+                CAR_SPACE_LOCATION,
+            </if>
+            <if test="sendCarUserName != null">
+                SEND_CAR_USER_NAME,
+            </if>
+            <if test="sendCarUserPhone != null">
+                SEND_CAR_USER_PHONE,
+            </if>
+            <if test="sendCarUserOrg != null">
+                SEND_CAR_USER_ORG,
+            </if>
+            <if test="receivedUserName != null">
+                RECEIVED_USER_NAME,
+            </if>
+            <if test="carLocationManagerName != null">
+                CAR_LOCATION_MANAGER_NAME,
+            </if>
+            <if test="bmProjectName != null">
+                BM_PROJECT_NAME,
+            </if>
+            <if test="createByName != null">
+                CREATE_BY_NAME,
+            </if>
+            <if test="chassisNumber != null">
+                CHASSIS_NUMBER,
+            </if>
+            <if test="motorNumber != null">
+                MOTOR_NUMBER,
+            </if>
+            <if test="batteryPack != null">
+                BATTERY_PACK,
+            </if>
+            <if test="carCondition != null">
+                CAR_CONDITION,
+            </if>
+            <if test="carStatusE != null">
+                CAR_STATUS_E,
+            </if>
+            <if test="createByDepart != null">
+                CREATE_BY_DEPART,
+            </if>
+            <if test="carModel != null">
+                CAR_MODEL,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy},
+            </if>
+            <if test="bmProjectId != null">
+                #{bmProjectId},
+            </if>
+            <if test="sendCarUserId != null">
+                #{sendCarUserId},
+            </if>
+            <if test="carName != null">
+                #{carName},
+            </if>
+            <if test="passengerNumber != null">
+                #{passengerNumber},
+            </if>
+            <if test="carVin != null">
+                #{carVin},
+            </if>
+            <if test="carMilieage != null">
+                #{carMilieage},
+            </if>
+            <if test="carEngineNo != null">
+                #{carEngineNo},
+            </if>
+            <if test="carEngineType != null">
+                #{carEngineType},
+            </if>
+            <if test="carStage != null">
+                #{carStage},
+            </if>
+            <if test="receivedUserId != null">
+                #{receivedUserId},
+            </if>
+            <if test="producedFactory != null">
+                #{producedFactory},
+            </if>
+            <if test="partStatus != null">
+                #{partStatus},
+            </if>
+            <if test="carStatus != null">
+                #{carStatus},
+            </if>
+            <if test="receivedTime != null">
+                #{receivedTime},
+            </if>
+            <if test="carDepotId != null">
+                #{carDepotId},
+            </if>
+            <if test="carSpaceNumber != null">
+                #{carSpaceNumber},
+            </if>
+            <if test="tyreFactory != null">
+                #{tyreFactory},
+            </if>
+            <if test="whetherUse != null">
+                #{whetherUse},
+            </if>
+            <if test="tyreType != null">
+                #{tyreType},
+            </if>
+            <if test="carType != null">
+                #{carType},
+            </if>
+            <if test="producedTime != null">
+                #{producedTime},
+            </if>
+            <if test="tyrePressure != null">
+                #{tyrePressure},
+            </if>
+            <if test="useCycle != null">
+                #{useCycle},
+            </if>
+            <if test="carWeight != null">
+                #{carWeight},
+            </if>
+            <if test="carLocation != null">
+                #{carLocation},
+            </if>
+            <if test="carLocationManagerId != null">
+                #{carLocationManagerId},
+            </if>
+            <if test="assessAttachmentId != null">
+                #{assessAttachmentId},
+            </if>
+            <if test="reportAssessAttachmentId != null">
+                #{reportAssessAttachmentId},
+            </if>
+            <if test="returnCarAttachmentId != null">
+                #{returnCarAttachmentId},
+            </if>
+            <if test="receiveCarAttachmentId != null">
+                #{receiveCarAttachmentId},
+            </if>
+            <if test="getCarUserId != null">
+                #{getCarUserId},
+            </if>
+            <if test="carSpaceLocation != null">
+                #{carSpaceLocation},
+            </if>
+            <if test="sendCarUserName != null">
+                #{sendCarUserName},
+            </if>
+            <if test="sendCarUserPhone != null">
+                #{sendCarUserPhone},
+            </if>
+            <if test="sendCarUserOrg != null">
+                #{sendCarUserOrg},
+            </if>
+            <if test="receivedUserName != null">
+                #{receivedUserName},
+            </if>
+            <if test="carLocationManagerName != null">
+                #{carLocationManagerName},
+            </if>
+            <if test="bmProjectName != null">
+                #{bmProjectName},
+            </if>
+            <if test="createByName != null">
+                #{createByName},
+            </if>
+            <if test="chassisNumber != null">
+                #{chassisNumber} ,
+            </if>
+            <if test="motorNumber != null">
+                #{motorNumber} ,
+            </if>
+            <if test="batteryPack != null">
+                #{batteryPack} ,
+            </if>
+            <if test="carCondition != null">
+                #{carCondition} ,
+            </if>
+            <if test="carStatusE != null">
+                #{carStatusE} ,
+            </if>
+            <if test="createByDepart != null">
+                #{createByDepart} ,
+            </if>
+            <if test="carModel != null">
+                #{carModel},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.car.entity.SaCarDataEO">
+        <!--@mbg.generated-->
+        UPDATE SA_CAR_DATA
+        <set>
+            <if test="delFlag != null">
+                DEL_FLAG = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY = #{updateBy},
+            </if>
+            <if test="bmProjectId != null">
+                BM_PROJECT_ID = #{bmProjectId},
+            </if>
+            <if test="sendCarUserId != null">
+                SEND_CAR_USER_ID = #{sendCarUserId},
+            </if>
+            <if test="carName != null">
+                CAR_NAME = #{carName},
+            </if>
+            <if test="passengerNumber != null">
+                PASSENGER_NUMBER = #{passengerNumber},
+            </if>
+            <if test="carVin != null">
+                CAR_VIN = #{carVin},
+            </if>
+            <if test="carMilieage != null">
+                CAR_MILIEAGE = #{carMilieage},
+            </if>
+            <if test="carEngineNo != null">
+                CAR_ENGINE_NO = #{carEngineNo},
+            </if>
+            <if test="carEngineType != null">
+                CAR_ENGINE_TYPE = #{carEngineType},
+            </if>
+            <if test="carStage != null">
+                CAR_STAGE = #{carStage},
+            </if>
+            <if test="receivedUserId != null">
+                RECEIVED_USER_ID = #{receivedUserId},
+            </if>
+            <if test="producedFactory != null">
+                PRODUCED_FACTORY = #{producedFactory},
+            </if>
+            <if test="partStatus != null">
+                PART_STATUS = #{partStatus},
+            </if>
+            <if test="carStatus != null">
+                CAR_STATUS = #{carStatus},
+            </if>
+            <if test="receivedTime != null">
+                RECEIVED_TIME = #{receivedTime},
+            </if>
+            <if test="carDepotId != null">
+                CAR_DEPOT_ID = #{carDepotId},
+            </if>
+            <if test="carSpaceNumber != null">
+                CAR_SPACE_NUMBER = #{carSpaceNumber},
+            </if>
+            <if test="tyreFactory != null">
+                TYRE_FACTORY = #{tyreFactory},
+            </if>
+            <if test="whetherUse != null">
+                WHETHER_USE = #{whetherUse},
+            </if>
+            <if test="tyreType != null">
+                TYRE_TYPE = #{tyreType},
+            </if>
+            <if test="carType != null">
+                CAR_TYPE = #{carType},
+            </if>
+            <if test="producedTime != null">
+                PRODUCED_TIME = #{producedTime},
+            </if>
+            <if test="tyrePressure != null">
+                TYRE_PRESSURE = #{tyrePressure},
+            </if>
+            <if test="useCycle != null">
+                USE_CYCLE = #{useCycle},
+            </if>
+            <if test="carWeight != null">
+                CAR_WEIGHT = #{carWeight},
+            </if>
+            <if test="carLocation != null">
+                CAR_LOCATION = #{carLocation},
+            </if>
+            <if test="carLocationManagerId != null">
+                CAR_LOCATION_MANAGER_ID = #{carLocationManagerId},
+            </if>
+            <if test="assessAttachmentId != null">
+                ASSESS_ATTACHMENT_ID = #{assessAttachmentId},
+            </if>
+            <if test="reportAssessAttachmentId != null">
+                REPORT_ASSESS_ATTACHMENT_ID = #{reportAssessAttachmentId},
+            </if>
+            <if test="returnCarAttachmentId != null">
+                RETURN_CAR_ATTACHMENT_ID = #{returnCarAttachmentId},
+            </if>
+            <if test="receiveCarAttachmentId != null">
+                RECEIVE_CAR_ATTACHMENT_ID = #{receiveCarAttachmentId},
+            </if>
+            <if test="getCarUserId != null">
+                GET_CAR_USER_ID = #{getCarUserId},
+            </if>
+            <if test="carSpaceLocation != null">
+                CAR_SPACE_LOCATION = #{carSpaceLocation},
+            </if>
+            <if test="sendCarUserName != null">
+                SEND_CAR_USER_NAME = #{sendCarUserName},
+            </if>
+            <if test="sendCarUserPhone != null">
+                SEND_CAR_USER_PHONE = #{sendCarUserPhone},
+            </if>
+            <if test="sendCarUserOrg != null">
+                SEND_CAR_USER_ORG = #{sendCarUserOrg},
+            </if>
+            <if test="receivedUserName != null">
+                RECEIVED_USER_NAME = #{receivedUserName},
+            </if>
+            <if test="carLocationManagerName != null">
+                CAR_LOCATION_MANAGER_NAME = #{carLocationManagerName},
+            </if>
+            <if test="bmProjectName != null">
+                BM_PROJECT_NAME = #{bmProjectName},
+            </if>
+            <if test="createByName != null ">
+                CREATE_BY_NAME = #{createByName},
+            </if>
+            <if test="chassisNumber != null">
+                CHASSIS_NUMBER = #{chassisNumber} ,
+            </if>
+            <if test="motorNumber != null">
+                MOTOR_NUMBER = #{motorNumber} ,
+            </if>
+            <if test="batteryPack != null">
+                BATTERY_PACK = #{batteryPack} ,
+            </if>
+            <if test="carCondition != null">
+                CAR_CONDITION = #{carCondition} ,
+            </if>
+            <if test="carStatusE != null">
+                CAR_STATUS_E = #{carStatusE} ,
+            </if>
+            <if test="createByDepart != null">
+                CREATE_BY_DEPART = #{createByDepart} ,
+            </if>
+            <if test="carModel != null">
+                CAR_MODEL = #{carModel} ,
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <select id="selectCarBarCode" resultType="com.adc.da.car.vo.CarBarcodeVO">
+        SELECT
+        scd.CAR_NAME carName,
+        scd.CAR_VIN carVin,
+        bp.PRO_NAME bmProjectName,
+        SCTI.CAR_NO carNO,
+        BIP.PRO_NAME inspectProjectName,
+        SCD.CREATE_TIME
+        FROM SA_CAR_DATA SCD LEFT JOIN BM_PROJECT BP ON SCD.BM_PROJECT_ID = BP.ID
+        LEFT JOIN SA_CAR_TRIALAPPLY_INSPROJECT SCTI ON SCD.ID = SCTI.CAR_DATA_ID
+        LEFT JOIN SA_CAR_FLOW_LOG SCFL ON scd.ID = SCFL.CAR_DATA_ID
+        LEFT JOIN BM_INSPECT_PROJECT BIP ON BIP.ID = SCTI.INSPECT_PROJECT_ID
+        WHERE SCD.DEL_FLAG = 0
+        <if test="carStatus == 2">
+            AND SCFL.OPERATION_CONTENT = '领样'
+        </if>
+        AND scd.ID = #{id}
+        ORDER BY scd.CREATE_TIME DESC
+    </select>
+
+    <select id="selectByCarEngineNo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SA_CAR_DATA WHERE DEL_FLAG = 0 AND CAR_ENGINE_NO = #{carEngineNo}
+    </select>
+
+    <select id="getOneByDepotId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_CAR_DATA
+        WHERE CAR_DEPOT_ID = #{depotId} AND DEL_FLAG = 0 and CAR_SPACE_NUMBER = #{carSpaceNumber}
+    </select>
+
+    <select id="selectSampleListById" resultMap="getPageList">
+        SELECT
+        <include refid="getPageColumn"/>
+        <include refid="getPageListFrom"/>
+        LEFT JOIN EV_TRIALTASK_SAMPLE ETS ON ETS.SAMPLE_ID = SCD.ID
+        WHERE SCD.DEL_FLAG = 0 AND ETS.TRIALTASK_ID = #{id}
+        ORDER BY scd.CREATE_TIME DESC
+    </select>
+
+    <select id="selectByTrialApplyNo" resultType="com.adc.da.car.vo.TrialSampleVO">
+        select ID
+        from EV_TRIAL_TASK
+        where EV_NUMBER = #{trialApplyNO}
+          and DEL_FLAG = 0
+        union all
+        select ID
+        from PC_TRIAL_TASK
+        where TASK_CODE = #{trialApplyNO}
+          and DEL_FLAG = 0
+    </select>
+    
+           <!-- 借车表分页查询列表 -->
+   <select id="queryBrrowCarByPage" resultType="com.adc.da.car.page.SaCarBrrowEOPage" parameterType="com.adc.da.car.page.SaCarBrrowEOPage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+       	PCLA.ID brrowId,
+		PCLA.TASK_ID taskId,
+		PCLA.LOAN_CAR_CODE brrowNum,
+		PCLA.APPLICANT applicant,
+		PCLA.END_DATE endTime,
+		PTT.task_code taskNum
+       FROM 
+       	PC_CAR_LOAN_APPLICATION pcla,
+ 		 PC_TRIAL_TASK ptt
+       <include refid="CarBrrow_Where_Clause"/>
+       ORDER BY END_DATE DESC
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+   		
+    <!--那个试验任务样品信息 -->
+    <insert id="insertTrialtaskSample" parameterType="com.adc.da.car.entity.TrialtaskSample">
+        insert into EV_TRIALTASK_SAMPLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">ID,</if>
+            <if test="trialtaskId!=null">TRIALTASK_ID,</if>
+            <if test="sampleId!=null">SAMPLE_ID,</if>
+            <if test="sampleType!=null">SAMPLE_TYPE,</if>
+            <if test="sampleEngineType!=null">SAMPLE_ENGINE_TYPE,</if>
+            <if test="sampleProduceTime!=null">SAMPLE_PRODUCE_TIME,</if>
+            <if test="sampleNo!=null">SAMPLE_NO,</if>
+            <if test="scaffoldingId!=null">SCAFFOLDING_ID,</if>
+            <if test="scaffoldingName!=null">SCAFFOLDING_NAME,</if>
+            <if test="remark!=null">REMARK,</if>
+            <if test="itemsId!=null">ITEMS_ID,</if>
+            <if test="sampleChassisNumber!=null">SAMPLE_CHASSIS_NUMBER,</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="trialtaskId!=null">#{trialtaskId},</if>
+            <if test="sampleId!=null">#{sampleId},</if>
+            <if test="sampleType!=null">#{sampleType},</if>
+            <if test="sampleEngineType!=null">#{sampleEngineType},</if>
+            <if test="sampleProduceTime!=null">#{sampleProduceTime},</if>
+            <if test="sampleNo!=null">#{sampleNo},</if>
+            <if test="scaffoldingId!=null">#{scaffoldingId},</if>
+            <if test="scaffoldingName!=null">#{scaffoldingName},</if>
+            <if test="remark!=null">#{remark},</if>
+            <if test="itemsId!=null">#{itemsId},</if>
+            <if test="sampleChassisNumber!=null">#{sampleChassisNumber},</if>
+        </trim>
+    </insert>
+
+	<select id="queryBrrowByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       COUNT(1)
+       FROM 
+       PC_CAR_LOAN_APPLICATION pcla,
+ 	   PC_TRIAL_TASK PTT
+       <include refid="CarBrrow_Where_Clause"></include>
+   </select>
+   
+   <!-- 还车表分页查询列表 -->
+   <select id="queryReturnCarByPage" resultMap="getCarReturnPageList" parameterType="com.adc.da.car.page.SaCarReturnEOPage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+       <include refid="CarReturn_Column_List"/>
+       FROM PC_CAR_RETURN_APPLICATION PCRA,
+       PC_TRIAL_TASK PTT
+       <include refid="CarReturn_Where_Clause"/>
+       ORDER BY RETURN_TIME DESC
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+   
+   <select id="queryReturnByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       COUNT(1)
+       FROM 
+       PC_CAR_RETURN_APPLICATION PCRA,
+       PC_TRIAL_TASK PTT
+       <include refid="CarReturn_Where_Clause"></include>
+   </select>
+   
+    <!--根据发动机编号或者底盘号查询整车-->
+    <select id="selectByNo" resultMap="BaseResultMap">
+        select *
+        from SA_CAR_DATA
+        where DEL_FLAG = 0
+        and CAR_ENGINE_NO = #{carEngineNo,jdbcType=VARCHAR}
+        or CHASSIS_NUMBER = #{chassisNumber,jdbcType=VARCHAR}
+    </select>
+    
+    
+    
+    <select id="checkNo" resultMap="chassisNoResult">
+   		SELECT 
+   		CHASSIS_NUMBER
+   		FROM SA_CAR_DATA
+   		WHERE DEL_FLAG != 1
+   		<if test="id != null and id != ''">
+            AND ID != #{id,jdbcType=VARCHAR}
+        </if>
+   </select>
+   
+   
+    <!--根据底盘号查询整车-->
+    <select id="selectByChassisNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SA_CAR_DATA
+        where DEL_FLAG = 0
+        and CHASSIS_NUMBER = #{chassisNumber,jdbcType=VARCHAR}
+    </select>
+
+    <!--根据底盘号以及创建人部门查询整车-->
+    <select id="selectCarByInfo" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SA_CAR_DATA
+        where DEL_FLAG = 0
+        and CHASSIS_NUMBER = #{chassisNumber,jdbcType=VARCHAR}
+        and CREATE_BY_DEPART = #{createByDepart,jdbcType=VARCHAR}
+    </select>
+
+    <!--根据底盘号查询整车-->
+    <select id="getCarByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from SA_CAR_DATA
+        where DEL_FLAG = 0
+        and id in
+        <foreach collection="idList" index="index" item="item" open="(" separator="," close=")">
+              #{item}
+        </foreach>
+    </select>
+</mapper>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head>
+        <title>Word文件</title>
+        <script type="text/javascript">
+          	function Save() {
+          		try{
+          			document.getElementById("PageOfficeCtrl1").WebSave();
+                  	window.external.close();//关闭POBrowser窗口
+                    window.external.CallParentFunc("onPageOfficeClose();");
+          		}catch (e){ 
+          			window.external.close();//关闭POBrowser窗口
+                    window.external.CallParentFunc("onPageOfficeError();");
+          		}
+              	
+        	}
+
+        </script>
+        <script type="text/javascript">
+         function ReportSubmit() {
+			try{
+				document.getElementById("PageOfficeCtrl1").WebSave();
+				document.getElementById("PageOfficeCtrl1").WebSaveAsPDF();
+				window.external.close();//关闭POBrowser窗口
+                window.external.CallParentFunc("onPageOfficeSubmitClose();");
+			}catch (e){ 
+				window.external.close();//关闭POBrowser窗口
+                window.external.CallParentFunc("onPageOfficeSubmitError();");
+			};
+         }
+  		</script>
+        
+    </head>
+    <body>
+        <div style="width:auto;height:700px;" th:utext="${pageoffice}"></div>
+    </body>
+</html>

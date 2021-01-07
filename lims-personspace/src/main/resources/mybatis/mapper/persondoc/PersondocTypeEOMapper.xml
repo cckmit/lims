@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.persondoc.dao.PersondocTypeEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.persondoc.entity.PersondocTypeEO" >
+    <id column="id" property="id" />
+    <result column="del_flag" property="delFlag" />
+    <result column="type_parentid" property="typeParentid" />
+    <result column="sort" property="sort" />
+    <result column="type_code" property="typeCode" />
+    <result column="type_name" property="typeName" />
+    <result column="create_By_Id" property="createById" />
+    <collection property="typeList" select="com.adc.da.persondoc.dao.PersondocTypeEODao.getsontype" column="id"></collection>
+  </resultMap>
+  <!-- TP_PERSONDOC_TYPE table all fields -->
+  <sql id="Base_Column_List" >
+     id, del_flag, type_parentid, sort, type_code, type_name, create_By_Id
+  </sql>
+
+    <select id="getsontype" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from TP_PERSONDOC_TYPE where del_flag = 0 and  type_parentid = #{id}
+    </select>
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1 and create_By_Id = #{createById}
+    <trim suffixOverrides="," >
+      <if test="typeName != null" >
+        and type_name like '%${typeName}%'
+      </if>
+    </trim>
+  </sql>
+
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.persondoc.entity.PersondocTypeEO" >
+      <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+          select sys_guid() from dual
+    </selectKey>
+        insert into TP_PERSONDOC_TYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="typeParentid != null" >type_parentid,</if>
+                <if test="sort != null" >sort,</if>
+                <if test="typeCode != null" >type_code,</if>
+                <if test="typeName != null" >type_name,</if>
+                <if test="createById != null">create_By_Id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="typeParentid != null" >#{typeParentid, jdbcType=VARCHAR},</if>
+                <if test="sort != null" >#{sort, jdbcType=VARCHAR},</if>
+                <if test="typeCode != null" >#{typeCode, jdbcType=VARCHAR},</if>
+                <if test="typeName != null" >#{typeName, jdbcType=VARCHAR},</if>
+                <if test="createById != null">#{createById, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.persondoc.entity.PersondocTypeEO" >
+    update TP_PERSONDOC_TYPE
+    <set >
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+      <if test="typeParentid != null" >
+        type_parentid = #{typeParentid},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort},
+      </if>
+      <if test="typeCode != null" >
+        type_code = #{typeCode},
+      </if>
+      <if test="typeName != null" >
+        type_name = #{typeName},
+      </if>
+      <if test="createById != null">
+          create_By_Id = #{createById},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 TP_PERSONDOC_TYPE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from TP_PERSONDOC_TYPE
+     where id = #{value}
+  </select>
+
+    <!--判断类型是否有子类型-->
+    <select id="querySonById" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from TP_PERSONDOC_TYPE where type_parentid = #{id}
+    </select>
+
+    <!--判断code是否已存在-->
+    <select id="queryCountByCode" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from TP_PERSONDOC_TYPE where type_code = #{code}
+    </select>
+
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TP_PERSONDOC_TYPE
+     where id = #{value}
+  </delete>
+
+  <!-- TP_PERSONDOC_TYPE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from TP_PERSONDOC_TYPE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询TP_PERSONDOC_TYPE列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from TP_PERSONDOC_TYPE
+			 <include refid="Base_Where_Clause"/>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from TP_PERSONDOC_TYPE
+    <include refid="Base_Where_Clause"/>
+      and del_flag = 0
+      order by sort
+  </select>
+
+</mapper>

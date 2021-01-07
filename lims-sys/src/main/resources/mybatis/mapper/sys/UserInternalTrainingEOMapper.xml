@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.UserInternalTrainingEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.UserInternalTrainingEO">
+        <!-- 主键 -->
+        <id column="id" property="id"/>
+        <!-- 表属性 -->
+        <result column="USID" property="usid"/>
+        <result column="COURSE_NUMBER" property="courseNumber"/>
+        <result column="COURSE_NAME" property="courseName"/>
+        <result column="TRAINING_TEACHER" property="trainingTeacher"/>
+        <result column="TRAINING_OBJECT" property="trainingObject"/>
+        <result column="TRAINING_TIME" property="trainingTime"/>
+        <result column="TRAINING_HOURS" property="trainingHours"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+    </resultMap>
+
+    <!-- 【表名】 table all fields -->
+    <sql id="Base_Column_List">
+        ID,USID,COURSE_NUMBER,COURSE_NAME,TRAINING_TEACHER,TRAINING_OBJECT,TRAINING_TIME,TRAINING_HOURS,DEL_FLAG
+    </sql>
+
+    <select id="findUserInternalTrainingEOByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from TR_USER_INTERNAL_TRAINING where DEL_FLAG != 1 and USID = #{userId}
+    </select>
+    <insert id="saveUserInternalTraining" parameterType="com.adc.da.sys.entity.UserInternalTrainingEO">
+        insert into TR_USER_INTERNAL_TRAINING (ID,USID,COURSE_NUMBER,COURSE_NAME,TRAINING_TEACHER,TRAINING_OBJECT,TRAINING_TIME,
+        TRAINING_HOURS,DEL_FLAG)
+        values (#{id},#{usid},#{courseNumber},#{courseName},#{trainingTeacher},#{trainingObject},#{trainingTime},
+        #{trainingHours},#{delFlag})
+    </insert>
+    <update id="updateUserInternalTrainingById" parameterType="com.adc.da.sys.entity.UserInternalTrainingEO">
+        update TR_USER_INTERNAL_TRAINING
+        <set>
+            <if test="usid!=null">
+                usid = #{usid},
+            </if>
+            <if test="courseNumber!=null">
+                COURSE_NUMBER = #{courseNumber},
+            </if>
+            <if test="courseName!=null">
+                COURSE_NAME = #{courseName},
+            </if>
+            <if test="trainingTeacher!=null">
+                TRAINING_TEACHER = #{trainingTeacher},
+            </if>
+            <if test="trainingObject!=null">
+                TRAINING_OBJECT = #{trainingObject},
+            </if>
+            <if test="trainingTime!=null">
+                TRAINING_TIME = #{trainingTime},
+            </if>
+            <if test="trainingHours!=null">
+                TRAINING_HOURS = #{trainingHours},
+            </if>
+            <if test="delFlag!=null">
+                DEL_FLAG = #{delFlag},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteUserInternalTrainingByUsid" parameterType="java.lang.String">
+        delete from TR_USER_INTERNAL_TRAINING where usid = #{userId}
+    </delete>
+    <delete id="deleteUserInternalTrainingById" parameterType="java.lang.String">
+        delete from TR_USER_INTERNAL_TRAINING where id = #{id}
+    </delete>
+    <select id="findUserInternalTrainingEOById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from TR_USER_INTERNAL_TRAINING where DEL_FLAG != 1 and id =#{id}
+    </select>
+</mapper>

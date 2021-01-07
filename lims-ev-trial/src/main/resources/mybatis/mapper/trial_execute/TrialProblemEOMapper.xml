@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_execute.dao.TrialProblemEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.trial_execute.entity.TrialProblemEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="RUN_HOURS" jdbcType="VARCHAR" property="runHours" />
+    <result column="FAULT_TIME" jdbcType="VARCHAR" property="faultTime" />
+    <result column="PART_USE_HOURS" jdbcType="VARCHAR" property="partUseHours" />
+    <result column="FAULT_STOP_HOURS" jdbcType="VARCHAR" property="faultStopHours" />
+    <result column="FAULT_NUM" jdbcType="VARCHAR" property="faultNum" />
+    <result column="FAULT_TYPE" jdbcType="VARCHAR" property="faultType" />
+    <result column="FAULT_PART_NAME" jdbcType="VARCHAR" property="faultPartName" />
+    <result column="FAULE_PART_PICNO" jdbcType="VARCHAR" property="faulePartPicno" />
+    <result column="SCAFFOLDING_STATUS" jdbcType="VARCHAR" property="scaffoldingStatus" />
+    <result column="FAULT_DESCRIPTION" jdbcType="VARCHAR" property="faultDescription" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="PICTURE_NAME" jdbcType="VARCHAR" property="pictureName" />
+    <result column="PICTURE_ID" jdbcType="VARCHAR" property="pictureId" />
+  </resultMap>
+  
+  
+  <resultMap id="SearchResultMap" type="com.adc.da.trial_execute.entity.TrialProblemEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="TRIALTASK_ID" jdbcType="VARCHAR" property="trialtaskId" />
+    <result column="RUN_HOURS" jdbcType="VARCHAR" property="runHours" />
+    <result column="FAULT_TIME" jdbcType="VARCHAR" property="faultTime" />
+    <result column="PART_USE_HOURS" jdbcType="VARCHAR" property="partUseHours" />
+    <result column="FAULT_STOP_HOURS" jdbcType="VARCHAR" property="faultStopHours" />
+    <result column="FAULT_NUM" jdbcType="VARCHAR" property="faultNum" />
+    <result column="FAULT_TYPE" jdbcType="VARCHAR" property="faultType" />
+    <result column="FAULT_PART_NAME" jdbcType="VARCHAR" property="faultPartName" />
+    <result column="FAULE_PART_PICNO" jdbcType="VARCHAR" property="faulePartPicno" />
+    <result column="SCAFFOLDING_STATUS" jdbcType="VARCHAR" property="scaffoldingStatus" />
+    <result column="FAULT_DESCRIPTION" jdbcType="VARCHAR" property="faultDescription" />
+    <result column="CREATEBY_NAME" jdbcType="VARCHAR" property="createByName" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="ENGINE_MODEL" jdbcType="VARCHAR" property="engineModel" />
+    <result column="ENGINE_DEVELOP_STAGE" jdbcType="VARCHAR" property="engineDevelopStage" />
+    <result column="ENGINE_NUMBER" jdbcType="VARCHAR" property="engineNumber" />
+    <result column="ECU_STATUS" jdbcType="VARCHAR" property="ECUStatus" />
+    <result column="ORG_NAMES" jdbcType="VARCHAR" property="orgNames" />
+    <result column="TRIAL_ENGINEER" jdbcType="VARCHAR" property="trialEngineer" />
+    <result column="INSPRO_NAMES" jdbcType="VARCHAR" property="insProNames" />
+    <result column="EV_NUMBER" jdbcType="VARCHAR" property="eVNumber" />
+    <result column="TITLE" jdbcType="VARCHAR" property="eVTitle" />
+    <result column="PICTURE_NAME" jdbcType="VARCHAR" property="pictureName" />
+    <result column="PICTURE_ID" jdbcType="VARCHAR" property="pictureId" />
+  </resultMap>
+  
+  
+  
+  
+  <sql id="Base_Column_List">
+    ID, TRIALTASK_ID, RUN_HOURS, FAULT_TIME, PART_USE_HOURS, FAULT_STOP_HOURS, FAULT_NUM, 
+    FAULT_TYPE, FAULT_PART_NAME, FAULE_PART_PICNO, SCAFFOLDING_STATUS, FAULT_DESCRIPTION, 
+    CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, DEL_FLAG, REMARK, PICTURE_NAME, PICTURE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="SearchResultMap">
+     <include refid="Base_List_Clause"/>
+    where EV_TRIAL_PROBLEM.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from EV_TRIAL_PROBLEM
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.trial_execute.entity.TrialProblemEO">
+    insert into EV_TRIAL_PROBLEM (
+    	ID, 
+    	TRIALTASK_ID, 
+    	RUN_HOURS, 
+      	FAULT_TIME, 
+      	PART_USE_HOURS, 
+      	FAULT_STOP_HOURS, 
+      	FAULT_NUM, 
+      	FAULT_TYPE, 
+      	FAULT_PART_NAME, 
+      	FAULE_PART_PICNO, 
+      	SCAFFOLDING_STATUS, 
+      	FAULT_DESCRIPTION, 
+      	CREATE_BY, 
+      	CREATE_TIME, 
+      	UPDATE_BY, 
+      	UPDATE_TIME, 
+      	DEL_FLAG, 
+      	REMARK,
+      	PICTURE_NAME,
+      	PICTURE_ID
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{trialtaskId,jdbcType=VARCHAR}, 
+    	#{runHours,jdbcType=VARCHAR}, 
+      	#{faultTime,jdbcType=VARCHAR}, 
+      	#{partUseHours,jdbcType=VARCHAR}, 
+      	#{faultStopHours,jdbcType=VARCHAR}, 
+      	#{faultNum,jdbcType=VARCHAR}, 
+      	#{faultType,jdbcType=VARCHAR}, 
+      	#{faultPartName,jdbcType=VARCHAR}, 
+      	#{faulePartPicno,jdbcType=VARCHAR}, 
+      	#{scaffoldingStatus,jdbcType=VARCHAR}, 
+      	#{faultDescription,jdbcType=VARCHAR}, 
+      	#{createBy,jdbcType=VARCHAR}, 
+      	#{createTime,jdbcType=VARCHAR}, 
+      	#{updateBy,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{delFlag,jdbcType=VARCHAR}, 
+      	#{remark,jdbcType=VARCHAR},
+      	#{pictureName,jdbcType=VARCHAR},
+      	#{pictureId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.trial_execute.entity.TrialProblemEO">
+    insert into EV_TRIAL_PROBLEM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID,
+      </if>
+      <if test="runHours != null">
+        RUN_HOURS,
+      </if>
+      <if test="faultTime != null">
+        FAULT_TIME,
+      </if>
+      <if test="partUseHours != null">
+        PART_USE_HOURS,
+      </if>
+      <if test="faultStopHours != null">
+        FAULT_STOP_HOURS,
+      </if>
+      <if test="faultNum != null">
+        FAULT_NUM,
+      </if>
+      <if test="faultType != null">
+        FAULT_TYPE,
+      </if>
+      <if test="faultPartName != null">
+        FAULT_PART_NAME,
+      </if>
+      <if test="faulePartPicno != null">
+        FAULE_PART_PICNO,
+      </if>
+      <if test="scaffoldingStatus != null">
+        SCAFFOLDING_STATUS,
+      </if>
+      <if test="faultDescription != null">
+        FAULT_DESCRIPTION,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="pictureName != null">
+          PICTURE_NAME,
+      </if>
+      <if test="pictureId != null">
+          PICTURE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="trialtaskId != null">
+        #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="runHours != null">
+        #{runHours,jdbcType=VARCHAR},
+      </if>
+      <if test="faultTime != null">
+        #{faultTime,jdbcType=VARCHAR},
+      </if>
+      <if test="partUseHours != null">
+        #{partUseHours,jdbcType=VARCHAR},
+      </if>
+      <if test="faultStopHours != null">
+        #{faultStopHours,jdbcType=VARCHAR},
+      </if>
+      <if test="faultNum != null">
+        #{faultNum,jdbcType=VARCHAR},
+      </if>
+      <if test="faultType != null">
+        #{faultType,jdbcType=VARCHAR},
+      </if>
+      <if test="faultPartName != null">
+        #{faultPartName,jdbcType=VARCHAR},
+      </if>
+      <if test="faulePartPicno != null">
+        #{faulePartPicno,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingStatus != null">
+        #{scaffoldingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="faultDescription != null">
+        #{faultDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureName != null">
+        #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureId != null">
+        #{pictureId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.trial_execute.entity.TrialProblemEO">
+    update EV_TRIAL_PROBLEM
+    <set>
+      <if test="trialtaskId != null">
+        TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="runHours != null">
+        RUN_HOURS = #{runHours,jdbcType=VARCHAR},
+      </if>
+      <if test="faultTime != null">
+        FAULT_TIME = #{faultTime,jdbcType=VARCHAR},
+      </if>
+      <if test="partUseHours != null">
+        PART_USE_HOURS = #{partUseHours,jdbcType=VARCHAR},
+      </if>
+      <if test="faultStopHours != null">
+        FAULT_STOP_HOURS = #{faultStopHours,jdbcType=VARCHAR},
+      </if>
+      <if test="faultNum != null">
+        FAULT_NUM = #{faultNum,jdbcType=VARCHAR},
+      </if>
+      <if test="faultType != null">
+        FAULT_TYPE = #{faultType,jdbcType=VARCHAR},
+      </if>
+      <if test="faultPartName != null">
+        FAULT_PART_NAME = #{faultPartName,jdbcType=VARCHAR},
+      </if>
+      <if test="faulePartPicno != null">
+        FAULE_PART_PICNO = #{faulePartPicno,jdbcType=VARCHAR},
+      </if>
+      <if test="scaffoldingStatus != null">
+        SCAFFOLDING_STATUS = #{scaffoldingStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="faultDescription != null">
+        FAULT_DESCRIPTION = #{faultDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureName != null">
+          PICTURE_NAME = #{pictureName,jdbcType=VARCHAR},
+      </if>
+      <if test="pictureId != null">
+          PICTURE_ID = #{pictureId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.trial_execute.entity.TrialProblemEO">
+    update EV_TRIAL_PROBLEM
+    set TRIALTASK_ID = #{trialtaskId,jdbcType=VARCHAR},
+      RUN_HOURS = #{runHours,jdbcType=VARCHAR},
+      FAULT_TIME = #{faultTime,jdbcType=VARCHAR},
+      PART_USE_HOURS = #{partUseHours,jdbcType=VARCHAR},
+      FAULT_STOP_HOURS = #{faultStopHours,jdbcType=VARCHAR},
+      FAULT_NUM = #{faultNum,jdbcType=VARCHAR},
+      FAULT_TYPE = #{faultType,jdbcType=VARCHAR},
+      FAULT_PART_NAME = #{faultPartName,jdbcType=VARCHAR},
+      FAULE_PART_PICNO = #{faulePartPicno,jdbcType=VARCHAR},
+      SCAFFOLDING_STATUS = #{scaffoldingStatus,jdbcType=VARCHAR},
+      FAULT_DESCRIPTION = #{faultDescription,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      PICTURE_NAME = #{pictureName,jdbcType=VARCHAR},
+      PICTURE_ID = #{pictureId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 基础列表查询 -->
+  <sql id="Base_List_Clause">
+ 		SELECT
+			EV_TRIAL_PROBLEM. ID,
+			EV_TRIAL_PROBLEM.TRIALTASK_ID,
+			EV_TRIAL_TASK.ENGINE_MODEL,
+			EV_TRIAL_TASK.ENGINE_DEVELOP_STAGE,
+			EV_TRIAL_TASK.ENGINE_NUMBER,
+			EV_TRIAL_TASK.ECU_STATUS,
+			EV_TRIAL_TASK.EV_NUMBER,
+			EV_TRIAL_TASK.TITLE,
+			CAR.ORG_NAMES,
+			user1.USNAME AS CREATEBY_NAME,
+			user2.USNAME AS TRIAL_ENGINEER,
+			EV_TRIAL_PROBLEM.RUN_HOURS,
+			EV_TRIAL_PROBLEM.FAULT_TIME,
+			EV_TRIAL_PROBLEM.PART_USE_HOURS,
+			EV_TRIAL_PROBLEM.FAULT_STOP_HOURS,
+			EV_TRIAL_PROBLEM.FAULT_NUM,
+			EV_TRIAL_PROBLEM.FAULT_TYPE,
+			EV_TRIAL_PROBLEM.FAULT_PART_NAME,
+			EV_TRIAL_PROBLEM.FAULE_PART_PICNO,
+			EV_TRIAL_PROBLEM.FAULT_DESCRIPTION,
+			EV_TRIAL_PROBLEM.CREATE_TIME,
+			EV_TRIAL_PROBLEM.SCAFFOLDING_STATUS,
+            EV_TRIAL_PROBLEM.PICTURE_NAME,
+            EV_TRIAL_PROBLEM.PICTURE_ID,
+			PRO.INSPRO_NAMES
+		FROM
+			EV_TRIAL_PROBLEM
+		<include refid="Base_Join_Clause"/>
+   </sql>
+  
+  
+  <sql id="Base_Join_Clause">
+  		LEFT JOIN TS_USER user1 ON user1.USID = EV_TRIAL_PROBLEM.CREATE_BY
+		LEFT JOIN EV_TRIAL_TASK ON EV_TRIAL_TASK. ID = EV_TRIAL_PROBLEM.TRIALTASK_ID
+		LEFT JOIN TS_USER user2 ON user2.USID = EV_TRIAL_TASK.CREATE_BY
+		LEFT JOIN (
+			SELECT
+				EV_TRIAL_PROBLEM.TRIALTASK_ID,
+				WM_CONCAT (
+					BM_INSPECT_PROJECT.PRO_NAME
+				) AS INSPRO_NAMES
+			FROM
+				EV_TRIAL_PROBLEM
+			LEFT JOIN EV_TRIALTASK_INSPRO ON EV_TRIALTASK_INSPRO.TRIALTASK_ID = EV_TRIAL_PROBLEM.TRIALTASK_ID
+			LEFT JOIN BM_INSPECT_PROJECT ON BM_INSPECT_PROJECT. ID = EV_TRIALTASK_INSPRO.INSPRO_ID
+			WHERE
+				EV_TRIAL_PROBLEM.DEL_FLAG = 0
+			GROUP BY
+				EV_TRIAL_PROBLEM.TRIALTASK_ID
+		) PRO ON PRO.TRIALTASK_ID = EV_TRIAL_PROBLEM.TRIALTASK_ID
+		LEFT JOIN (
+			SELECT
+				EV_TRIAL_PROBLEM.TRIALTASK_ID,
+				TS_ORG.ORG_NAME AS ORG_NAMES
+			FROM
+				EV_TRIAL_PROBLEM
+			LEFT JOIN EV_TRIALTASK_SAMPLE ON EV_TRIALTASK_SAMPLE.TRIALTASK_ID = EV_TRIAL_PROBLEM.TRIALTASK_ID
+			LEFT JOIN TS_ORG ON TS_ORG. ID = EV_TRIALTASK_SAMPLE.SCAFFOLDING_ID
+			WHERE
+				EV_TRIAL_PROBLEM.DEL_FLAG = 0
+			GROUP BY
+				EV_TRIAL_PROBLEM.TRIALTASK_ID,
+				TS_ORG.ORG_NAME
+		) CAR ON CAR.TRIALTASK_ID = EV_TRIAL_PROBLEM.TRIALTASK_ID
+  </sql>
+  
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+ 		WHERE EV_TRIAL_PROBLEM.DEL_FLAG != 1
+ 		<if test="trialtaskId != null and trialtaskId != ''">
+          AND EV_TRIAL_PROBLEM.TRIALTASK_ID = #{trialtaskId}
+      	</if>
+       	<if test="createName != null and createName != ''">
+          AND user2.USNAME LIKE '%${createName}%'
+      	</if>
+      	<if test="createDate1 != null and createDate1 != ''">
+          AND EV_TRIAL_PROBLEM.CREATE_TIME <![CDATA[>=]]> #{createDate1}
+       </if>
+       <if test="createDate2 != null and createDate2 != ''">
+          AND EV_TRIAL_PROBLEM.CREATE_TIME <![CDATA[<=]]> #{createDate2}
+       </if>
+   </sql>
+  
+  <!-- 列表总数-->
+ <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from EV_TRIAL_PROBLEM
+	<include refid="Base_Join_Clause"/>
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询列表 分页 -->
+  <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+	SELECT *
+	FROM
+		(select tmp_tb.* , rownum rn from
+			(
+			 <include refid="Base_List_Clause"/>
+			 <include refid="Base_Where_Clause"/>
+			 ORDER BY EV_TRIAL_PROBLEM.UPDATE_TIME DESC
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+		where rn &gt;= ${pager.startIndex}
+  </select>
+  
+    <!-- 查询列表  不分页-->
+  <select id="findByList" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+	 <include refid="Base_List_Clause"/>
+	 <include refid="Base_Where_Clause"/>
+	 ORDER BY EV_TRIAL_PROBLEM.UPDATE_TIME DESC
+  </select>
+    <update id="updatePicture" parameterType="com.adc.da.trial_execute.entity.TrialProblemEO">
+    update EV_TRIAL_PROBLEM
+    set
+      PICTURE_NAME = #{pictureName,jdbcType=VARCHAR},
+      PICTURE_ID = #{pictureId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCTrialLineEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_execute.entity.PCTrialLineEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy" />
+    <result column="DAY_NO" jdbcType="VARCHAR" property="dayNo" />
+    <result column="LINE_START" jdbcType="VARCHAR" property="lineStart" />
+    <result column="LINE_END" jdbcType="VARCHAR" property="lineEnd" />
+    <result column="LINE_TYPE" jdbcType="VARCHAR" property="lineType" />
+    <result column="ONE_DAY_KM" jdbcType="VARCHAR" property="oneDayKm" />
+    <result column="REMARKS" jdbcType="VARCHAR" property="remarks" />
+    <result column="DRIVE_DAYS" jdbcType="VARCHAR" property="driveDays" />
+    <result column="LINE_CYCLE" jdbcType="VARCHAR" property="lineCycle" />
+    <result column="ACCO_DAYS" jdbcType="VARCHAR" property="accoDays" />
+    <result column="HOLIDAYS" jdbcType="VARCHAR" property="holidays" />
+    <result column="ALT_PARTS_DAYS" jdbcType="VARCHAR" property="altPartsDays" />
+    <result column="CURR_CAR_DAYS" jdbcType="VARCHAR" property="currCarDays" />
+    <result column="INIT_TASK_ID" jdbcType="VARCHAR" property="initTaskId" />
+    <result column="ONE_CYCLE_DAYS" jdbcType="VARCHAR" property="oneCycleDays" />
+    <result column="TRIAL_TASK_ID" jdbcType="VARCHAR" property="trialTaskId" />
+    <result column="DRIVE_ORDER" property="driveOrder"/>
+    <result column="TASK_NUMBER" property="taskNumber" />
+    <result column="CYCLE_NO" property="cycleNo" />
+    <result column="INPUT_PERSON_NUM" property="inputPersonNum" />
+    <result column="MILEAGE_TOTAL" property="mileageTotal" />
+    
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, DAY_NO, LINE_START, 
+    LINE_END, LINE_TYPE, ONE_DAY_KM, REMARKS, DRIVE_DAYS, LINE_CYCLE, ACCO_DAYS, HOLIDAYS, 
+    ALT_PARTS_DAYS, CURR_CAR_DAYS, INIT_TASK_ID, ONE_CYCLE_DAYS,TRIAL_TASK_ID, DRIVE_ORDER,
+    TASK_NUMBER, CYCLE_NO, INPUT_PERSON_NUM, MILEAGE_TOTAL
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_TRIAL_LINE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_TRIAL_LINE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.pc_execute.entity.PCTrialLineEO">
+    insert into PC_TRIAL_LINE (
+    	ID, 
+    	DEL_FLAG, 
+    	CREATE_TIME, 
+      	CREATE_BY, 
+      	UPDATE_TIME, 
+      	UPDATE_BY, 
+      	DAY_NO, 
+      	LINE_START, 
+      	LINE_END, 
+      	LINE_TYPE, 
+      	ONE_DAY_KM, 
+      	REMARKS, 
+      	DRIVE_DAYS, 
+      	LINE_CYCLE, 
+      	ACCO_DAYS, 
+      	HOLIDAYS, 
+      	ALT_PARTS_DAYS, 
+      	CURR_CAR_DAYS, 
+      	INIT_TASK_ID,
+      	ONE_CYCLE_DAYS,
+      	TRIAL_TASK_ID,
+      	DRIVE_ORDER,
+      	TASK_NUMBER,
+      	CYCLE_NO,
+      	INPUT_PERSON_NUM,
+      	MILEAGE_TOTAL
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{createTime,jdbcType=VARCHAR}, 
+      	#{createBy,jdbcType=VARCHAR}, 
+      	#{updateTime,jdbcType=VARCHAR}, 
+      	#{updateBy,jdbcType=VARCHAR}, 
+      	#{dayNo,jdbcType=VARCHAR}, 
+      	#{lineStart,jdbcType=VARCHAR}, 
+      	#{lineEnd,jdbcType=VARCHAR}, 
+      	#{lineType,jdbcType=VARCHAR}, 
+      	#{oneDayKm,jdbcType=VARCHAR}, 
+      	#{remarks,jdbcType=VARCHAR}, 
+      	#{driveDays,jdbcType=VARCHAR}, 
+      	#{lineCycle,jdbcType=VARCHAR}, 
+      	#{accoDays,jdbcType=VARCHAR}, 
+      	#{holidays,jdbcType=VARCHAR}, 
+      	#{altPartsDays,jdbcType=VARCHAR}, 
+      	#{currCarDays,jdbcType=VARCHAR}, 
+      	#{initTaskId,jdbcType=VARCHAR},
+      	#{oneCycleDays,jdbcType=VARCHAR},
+      	#{trialTaskId,jdbcType=VARCHAR},
+      	#{driveOrder},
+      	#{taskNumber,jdbcType=VARCHAR},
+      	#{cycleNo,jdbcType=VARCHAR},
+      	#{inputPersonNum,jdbcType=VARCHAR},
+      	#{mileageTotal,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_execute.entity.PCTrialLineEO">
+    insert into PC_TRIAL_LINE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="dayNo != null">
+        DAY_NO,
+      </if>
+      <if test="lineStart != null">
+        LINE_START,
+      </if>
+      <if test="lineEnd != null">
+        LINE_END,
+      </if>
+      <if test="lineType != null">
+        LINE_TYPE,
+      </if>
+      <if test="oneDayKm != null">
+        ONE_DAY_KM,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+      <if test="driveDays != null">
+        DRIVE_DAYS,
+      </if>
+      <if test="lineCycle != null">
+        LINE_CYCLE,
+      </if>
+      <if test="accoDays != null">
+        ACCO_DAYS,
+      </if>
+      <if test="holidays != null">
+        HOLIDAYS,
+      </if>
+      <if test="altPartsDays != null">
+        ALT_PARTS_DAYS,
+      </if>
+      <if test="currCarDays != null">
+        CURR_CAR_DAYS,
+      </if>
+      <if test="initTaskId != null">
+        INIT_TASK_ID,
+      </if>
+      <if test="oneCycleDays != null">
+        ONE_CYCLE_DAYS,
+      </if>
+      <if test="trialTaskId != null">
+        TRIAL_TASK_ID,
+      </if>
+      <if test="driveOrder != null">
+      	DRIVE_ORDER,
+      </if>
+      <if test="taskNumber != null">
+        TASK_NUMBER,
+      </if>
+      <if test="cycleNo != null">
+        CYCLE_NO,
+      </if>
+      <if test="inputPersonNum != null">
+        INPUT_PERSON_NUM,
+      </if>
+      <if test="mileageTotal != null">
+        MILEAGE_TOTAL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="dayNo != null">
+        #{dayNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lineStart != null">
+        #{lineStart,jdbcType=VARCHAR},
+      </if>
+      <if test="lineEnd != null">
+        #{lineEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="lineType != null">
+        #{lineType,jdbcType=VARCHAR},
+      </if>
+      <if test="oneDayKm != null">
+        #{oneDayKm,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="driveDays != null">
+        #{driveDays,jdbcType=VARCHAR},
+      </if>
+      <if test="lineCycle != null">
+        #{lineCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="accoDays != null">
+        #{accoDays,jdbcType=VARCHAR},
+      </if>
+      <if test="holidays != null">
+        #{holidays,jdbcType=VARCHAR},
+      </if>
+      <if test="altPartsDays != null">
+        #{altPartsDays,jdbcType=VARCHAR},
+      </if>
+      <if test="currCarDays != null">
+        #{currCarDays,jdbcType=VARCHAR},
+      </if>
+      <if test="initTaskId != null">
+        #{initTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="oneCycleDays != null">
+        #{oneCycleDays,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="driveOrder != null">
+      	#{driveOrder},
+      </if>
+      <if test="taskNumber != null">
+        #{taskNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleNo != null">
+        #{cycleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inputPersonNum != null">
+        #{inputPersonNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mileageTotal != null">
+        #{mileageTotal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_execute.entity.PCTrialLineEO">
+    update PC_TRIAL_LINE
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="dayNo != null">
+        DAY_NO = #{dayNo,jdbcType=VARCHAR},
+      </if>
+      <if test="lineStart != null">
+        LINE_START = #{lineStart,jdbcType=VARCHAR},
+      </if>
+      <if test="lineEnd != null">
+        LINE_END = #{lineEnd,jdbcType=VARCHAR},
+      </if>
+      <if test="lineType != null">
+        LINE_TYPE = #{lineType,jdbcType=VARCHAR},
+      </if>
+      <if test="oneDayKm != null">
+        ONE_DAY_KM = #{oneDayKm,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="driveDays != null">
+        DRIVE_DAYS = #{driveDays,jdbcType=VARCHAR},
+      </if>
+      <if test="lineCycle != null">
+        LINE_CYCLE = #{lineCycle,jdbcType=VARCHAR},
+      </if>
+      <if test="accoDays != null">
+        ACCO_DAYS = #{accoDays,jdbcType=VARCHAR},
+      </if>
+      <if test="holidays != null">
+        HOLIDAYS = #{holidays,jdbcType=VARCHAR},
+      </if>
+      <if test="altPartsDays != null">
+        ALT_PARTS_DAYS = #{altPartsDays,jdbcType=VARCHAR},
+      </if>
+      <if test="currCarDays != null">
+        CURR_CAR_DAYS = #{currCarDays,jdbcType=VARCHAR},
+      </if>
+      <if test="initTaskId != null">
+        INIT_TASK_ID = #{initTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="oneCycleDays != null">
+        ONE_CYCLE_DAYS = #{oneCycleDays,jdbcType=VARCHAR},
+      </if>
+      <if test="trialTaskId != null">
+        ITRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="driveOrder != null">
+        DRIVE_ORDER = #{driveOrder},
+      </if>
+      <if test="taskNumber != null">
+        TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleNo != null">
+        CYCLE_NO = #{cycleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="inputPersonNum != null">
+        INPUT_PERSON_NUM = #{inputPersonNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mileageTotal != null">
+        MILEAGE_TOTAL = #{mileageTotal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_execute.entity.PCTrialLineEO">
+    update PC_TRIAL_LINE
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      DAY_NO = #{dayNo,jdbcType=VARCHAR},
+      LINE_START = #{lineStart,jdbcType=VARCHAR},
+      LINE_END = #{lineEnd,jdbcType=VARCHAR},
+      LINE_TYPE = #{lineType,jdbcType=VARCHAR},
+      ONE_DAY_KM = #{oneDayKm,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      DRIVE_DAYS = #{driveDays,jdbcType=VARCHAR},
+      LINE_CYCLE = #{lineCycle,jdbcType=VARCHAR},
+      ACCO_DAYS = #{accoDays,jdbcType=VARCHAR},
+      HOLIDAYS = #{holidays,jdbcType=VARCHAR},
+      ALT_PARTS_DAYS = #{altPartsDays,jdbcType=VARCHAR},
+      CURR_CAR_DAYS = #{currCarDays,jdbcType=VARCHAR},
+      INIT_TASK_ID = #{initTaskId,jdbcType=VARCHAR},
+      ONE_CYCLE_DAYS = #{oneCycleDays,jdbcType=VARCHAR},
+      TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR},
+      DRIVE_ORDER = #{driveOrder},
+      TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR},
+      CYCLE_NO = #{cycleNo,jdbcType=VARCHAR},
+      INPUT_PERSON_NUM = #{inputPersonNum,jdbcType=VARCHAR},
+      MILEAGE_TOTAL = #{mileageTotal,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findByList" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List"/> 
+    from PC_TRIAL_LINE
+    where DEL_FLAG = 0
+    and
+    INIT_TASK_ID = #{initTaskId,jdbcType=VARCHAR}
+    ORDER BY DAY_NO,DRIVE_ORDER
+  </select>
+  
+  <delete id="deleteByInitTaskId" parameterType="java.lang.String">
+    delete from PC_TRIAL_LINE
+    where INIT_TASK_ID = #{initTaskId,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByTaskNumber" parameterType="java.lang.String">
+    delete from PC_TRIAL_LINE
+    where TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR}
+  </delete>
+  
+  <select id="findListByTrialTaskId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List"/> 
+    from PC_TRIAL_LINE
+    where DEL_FLAG = 0
+    and
+    TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="findListByTrialTaskNumber" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+    <include refid="Base_Column_List"/> 
+    from PC_TRIAL_LINE
+    where DEL_FLAG = 0
+    and
+    TASK_NUMBER = #{taskNumber,jdbcType=VARCHAR}
+    ORDER BY DAY_NO,DRIVE_ORDER
+  </select>
+  
+  
+  <delete id="deleteByTrialTaskId" parameterType="java.lang.String">
+    delete from PC_TRIAL_LINE
+    where TRIAL_TASK_ID = #{trialTaskId,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

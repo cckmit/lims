@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCQCDDSupEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_execute.entity.PCQCDDSupEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="QCDD_ID" jdbcType="VARCHAR" property="qcddId" />
+    <result column="SUP_ID" jdbcType="VARCHAR" property="supId" />
+    <result column="SUP_NAME" jdbcType="VARCHAR" property="supName" />
+    <result column="QUALITY" jdbcType="VARCHAR" property="quality" />
+    <result column="COST" jdbcType="VARCHAR" property="cost" />
+    <result column="DELIVER" jdbcType="VARCHAR" property="deliver" />
+    <result column="DEVELOPMENT" jdbcType="VARCHAR" property="development" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, QCDD_ID, SUP_ID, SUP_NAME, QUALITY, COST, DELIVER, DEVELOPMENT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_QCDD_SUP
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_QCDD_SUP
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByQcddId" parameterType="java.lang.String">
+    delete from PC_QCDD_SUP
+    where QCDD_ID = #{qcddId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.adc.da.pc_execute.entity.PCQCDDSupEO">
+    insert into PC_QCDD_SUP (
+    	ID, 
+    	DEL_FLAG, 
+    	QCDD_ID, 
+      	SUP_ID, 
+      	SUP_NAME, 
+      	QUALITY, 
+      	COST, 
+      	DELIVER, 
+      	DEVELOPMENT
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{qcddId,jdbcType=VARCHAR}, 
+      	#{supId,jdbcType=VARCHAR}, 
+      	#{supName,jdbcType=VARCHAR}, 
+      	#{quality,jdbcType=VARCHAR}, 
+      	#{cost,jdbcType=VARCHAR}, 
+      	#{deliver,jdbcType=VARCHAR}, 
+      	#{development,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_execute.entity.PCQCDDSupEO">
+    insert into PC_QCDD_SUP
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="qcddId != null">
+        QCDD_ID,
+      </if>
+      <if test="supId != null">
+        SUP_ID,
+      </if>
+      <if test="supName != null">
+        SUP_NAME,
+      </if>
+      <if test="quality != null">
+        QUALITY,
+      </if>
+      <if test="cost != null">
+        COST,
+      </if>
+      <if test="deliver != null">
+        DELIVER,
+      </if>
+      <if test="development != null">
+        DEVELOPMENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="qcddId != null">
+        #{qcddId,jdbcType=VARCHAR},
+      </if>
+      <if test="supId != null">
+        #{supId,jdbcType=VARCHAR},
+      </if>
+      <if test="supName != null">
+        #{supName,jdbcType=VARCHAR},
+      </if>
+      <if test="quality != null">
+        #{quality,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null">
+        #{cost,jdbcType=VARCHAR},
+      </if>
+      <if test="deliver != null">
+        #{deliver,jdbcType=VARCHAR},
+      </if>
+      <if test="development != null">
+        #{development,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_execute.entity.PCQCDDSupEO">
+    update PC_QCDD_SUP
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="qcddId != null">
+        QCDD_ID = #{qcddId,jdbcType=VARCHAR},
+      </if>
+      <if test="supId != null">
+        SUP_ID = #{supId,jdbcType=VARCHAR},
+      </if>
+      <if test="supName != null">
+        SUP_NAME = #{supName,jdbcType=VARCHAR},
+      </if>
+      <if test="quality != null">
+        QUALITY = #{quality,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null">
+        COST = #{cost,jdbcType=VARCHAR},
+      </if>
+      <if test="deliver != null">
+        DELIVER = #{deliver,jdbcType=VARCHAR},
+      </if>
+      <if test="development != null">
+        DEVELOPMENT = #{development,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_execute.entity.PCQCDDSupEO">
+    update PC_QCDD_SUP
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      QCDD_ID = #{qcddId,jdbcType=VARCHAR},
+      SUP_ID = #{supId,jdbcType=VARCHAR},
+      SUP_NAME = #{supName,jdbcType=VARCHAR},
+      QUALITY = #{quality,jdbcType=VARCHAR},
+      COST = #{cost,jdbcType=VARCHAR},
+      DELIVER = #{deliver,jdbcType=VARCHAR},
+      DEVELOPMENT = #{development,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

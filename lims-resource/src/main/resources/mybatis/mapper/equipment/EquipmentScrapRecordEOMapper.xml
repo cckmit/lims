@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.equipment.dao.EquipmentScrapRecordEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.equipment.entity.EquipmentScrapRecordEO" >
+    <result column="scr_equipment_status" property="scrEquipmentStatus" />
+    <result column="scr_recover_reason" property="scrRecoverReason" />
+    <result column="scr_recover_time" property="scrRecoverTime" />
+    <result column="scr_scrap_reason" property="scrScrapReason" />
+    <result column="scr_scrap_time" property="scrScrapTime" />
+    <result column="scr_applicant_department" property="scrApplicantDepartment" />
+    <result column="scr_applicant_name" property="scrApplicantName" />
+    <result column="scr_applicant_id" property="scrApplicantId" />
+    <result column="eq_id" property="eqId" />
+    <result column="id" property="id" />
+  </resultMap>
+
+  <!-- RES_EQUIPMENT_SCRAP_RECORD table all fields -->
+  <sql id="Base_Column_List" >
+     scr_equipment_status,
+     scr_recover_reason,
+     scr_recover_time,
+     scr_scrap_reason,
+     scr_scrap_time,
+     scr_applicant_department,
+     scr_applicant_name,
+     scr_applicant_id,
+     eq_id,
+     id
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="scrEquipmentStatus
+ != null" >
+        and scr_equipment_status
+ ${scrEquipmentStatus
+Operator} #{scrEquipmentStatus
+}
+      </if>
+      <if test="scrRecoverReason
+ != null" >
+        and scr_recover_reason
+ ${scrRecoverReason
+Operator} #{scrRecoverReason
+}
+      </if>
+      <if test="scrRecoverTime
+ != null" >
+        and scr_recover_time
+ ${scrRecoverTime
+Operator} #{scrRecoverTime
+}
+      </if>
+      <if test="scrScrapReason
+ != null" >
+        and scr_scrap_reason
+ ${scrScrapReason
+Operator} #{scrScrapReason
+}
+      </if>
+      <if test="scrScrapTime
+ != null" >
+        and scr_scrap_time
+ ${scrScrapTime
+Operator} #{scrScrapTime
+}
+      </if>
+      <if test="scrApplicantDepartment
+ != null" >
+        and scr_applicant_department
+ ${scrApplicantDepartment
+Operator} #{scrApplicantDepartment
+}
+      </if>
+      <if test="scrApplicantName != null" >
+        and scr_applicant_name ${scrApplicantNameOperator} #{scrApplicantName}
+      </if>
+      <if test="scrApplicantId != null" >
+        and scr_applicant_id ${scrApplicantIdOperator} #{scrApplicantId}
+      </if>
+      <if test="eqId != null" >
+        and eq_id ${eqIdOperator} #{eqId}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.equipment.entity.EquipmentScrapRecordEO" >
+    insert into RES_EQUIPMENT_SCRAP_RECORD(<include refid="Base_Column_List" />)
+    values (#{scrEquipmentStatus
+, jdbcType=VARCHAR}, #{scrRecoverReason
+, jdbcType=VARCHAR}, #{scrRecoverTime
+, jdbcType=VARCHAR}, #{scrScrapReason
+, jdbcType=VARCHAR}, #{scrScrapTime
+, jdbcType=VARCHAR}, #{scrApplicantDepartment
+, jdbcType=VARCHAR}, #{scrApplicantName, jdbcType=VARCHAR}, #{scrApplicantId, jdbcType=VARCHAR}, #{eqId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.equipment.entity.EquipmentScrapRecordEO" >
+        insert into RES_EQUIPMENT_SCRAP_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="scrEquipmentStatus
+ != null" >scr_equipment_status
+,</if>
+                <if test="scrRecoverReason
+ != null" >scr_recover_reason
+,</if>
+                <if test="scrRecoverTime
+ != null" >scr_recover_time
+,</if>
+                <if test="scrScrapReason
+ != null" >scr_scrap_reason
+,</if>
+                <if test="scrScrapTime
+ != null" >scr_scrap_time
+,</if>
+                <if test="scrApplicantDepartment
+ != null" >scr_applicant_department
+,</if>
+                <if test="scrApplicantName != null" >scr_applicant_name,</if>
+                <if test="scrApplicantId != null" >scr_applicant_id,</if>
+                <if test="eqId != null" >eq_id,</if>
+                <if test="id != null" >id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="scrEquipmentStatus
+ != null" >#{scrEquipmentStatus
+, jdbcType=VARCHAR},</if>
+                <if test="scrRecoverReason
+ != null" >#{scrRecoverReason
+, jdbcType=VARCHAR},</if>
+                <if test="scrRecoverTime
+ != null" >#{scrRecoverTime
+, jdbcType=VARCHAR},</if>
+                <if test="scrScrapReason
+ != null" >#{scrScrapReason
+, jdbcType=VARCHAR},</if>
+                <if test="scrScrapTime
+ != null" >#{scrScrapTime
+, jdbcType=VARCHAR},</if>
+                <if test="scrApplicantDepartment
+ != null" >#{scrApplicantDepartment
+, jdbcType=VARCHAR},</if>
+                <if test="scrApplicantName != null" >#{scrApplicantName, jdbcType=VARCHAR},</if>
+                <if test="scrApplicantId != null" >#{scrApplicantId, jdbcType=VARCHAR},</if>
+                <if test="eqId != null" >#{eqId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- RES_EQUIPMENT_SCRAP_RECORD 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from RES_EQUIPMENT_SCRAP_RECORD
+    <include refid="Base_Where_Clause"/>
+  </select>
+<!--根据设备Id，在表中查询中处于报废状态的条数-->
+    <select id="queryCountForEqScrap" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select count(1) from RES_EQUIPMENT_SCRAP_RECORD
+        where SCR_EQUIPMENT_STATUS = '0' AND EQ_ID = #{0,jdbcType=VARCHAR}
+    </select>
+    <!--查出对应的报废记录-->
+    <select id="selectScrapRecordByEqId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from RES_EQUIPMENT_SCRAP_RECORD record
+        where record.EQ_ID=#{0,jdbcType=VARCHAR}
+        AND record.SCR_EQUIPMENT_STATUS='0'
+
+    </select>
+    <!--通过传入的对象来更新对应的记录-->
+    <update id="updateByScrapEO" parameterType="com.adc.da.equipment.entity.EquipmentScrapRecordEO">
+        update RES_EQUIPMENT_SCRAP_RECORD
+        <set >
+            <if test="eqId != null" >
+                EQ_ID = #{eqId},
+            </if>
+            <if test="scrApplicantId != null" >
+                SCR_APPLICANT_ID = #{scrApplicantId},
+            </if>
+            <if test="scrApplicantName != null" >
+                SCR_APPLICANT_NAME = #{scrApplicantName},
+            </if>
+            <if test="scrApplicantDepartment != null" >
+                SCR_APPLICANT_DEPARTMENT = #{scrApplicantDepartment},
+            </if>
+            <if test="scrScrapTime != null" >
+                SCR_SCRAP_TIME= #{scrScrapTime},
+            </if>
+            <if test="scrScrapReason != null" >
+                SCR_SCRAP_REASON = #{scrScrapReason},
+            </if>
+            <if test="scrRecoverTime != null" >
+                SCR_RECOVER_TIME = #{scrRecoverTime},
+            </if>
+            <if test="scrRecoverReason != null" >
+                SCR_RECOVER_REASON = #{scrRecoverReason},
+            </if>
+            <if test="scrEquipmentStatus != null" >
+                SCR_EQUIPMENT_STATUS = #{scrEquipmentStatus},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+  <!-- 查询RES_EQUIPMENT_SCRAP_RECORD列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from RES_EQUIPMENT_SCRAP_RECORD
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from RES_EQUIPMENT_SCRAP_RECORD
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+    <!-- 借用归还记录列表总数-->
+    <select id="queryCountForScrapRecord" resultType="java.lang.Integer" parameterType="com.adc.da.equipment.page.EquipmentScrapRecordEOPage">
+        SELECT count(1) FROM RES_EQUIPMENT_SCRAP_RECORD
+        where RES_EQUIPMENT_SCRAP_RECORD.eq_id = #{eqId,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 分页查询,查询出对应设备的报废借用记录 -->
+    <select id="getScrapRecordByPage" resultMap="BaseResultMap" parameterType="com.adc.da.equipment.page.EquipmentScrapRecordEOPage">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        ( select <include refid="Base_Column_List"/>
+        from RES_EQUIPMENT_SCRAP_RECORD
+        where RES_EQUIPMENT_SCRAP_RECORD.eq_id = #{eqId,jdbcType=VARCHAR}
+        order by SCR_SCRAP_TIME desc
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+
+
+    </select>
+</mapper>

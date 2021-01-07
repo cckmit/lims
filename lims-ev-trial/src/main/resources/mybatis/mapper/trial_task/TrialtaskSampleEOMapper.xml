@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_task.dao.TrialtaskSampleEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.trial_task.entity.TrialtaskSampleEO">
+        <!-- 主键 -->
+        <id column="ID" property="id"/>
+        <!-- 表属性 -->
+        <result column="TRIALTASK_ID" property="trialtaskId"/>
+        <result column="SAMPLE_ID" property="sampleId"/>
+        <result column="SAMPLE_TYPE" property="sampleType"/>
+        <result column="SAMPLE_ENGINE_TYPE" property="sampleEngineType"/>
+        <result column="SAMPLE_PRODUCE_TIME" property="sampleProduceTime"/>
+        <result column="SAMPLE_NO" property="sampleNo"/>
+        <result column="SCAFFOLDING_ID" property="scaffoldingId"/>
+        <result column="SCAFFOLDING_NAME" property="scaffoldingName"/>
+        <result column="REMARK" property="remark"/>
+    </resultMap>
+
+    <!-- 【表名】 table all fields -->
+    <sql id="Base_Column_List">
+        ID,TRIALTASK_ID,SAMPLE_ID,SAMPLE_TYPE,SAMPLE_ENGINE_TYPE,SAMPLE_PRODUCE_TIME,SAMPLE_NO,SCAFFOLDING_ID,
+        SCAFFOLDING_NAME, REMARK
+    </sql>
+
+    <!--那个试验任务样品信息 -->
+    <insert id="insertTrialtaskSample" parameterType="com.adc.da.trial_task.entity.TrialtaskSampleEO">
+        insert  into  EV_TRIALTASK_SAMPLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">ID,</if>
+            <if test="trialtaskId!=null">TRIALTASK_ID,</if>
+            <if test="sampleId!=null">SAMPLE_ID,</if>
+            <if test="sampleType!=null">SAMPLE_TYPE,</if>
+            <if test="sampleEngineType!=null">SAMPLE_ENGINE_TYPE,</if>
+            <if test="sampleProduceTime!=null">SAMPLE_PRODUCE_TIME,</if>
+            <if test="sampleNo!=null">SAMPLE_NO,</if>
+            <if test="scaffoldingId!=null">SCAFFOLDING_ID,</if>
+            <if test="scaffoldingName!=null">SCAFFOLDING_NAME,</if>
+            <if test="remark!=null">REMARK,</if> 
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="trialtaskId!=null">#{trialtaskId},</if>
+            <if test="sampleId!=null">#{sampleId},</if>
+            <if test="sampleType!=null">#{sampleType},</if>
+            <if test="sampleEngineType!=null">#{sampleEngineType},</if>
+            <if test="sampleProduceTime!=null">#{sampleProduceTime},</if>
+            <if test="sampleNo!=null">#{sampleNo},</if>
+            <if test="scaffoldingId!=null">#{scaffoldingId},</if>
+            <if test="scaffoldingName!=null">#{scaffoldingName},</if>
+            <if test="remark!=null">#{remark},</if>
+        </trim>
+    </insert>
+
+    <!--根据试验任务id查询试验任务样品信息 -->
+    <select id="findTrialtaskSampleByTrialtaskId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/> from EV_TRIALTASK_SAMPLE where TRIALTASK_ID = #{trialtaskId}
+    </select>
+
+    <!--根据试验任务id删除试验任务样品信息-->
+    <delete id="deleteTrialtaskSampleByTrialtaskId" parameterType="java.lang.String">
+        delete from EV_TRIALTASK_SAMPLE where TRIALTASK_ID = #{trialtaskId}
+    </delete>
+
+</mapper>

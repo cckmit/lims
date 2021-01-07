@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.OrgEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.OrgEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="org_name" property="name"/>
+        <result column="org_desc" property="orgDesc"/>
+        <result column="org_code" property="orgCode"/>
+        <result column="org_type" property="orgType"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="parent_ids" property="parentIds"/>
+        <result column="is_show" property="isShow"/>
+        <result column="remarks" property="remarks"/>
+
+    </resultMap>
+
+
+	<resultMap id="OrgIdsResultMap" type="java.lang.String" >
+    	<id column="id" property="id"/>
+  	</resultMap>
+
+    <!--用于返回组织所属用户信息-->
+    <resultMap id="UserResultMap" type="com.adc.da.sys.entity.UserEO">
+        <id column="usid" property="usid"/>
+        <result column="account" property="account"/>
+        <result column="del_flag" property="delFlag"/>
+        <!--<result column="password" property="password"/>-->
+        <result column="usname" property="usname"/>
+        <result column="ext_info" property="extInfo"/>
+        <result column="extinfo5" property="extInfo5"/>
+        <collection property="roleEOList" ofType="com.adc.da.sys.entity.RoleEO">
+            <id column="id" property="id"/>
+            <result column="data_scope" property="dataScope"/>
+            <result column="r_delFlag" property="delFlag"/>
+            <result column="is_default" property="isDefault"/>
+            <result column="name" property="name"/>
+            <result column="remarks" property="remarks"/>
+            <result column="r_extInfo" property="extInfo"/>
+        </collection>
+        <collection property="orgEOList" ofType="com.adc.da.sys.entity.OrgEO">
+            <id column="org_id" property="id"/>
+            <result column="org_name" property="name"/>
+            <result column="org_desc" property="orgDesc"/>
+            <result column="org_code" property="orgCode"/>
+            <result column="org_type" property="orgType"/>
+            <result column="org_parent_id" property="parentId"/>
+            <result column="org_remarks" property="remarks"/>
+            <result column="org_isshow" property="isShow"/>
+            <result column="org_delFlag" property="delFlag"/>
+            <result column="org_parentIds" property="parentIds"/>
+        </collection>
+    </resultMap>
+
+
+    <!-- TS_ORG table all fields -->
+    <sql id="Base_Column_List">
+        TS_ORG.id, TS_ORG.del_flag, TS_ORG.org_name, TS_ORG.org_desc,TS_ORG.org_code,TS_ORG.parent_id, TS_ORG.parent_ids, TS_ORG.is_show, TS_ORG.remarks
+    </sql>
+
+    <sql id="Base_Column_Lista">
+        TS_ORG.id, TS_ORG.del_flag, TS_ORG.org_name, TS_ORG.org_desc,TS_ORG.org_code,TS_ORG.org_type,TS_ORG.parent_id, TS_ORG.parent_ids, TS_ORG.is_show, TS_ORG.remarks
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+            <if test="delFlag != null">
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+            <if test="name != null">
+                and org_name ${nameOperator} #{name}
+            </if>
+            <if test="orgDesc != null">
+                and org_desc ${orgDescOperator} #{orgDesc}
+            </if>
+            <if test="orgCode != null">
+                and org_code ${orgCodeOperator} #{orgCode}
+            </if>
+            <if test="orgType != null">
+                and org_type ${orgTypeOperator} #{orgType}
+            </if>
+            <if test="parentId != null">
+                and parent_id ${parentIdOperator} #{parentId}
+            </if>
+            <if test="parentIds != null">
+                and parent_ids ${parentIdsOperator} #{parentIds}
+            </if>
+            <if test="isShow != null">
+                and is_show ${isShowOperator} #{isShow}
+            </if>
+            <if test="remarks != null">
+                and remarks ${remarksOperator} #{remarks}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.sys.entity.OrgEO">
+        insert into TS_ORG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="name != null">org_name,</if>
+            <if test="orgDesc != null">org_desc,</if>
+            <if test="orgCode != null">org_code,</if>
+            <if test="orgType != null">org_type,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="parentIds != null">parent_ids,</if>
+            <if test="isShow != null">is_show,</if>
+            <if test="remarks != null">remarks,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="name != null">#{name},</if>
+            <if test="orgDesc != null">#{orgDesc},</if>
+            <if test="orgCode != null">#{orgCode},</if>
+            <if test="orgType != null">#{orgType},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="parentIds != null">#{parentIds},</if>
+            <if test="isShow != null">#{isShow},</if>
+            <if test="remarks != null">#{remarks},</if>
+        </trim>
+    </insert>
+
+    <update id="deleteLogic" parameterType="java.lang.String">
+		update TS_ORG
+		set del_Flag = 1
+		where id = #{id}
+	</update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.sys.entity.OrgEO">
+        update TS_ORG
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="name != null">
+                org_name = #{name},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="parentIds != null">
+                parent_ids = #{parentIds},
+            </if>
+            <if test="orgDesc != null">
+                org_desc = #{orgDesc},
+            </if>
+            <if test="orgCode != null">
+                org_code = #{orgCode},
+            </if>
+            <if test="orgType != null">
+                org_type = #{orgType},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <!-- 根据id查询 组织机构 -->
+    <select id="getOrgEOById" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_Lista"/>
+        from TS_ORG
+        where id = #{id}
+        and del_flag != 1
+    </select>
+    
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from TS_ORG
+        where id = #{id}
+        and del_flag != 1
+    </select>
+
+
+    <select id="getOrgEOByNameAndPid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_ORG WHERE
+        org_name = #{0} and parent_id = #{1}
+        and del_flag != 1
+    </select>
+
+    <select id="getOrgEOByPid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_ORG WHERE
+        parent_id = #{parentId}
+        and del_flag != 1
+    </select>
+    <!-- 根据OrgCode查找 Org -->
+    <select id="getOrgEOByOrgCode" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_Lista"/>
+        from TS_ORG
+        where org_code = #{org_Code}
+        and del_flag != 1
+    </select>
+
+    <!-- TS_ORG 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from TS_ORG
+        <include refid="Base_Where_Clause"/>
+        and del_flag != 1
+    </select>
+
+    <!--查询组织机构功能，根据组织名查找，返回组织以及父级组织信息-->
+    <select id="listOrgEOByOrgName" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        ,TS_DICTYPE.DIC_TYPE_NAME AS org_type FROM
+        (SELECT DISTINCT
+        <include refid="Base_Column_Lista"/>
+        FROM TS_ORG right join
+        (SELECT DISTINCT
+        <include refid="Base_Column_Lista"/>
+        FROM TS_ORG right join (
+        SELECT DISTINCT
+        <include refid="Base_Column_Lista"/>
+        FROM TS_ORG right join (
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM TS_ORG
+        WHERE TS_ORG.del_flag !=1
+        <if test="orgName != null and orgName != ''">
+            AND TS_ORG.ORG_NAME LIKE '%${orgName}%'
+        </if>
+        <if test="orgCode != null and orgCode != ''">
+            AND TS_ORG.ORG_CODE LIKE '%${orgCode}%'
+        </if>
+        <if test="orgType != null and orgType != ''">
+            AND TS_ORG.org_type = #{orgType}
+        </if>
+        ) b on TS_ORG.id=b.id
+        <if test="orgName != null or orgCode != null or orgName != '' or orgCode != '' or orgType != null or orgType != '' ">
+            or b.parent_ids like '%'||TS_ORG.id||'%' or b.parent_id = TS_ORG.id
+        </if>
+        )c on TS_ORG.id=c.id
+        <if test="orgName != null or orgCode != null or orgName != '' or orgCode != '' or orgType != null or orgType != '' ">
+            or c.parent_ids like '%'||TS_ORG.id||'%' or c.parent_id = TS_ORG.id
+        </if>
+        )aa on TS_ORG.id=aa.id
+        <if test="orgName != null or orgCode != null or orgName != '' or orgCode != '' or orgType != null or orgType != '' ">
+            or aa.parent_ids like '%'||TS_ORG.id||'%' or aa.parent_id = TS_ORG.id
+        </if>
+        )
+        TS_ORG
+        left join TS_DICTYPE on TS_ORG.ORG_TYPE = TS_DICTYPE.id
+        WHERE TS_ORG.del_flag !=1
+    </select>
+
+    <!--查询组织所属用户信息-->
+    <select id="listUserEOByOrgId" resultMap="UserResultMap">
+    SELECT *
+    FROM TS_USER u
+        left join TR_USER_ROLE ur on u.usid = ur.user_id
+        left join TS_ROLE r on ur.role_id = r.id
+    WHERE USID IN
+      (SELECT TR_USER_ORG.USER_ID FROM TR_USER_ORG
+      WHERE ORG_ID IN
+          (SELECT TS_ORG.ID FROM TS_ORG
+          WHERE ID = '${orgId}' OR PARENT_IDS LIKE '%${orgId}%'
+          )
+      )
+    AND u.del_flag !=1
+    </select>
+
+
+    <!--查询组织的子组织-->
+    <select id="getSubOrgId" resultType="java.lang.String" parameterType="java.lang.String">
+    select ID from ts_org u
+    where
+    (
+      parent_id like '%${orgId}%'
+      or parent_ids like '%${orgId}%'
+    )
+    AND u.del_flag !=1
+    </select>
+
+    <!--根据组织机构查询组织机构信息-->
+    <select id="getOrgByOrgName" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_Lista"/> FROM TS_ORG WHERE  DEL_FLAG = 0
+        <if test="orgName!=null">
+            AND ORG_NAME = #{orgName}
+        </if>
+    </select>
+
+    <!--根据上级和本级的组织机构名称查询组织机构-->
+    <select id="getOrgByTwoOrgName" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT <include refid="Base_Column_Lista"/> FROM TS_ORG
+        WHERE LEVEL>1
+        START WITH ORG_NAME = #{orgPName} CONNECT BY PRIOR ID = PARENT_ID
+        AND ORG_NAME = #{orgName}
+        and del_flag != 1
+    </select>
+
+    <!--根据上级和本级的组织机构名称查询组织机构-->
+    <select id="getOrgByOrgNameAndOrgId" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_Lista"/> FROM TS_ORG
+        WHERE LEVEL>1
+        START WITH id = #{orgId} CONNECT BY PRIOR ID = PARENT_ID
+        AND ORG_NAME = #{orgName}
+        and del_flag != 1
+    </select>
+
+    <select id="findOrgByUsId" parameterType="java.lang.String" resultType="java.lang.String">
+        select org_code from TS_ORG where id = (select org_id from tr_user_org where user_id = #{usId})
+    </select>
+    
+    <!-- 递归获取所有下级部门 -->
+    <select id="getChildren" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from (select
+        <include refid="Base_Column_Lista"/>
+        from TS_ORG
+        <if test="self == 'n'">
+        	start with PARENT_ID = #{id}
+        </if>
+        <if test="self != 'n'">
+        	start with id = #{id}
+        </if>
+  		connect by prior id = PARENT_ID)
+  		where del_flag != 1
+    </select>
+    
+    <!-- 获取该用户的部门信息 -->
+    <select id="getByUserId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select org_.id, org_.del_flag, org_.org_name, org_.org_desc,org_.org_code,org_.org_type,org_.parent_id, org_.parent_ids, org_.is_show, org_.remarks
+		  from TS_ORG org_
+		  left join TR_USER_ORG uo_ on org_.id=uo_.org_id
+		  left join TS_USER usr_ on uo_.user_id=usr_.usid
+		  where ORG_.DEL_FLAG=0 and usr_.del_flag=0
+		  and usr_.usid=#{value}
+		  and rownum = 1
+    </select>
+
+<!-- 获取父级的部门信息 -->
+    <select id="getByOrgId" resultMap="OrgIdsResultMap" parameterType="java.lang.String">
+        SELECT
+			TS_ORG. ID
+		FROM
+			(
+				SELECT DISTINCT
+					<include refid="Base_Column_Lista"/>
+				FROM
+					TS_ORG
+				RIGHT JOIN (
+					SELECT DISTINCT
+						<include refid="Base_Column_Lista"/>
+					FROM
+						TS_ORG
+					RIGHT JOIN (
+						SELECT DISTINCT
+							<include refid="Base_Column_Lista"/>
+						FROM
+							TS_ORG
+						RIGHT JOIN (
+							SELECT
+								<include refid="Base_Column_List"/>
+							FROM
+								TS_ORG
+							WHERE
+								TS_ORG.del_flag != 1
+							AND TS_ORG. ID = #{id}
+						) b ON TS_ORG. ID = b. ID
+						OR b.parent_ids LIKE '%' || TS_ORG. ID || '%'
+						OR b.parent_id = TS_ORG. ID
+					) c ON TS_ORG. ID = c. ID
+					OR c.parent_ids LIKE '%' || TS_ORG. ID || '%'
+					OR c.parent_id = TS_ORG. ID
+				) aa ON TS_ORG. ID = aa. ID
+				OR aa.parent_ids LIKE '%' || TS_ORG. ID || '%'
+				OR aa.parent_id = TS_ORG. ID
+			) TS_ORG
+		LEFT JOIN TS_DICTYPE ON TS_ORG.ORG_TYPE = TS_DICTYPE. ID
+		WHERE
+	TS_ORG.del_flag != 1
+    </select>
+
+    <!--查询父级是东风柳州汽车有限公司的部门信息-->
+    <select id="selectChildByParent" resultMap="BaseResultMap">
+        select <include refid="Base_Column_Lista"/>
+        from TS_ORG
+        where TS_ORG.del_flag != 1
+        and TS_ORG.parent_id = 'VYGKQ98GS6'
+    </select>
+</mapper>

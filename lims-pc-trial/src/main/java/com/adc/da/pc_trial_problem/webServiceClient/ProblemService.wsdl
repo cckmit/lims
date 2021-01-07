@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://problem.ws.tpm.dflzm.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://problem.ws.tpm.dflzm.com" xmlns:intf="http://problem.ws.tpm.dflzm.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://problem.ws.tpm.dflzm.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="reviewProblemByZGCheck">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="reviewProblemByZGCheckResponse">
+    <complexType>
+     <sequence>
+      <element name="reviewProblemByZGCheckReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="approvalCloseProblem">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="approvalCloseProblemResponse">
+    <complexType>
+     <sequence>
+      <element name="approvalCloseProblemReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryDownDeptUsers">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryDownDeptUsersResponse">
+    <complexType>
+     <sequence>
+      <element name="queryDownDeptUsersReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="applyCloseProblem">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="applyCloseProblemResponse">
+    <complexType>
+     <sequence>
+      <element name="applyCloseProblemReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="setProblemOperation">
+    <complexType>
+     <sequence>
+      <element name="setProOperJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="setProblemOperationResponse">
+    <complexType>
+     <sequence>
+      <element name="setProblemOperationReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="returnProblem">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="returnProblemResponse">
+    <complexType>
+     <sequence>
+      <element name="returnProblemReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="startProblem">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="startProblemResponse">
+    <complexType>
+     <sequence>
+      <element name="startProblemReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryAllTopDept">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryAllTopDeptResponse">
+    <complexType>
+     <sequence>
+      <element name="queryAllTopDeptReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateProblem">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateProblemResponse">
+    <complexType>
+     <sequence>
+      <element name="updateProblemReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryProblemInfo">
+    <complexType>
+     <sequence>
+      <element name="ProblemInfoJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="queryProblemInfoResponse">
+    <complexType>
+     <sequence>
+      <element name="queryProblemInfoReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProblemTask">
+    <complexType>
+     <sequence>
+      <element name="ProblemTaskJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProblemTaskResponse">
+    <complexType>
+     <sequence>
+      <element name="getProblemTaskReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="approvalProblem">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="approvalProblemResponse">
+    <complexType>
+     <sequence>
+      <element name="approvalProblemReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="submitSolution">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="submitSolutionResponse">
+    <complexType>
+     <sequence>
+      <element name="submitSolutionReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOrgByParentId">
+    <complexType>
+     <sequence>
+      <element name="paramJson" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOrgByParentIdResponse">
+    <complexType>
+     <sequence>
+      <element name="getOrgByParentIdReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="queryProblemInfoRequest">
+
+      <wsdl:part element="impl:queryProblemInfo" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="submitSolutionRequest">
+
+      <wsdl:part element="impl:submitSolution" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="applyCloseProblemRequest">
+
+      <wsdl:part element="impl:applyCloseProblem" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryDownDeptUsersResponse">
+
+      <wsdl:part element="impl:queryDownDeptUsersResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="approvalCloseProblemRequest">
+
+      <wsdl:part element="impl:approvalCloseProblem" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="returnProblemResponse">
+
+      <wsdl:part element="impl:returnProblemResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryProblemInfoResponse">
+
+      <wsdl:part element="impl:queryProblemInfoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="startProblemRequest">
+
+      <wsdl:part element="impl:startProblem" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProblemTaskRequest">
+
+      <wsdl:part element="impl:getProblemTask" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="approvalProblemResponse">
+
+      <wsdl:part element="impl:approvalProblemResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="approvalProblemRequest">
+
+      <wsdl:part element="impl:approvalProblem" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="submitSolutionResponse">
+
+      <wsdl:part element="impl:submitSolutionResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="reviewProblemByZGCheckRequest">
+
+      <wsdl:part element="impl:reviewProblemByZGCheck" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="approvalCloseProblemResponse">
+
+      <wsdl:part element="impl:approvalCloseProblemResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOrgByParentIdResponse">
+
+      <wsdl:part element="impl:getOrgByParentIdResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="startProblemResponse">
+
+      <wsdl:part element="impl:startProblemResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOrgByParentIdRequest">
+
+      <wsdl:part element="impl:getOrgByParentId" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateProblemRequest">
+
+      <wsdl:part element="impl:updateProblem" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryAllTopDeptResponse">
+
+      <wsdl:part element="impl:queryAllTopDeptResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="returnProblemRequest">
+
+      <wsdl:part element="impl:returnProblem" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="setProblemOperationResponse">
+
+      <wsdl:part element="impl:setProblemOperationResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryAllTopDeptRequest">
+
+      <wsdl:part element="impl:queryAllTopDept" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getProblemTaskResponse">
+
+      <wsdl:part element="impl:getProblemTaskResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="reviewProblemByZGCheckResponse">
+
+      <wsdl:part element="impl:reviewProblemByZGCheckResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="setProblemOperationRequest">
+
+      <wsdl:part element="impl:setProblemOperation" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="applyCloseProblemResponse">
+
+      <wsdl:part element="impl:applyCloseProblemResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateProblemResponse">
+
+      <wsdl:part element="impl:updateProblemResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="queryDownDeptUsersRequest">
+
+      <wsdl:part element="impl:queryDownDeptUsers" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ProblemService">
+
+      <wsdl:operation name="reviewProblemByZGCheck">
+
+         <wsdl:input message="impl:reviewProblemByZGCheckRequest" name="reviewProblemByZGCheckRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:reviewProblemByZGCheckResponse" name="reviewProblemByZGCheckResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="approvalCloseProblem">
+
+         <wsdl:input message="impl:approvalCloseProblemRequest" name="approvalCloseProblemRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:approvalCloseProblemResponse" name="approvalCloseProblemResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryDownDeptUsers">
+
+         <wsdl:input message="impl:queryDownDeptUsersRequest" name="queryDownDeptUsersRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:queryDownDeptUsersResponse" name="queryDownDeptUsersResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="applyCloseProblem">
+
+         <wsdl:input message="impl:applyCloseProblemRequest" name="applyCloseProblemRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:applyCloseProblemResponse" name="applyCloseProblemResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setProblemOperation">
+
+         <wsdl:input message="impl:setProblemOperationRequest" name="setProblemOperationRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:setProblemOperationResponse" name="setProblemOperationResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="returnProblem">
+
+         <wsdl:input message="impl:returnProblemRequest" name="returnProblemRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:returnProblemResponse" name="returnProblemResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="startProblem">
+
+         <wsdl:input message="impl:startProblemRequest" name="startProblemRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:startProblemResponse" name="startProblemResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryAllTopDept">
+
+         <wsdl:input message="impl:queryAllTopDeptRequest" name="queryAllTopDeptRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:queryAllTopDeptResponse" name="queryAllTopDeptResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateProblem">
+
+         <wsdl:input message="impl:updateProblemRequest" name="updateProblemRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateProblemResponse" name="updateProblemResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryProblemInfo">
+
+         <wsdl:input message="impl:queryProblemInfoRequest" name="queryProblemInfoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:queryProblemInfoResponse" name="queryProblemInfoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProblemTask">
+
+         <wsdl:input message="impl:getProblemTaskRequest" name="getProblemTaskRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getProblemTaskResponse" name="getProblemTaskResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="approvalProblem">
+
+         <wsdl:input message="impl:approvalProblemRequest" name="approvalProblemRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:approvalProblemResponse" name="approvalProblemResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="submitSolution">
+
+         <wsdl:input message="impl:submitSolutionRequest" name="submitSolutionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:submitSolutionResponse" name="submitSolutionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOrgByParentId">
+
+         <wsdl:input message="impl:getOrgByParentIdRequest" name="getOrgByParentIdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getOrgByParentIdResponse" name="getOrgByParentIdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ProblemServiceSoapBinding" type="impl:ProblemService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="reviewProblemByZGCheck">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="reviewProblemByZGCheckRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="reviewProblemByZGCheckResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="approvalCloseProblem">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="approvalCloseProblemRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="approvalCloseProblemResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryDownDeptUsers">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryDownDeptUsersRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryDownDeptUsersResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="applyCloseProblem">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="applyCloseProblemRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="applyCloseProblemResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="setProblemOperation">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="setProblemOperationRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="setProblemOperationResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="returnProblem">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="returnProblemRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="returnProblemResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="startProblem">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="startProblemRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="startProblemResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryAllTopDept">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryAllTopDeptRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryAllTopDeptResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateProblem">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateProblemRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateProblemResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="queryProblemInfo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="queryProblemInfoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="queryProblemInfoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getProblemTask">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProblemTaskRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProblemTaskResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="approvalProblem">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="approvalProblemRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="approvalProblemResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="submitSolution">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="submitSolutionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="submitSolutionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOrgByParentId">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getOrgByParentIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getOrgByParentIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ProblemServiceService">
+
+      <wsdl:port binding="impl:ProblemServiceSoapBinding" name="ProblemService">
+
+         <wsdlsoap:address location="http://192.168.43.162:8080/IS/services/ProblemService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

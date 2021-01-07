@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_outtrust.dao.PcOutsourceEntrustEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_outtrust.entity.PcOutsourceEntrustEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_by_name" property="createByName"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="entrust_code" property="entrustCode"/>
+        <result column="entrust_project" property="entrustProject"/>
+        <result column="task_code" property="taskCode"/>
+        <result column="op_code" property="opCode"/>
+        <result column="entrust_type" property="entrustType"/>
+        <result column="sample_type" property="sampleType"/>
+        <result column="sup_name" property="supName"/>
+        <result column="trial_task_code" property="trialTaskCode"/>
+        <result column="plan_report_finish_date" property="planReportFinishDate"/>
+        <result column="entrust_status" property="entrustStatus"/>
+        <result column="plan_cost" property="planCost"/>
+        <result column="entrust_company_name" property="entrustCompanyName"/>
+        <result column="zip_code" property="zipCode"/>
+        <result column="entrust_company_addr" property="entrustCompanyAddr"/>
+        <result column="tel_phone" property="telPhone"/>
+        <result column="product_name" property="productName"/>
+        <result column="logo" property="logo"/>
+        <result column="acc_require" property="accRequire"/>
+        <result column="require_finish_date" property="requireFinishDate"/>
+        <result column="create_by_phone" property="createByPhone"/>
+        <result column="sup_addr" property="supAddr"/>
+        <result column="sup_manager_name" property="supManagerName"/>
+        <result column="sup_manager_phone" property="supManagerPhone"/>
+        <result column="trial_task_id" property="trialTaskId"/>
+        <result column="pvorcv" property="pvOrcv"/>
+        <result column="trial_code" property="trialCode"/>
+        <result column="SUP_ID" property="supId"/>
+    </resultMap>
+
+    <!-- PC_OUTSOURCE_ENTRUST table all fields -->
+    <sql id="Base_Column_List">
+     id, del_flag, create_time, create_by, create_by_name, update_time,
+      update_by, entrust_code, entrust_project, task_code, op_code,
+      entrust_type, sample_type, sup_name, trial_task_code, plan_report_finish_date,
+       entrust_status, plan_cost, entrust_company_name, zip_code, entrust_company_addr,
+       tel_phone, product_name, logo, acc_require, require_finish_date, create_by_phone,
+        sup_addr, sup_manager_name, sup_manager_phone, trial_task_id, pvorcv, trial_code,
+        SUP_ID
+  </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1 and del_flag = 0
+        <trim suffixOverrides=",">
+            <if test="trialCode != null">
+                and trial_code = #{trialCode}
+            </if>
+            <if test="trialTaskId != null">
+                and trial_task_id = #{trialTaskId}
+            </if>
+            <if test="supId != null">
+                and sup_id = #{supId}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_outtrust.entity.PcOutsourceEntrustEO">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SYS_GUID() FROM DUAL
+        </selectKey>
+        insert into PC_OUTSOURCE_ENTRUST
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createByName != null">create_by_name,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="entrustCode != null">entrust_code,</if>
+            <if test="entrustProject != null">entrust_project,</if>
+            <if test="taskCode != null">task_code,</if>
+            <if test="opCode != null">op_code,</if>
+            <if test="entrustType != null">entrust_type,</if>
+            <if test="sampleType != null">sample_type,</if>
+            <if test="supName != null">sup_name,</if>
+            <if test="trialTaskCode != null">trial_task_code,</if>
+            <if test="planReportFinishDate != null">plan_report_finish_date,</if>
+            <if test="entrustStatus != null">entrust_status,</if>
+            <if test="planCost != null">plan_cost,</if>
+            <if test="entrustCompanyName != null">entrust_company_name,</if>
+            <if test="zipCode != null">zip_code,</if>
+            <if test="entrustCompanyAddr != null">entrust_company_addr,</if>
+            <if test="telPhone != null">tel_phone,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="logo != null">logo,</if>
+            <if test="accRequire != null">acc_require,</if>
+            <if test="requireFinishDate != null">require_finish_date,</if>
+            <if test="createByPhone != null">create_by_phone,</if>
+            <if test="supAddr != null">sup_addr,</if>
+            <if test="supManagerName != null">sup_manager_name,</if>
+            <if test="supManagerPhone != null">sup_manager_phone,</if>
+            <if test="trialTaskId != null">trial_task_id,</if>
+            <if test="pvOrcv != null">pvOrcv,</if>
+            <if test="trialCode != null">trial_code,</if>
+            <if test="supId != null">SUP_ID,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="createByName != null">#{createByName, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="entrustCode != null">#{entrustCode, jdbcType=VARCHAR},</if>
+            <if test="entrustProject != null">#{entrustProject, jdbcType=VARCHAR},</if>
+            <if test="taskCode != null">#{taskCode, jdbcType=VARCHAR},</if>
+            <if test="opCode != null">#{opCode, jdbcType=VARCHAR},</if>
+            <if test="entrustType != null">#{entrustType, jdbcType=VARCHAR},</if>
+            <if test="sampleType != null">#{sampleType, jdbcType=VARCHAR},</if>
+            <if test="supName != null">#{supName, jdbcType=VARCHAR},</if>
+            <if test="trialTaskCode != null">#{trialTaskCode, jdbcType=VARCHAR},</if>
+            <if test="planReportFinishDate != null">#{planReportFinishDate, jdbcType=VARCHAR},</if>
+            <if test="entrustStatus != null">#{entrustStatus, jdbcType=VARCHAR},</if>
+            <if test="planCost != null">#{planCost, jdbcType=VARCHAR},</if>
+            <if test="entrustCompanyName != null">#{entrustCompanyName, jdbcType=VARCHAR},</if>
+            <if test="zipCode != null">#{zipCode, jdbcType=VARCHAR},</if>
+            <if test="entrustCompanyAddr != null">#{entrustCompanyAddr, jdbcType=VARCHAR},</if>
+            <if test="telPhone != null">#{telPhone, jdbcType=VARCHAR},</if>
+            <if test="productName != null">#{productName, jdbcType=VARCHAR},</if>
+            <if test="logo != null">#{logo, jdbcType=VARCHAR},</if>
+            <if test="accRequire != null">#{accRequire, jdbcType=VARCHAR},</if>
+            <if test="requireFinishDate != null">#{requireFinishDate, jdbcType=VARCHAR},</if>
+            <if test="createByPhone != null">#{createByPhone, jdbcType=VARCHAR},</if>
+            <if test="supAddr != null">#{supAddr, jdbcType=VARCHAR},</if>
+            <if test="supManagerName != null">#{supManagerName, jdbcType=VARCHAR},</if>
+            <if test="supManagerPhone != null">#{supManagerPhone, jdbcType=VARCHAR},</if>
+            <if test="trialTaskId != null">#{trialTaskId, jdbcType=VARCHAR},</if>
+            <if test="pvOrcv != null">#{pvOrcv, jdbcType=VARCHAR},</if>
+            <if test="trialCode != null">#{trialCode, jdbcType=VARCHAR},</if>
+            <if test="supId != null">#{supId, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_outtrust.entity.PcOutsourceEntrustEO">
+        update PC_OUTSOURCE_ENTRUST
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="createByName != null">
+                create_by_name = #{createByName},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="entrustCode != null">
+                entrust_code = #{entrustCode},
+            </if>
+            <if test="entrustProject != null">
+                entrust_project = #{entrustProject},
+            </if>
+            <if test="taskCode != null">
+                task_code = #{taskCode},
+            </if>
+            <if test="opCode != null">
+                op_code = #{opCode},
+            </if>
+            <if test="entrustType != null">
+                entrust_type = #{entrustType},
+            </if>
+            <if test="sampleType != null">
+                sample_type = #{sampleType},
+            </if>
+            <if test="supName != null">
+                sup_name = #{supName},
+            </if>
+            <if test="trialTaskCode != null">
+                trial_task_code = #{trialTaskCode},
+            </if>
+            <if test="planReportFinishDate != null">
+                plan_report_finish_date = #{planReportFinishDate},
+            </if>
+            <if test="entrustStatus != null">
+                entrust_status = #{entrustStatus},
+            </if>
+            <if test="planCost != null">
+                plan_cost = #{planCost},
+            </if>
+            <if test="entrustCompanyName != null">
+                entrust_company_name = #{entrustCompanyName},
+            </if>
+            <if test="zipCode != null">
+                zip_code = #{zipCode},
+            </if>
+            <if test="entrustCompanyAddr != null">
+                entrust_company_addr = #{entrustCompanyAddr},
+            </if>
+            <if test="telPhone != null">
+                tel_phone = #{telPhone},
+            </if>
+            <if test="productName != null">
+                product_name = #{productName},
+            </if>
+            <if test="logo != null">
+                logo = #{logo},
+            </if>
+            <if test="accRequire != null">
+                acc_require = #{accRequire},
+            </if>
+            <if test="requireFinishDate != null">
+                require_finish_date = #{requireFinishDate},
+            </if>
+            <if test="createByPhone != null">
+                create_by_phone = #{createByPhone},
+            </if>
+            <if test="supAddr != null">
+                sup_addr = #{supAddr},
+            </if>
+            <if test="supManagerName != null">
+                sup_manager_name = #{supManagerName},
+            </if>
+            <if test="supManagerPhone != null">
+                sup_manager_phone = #{supManagerPhone},
+            </if>
+            <if test="pvOrcv != null">
+                pvOrcv = #{pvOrcv},
+            </if>
+            <if test="supId != null">
+                SUP_ID = #{supId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="updateStatus" parameterType="java.lang.String">
+        update PC_OUTSOURCE_ENTRUST set entrust_status = #{status} where id = #{id}
+    </update>
+
+    <!-- 根据id查询 PC_OUTSOURCE_ENTRUST -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_OUTSOURCE_ENTRUST
+        where id = #{value}
+    </select>
+
+    <select id="findActProcId" parameterType="java.lang.String" resultType="java.lang.String">
+        select ahp.PROC_INST_ID_ procId from TS_BASEBUS tb
+        left join ACT_HI_PROCINST ahp on ahp.BUSINESS_KEY_ = tb.id
+         where tb.BUSINESS_ID = #{value}
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_OUTSOURCE_ENTRUST
+     where id = #{value}
+  </delete>
+
+    <!-- PC_OUTSOURCE_ENTRUST 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_OUTSOURCE_ENTRUST
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_OUTSOURCE_ENTRUST列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_OUTSOURCE_ENTRUST
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_OUTSOURCE_ENTRUST
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <!--pc委外立项＆pc可靠性立项获取编号集合-->
+    <select id="queryCodeList" resultType="java.lang.String">
+        select init_code from PC_RELIABLE_INITTASK
+        union all
+        select op_code from PC_OUTSOURCE_PROJECT
+    </select>
+</mapper>

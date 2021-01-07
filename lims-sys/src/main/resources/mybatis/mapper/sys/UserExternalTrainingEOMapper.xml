@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.UserExternalTrainingEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.UserExternalTrainingEO">
+        <!-- 主键 -->
+        <id column="id" property="id"/>
+        <!-- 表属性 -->
+        <result column="USID" property="usid"/>
+        <result column="START_TIME" property="startTime"/>
+        <result column="END_TIME" property="endTime"/>
+        <result column="COURSE_NAME" property="courseName"/>
+        <result column="TRAINING_ORGANIZATION" property="trainingOrganization"/>
+        <result column="TRAINING_RESULTS" property="trainingResults"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+    </resultMap>
+
+    <!-- 【表名】 table all fields -->
+    <sql id="Base_Column_List">
+        ID,USID,START_TIME,END_TIME,COURSE_NAME,TRAINING_ORGANIZATION,TRAINING_RESULTS,DEL_FLAG
+    </sql>
+
+    <select id="findUserExternalTrainingEOByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from TR_USER_EXTERNAL_TRAINING where DEL_FLAG != 1 and USID = #{userId}
+    </select>
+    <insert id="saveUserExternalTraining" parameterType="com.adc.da.sys.entity.UserExternalTrainingEO">
+        insert into TR_USER_EXTERNAL_TRAINING (ID,USID,START_TIME,END_TIME,COURSE_NAME,TRAINING_ORGANIZATION,TRAINING_RESULTS,DEL_FLAG)
+        values (#{id},#{usid},#{startTime},#{endTime},#{courseName},#{trainingOrganization},#{trainingResults},#{delFlag})
+    </insert>
+    <update id="updateUserExternalTrainingById" parameterType="com.adc.da.sys.entity.UserExternalTrainingEO">
+        update TR_USER_EXTERNAL_TRAINING
+        <set>
+            <if test="startTime!=null">
+                START_TIME = #{startTime},
+            </if>
+            <if test="endTime!=null">
+                end_time = #{endTime},
+            </if>
+            <if test="courseName!=null">
+                COURSE_NAME = #{courseName},
+            </if>
+            <if test="trainingOrganization!=null">
+                TRAINING_ORGANIZATION = #{trainingOrganization},
+            </if>
+            <if test="trainingResults!=null">
+                TRAINING_RESULTS = #{trainingResults}
+            </if>
+            <if test="delFlag!=null">
+                DEL_FLAG = #{delFlag}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteUserExternalTrainingByUsid" parameterType="java.lang.String">
+        delete from TR_USER_EXTERNAL_TRAINING where usid = #{userId}
+    </delete>
+    <delete id="deleteUserExternalTrainingById" parameterType="java.lang.String">
+        delete from TR_USER_EXTERNAL_TRAINING where id = #{id}
+    </delete>
+    <select id="findUserExternalTrainingEOById" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"></include> from TR_USER_EXTERNAL_TRAINING where DEL_FLAG != 1 and id =#{id}
+    </select>
+</mapper>

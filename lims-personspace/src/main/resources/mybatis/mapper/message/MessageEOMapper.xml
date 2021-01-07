@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.message.dao.MessageEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.message.entity.MessageEO">
+        <id column="id" property="id"/>
+        <result column="isread" property="isread"/>
+        <result column="sendlink" property="sendlink"/>
+        <result column="sendtime" property="sendtime"/>
+        <result column="senduser" property="senduser"/>
+        <result column="title" property="title"/>
+        <result column="cc_create_by_id" property="ccCreateById"/>
+        <result column="business_id" property="businessId"/>
+    </resultMap>
+
+    <!-- TP_MESSAGE table all fields -->
+    <sql id="Base_Column_List">
+     id, isread, sendlink, sendtime, senduser, title, cc_create_by_id, business_id
+  </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1 and cc_create_by_id = #{ccCreateById}
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="search">
+                    and (
+                    title like '%${search}%' or
+                    sendtime like '%${search}%' or
+                    senduser like '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <trim suffixOverrides=",">
+                    <if test="id != null">
+                        and id ${idOperator} #{id}
+                    </if>
+                    <if test="isread != null">
+                        and isread ${isreadOperator} #{isread}
+                    </if>
+                    <if test="sendlink != null">
+                        and sendlink ${sendlinkOperator} #{sendlink}
+                    </if>
+                    <if test="sendtime1 != null">
+                        and sendtime &gt;= #{sendtime1}
+                    </if>
+                    <if test="sendtime2 != null">
+                        and sendtime &lt;= #{sendtime2}
+                    </if>
+                    <if test="senduser != null">
+                        and senduser like '%${senduser}%'
+                    </if>
+                    <if test="title != null">
+                        and title like '%${title}%'
+                    </if>
+                    <if test="businessId != null">
+                        and business_id ${businessIdOperator} #{businessId}
+                    </if>
+                </trim>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.message.entity.MessageEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SEQ_TP_MESSAGE.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into TP_MESSAGE(<include refid="Base_Column_List"/>)
+        values (#{id, jdbcType=VARCHAR}, #{isread, jdbcType=VARCHAR}, #{sendlink, jdbcType=VARCHAR},
+        #{sendtime, jdbcType=VARCHAR}, #{senduser, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR},
+        #{ccCreateById, jdbcType=VARCHAR}, #{businessId, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.message.entity.MessageEO">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            select sys_guid() from dual
+        </selectKey>
+        insert into TP_MESSAGE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="isread != null">isread,</if>
+            <if test="sendlink != null">sendlink,</if>
+            <if test="sendtime != null">sendtime,</if>
+            <if test="senduser != null">senduser,</if>
+            <if test="title != null">title,</if>
+            <if test="ccCreateById != null">cc_create_by_id,</if>
+            <if test="businessId != null">business_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="isread != null">#{isread, jdbcType=VARCHAR},</if>
+            <if test="sendlink != null">#{sendlink, jdbcType=VARCHAR},</if>
+            <if test="sendtime != null">#{sendtime, jdbcType=VARCHAR},</if>
+            <if test="senduser != null">#{senduser, jdbcType=VARCHAR},</if>
+            <if test="title != null">#{title, jdbcType=VARCHAR},</if>
+            <if test="ccCreateById != null">#{ccCreateById, jdbcType=VARCHAR},</if>
+            <if test="businessId != null">#{businessId, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch">
+        insert into TP_MESSAGE (id, isread, sendlink, sendtime, senduser, title, cc_create_by_id, business_Id) values
+        <foreach collection="list" item="item" index="index" open="( " close=" )" separator=" union ">
+            select #{item.id}, #{item.isread}, #{item.sendlink}, #{item.sendtime}, #{item.senduser}, #{item.title},
+            #{item.ccCreateById}, #{item.businessId} from dual
+        </foreach>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.message.entity.MessageEO">
+    update TP_MESSAGE
+       set  isread = #{isread},
+            sendlink = #{sendlink},
+            sendtime = #{sendtime},
+            senduser = #{senduser},
+            title = #{title},
+            cc_create_by_id = #{ccCreateById},
+            business_id = #{businessId}
+     where  id = #{id}
+  </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByIds">
+        update TP_MESSAGE
+        <set>
+            isread = 1,
+        </set>
+        <where>id
+            <foreach collection="array" item="id" open="in (" close=")"
+                     separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </update>
+
+    <!-- 根据id查询 TP_MESSAGE -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TP_MESSAGE
+        where id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TP_MESSAGE
+     where id = #{value}
+
+  </delete>
+
+    <!-- TP_MESSAGE 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from TP_MESSAGE
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询TP_MESSAGE列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from TP_MESSAGE
+        <include refid="Base_Where_Clause"/>
+        order by sendtime desc
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from TP_MESSAGE
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <!-- 查询未读消息通知的数量：即统计ISREAD为0的数量 -->
+    <select id="queryIsread" resultType="java.lang.Integer">
+        select count(isread) from TP_MESSAGE where isread = 0 and cc_create_by_id = #{value}
+    </select>
+    <select id="queryBySize" resultType="java.lang.Integer" parameterType="com.adc.da.message.page.MessageEOPage">
+        select count(1) from TP_MESSAGE
+        where cc_create_by_id = #{ccCreateById} and isread = '0'
+    </select>
+</mapper>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_announcement.dao.AnnPlanEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_announcement.entity.AnnPlanEO" >
+    <id column="id" property="id" />
+    <result column="del_flag" property="delFlag" />
+    <result column="pl_update_time" property="plUpdateTime" />
+    <result column="pl_update_by" property="plUpdateBy" />
+    <result column="pl_status" property="plStatus" />
+    <result column="pl_attachment_name" property="plAttachmentName" />
+    <result column="pl_attachment_id" property="plAttachmentId" />
+    <result column="pl_create_date" property="plCreateDate" />
+    <result column="pl_create_name" property="plCreateName" />
+    <result column="pl_create_by" property="plCreateBy" />
+    <result column="pl_no" property="plNo" />
+    <result column="pl_source" property="plSource" />
+    <result column="pl_name" property="plName" />
+  </resultMap>
+
+  <!-- ANN_PLAN table all fields -->
+  <sql id="Base_Column_List" >
+     del_flag, pl_update_time, pl_update_by, pl_status, pl_attachment_name, pl_attachment_id, pl_create_date, pl_create_name, pl_create_by, pl_no, pl_source, pl_name, id
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where del_flag = '0'
+      <choose>
+    	<when test="searchMap != null">
+    		<foreach collection="searchMap" item="searchItem">
+    			and (
+    				lower(pl_name) like lower('%'||#{searchItem.search,jdbcType=VARCHAR}||'%')
+    				or lower(pl_no) like lower('%'||#{searchItem.search,jdbcType=VARCHAR}||'%')
+    				or lower(pl_create_name) like lower('%'||#{searchItem.search,jdbcType=VARCHAR}||'%')
+    				or lower(pl_create_date) like lower('%'||#{searchItem.search,jdbcType=VARCHAR}||'%')
+    				<if test="searchItem.sourceKeys != null">
+    					<foreach collection="searchItem.sourceKeys" item="code">
+    						or pl_source = #{code,jdbcType=VARCHAR}
+    					</foreach>
+    				</if>
+    				<if test="searchItem.statusKeys != null">
+    					<foreach collection="searchItem.statusKeys" item="code">
+    						or pl_status = #{code,jdbcType=VARCHAR}
+    					</foreach>
+    				</if>
+    			)
+    		</foreach>
+    	</when>
+    	<otherwise>
+	      	<if test="plStatus != null" >
+		        and pl_status = #{plStatus,jdbcType=VARCHAR}
+	      	</if>
+	      	<if test="plCreateDate != null" >
+		        and pl_create_date like '%'||#{plCreateDate,jdbcType=VARCHAR}||'%'
+	      	</if>
+	      	<if test="plCreateName != null" >
+		        and lower(pl_create_name) like lower('%'||#{plCreateName,jdbcType=VARCHAR}||'%')
+	      	</if>
+	      	<if test="plNo != null" >
+		        and lower(pl_no) like lower('%'||#{plNo,jdbcType=VARCHAR}||'%')
+	      	</if>
+	      	<if test="plSource != null" >
+		        and pl_source = #{plSource,jdbcType=VARCHAR}
+	      	</if>
+	      	<if test="plName != null" >
+		        and lower(pl_name) like lower('%'||#{plName,jdbcType=VARCHAR}||'%')
+	      	</if>
+    	</otherwise>
+   	  </choose>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.pc_announcement.entity.AnnPlanEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_ANN_PLAN.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into ANN_PLAN(<include refid="Base_Column_List" />)
+    values (#{delFlag, jdbcType=VARCHAR}, #{plUpdateTime, jdbcType=VARCHAR}, #{plUpdateBy, jdbcType=VARCHAR}, #{plStatus, jdbcType=VARCHAR}, #{plAttachmentName, jdbcType=VARCHAR}, #{plAttachmentId, jdbcType=VARCHAR}, #{plCreateDate, jdbcType=VARCHAR}, #{plCreateName, jdbcType=VARCHAR}, #{plCreateBy, jdbcType=VARCHAR}, #{plNo, jdbcType=VARCHAR}, #{plSource, jdbcType=VARCHAR}, #{plName, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_announcement.entity.AnnPlanEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_ANN_PLAN.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ANN_PLAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="plUpdateTime != null" >pl_update_time,</if>
+                <if test="plUpdateBy != null" >pl_update_by,</if>
+                <if test="plStatus != null" >pl_status,</if>
+                <if test="plAttachmentName != null" >pl_attachment_name,</if>
+                <if test="plAttachmentId != null" >pl_attachment_id,</if>
+                <if test="plCreateDate != null" >pl_create_date,</if>
+                <if test="plCreateName != null" >pl_create_name,</if>
+                <if test="plCreateBy != null" >pl_create_by,</if>
+                <if test="plNo != null" >pl_no,</if>
+                <if test="plSource != null" >pl_source,</if>
+                <if test="plName != null" >pl_name,</if>
+                <if test="id != null" >id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="plUpdateTime != null" >#{plUpdateTime, jdbcType=VARCHAR},</if>
+                <if test="plUpdateBy != null" >#{plUpdateBy, jdbcType=VARCHAR},</if>
+                <if test="plStatus != null" >#{plStatus, jdbcType=VARCHAR},</if>
+                <if test="plAttachmentName != null" >#{plAttachmentName, jdbcType=VARCHAR},</if>
+                <if test="plAttachmentId != null" >#{plAttachmentId, jdbcType=VARCHAR},</if>
+                <if test="plCreateDate != null" >#{plCreateDate, jdbcType=VARCHAR},</if>
+                <if test="plCreateName != null" >#{plCreateName, jdbcType=VARCHAR},</if>
+                <if test="plCreateBy != null" >#{plCreateBy, jdbcType=VARCHAR},</if>
+                <if test="plNo != null" >#{plNo, jdbcType=VARCHAR},</if>
+                <if test="plSource != null" >#{plSource, jdbcType=VARCHAR},</if>
+                <if test="plName != null" >#{plName, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_announcement.entity.AnnPlanEO" >
+    update ANN_PLAN
+       set  del_flag = #{delFlag},
+            pl_update_time = #{plUpdateTime},
+            pl_update_by = #{plUpdateBy},
+            pl_status = #{plStatus},
+            pl_attachment_name = #{plAttachmentName},
+            pl_attachment_id = #{plAttachmentId},
+            pl_create_date = #{plCreateDate},
+            pl_create_name = #{plCreateName},
+            pl_create_by = #{plCreateBy},
+            pl_no = #{plNo},
+            pl_source = #{plSource},
+            pl_name = #{plName}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_announcement.entity.AnnPlanEO" >
+    update ANN_PLAN
+    <set >
+      <if test='delFlag != null and delFlag!=""' >
+        del_flag = #{delFlag},
+      </if>
+      <if test='plUpdateTime != null and plUpdateTime!=""' >
+        pl_update_time = #{plUpdateTime},
+      </if>
+      <if test='plUpdateBy != null and plUpdateBy!=""' >
+        pl_update_by = #{plUpdateBy},
+      </if>
+      <if test='plStatus != null and plStatus!=""' >
+        pl_status = #{plStatus},
+      </if>
+      <if test='plAttachmentName != null and plAttachmentName!=""' >
+        pl_attachment_name = #{plAttachmentName},
+      </if>
+      <if test='plAttachmentId != null and plAttachmentId!=""' >
+        pl_attachment_id = #{plAttachmentId},
+      </if>
+      <if test='plCreateDate != null and plCreateDate!=""' >
+        pl_create_date = #{plCreateDate},
+      </if>
+      <if test='plCreateName != null and plCreateName!=""' >
+        pl_create_name = #{plCreateName},
+      </if>
+      <if test='plCreateBy != null and plCreateBy!=""' >
+        pl_create_by = #{plCreateBy},
+      </if>
+      <if test='plNo != null and plNo!=""' >
+        pl_no = #{plNo},
+      </if>
+      <if test='plSource != null and plSource!="" '>
+        pl_source = #{plSource},
+      </if>
+      <if test='plName != null and plName!=""' >
+        pl_name = #{plName},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+    <!-- 根据创建人id查询 ANN_PLAN -->
+    <select id="getAnnPlanList" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List" />
+        from ANN_PLAN
+        where pl_create_by = #{value}
+        and del_flag = 0
+    </select>
+
+  <!-- 根据id查询 ANN_PLAN -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from ANN_PLAN
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ANN_PLAN
+     where id = #{value}
+
+  </delete>
+    <!-- 对应创建人的ANN_PLAN 列表总数-->
+    <select id="queryForAnnPlanCount" resultType="java.lang.Integer" parameterType="com.adc.da.pc_announcement.page.AnnPlanEOPage">
+        select count(1) from ANN_PLAN
+        <include refid="Base_Where_Clause"/>
+        <if test="plCreateBy != null" >
+	        and pl_create_by = #{plCreateBy}
+      	</if>
+    </select>
+    <!-- 对应的工程师ANN_PLAN 列表总数-->
+    <select id="queryForEngineerAnnPlanCount" resultType="java.lang.Integer" parameterType="com.adc.da.pc_announcement.page.AnnPlanEOPage">
+       select count(1) from ANN_PLAN
+       <include refid="Base_Where_Clause"/>
+        <if test="plCreateBy != null" >
+	        and id in (
+	        select project.PLAN_ID from ANN_PLAN_PROJECT project
+	        where project.PJ_ENGINEER_ID = #{plCreateBy,jdbcType=VARCHAR}
+	        )
+      	</if>
+    </select>
+    <!-- 查询创建人的ANN_PLAN列表 -->
+    <select id="getAnnPlanPage" resultMap="BaseResultMap" parameterType="com.adc.da.pc_announcement.page.AnnPlanEOPage">
+        select <include refid="Base_Column_List" /> from
+        (select tmp_tb.* , rownum rn from
+        (select <include refid="Base_Column_List" /> from ANN_PLAN
+        	<include refid="Base_Where_Clause"/>
+        	<if test="plCreateBy != null" >
+		        and pl_create_by = #{plCreateBy}
+	      	</if>
+        ORDER BY pl_create_date DESC
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+    <select id="findAnnPlanForEngineer" resultMap="BaseResultMap" parameterType="com.adc.da.pc_announcement.page.AnnPlanEOPage">
+        select <include refid="Base_Column_List" /> from
+        (select tmp_tb.* , rownum rn from
+        (select <include refid="Base_Column_List" /> from ANN_PLAN
+        <include refid="Base_Where_Clause"/>
+        <if test="plCreateBy != null" >
+	        and id in (
+	        select project.PLAN_ID from ANN_PLAN_PROJECT project
+	        where project.PJ_ENGINEER_ID = #{plCreateBy,jdbcType=VARCHAR}
+	        )
+      	</if>
+        ORDER BY pl_create_date DESC
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+  <!-- ANN_PLAN 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from ANN_PLAN
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询ANN_PLAN列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from ANN_PLAN
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from ANN_PLAN
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.equipment.dao.EquipmentCheckEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.equipment.entity.EquipmentCheckEO" >
+    <id column="id" property="id" />
+    <result column="ck_id" property="ckId" />
+    <result column="update_time" property="updateTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="create_time" property="createTime" />
+    <result column="create_by" property="createBy" />
+    <result column="del_flag" property="delFlag" />
+    <result column="is_finish_flag" property="isFinishFlag" />
+    <result column="eq_ck_attach_name" property="eqCkAttachName" />
+    <result column="eq_ck_attach_id" property="eqCkAttachId" />
+    <result column="eq_ck_plan_attach_name" property="eqCkPlanAttachName" />
+    <result column="eq_ck_plan_attach_id" property="eqCkPlanAttachId" />
+    <result column="eq_ck_warn_time" property="eqCkWarnTime" />
+    <result column="eq_ck_remark" property="eqCkRemark" />
+    <result column="eq_ck_plan_remark" property="eqCkPlanRemark" />
+    <result column="eq_ck_amount" property="eqCkAmount" />
+    <result column="eq_ck_plan_owner" property="eqCkPlanOwner" />
+    <result column="eq_ck_check_time_actual" property="eqCkCheckTimeActual" />
+    <result column="eq_ck_check_time_plan" property="eqCkCheckTimePlan" />
+    <result column="eq_ck_org_tel" property="eqCkOrgTel" />
+    <result column="eq_ck_org_address" property="eqCkOrgAddress" />
+    <result column="eq_ck_org" property="eqCkOrg" />
+    <result column="eq_ck_cycle_unit" property="eqCkCycleUnit" />
+    <result column="eq_ck_cycle" property="eqCkCycle" />
+    <result column="eq_ck_type" property="eqCkType" />
+    <result column="eq_id" property="eqId" />
+  </resultMap>
+    <!-- Result Map-->
+    <resultMap id="CheckResultMap" type="com.adc.da.equipment.entity.EquipmentCheckEO" >
+        <id column="id" property="id" />
+        <result column="ck_id" property="ckId" />
+        <result column="update_time" property="updateTime" />
+        <result column="update_by" property="updateBy" />
+        <result column="create_time" property="createTime" />
+        <result column="create_by" property="createBy" />
+        <result column="del_flag" property="delFlag" />
+        <result column="is_finish_flag" property="isFinishFlag" />
+        <result column="eq_ck_attach_name" property="eqCkAttachName" />
+        <result column="eq_ck_attach_id" property="eqCkAttachId" />
+        <result column="eq_ck_plan_attach_name" property="eqCkPlanAttachName" />
+        <result column="eq_ck_plan_attach_id" property="eqCkPlanAttachId" />
+        <result column="eq_ck_warn_time" property="eqCkWarnTime" />
+        <result column="eq_ck_remark" property="eqCkRemark" />
+        <result column="eq_ck_plan_remark" property="eqCkPlanRemark" />
+        <result column="eq_ck_amount" property="eqCkAmount" />
+        <result column="eq_ck_plan_owner" property="eqCkPlanOwner" />
+        <result column="eq_ck_check_time_actual" property="eqCkCheckTimeActual" />
+        <result column="eq_ck_check_time_plan" property="eqCkCheckTimePlan" />
+        <result column="eq_ck_org_tel" property="eqCkOrgTel" />
+        <result column="eq_ck_org_address" property="eqCkOrgAddress" />
+        <result column="eq_ck_org" property="eqCkOrg" />
+        <result column="eq_ck_cycle_unit" property="eqCkCycleUnit" />
+        <result column="eq_ck_cycle" property="eqCkCycle" />
+        <result column="eq_ck_type" property="eqCkType" />
+        <result column="eq_id" property="eqId" />
+        <result column="eq_No" property="eqNo" />
+        <result column="eq_Name" property="eqName" />
+    </resultMap>
+
+    <!-- RES_EQUIPMENT_CHECK table all fields -->
+  <sql id="Base_Column_List" >
+     ck_id, update_time, update_by, create_time, create_by, del_flag, is_finish_flag, eq_ck_attach_name, eq_ck_attach_id, eq_ck_plan_attach_name, eq_ck_plan_attach_id, eq_ck_warn_time, eq_ck_remark, eq_ck_plan_remark, eq_ck_amount, eq_ck_plan_owner, eq_ck_check_time_actual, eq_ck_check_time_plan, eq_ck_org_tel, eq_ck_org_address, eq_ck_org, eq_ck_cycle_unit, eq_ck_cycle, eq_ck_type, eq_id, id
+  </sql>
+
+    <!-- RES_EQUIPMENT_CHECK table all fields -->
+    <sql id="Check_Column_List" >
+     eq_No,eq_Name,ck_id, is_finish_flag, eq_ck_attach_name, eq_ck_attach_id, eq_ck_plan_attach_name, eq_ck_plan_attach_id, eq_ck_warn_time, eq_ck_remark, eq_ck_plan_remark, eq_ck_amount, eq_ck_plan_owner, eq_ck_check_time_actual, eq_ck_check_time_plan, eq_ck_org_tel, eq_ck_org_address, eq_ck_org, eq_ck_cycle_unit, eq_ck_cycle, eq_ck_type, eq_id, RES_EQUIPMENT_CHECK.id
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="ckId != null" >
+        and ck_id ${ckIdOperator} #{ckId}
+      </if>
+      <if test="updateTime != null" >
+        and update_time ${updateTimeOperator} #{updateTime}
+      </if>
+      <if test="updateBy != null" >
+        and update_by ${updateByOperator} #{updateBy}
+      </if>
+      <if test="createTime != null" >
+        and create_time ${createTimeOperator} #{createTime}
+      </if>
+      <if test="createBy != null" >
+        and create_by ${createByOperator} #{createBy}
+      </if>
+      <if test="delFlag != null" >
+        and del_flag ${delFlagOperator} #{delFlag}
+      </if>
+      <if test="isFinishFlag != null" >
+        and is_finish_flag ${isFinishFlagOperator} #{isFinishFlag}
+      </if>
+      <if test="eqCkAttachName != null" >
+        and eq_ck_attach_name ${eqCkAttachNameOperator} #{eqCkAttachName}
+      </if>
+      <if test="eqCkAttachId != null" >
+        and eq_ck_attach_id ${eqCkAttachIdOperator} #{eqCkAttachId}
+      </if>
+      <if test="eqCkPlanAttachName != null" >
+        and eq_ck_plan_attach_name ${eqCkPlanAttachNameOperator} #{eqCkPlanAttachName}
+      </if>
+      <if test="eqCkPlanAttachId != null" >
+        and eq_ck_plan_attach_id ${eqCkPlanAttachIdOperator} #{eqCkPlanAttachId}
+      </if>
+      <if test="eqCkWarnTime != null" >
+        and eq_ck_warn_time ${eqCkWarnTimeOperator} #{eqCkWarnTime}
+      </if>
+      <if test="eqCkRemark != null" >
+        and eq_ck_remark ${eqCkRemarkOperator} #{eqCkRemark}
+      </if>
+      <if test="eqCkPlanRemark != null" >
+        and eq_ck_plan_remark ${eqCkPlanRemarkOperator} #{eqCkPlanRemark}
+      </if>
+      <if test="eqCkAmount != null" >
+        and eq_ck_amount ${eqCkAmountOperator} #{eqCkAmount}
+      </if>
+      <if test="eqCkPlanOwner != null" >
+        and eq_ck_plan_owner ${eqCkPlanOwnerOperator} #{eqCkPlanOwner}
+      </if>
+      <if test="eqCkCheckTimeActual != null" >
+        and eq_ck_check_time_actual ${eqCkCheckTimeActualOperator} #{eqCkCheckTimeActual}
+      </if>
+      <if test="eqCkCheckTimePlan != null" >
+        and eq_ck_check_time_plan ${eqCkCheckTimePlanOperator} #{eqCkCheckTimePlan}
+      </if>
+      <if test="eqCkOrgTel != null" >
+        and eq_ck_org_tel ${eqCkOrgTelOperator} #{eqCkOrgTel}
+      </if>
+      <if test="eqCkOrgAddress != null" >
+        and eq_ck_org_address ${eqCkOrgAddressOperator} #{eqCkOrgAddress}
+      </if>
+      <if test="eqCkOrg != null" >
+        and eq_ck_org ${eqCkOrgOperator} #{eqCkOrg}
+      </if>
+      <if test="eqCkCycleUnit != null" >
+        and eq_ck_cycle_unit ${eqCkCycleUnitOperator} #{eqCkCycleUnit}
+      </if>
+      <if test="eqCkCycle != null" >
+        and eq_ck_cycle ${eqCkCycleOperator} #{eqCkCycle}
+      </if>
+      <if test="eqCkType != null" >
+        and eq_ck_type ${eqCkTypeOperator} #{eqCkType}
+      </if>
+      <if test="eqId != null" >
+        and eq_id ${eqIdOperator} #{eqId}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.equipment.entity.EquipmentCheckEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_RES_EQUIPMENT_CHECK.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into RES_EQUIPMENT_CHECK(<include refid="Base_Column_List" />)
+    values (#{ckId, jdbcType=VARCHAR}, #{updateTime, jdbcType=VARCHAR}, #{updateBy, jdbcType=VARCHAR}, #{createTime, jdbcType=VARCHAR}, #{createBy, jdbcType=VARCHAR}, #{delFlag, jdbcType=VARCHAR}, #{isFinishFlag, jdbcType=VARCHAR}, #{eqCkAttachName, jdbcType=VARCHAR}, #{eqCkAttachId, jdbcType=VARCHAR}, #{eqCkPlanAttachName, jdbcType=VARCHAR}, #{eqCkPlanAttachId, jdbcType=VARCHAR}, #{eqCkWarnTime, jdbcType=VARCHAR}, #{eqCkRemark, jdbcType=VARCHAR}, #{eqCkPlanRemark, jdbcType=VARCHAR}, #{eqCkAmount, jdbcType=VARCHAR}, #{eqCkPlanOwner, jdbcType=VARCHAR}, #{eqCkCheckTimeActual, jdbcType=VARCHAR}, #{eqCkCheckTimePlan, jdbcType=VARCHAR}, #{eqCkOrgTel, jdbcType=VARCHAR}, #{eqCkOrgAddress, jdbcType=VARCHAR}, #{eqCkOrg, jdbcType=VARCHAR}, #{eqCkCycleUnit, jdbcType=VARCHAR}, #{eqCkCycle, jdbcType=VARCHAR}, #{eqCkType, jdbcType=VARCHAR}, #{eqId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.equipment.entity.EquipmentCheckEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_RES_EQUIPMENT_CHECK.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into RES_EQUIPMENT_CHECK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="ckId != null" >ck_id,</if>
+                <if test="updateTime != null" >update_time,</if>
+                <if test="updateBy != null" >update_by,</if>
+                <if test="createTime != null" >create_time,</if>
+                <if test="createBy != null" >create_by,</if>
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="isFinishFlag != null" >is_finish_flag,</if>
+                <if test="eqCkAttachName != null" >eq_ck_attach_name,</if>
+                <if test="eqCkAttachId != null" >eq_ck_attach_id,</if>
+                <if test="eqCkPlanAttachName != null" >eq_ck_plan_attach_name,</if>
+                <if test="eqCkPlanAttachId != null" >eq_ck_plan_attach_id,</if>
+                <if test="eqCkWarnTime != null" >eq_ck_warn_time,</if>
+                <if test="eqCkRemark != null" >eq_ck_remark,</if>
+                <if test="eqCkPlanRemark != null" >eq_ck_plan_remark,</if>
+                <if test="eqCkAmount != null" >eq_ck_amount,</if>
+                <if test="eqCkPlanOwner != null" >eq_ck_plan_owner,</if>
+                <if test="eqCkCheckTimeActual != null" >eq_ck_check_time_actual,</if>
+                <if test="eqCkCheckTimePlan != null" >eq_ck_check_time_plan,</if>
+                <if test="eqCkOrgTel != null" >eq_ck_org_tel,</if>
+                <if test="eqCkOrgAddress != null" >eq_ck_org_address,</if>
+                <if test="eqCkOrg != null" >eq_ck_org,</if>
+                <if test="eqCkCycleUnit != null" >eq_ck_cycle_unit,</if>
+                <if test="eqCkCycle != null" >eq_ck_cycle,</if>
+                <if test="eqCkType != null" >eq_ck_type,</if>
+                <if test="eqId != null" >eq_id,</if>
+                <if test="id != null" >id,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="ckId != null" >#{ckId, jdbcType=VARCHAR},</if>
+                <if test="updateTime != null" >#{updateTime, jdbcType=VARCHAR},</if>
+                <if test="updateBy != null" >#{updateBy, jdbcType=VARCHAR},</if>
+                <if test="createTime != null" >#{createTime, jdbcType=VARCHAR},</if>
+                <if test="createBy != null" >#{createBy, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="isFinishFlag != null" >#{isFinishFlag, jdbcType=VARCHAR},</if>
+                <if test="eqCkAttachName != null" >#{eqCkAttachName, jdbcType=VARCHAR},</if>
+                <if test="eqCkAttachId != null" >#{eqCkAttachId, jdbcType=VARCHAR},</if>
+                <if test="eqCkPlanAttachName != null" >#{eqCkPlanAttachName, jdbcType=VARCHAR},</if>
+                <if test="eqCkPlanAttachId != null" >#{eqCkPlanAttachId, jdbcType=VARCHAR},</if>
+                <if test="eqCkWarnTime != null" >#{eqCkWarnTime, jdbcType=VARCHAR},</if>
+                <if test="eqCkRemark != null" >#{eqCkRemark, jdbcType=VARCHAR},</if>
+                <if test="eqCkPlanRemark != null" >#{eqCkPlanRemark, jdbcType=VARCHAR},</if>
+                <if test="eqCkAmount != null" >#{eqCkAmount, jdbcType=VARCHAR},</if>
+                <if test="eqCkPlanOwner != null" >#{eqCkPlanOwner, jdbcType=VARCHAR},</if>
+                <if test="eqCkCheckTimeActual != null" >#{eqCkCheckTimeActual, jdbcType=VARCHAR},</if>
+                <if test="eqCkCheckTimePlan != null" >#{eqCkCheckTimePlan, jdbcType=VARCHAR},</if>
+                <if test="eqCkOrgTel != null" >#{eqCkOrgTel, jdbcType=VARCHAR},</if>
+                <if test="eqCkOrgAddress != null" >#{eqCkOrgAddress, jdbcType=VARCHAR},</if>
+                <if test="eqCkOrg != null" >#{eqCkOrg, jdbcType=VARCHAR},</if>
+                <if test="eqCkCycleUnit != null" >#{eqCkCycleUnit, jdbcType=VARCHAR},</if>
+                <if test="eqCkCycle != null" >#{eqCkCycle, jdbcType=VARCHAR},</if>
+                <if test="eqCkType != null" >#{eqCkType, jdbcType=VARCHAR},</if>
+                <if test="eqId != null" >#{eqId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.equipment.entity.EquipmentCheckEO" >
+    update RES_EQUIPMENT_CHECK
+       set  ck_id = #{ckId},
+            update_time = #{updateTime},
+            update_by = #{updateBy},
+            create_time = #{createTime},
+            create_by = #{createBy},
+            del_flag = #{delFlag},
+            is_finish_flag = #{isFinishFlag},
+            eq_ck_attach_name = #{eqCkAttachName},
+            eq_ck_attach_id = #{eqCkAttachId},
+            eq_ck_plan_attach_name = #{eqCkPlanAttachName},
+            eq_ck_plan_attach_id = #{eqCkPlanAttachId},
+            eq_ck_warn_time = #{eqCkWarnTime},
+            eq_ck_remark = #{eqCkRemark},
+            eq_ck_plan_remark = #{eqCkPlanRemark},
+            eq_ck_amount = #{eqCkAmount},
+            eq_ck_plan_owner = #{eqCkPlanOwner},
+            eq_ck_check_time_actual = #{eqCkCheckTimeActual},
+            eq_ck_check_time_plan = #{eqCkCheckTimePlan},
+            eq_ck_org_tel = #{eqCkOrgTel},
+            eq_ck_org_address = #{eqCkOrgAddress},
+            eq_ck_org = #{eqCkOrg},
+            eq_ck_cycle_unit = #{eqCkCycleUnit},
+            eq_ck_cycle = #{eqCkCycle},
+            eq_ck_type = #{eqCkType},
+            eq_id = #{eqId}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.equipment.entity.EquipmentCheckEO" >
+    update RES_EQUIPMENT_CHECK
+    <set >
+      <if test='ckId !=null and ckId != "" '>
+        ck_id = #{ckId},
+      </if>
+      <if test='updateTime != null and updateTime != "" ' >
+        update_time = #{updateTime},
+      </if>
+      <if test='updateBy != null and updateBy!="" ' >
+        update_by = #{updateBy},
+      </if>
+      <if test='createTime != null and createTime != "" ' >
+        create_time = #{createTime},
+      </if>
+      <if test='createBy != null and createBy != "" ' >
+        create_by = #{createBy},
+      </if>
+      <if test='delFlag != null and delFlag!= "" ' >
+        del_flag = #{delFlag},
+      </if>
+      <if test='isFinishFlag != null and isFinishFlag!="" ' >
+        is_finish_flag = #{isFinishFlag},
+      </if>
+      <if test='eqCkAttachName != null and eqCkAttachName !="" ' >
+        eq_ck_attach_name = #{eqCkAttachName},
+      </if>
+      <if test='eqCkAttachId != null and eqCkAttachId !="" ' >
+        eq_ck_attach_id = #{eqCkAttachId},
+      </if>
+      <if test='eqCkPlanAttachName != null and eqCkPlanAttachName !="" ' >
+        eq_ck_plan_attach_name = #{eqCkPlanAttachName},
+      </if>
+      <if test='eqCkPlanAttachId != null and eqCkPlanAttachId!="" '>
+        eq_ck_plan_attach_id = #{eqCkPlanAttachId},
+      </if>
+      <if test='eqCkWarnTime != null and eqCkWarnTime!="" ' >
+        eq_ck_warn_time = #{eqCkWarnTime},
+      </if>
+      <if test='eqCkRemark != null and eqCkRemark!="" ' >
+        eq_ck_remark = #{eqCkRemark},
+      </if>
+      <if test='eqCkPlanRemark != null and eqCkPlanRemark!= "" ' >
+        eq_ck_plan_remark = #{eqCkPlanRemark},
+      </if>
+      <if test='eqCkAmount != null and eqCkAmount!="" ' >
+        eq_ck_amount = #{eqCkAmount},
+      </if>
+      <if test='eqCkPlanOwner != null and eqCkPlanOwner!="" ' >
+        eq_ck_plan_owner = #{eqCkPlanOwner},
+      </if>
+      <if test='eqCkCheckTimeActual != null and eqCkCheckTimeActual!="" ' >
+        eq_ck_check_time_actual = #{eqCkCheckTimeActual},
+      </if>
+      <if test='eqCkCheckTimePlan != null and eqCkCheckTimePlan!="" ' >
+        eq_ck_check_time_plan = #{eqCkCheckTimePlan},
+      </if>
+      <if test='eqCkOrgTel != null and eqCkOrgTel!="" '>
+        eq_ck_org_tel = #{eqCkOrgTel},
+      </if>
+      <if test='eqCkOrgAddress != null and eqCkOrgAddress!="" ' >
+        eq_ck_org_address = #{eqCkOrgAddress},
+      </if>
+      <if test='eqCkOrg != null and eqCkOrg!="" ' >
+        eq_ck_org = #{eqCkOrg},
+      </if>
+      <if test='eqCkCycleUnit != null and eqCkCycleUnit!="" '>
+        eq_ck_cycle_unit = #{eqCkCycleUnit},
+      </if>
+      <if test='eqCkCycle != null and eqCkCycle!="" ' >
+        eq_ck_cycle = #{eqCkCycle},
+      </if>
+      <if test='eqCkType != null and eqCkType!="" '>
+        eq_ck_type = #{eqCkType},
+      </if>
+      <if test='eqId != null and eqId != "" ' >
+        eq_id = #{eqId},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 RES_EQUIPMENT_CHECK -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from RES_EQUIPMENT_CHECK
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from RES_EQUIPMENT_CHECK
+     where id = #{value}
+
+  </delete>
+
+  <!-- RES_EQUIPMENT_CHECK 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from RES_EQUIPMENT_CHECK
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询RES_EQUIPMENT_CHECK列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from RES_EQUIPMENT_CHECK
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from RES_EQUIPMENT_CHECK
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+    <select id="findPlanCheck" resultMap="CheckResultMap" parameterType="java.lang.String">
+        select <include refid="Check_Column_List"/>
+         from RES_EQUIPMENT_CHECK
+         left JOIN Res_Equipment
+         ON RES_EQUIPMENT_CHECK.eq_id = Res_Equipment.id
+         where RES_EQUIPMENT_CHECK.eq_id = #{0,jdbcType=VARCHAR}
+         and RES_EQUIPMENT_CHECK.DEL_FLAG = 0
+         and RES_EQUIPMENT_CHECK.IS_fINISH_FLAG = 0
+    </select>
+
+    <select id="findCheckRecord" resultMap="CheckResultMap" parameterType="java.lang.String">
+        select <include refid="Check_Column_List"/>
+        from RES_EQUIPMENT_CHECK
+        left JOIN Res_Equipment
+        ON RES_EQUIPMENT_CHECK.eq_id = Res_Equipment.id
+        where RES_EQUIPMENT_CHECK.eq_id = #{0,jdbcType=VARCHAR}
+        and RES_EQUIPMENT_CHECK.DEL_FLAG = 0
+        and RES_EQUIPMENT_CHECK.IS_fINISH_FLAG = 1
+    </select>
+
+    <select id="findUnCheckRecord" resultMap="CheckResultMap" >
+        select <include refid="Check_Column_List"/>
+        from RES_EQUIPMENT_CHECK
+        left JOIN RES_EQUIPMENT ON RES_EQUIPMENT_CHECK.eq_id = Res_Equipment.id
+        where 1=1
+        and RES_EQUIPMENT.DEL_FLAG = 0
+        and RES_EQUIPMENT_CHECK.DEL_FLAG = 0
+        and RES_EQUIPMENT_CHECK.IS_fINISH_FLAG = 0
+        and RES_EQUIPMENT_CHECK.EQ_CK_WARN_TIME != '-1'
+    </select>
+
+    <!-- 核检记录列表总数-->
+    <select id="queryForCheckRecordByPage" resultType="java.lang.Integer" parameterType="com.adc.da.equipment.page.EquipmentCheckEOPage">
+        SELECT count(1) FROM RES_EQUIPMENT_CHECK
+        where RES_EQUIPMENT_CHECK.eq_id = #{eqId,jdbcType=VARCHAR}
+        and RES_EQUIPMENT_CHECK.DEL_FLAG = 0
+        and RES_EQUIPMENT_CHECK.IS_fINISH_FLAG = 1
+    </select>
+
+    <!-- 分页查询,查询出对应设备的所有核检记录 -->
+    <select id="findCheckRecordByPage" resultMap="CheckResultMap" parameterType="com.adc.da.equipment.page.EquipmentCheckEOPage">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        ( select <include refid="Check_Column_List"/>
+        from RES_EQUIPMENT_CHECK
+        left JOIN Res_Equipment
+        ON RES_EQUIPMENT_CHECK.eq_id = Res_Equipment.id
+        where RES_EQUIPMENT_CHECK.eq_id = #{eqId,jdbcType=VARCHAR}
+        and RES_EQUIPMENT_CHECK.DEL_FLAG = 0
+        and RES_EQUIPMENT_CHECK.IS_fINISH_FLAG = 1
+        order by EQ_CK_CHECK_TIME_PLAN desc
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+
+
+    </select>
+</mapper>

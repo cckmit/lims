@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.line.dao.BmLineCaseInfoEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.line.entity.BmLineCaseInfoEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="day_no" property="dayNo"/>
+        <result column="line_start" property="lineStart"/>
+        <result column="line_end" property="lineEnd"/>
+        <result column="line_type" property="lineType"/>
+        <result column="one_day_km" property="oneDayKm"/>
+        <result column="remarks" property="remarks"/>
+        <result column="drive_days" property="driveDays"/>
+        <result column="line_cycle" property="lineCycle"/>
+        <result property="caseId" column="case_id"/>
+        <result property="driveOrder" column="drive_order"/>
+    </resultMap>
+
+    <!-- BM_LINE_CASE_INFO table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            day_no,
+            line_start,
+            line_end,
+            line_type,
+            one_day_km,
+            remarks,
+            drive_days,
+            line_cycle,
+            CASE_ID,
+            DRIVE_ORDER
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+            <if test="delFlag != null">
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time ${createTimeOperator} #{createTime}
+            </if>
+            <if test="createBy != null">
+                and create_by ${createByOperator} #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time ${updateTimeOperator} #{updateTime}
+            </if>
+            <if test="updateBy != null">
+                and update_by ${updateByOperator} #{updateBy}
+            </if>
+            <if test="dayNo != null">
+                and day_no ${dayNoOperator} #{dayNo}
+            </if>
+            <if test="lineStart != null">
+                and line_start ${lineStartOperator} #{lineStart}
+            </if>
+            <if test="lineEnd != null">
+                and line_end ${lineEndOperator} #{lineEnd}
+            </if>
+            <if test="lineType != null">
+                and line_type ${lineTypeOperator} #{lineType}
+            </if>
+            <if test="oneDayKm != null">
+                and one_day_km ${oneDayKmOperator} #{oneDayKm}
+            </if>
+            <if test="remarks != null">
+                and remarks ${remarksOperator} #{remarks}
+            </if>
+            <if test="driveDays != null">
+                and drive_days ${driveDaysOperator} #{driveDays}
+            </if>
+            <if test="lineCycle != null">
+                and line_cycle ${lineCycleOperator} #{lineCycle}
+            </if>
+            <if test="caseId != null">
+                and case_id ${lineCycleOperator} #{caseId}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.line.entity.BmLineCaseInfoEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SEQ_BM_LINE_CASE_INFO.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into BM_LINE_CASE_INFO(<include refid="Base_Column_List"/>)
+        values (#{id, jdbcType=VARCHAR}, #{delFlag, jdbcType=INTEGER}, #{createTime, jdbcType=VARCHAR},
+        #{createBy, jdbcType=VARCHAR}, #{updateTime, jdbcType=VARCHAR}, #{updateBy, jdbcType=VARCHAR},
+        #{dayNo, jdbcType=VARCHAR}, #{lineStart, jdbcType=VARCHAR}, #{lineEnd, jdbcType=VARCHAR},
+        #{lineType, jdbcType=VARCHAR}, #{oneDayKm, jdbcType=VARCHAR}, #{remarks, jdbcType=VARCHAR},
+        #{driveDays, jdbcType=VARCHAR}, #{lineCycle, jdbcType=VARCHAR}, #{caseId, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.line.entity.BmLineCaseInfoEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_BM_LINE_CASE_INFO.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into BM_LINE_CASE_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="dayNo != null">day_no,</if>
+            <if test="lineStart != null">line_start,</if>
+            <if test="lineEnd != null">line_end,</if>
+            <if test="lineType != null">line_type,</if>
+            <if test="oneDayKm != null">one_day_km,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="driveDays != null">drive_days,</if>
+            <if test="lineCycle != null">line_cycle,</if>
+            <if test="caseId != null">case_id,</if>
+            <if test="driveOrder != null">DRIVE_ORDER,</if>
+            <if test="cycleNumber != null">CYCLE_NUMBER,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="dayNo != null">#{dayNo, jdbcType=VARCHAR},</if>
+            <if test="lineStart != null">#{lineStart, jdbcType=VARCHAR},</if>
+            <if test="lineEnd != null">#{lineEnd, jdbcType=VARCHAR},</if>
+            <if test="lineType != null">#{lineType, jdbcType=VARCHAR},</if>
+            <if test="oneDayKm != null">#{oneDayKm, jdbcType=VARCHAR},</if>
+            <if test="remarks != null">#{remarks, jdbcType=VARCHAR},</if>
+            <if test="driveDays != null">#{driveDays, jdbcType=VARCHAR},</if>
+            <if test="lineCycle != null">#{lineCycle, jdbcType=VARCHAR},</if>
+            <if test="caseId != null">#{caseId, jdbcType=VARCHAR},</if>
+            <if test="driveOrder != null">#{driveOrder},</if>
+            <if test="cycleNumber != null">#{cycleNumber},</if>
+        </trim>
+    </insert>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.line.entity.BmLineCaseInfoEO">
+        update BM_LINE_CASE_INFO
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="dayNo != null">
+                day_no = #{dayNo},
+            </if>
+            <if test="lineStart != null">
+                line_start = #{lineStart},
+            </if>
+            <if test="lineEnd != null">
+                line_end = #{lineEnd},
+            </if>
+            <if test="lineType != null">
+                line_type = #{lineType},
+            </if>
+            <if test="oneDayKm != null">
+                one_day_km = #{oneDayKm},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks},
+            </if>
+            <if test="driveDays != null">
+                drive_days = #{driveDays},
+            </if>
+            <if test="lineCycle != null">
+                line_cycle = #{lineCycle},
+            </if>
+            <if test="caseId != null">
+                CASE_ID = #{caseId},
+            </if>
+            <if test="driveOrder != null">
+                DRIVE_ORDER = #{driveOrder},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 BM_LINE_CASE_INFO -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from BM_LINE_CASE_INFO
+        where id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from BM_LINE_CASE_INFO
+        where id = #{value}
+
+    </delete>
+
+    <!-- BM_LINE_CASE_INFO 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from BM_LINE_CASE_INFO
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询BM_LINE_CASE_INFO列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from BM_LINE_CASE_INFO
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from BM_LINE_CASE_INFO
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <delete id="deleteByCaseId">
+        delete
+        from BM_LINE_CASE_INFO
+        where CASE_ID = #{id}
+    </delete>
+
+</mapper>

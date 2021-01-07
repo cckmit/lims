@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_execute.dao.PCMaterialsOutInfoEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_execute.entity.PCMaterialsOutInfoEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="VARCHAR" property="delFlag" />
+    <result column="MATERIALS_OUT_ID" jdbcType="VARCHAR" property="materialsOutId" />
+    <result column="SAMPLE_ID" jdbcType="VARCHAR" property="sampleId" />
+    <result column="MATERIALS_TYPE" jdbcType="VARCHAR" property="materialsType" />
+    <result column="MATERIALS_NAME" jdbcType="VARCHAR" property="materialsName" />
+    <result column="NUMBERS" jdbcType="VARCHAR" property="numbers" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, MATERIALS_OUT_ID, SAMPLE_ID, MATERIALS_TYPE, MATERIALS_NAME, NUMBERS, 
+    REMARK
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from PC_MATERIALS_OUT_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_MATERIALS_OUT_INFO
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.pc_execute.entity.PCMaterialsOutInfoEO">
+    insert into PC_MATERIALS_OUT_INFO (
+    	ID, 
+    	DEL_FLAG, 
+    	MATERIALS_OUT_ID, 
+      	SAMPLE_ID, 
+      	MATERIALS_TYPE, 
+      	MATERIALS_NAME, 
+      	NUMBERS, 
+      	REMARK
+      )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=VARCHAR}, 
+    	#{materialsOutId,jdbcType=VARCHAR}, 
+      	#{sampleId,jdbcType=VARCHAR}, 
+      	#{materialsType,jdbcType=VARCHAR}, 
+      	#{materialsName,jdbcType=VARCHAR}, 
+      	#{numbers,jdbcType=VARCHAR}, 
+      	#{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.pc_execute.entity.PCMaterialsOutInfoEO">
+    insert into PC_MATERIALS_OUT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="materialsOutId != null">
+        MATERIALS_OUT_ID,
+      </if>
+      <if test="sampleId != null">
+        SAMPLE_ID,
+      </if>
+      <if test="materialsType != null">
+        MATERIALS_TYPE,
+      </if>
+      <if test="materialsName != null">
+        MATERIALS_NAME,
+      </if>
+      <if test="numbers != null">
+        NUMBERS,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsOutId != null">
+        #{materialsOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleId != null">
+        #{sampleId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsType != null">
+        #{materialsType,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsName != null">
+        #{materialsName,jdbcType=VARCHAR},
+      </if>
+      <if test="numbers != null">
+        #{numbers,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_execute.entity.PCMaterialsOutInfoEO">
+    update PC_MATERIALS_OUT_INFO
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsOutId != null">
+        MATERIALS_OUT_ID = #{materialsOutId,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleId != null">
+        SAMPLE_ID = #{sampleId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsType != null">
+        MATERIALS_TYPE = #{materialsType,jdbcType=VARCHAR},
+      </if>
+      <if test="materialsName != null">
+        MATERIALS_NAME = #{materialsName,jdbcType=VARCHAR},
+      </if>
+      <if test="numbers != null">
+        NUMBERS = #{numbers,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_execute.entity.PCMaterialsOutInfoEO">
+    update PC_MATERIALS_OUT_INFO
+    set DEL_FLAG = #{delFlag,jdbcType=VARCHAR},
+      MATERIALS_OUT_ID = #{materialsOutId,jdbcType=VARCHAR},
+      SAMPLE_ID = #{sampleId,jdbcType=VARCHAR},
+      MATERIALS_TYPE = #{materialsType,jdbcType=VARCHAR},
+      MATERIALS_NAME = #{materialsName,jdbcType=VARCHAR},
+      NUMBERS = #{numbers,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <delete id="deleteByMaterialsOutId" parameterType="java.lang.String">
+    delete from PC_MATERIALS_OUT_INFO
+    where MATERIALS_OUT_ID = #{materialsOutId,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.log.dao.LogEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.log.entity.LogEO">
+        <id column="id" property="id"/>
+        <result column="ip_address" property="ipAddress"/>
+        <result column="browser" property="browser"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="usid" property="usid"/>
+        <result column="operate_time" property="operateTime"/>
+        <result column="method" property="method"/>
+        <result column="description" property="description"/>
+        <result column="class_name" property="className"/>
+        <result column="account" property="account"/>
+    </resultMap>
+
+    <!-- TS_LOG table all fields -->
+    <sql id="Base_Column_List">
+     ip_address, browser, start_time, end_time, usid, operate_time, method, description, class_name, account, id
+  </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="ipAddress != null">
+                and ip_address ${ipAddressOperator} #{ipAddress}
+            </if>
+            <if test="browser != null">
+                and browser ${browserOperator} #{browser}
+            </if>
+            <if test="startTime1 != null and startTime1 !=''">
+                and start_time &gt;= to_date(#{startTime1},'yyyy-mm-dd hh24:mi:ss')
+            </if>
+            <if test="startTime2 != null and startTime2 !=''">
+                and start_time &lt;= to_date(#{startTime2},'yyyy-mm-dd hh24:mi:ss')
+            </if>
+            <if test="usid != null">
+                and usid ${usidOperator} #{usid}
+            </if>
+            <if test="operateTime != null">
+                and operate_time ${operateTimeOperator} #{operateTime}
+            </if>
+            <if test="operateTime1 != null">
+                and operate_time &gt;= #{operateTime1}
+            </if>
+            <if test="operateTime2 != null">
+                and operate_time &lt;= #{operateTime2}
+            </if>
+            <if test="method != null">
+                and method ${methodOperator} #{method}
+            </if>
+            <if test="description != null">
+                and description ${descriptionOperator} #{description}
+            </if>
+            <if test="className != null">
+                and class_name ${classNameOperator} #{className}
+            </if>
+            <if test="account != null">
+                and account ${accountOperator} '%${account}%'
+            </if>
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.log.entity.LogEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SEQ_TS_LOG.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into TS_LOG(<include refid="Base_Column_List"/>)
+        values (#{ipAddress}, #{browser}, #{startTime}, #{endTime}, #{usid}, #{operateTime}, #{method}, #{description},
+        #{className}, #{account},
+        #{id})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.log.entity.LogEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_TS_LOG.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into TS_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ipAddress != null">ip_address,</if>
+            <if test="browser != null">browser,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="usid != null">usid,</if>
+            <if test="operateTime != null">operate_time,</if>
+            <if test="method != null">method,</if>
+            <if test="description != null">description,</if>
+            <if test="className != null">class_name,</if>
+            <if test="account != null">account,</if>
+            <if test="id != null">id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ipAddress != null">#{ipAddress},</if>
+            <if test="browser != null">#{browser},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="endTime != null">#{endTime},</if>
+            <if test="usid != null">#{usid},</if>
+            <if test="operateTime != null">#{operateTime},</if>
+            <if test="method != null">#{method},</if>
+            <if test="description != null">#{description},</if>
+            <if test="className != null">#{className},</if>
+            <if test="account != null">#{account},</if>
+            <if test="id != null">#{id},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.log.entity.LogEO">
+    update TS_LOG
+       set  ip_address = #{ipAddress},
+            browser = #{browser},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            usid = #{usid},
+            operate_time = #{operateTime},
+            method = #{method},
+            description = #{description},
+            class_name = #{className},
+            account = #{account}
+     where  id = #{id}
+  </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.log.entity.LogEO">
+        update TS_LOG
+        <set>
+            <if test="ipAddress != null">
+                ip_address = #{ipAddress},
+            </if>
+            <if test="browser != null">
+                browser = #{browser},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="usid != null">
+                usid = #{usid},
+            </if>
+            <if test="operateTime != null">
+                operate_time = #{operateTime},
+            </if>
+            <if test="method != null">
+                method = #{method},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="className != null">
+                class_name = #{className},
+            </if>
+            <if test="account != null">
+                account = #{account},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 TS_LOG -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_LOG
+        where id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+      delete from TS_LOG
+     where id = #{value}
+    </delete>
+
+    <!-- TS_LOG 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from TS_LOG
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询TS_LOG列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from TS_LOG
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+    <!--mysql date 2019-01-18-->
+    <!--@author Lee Kwanho 李坤澔-->
+    <!-- 查询TS_LOG列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage" databaseId="mysql">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_LOG
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        limit ${pager.startIndex -1}, ${pager.pageSize}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from TS_LOG
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+</mapper>

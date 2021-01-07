@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.sys.dao.UserRoleEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.sys.entity.UserRoleEO" >
+    <id column="user_id" property="userId" />
+    <result column="role_id" property="roleId" />
+  </resultMap>
+
+  <!-- TR_USER_ROLE table all fields -->
+  <sql id="Base_Column_List" >
+     user_id, role_id
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="userId != null" >
+        and `user_id` ${userIdOperator} #{userId}
+      </if>
+      <if test="roleId != null" >
+        and `role_id` ${roleIdOperator} #{roleId}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.sys.entity.UserRoleEO" >
+    insert into TR_USER_ROLE(<include refid="Base_Column_List" />)
+    values (#{userId}, #{roleId})
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.sys.entity.UserRoleEO" >
+    update TR_USER_ROLE
+       set `role_id` = #{roleId}
+     where `user_id` = #{userId}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.sys.entity.UserRoleEO" >
+    update TR_USER_ROLE
+    <set >
+      <if test="roleId != null" >
+        role_id = #{roleId},
+      </if>
+    </set>
+     where user_id = #{userId}
+  </update>
+
+  <!-- 根据id查询 TR_USER_ROLE -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from TR_USER_ROLE
+     where user_id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TR_USER_ROLE
+     where user_id = #{value}
+
+  </delete>
+
+  <!-- TR_USER_ROLE 列表总数-->
+  <select id="queryByCount" resultType="java.lang.String" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from TR_USER_ROLE
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询TR_USER_ROLE列表 -->
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from (select t.*,rownum rownu from TR_USER_ROLE t
+        where rownum&lt;=${pager.endIndex})tt
+        where tt.rownu>=${pager.startIndex}
+  </select>
+
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/>
+      from TR_USER_ROLE
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+    <if test="pager.mysqlQueryCondition != null and pager.mysqlQueryCondition != ''" >
+       ${pager.mysqlQueryCondition}
+    </if>
+  </select>
+
+</mapper>

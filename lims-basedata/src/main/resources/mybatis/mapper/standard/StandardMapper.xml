@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.standard.dao.StandardEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.standard.entity.StandardEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="DEL_FLAG" jdbcType="DECIMAL" property="delFlag" />
+    <result column="CREATE_TIME" jdbcType="VARCHAR" property="createTime" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy.usid" />
+    <result column="UPDATE_TIME" jdbcType="VARCHAR" property="updateTime" />
+    <result column="UPDATE_BY" jdbcType="VARCHAR" property="updateBy.usid" />
+    <result column="STD_NAME" jdbcType="VARCHAR" property="stdName" />
+    <result column="STD_NO" jdbcType="VARCHAR" property="stdNo" />
+    <result column="STD_TYPE_ID" jdbcType="VARCHAR" property="stdTypeId" />
+    <result column="STD_IMPLEMENT_DATE" jdbcType="VARCHAR" property="stdImplementDate" />
+    <result column="STD_READ" jdbcType="VARCHAR" property="stdRead" />
+    <result column="STD_FILE_ID" jdbcType="VARCHAR" property="stdFileId" />
+    <result column="STD_STATUS" jdbcType="VARCHAR" property="stdStatus" />
+  </resultMap>
+  
+  <resultMap id="SearchResultMap" type="com.adc.da.standard.entity.StandardEO">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="STD_NAME" jdbcType="VARCHAR" property="stdName" />
+    <result column="STD_NO" jdbcType="VARCHAR" property="stdNo" />
+    <result column="STD_TYPE_ID" jdbcType="VARCHAR" property="stdTypeId" />
+    <result column="STD_IMPLEMENT_DATE" jdbcType="VARCHAR" property="stdImplementDate" />
+    <result column="STD_READ" jdbcType="VARCHAR" property="stdRead" />
+    <result column="STD_STATUS" jdbcType="VARCHAR" property="stdStatus" />
+    <result column="STD_TYPE_NAME" jdbcType="VARCHAR" property="stdTypeName" />
+    <result column="STD_FILE_ID" jdbcType="VARCHAR" property="stdFileId" />
+    <result column="STD_FILE_NAME" jdbcType="VARCHAR" property="stdFileName" />
+  </resultMap>
+  
+  <resultMap id="stdNoResult" type="java.lang.String" >
+    <result column="STD_NO" jdbcType="VARCHAR" property="num" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, STD_NAME, STD_NO, STD_TYPE_ID, 
+    STD_IMPLEMENT_DATE, STD_READ, STD_FILE_ID, STD_STATUS
+  </sql>
+  
+  <sql id="Std_Type_List">
+    BM_STANDARD.ID, STD_NAME, STD_NO, STD_TYPE_ID, STD_FILE_ID,
+    STD_IMPLEMENT_DATE, STD_READ, STD_STATUS, STD_TYPE_NAME
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="SearchResultMap">
+    SELECT
+		BM_STANDARD.ID,
+		STD_NAME,
+		STD_NO,
+		STD_TYPE_ID,
+		STD_IMPLEMENT_DATE,
+		STD_READ,
+		STD_FILE_ID,
+		STD_STATUS,
+		TS_ATTACHMENT.ATTACHMENT_NAME AS STD_FILE_NAME
+	FROM
+		BM_STANDARD
+	LEFT JOIN TS_ATTACHMENT ON TS_ATTACHMENT."ID" = BM_STANDARD.STD_FILE_ID
+	WHERE
+		BM_STANDARD.DEL_FLAG != 1
+		AND
+		BM_STANDARD.ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    UPDATE BM_STANDARD
+    SET DEL_FLAG = 1
+    WHERE ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.standard.entity.StandardEO">
+    insert into BM_STANDARD (
+    	ID, 
+    	DEL_FLAG, 
+    	CREATE_TIME, 
+     	CREATE_BY, 
+     	UPDATE_TIME, 
+     	UPDATE_BY, 
+     	STD_NAME, 
+     	STD_NO, 
+     	STD_TYPE_ID, 
+     	STD_IMPLEMENT_DATE, 
+     	STD_READ, 
+     	STD_FILE_ID, 
+     	STD_STATUS
+     )
+    values (
+    	#{id,jdbcType=VARCHAR}, 
+    	#{delFlag,jdbcType=DECIMAL}, 
+    	#{createTime,jdbcType=VARCHAR}, 
+        #{createBy.usid,jdbcType=VARCHAR}, 
+        #{updateTime,jdbcType=VARCHAR}, 
+        #{updateBy.usid,jdbcType=VARCHAR}, 
+      	#{stdName,jdbcType=VARCHAR}, 
+      	#{stdNo,jdbcType=VARCHAR}, 
+      	#{stdTypeId,jdbcType=VARCHAR}, 
+      	#{stdImplementDate,jdbcType=VARCHAR}, 
+      	#{stdRead,jdbcType=VARCHAR}, 
+      	#{stdFileId,jdbcType=VARCHAR}, 
+      	#{stdStatus,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.standard.entity.StandardEO">
+    insert into BM_STANDARD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY,
+      </if>
+      <if test="stdName != null">
+        STD_NAME,
+      </if>
+      <if test="stdNo != null">
+        STD_NO,
+      </if>
+      <if test="stdTypeId != null">
+        STD_TYPE_ID,
+      </if>
+      <if test="stdImplementDate != null">
+        STD_IMPLEMENT_DATE,
+      </if>
+      <if test="stdRead != null">
+        STD_READ,
+      </if>
+      <if test="stdFileId != null">
+        STD_FILE_ID,
+      </if>
+      <if test="stdStatus != null">
+        STD_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="stdName != null">
+        #{stdName,jdbcType=VARCHAR},
+      </if>
+      <if test="stdNo != null">
+        #{stdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stdTypeId != null">
+        #{stdTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdImplementDate != null">
+        #{stdImplementDate,jdbcType=VARCHAR},
+      </if>
+      <if test="stdRead != null">
+        #{stdRead,jdbcType=VARCHAR},
+      </if>
+      <if test="stdFileId != null">
+        #{stdFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdStatus != null">
+        #{stdStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.standard.entity.StandardEO">
+    update BM_STANDARD
+    <set>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      </if>
+      <if test="stdName != null">
+        STD_NAME = #{stdName,jdbcType=VARCHAR},
+      </if>
+      <if test="stdNo != null">
+        STD_NO = #{stdNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stdTypeId != null">
+        STD_TYPE_ID = #{stdTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdImplementDate != null">
+        STD_IMPLEMENT_DATE = #{stdImplementDate,jdbcType=VARCHAR},
+      </if>
+      <if test="stdRead != null">
+        STD_READ = #{stdRead,jdbcType=VARCHAR},
+      </if>
+      <if test="stdFileId != null">
+        STD_FILE_ID = #{stdFileId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdStatus != null">
+        STD_STATUS = #{stdStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.standard.entity.StandardEO">
+    update BM_STANDARD
+    set DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      UPDATE_BY = #{updateBy.usid,jdbcType=VARCHAR},
+      STD_NAME = #{stdName,jdbcType=VARCHAR},
+      STD_NO = #{stdNo,jdbcType=VARCHAR},
+      STD_TYPE_ID = #{stdTypeId,jdbcType=VARCHAR},
+      STD_IMPLEMENT_DATE = #{stdImplementDate,jdbcType=VARCHAR},
+      STD_READ = #{stdRead,jdbcType=VARCHAR},
+      STD_FILE_ID = #{stdFileId,jdbcType=VARCHAR},
+      STD_STATUS = #{stdStatus,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 列表总数-->
+   <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+       SELECT count(1) FROM BM_STANDARD
+       LEFT JOIN BM_STD_TYPE ON BM_STANDARD.STD_TYPE_ID = BM_STD_TYPE.ID
+       <include refid="Base_Where_Clause"/>
+   </select>
+  
+   <!-- 查询条件 -->
+   <sql id="Base_Where_Clause">
+       WHERE BM_STANDARD.del_flag = 0
+       <choose>
+           <when test="searchPhrase != null">
+               <foreach collection="searchPhrase" item="search">
+                   AND (
+	                   STD_NAME LIKE '%${search}%' 
+	                   OR STD_NO LIKE '%${search}%' 
+	                   OR STD_READ LIKE '%${search}%' 
+	                   OR BM_STD_TYPE.STD_TYPE_NAME LIKE '%${search}%'
+	                   OR STD_IMPLEMENT_DATE LIKE '%${search}%'
+                   )
+               </foreach>
+           </when>
+           <otherwise>
+               <if test="stdName != null and stdName != ''">
+                   AND STD_NAME LIKE '%${stdName}%'
+               </if>
+               <if test="stdNo != null and stdNo != ''">
+                   AND STD_NO LIKE '%${stdNo}%'
+               </if>
+               <if test="stdRead != null and stdRead != ''">
+                   AND STD_READ LIKE '%${stdRead}%'
+               </if>
+               <if test="stdStatus != null and stdStatus != ''">
+                   AND STD_STATUS = #{stdStatus}
+               </if>
+               <if test="stdTypeName != null and stdTypeName != ''">
+                   AND BM_STD_TYPE.STD_TYPE_NAME LIKE '%${stdTypeName}%'
+               </if>
+               <if test="stdTypeId != null and stdTypeId != ''">
+                   AND STD_TYPE_ID = #{stdTypeId}
+               </if>
+               <if test="stdImplementDate1 != null and stdImplementDate1 != ''">
+                   AND STD_IMPLEMENT_DATE <![CDATA[>=]]> #{stdImplementDate1}
+               </if>
+               <if test="stdImplementDate2 != null and stdImplementDate2 != ''">
+                   AND STD_IMPLEMENT_DATE <![CDATA[<=]]> #{stdImplementDate2}
+               </if>
+           </otherwise>
+       </choose>
+   </sql>
+  
+   <!-- 分页查询列表 -->
+   <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+       SELECT
+       *
+       FROM
+       (SELECT tmp_tb.* , rownum rn FROM
+       (SELECT
+       <include refid="Std_Type_List"/>
+       FROM BM_STANDARD
+       LEFT JOIN BM_STD_TYPE ON BM_STANDARD.STD_TYPE_ID = BM_STD_TYPE.ID
+       <include refid="Base_Where_Clause"/>
+       ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+       WHERE rn &gt;= ${pager.startIndex}
+   </select>
+   
+   <select id="findAll" resultType="java.lang.String">
+   		SELECT 
+   		STD_NO
+   		FROM BM_STANDARD
+   		WHERE DEL_FLAG != 1
+   </select>
+   
+      
+   <select id="checkNo" resultMap="stdNoResult">
+   		SELECT 
+   		STD_NO
+   		FROM BM_STANDARD
+   		WHERE DEL_FLAG != 1
+   		<if test="id != null and id != ''">
+            AND ID != #{id,jdbcType=VARCHAR}
+        </if>
+   </select>
+   
+   
+   <select id="selectByStdNo" resultType="java.lang.String">
+    	SELECT 
+    	ID
+   		FROM BM_STANDARD
+   		WHERE DEL_FLAG != 1
+   		AND STD_NO  = #{stdNo,jdbcType=VARCHAR}
+   </select>
+   
+   <select id="selectStdByTypeId" resultMap="BaseResultMap">
+     SELECT
+     <include refid="Base_Column_List"/>
+     FROM BM_STANDARD
+     WHERE DEL_FLAG != 1
+     AND STD_TYPE_ID = #{stdTypeId,jdbcType=VARCHAR}
+  </select>
+   
+</mapper>

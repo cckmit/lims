@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.insprostd.dao.InsProStdEODao">
+  <resultMap id="BaseResultMap" type="com.adc.da.insprostd.entity.InsProStdEO">
+    <result column="PRO_ID" jdbcType="VARCHAR" property="proId" />
+    <result column="STD_ID" jdbcType="VARCHAR" property="stdId" />
+  </resultMap>
+  
+  <!-- 根据检验项目删除关联关系 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from BM_INSPROJECT_STANDARD
+    where PRO_ID = #{proId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.adc.da.insprostd.entity.InsProStdEO">   
+    insert into BM_INSPROJECT_STANDARD (
+    	PRO_ID, 
+    	STD_ID
+    )
+    values (
+    	#{proId,jdbcType=VARCHAR}, 
+    	#{stdId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.adc.da.insprostd.entity.InsProStdEO">
+    insert into BM_INSPROJECT_STANDARD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="proId != null">
+        PRO_ID,
+      </if>
+      <if test="stdId != null">
+        STD_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="proId != null">
+        #{proId,jdbcType=VARCHAR},
+      </if>
+      <if test="stdId != null">
+        #{stdId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+</mapper>

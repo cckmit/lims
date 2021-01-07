@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.task.dao.SupplierTaskInfoEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.task.entity.SupplierTaskInfoEO">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="sup_apply_id" property="supApplyId"/>
+        <result column="sa_car_id" property="saCarId"/>
+        <result column="task_implementer_id" property="taskImplementerId"/>
+        <result column="type" property="type"/>
+        <result column="project" property="project"/>
+        <result column="job_content" property="jobContent"/>
+        <result column="people_number" property="peopleNumber"/>
+        <result column="work_hour" property="workHour"/>
+        <result column="work_hour_unit" property="workHourUnit"/>
+        <result column="output_content" property="outputContent"/>
+        <result column="task_status" property="taskStatus"/>
+        <result column="apply_no" property="applyNo"/>
+        <result column="PC_PART_NO" property="pcPartNo" />
+        <result column="task_implementer_name" property="taskImplementerName" />
+        <result column="UNIT_PRICE" property="unitPrice" />
+    </resultMap>
+
+    <!-- SUP_SUPPLIER_TASK_INFO table all fields -->
+    <sql id="Base_Column_List">
+            id, create_time, create_by, update_time, update_by, del_flag, sup_apply_id, sa_car_id, task_implementer_id,
+            type, project, job_content, people_number, work_hour, work_hour_unit, output_content, task_status,
+            SUP_APPLY_NO, PC_PART_NO,task_implementer_name, UNIT_PRICE
+    </sql>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.task.entity.SupplierTaskInfoEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_SUP_SUPPLIER_TASK_INFO.NEXTVAL FROM DUAL
+    </selectKey> -->
+        INSERT INTO SUP_SUPPLIER_TASK_INFO
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="supApplyId != null">sup_apply_id,</if>
+            <if test="saCarId != null">sa_car_id,</if>
+            <if test="taskImplementerId != null">task_implementer_id,</if>
+            <if test="taskImplementerName != null">task_implementer_Name,</if>
+            <if test="type != null">type,</if>
+            <if test="project != null">project,</if>
+            <if test="jobContent != null">job_content,</if>
+            <if test="peopleNumber != null">people_number,</if>
+            <if test="workHour != null">work_hour,</if>
+            <if test="workHourUnit != null">work_hour_unit,</if>
+            <if test="outputContent != null">output_content,</if>
+            <if test="taskStatus != null">task_status,</if>
+            <if test="applyNo != null">SUP_APPLY_NO,</if>
+            <if test=" pcPartNo != null">pc_Part_No,</if>
+            <if test=" unitPrice != null">UNIT_PRICE,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="supApplyId != null">#{supApplyId, jdbcType=VARCHAR},</if>
+            <if test="saCarId != null">#{saCarId, jdbcType=VARCHAR},</if>
+            <if test="taskImplementerId != null">#{taskImplementerId, jdbcType=VARCHAR},</if>
+            <if test="taskImplementerName != null">#{taskImplementerName, jdbcType=VARCHAR},</if>
+            <if test="type != null">#{type, jdbcType=VARCHAR},</if>
+            <if test="project != null">#{project, jdbcType=VARCHAR},</if>
+            <if test="jobContent != null">#{jobContent, jdbcType=VARCHAR},</if>
+            <if test="peopleNumber != null">#{peopleNumber, jdbcType=VARCHAR},</if>
+            <if test="workHour != null">#{workHour, jdbcType=VARCHAR},</if>
+            <if test="workHourUnit != null">#{workHourUnit, jdbcType=VARCHAR},</if>
+            <if test="outputContent != null">#{outputContent, jdbcType=VARCHAR},</if>
+            <if test="taskStatus != null">#{taskStatus, jdbcType=VARCHAR},</if>
+            <if test="applyNo != null">#{applyNo},</if>
+            <if test="pcPartNo != null">#{pcPartNo},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+        </trim>
+    </insert>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.task.entity.SupplierTaskInfoEO">
+        UPDATE SUP_SUPPLIER_TASK_INFO
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="supApplyId != null">
+                sup_apply_id = #{supApplyId},
+            </if>
+            <if test="saCarId != null">
+                sa_car_id = #{saCarId},
+            </if>
+            <if test="taskImplementerId != null">
+                task_implementer_id = #{taskImplementerId},
+            </if>
+            <if test="taskImplementerName != null">
+                task_implementer_Name = #{taskImplementerName},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="project != null">
+                project = #{project},
+            </if>
+            <if test="jobContent != null">
+                job_content = #{jobContent},
+            </if>
+            <if test="peopleNumber != null">
+                people_number = #{peopleNumber},
+            </if>
+            <if test="workHour != null">
+                work_hour = #{workHour},
+            </if>
+            <if test="workHourUnit != null">
+                work_hour_unit = #{workHourUnit},
+            </if>
+            <if test="outputContent != null">
+                output_content = #{outputContent},
+            </if>
+            <if test="taskStatus != null">
+                task_status = #{taskStatus},
+            </if>
+            <if test="applyNo != null">
+                SUP_APPLY_NO = #{applyNo} ,
+            </if>
+            <if test=" pcPartNo =! null">
+                pc_Part_No = #{pcPartNo},
+            </if>
+            <if test=" unitPrice =! null">
+                UNIT_PRICE = #{unitPrice},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 根据id查询 SUP_SUPPLIER_TASK_INFO -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SUP_SUPPLIER_TASK_INFO
+        WHERE id = #{value} AND DEL_FLAG = 0
+
+    </select>
+
+    <!-- SUP_SUPPLIER_TASK_INFO 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        SELECT count(1) FROM SUP_SUPPLIER_TASK_INFO
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询SUP_SUPPLIER_TASK_INFO列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="Base_Column_List"/>
+        FROM SUP_SUPPLIER_TASK_INFO
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SUP_SUPPLIER_TASK_INFO
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <update id="deleteByApplyId">
+        DELETE FROM SUP_SUPPLIER_TASK_INFO WHERE SUP_APPLY_ID = #{id}
+    </update>
+
+    <select id="getTaskInfo" resultType="com.adc.da.task.vo.SupplierTaskInfoVO">
+        SELECT
+            SSTI.SUP_APPLY_NO   AS applyNo,
+            SCD.CAR_NAME        AS carType,
+            SCD.CAR_VIN         AS underpanNO,
+            SSTI.ID             AS id,
+            SSTI.OUTPUT_CONTENT AS outputContent,
+            SSTI.WORK_HOUR      AS workHour,
+            SSTI.WORK_HOUR_UNIT AS workHourUnit,
+            SSTI.PEOPLE_NUMBER  AS peopleNumber,
+            SSTI.JOB_CONTENT    AS jobContent,
+            SSTI.PROJECT        AS project,
+            SSTI.TYPE           AS type,
+            SSTI.UNIT_PRICE     AS unitPrice
+        FROM SUP_SUPPLIER_TASK_INFO SSTI LEFT JOIN SA_CAR_DATA SCD ON SSTI.SA_CAR_ID = SCD.ID
+        WHERE SSTI.DEL_FLAG = 0 AND SSTI.ID = #{id}
+        ORDER BY SSTI.UPDATE_TIME DESC
+    </select>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        WHERE SSTA.del_flag = 0
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    AND (SA.SUP_NAME LIKE '%'||#{keyWord}||'%' OR SSTI.SUP_APPLY_NO LIKE '%'||#{keyWord}||'%' OR
+                    SSTI.OUTPUT_CONTENT LIKE '%'||#{keyWord}||'%' OR SSTI.JOB_CONTENT LIKE '%'||#{keyWord}||'%'
+                    OR SCD.CAR_NAME LIKE '%'||#{keyWord}||'%' OR SSTI.TASK_STATUS LIKE '%'||#{keyWord}||'%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="beApplyForName != null and beApplyForName != ''">
+                    AND SA.SUP_NAME LIKE '%'||#{beApplyForName}||'%'
+                </if>
+                <if test="supId != null and supId != ''">
+                    AND SSTA.BE_APPLY_FOR_ID LIKE '%'||#{supId}||'%'
+                </if>
+                <if test="trialTaskId != null and trialTaskId != ''">
+                    AND SSTA.TRIAL_TASK_ID LIKE '%'||#{trialTaskId}||'%'
+                </if>
+                <if test="applyNo != null and applyNo != ''">
+                    AND SSTI.SUP_APPLY_NO LIKE '%'||#{applyNo}||'%'
+                </if>
+                <if test="outputContent != null and outputContent != ''">
+                    AND SSTI.OUTPUT_CONTENT LIKE '%'||#{outputContent}||'%'
+                </if>
+                <if test="jobContent != null and jobContent != ''">
+                    AND SSTI.JOB_CONTENT LIKE '%'||#{jobContent}||'%'
+                </if>
+                <if test="carType != null and carType != ''">
+                    AND SCD.CAR_NAME LIKE '%'||#{carType}||'%'
+                </if>
+                <if test="underpanNO != null and underpanNO != ''">
+                    AND SCD.CAR_VIN LIKE '%'||#{underpanNO}||'%'
+                </if>
+                <if test="status != null">
+                    AND SSTI.TASK_STATUS = #{status}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <sql id="statisticsColumn">
+            SSTI.ID,
+            SSTI.SUP_APPLY_NO        AS applyNo,
+            SA.SUP_NAME              AS supName,
+            SSTI.JOB_CONTENT         AS jobContent,
+            SSTI.PEOPLE_NUMBER       AS peopleNumber,
+            SSTFI.REAL_PEOPLE_NUMBER AS realPeopleNumber,
+            SSTFI.TOTAL_MANDAYS*SSTI.UNIT_PRICE  AS totalPrice,
+            SSTI.UNIT_PRICE          AS unitPrice,
+            SSTI.WORK_HOUR           AS workHour,
+            SSTFI.REAL_WORK_HOUR     AS realWorkHour,
+            SSTI.OUTPUT_CONTENT      AS outputContent,
+            TU.USNAME,
+            SSTI.TASK_STATUS         AS taskStatus,
+            SSTFI.TASK_END_TIME      AS taskEndTime,
+            SSTFI.ATTACHMENT_ID      AS attachmentId,
+            SCD.CAR_NAME             AS carType,
+            scd.CAR_VIN              AS underpanNO
+    </sql>
+
+    <sql id="statisticsFrom">
+        FROM SUP_SUPPLIER_TASK_INFO SSTI LEFT JOIN SUP_SUPPLIER_TASK_APPLY SSTA ON SSTI.SUP_APPLY_ID = SSTA.ID
+            LEFT JOIN TS_USER TU ON SSTI.TASK_IMPLEMENTER_ID = TU.USID
+            LEFT JOIN SA_CAR_DATA SCD ON SSTI.SA_CAR_ID = SCD.ID
+            LEFT JOIN SUP_SUPPLIER_TASK_FINISH_INFO SSTFI ON SSTI.ID = SSTFI.SUP_TASK_INFO_ID
+            LEFT JOIN SUP_ABILITY SA ON SA.ID = SSTA.BE_APPLY_FOR_ID
+    </sql>
+
+    <select id="getSupplierTaskStatisticsByPage" resultType="com.adc.da.task.vo.SupplierTaskStatisticsVO">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        ( SELECT
+        <include refid="statisticsColumn"/>
+        <include refid="statisticsFrom"/>
+        <include refid="Base_Where_Clause"/>
+        ORDER BY SSTI.UPDATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="getSupplierTaskStatisticsByCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        <include refid="statisticsFrom"/>
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <select id="queryListForExcel" resultType="com.adc.da.task.vo.SupplierTaskStatisticsVO">
+        SELECT
+        <include refid="statisticsColumn"/>
+        <include refid="statisticsFrom"/>
+        <include refid="Base_Where_Clause"/>
+        ORDER BY SSTI.UPDATE_TIME DESC
+    </select>
+
+    <update id="updateTaskInfoStatus" parameterType="java.lang.String">
+        update SUP_SUPPLIER_TASK_INFO set task_status = 4
+        where sup_apply_id = #{value}
+    </update>
+
+    <select id="getTaskInfoByApplyNos" resultType="com.adc.da.task.vo.SupplierTaskStatisticsVO">
+        SELECT
+        *
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        ( SELECT
+        <include refid="statisticsColumn"/>
+        <include refid="statisticsFrom"/>
+        <include refid="Base_Where_Clause"/>
+        and SUP_APPLY_NO in
+        <foreach collection="appNos" index="index" item="item" open="(" separator="," close=")">
+                         #{item}
+        </foreach>
+        ORDER BY SSTI.UPDATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${page.pager.endIndex})
+        WHERE rn &gt;= ${page.pager.startIndex}
+    </select>
+    <select id="getTaskInfoByApplyNosCount" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        <include refid="statisticsFrom"/>
+        <include refid="Base_Where_Clause"/>
+        and SUP_APPLY_NO in
+        <foreach collection="appNos" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

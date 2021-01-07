@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_budget_reimbursement.dao.PcTrialWorkdayEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_budget_reimbursement.entity.PcTrialWorkdayEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="r_id" property="rId"/>
+        <result column="user_usid" property="userUsid"/>
+        <result column="user_name" property="userName"/>
+        <result column="destination" property="destination"/>
+        <result column="trial_start_time" property="trialStartTime"/>
+        <result column="trial_end_time" property="trialEndTime"/>
+        <result column="day_number" property="dayNumber"/>
+    </resultMap>
+
+    <!-- PC_TRIAL_WORKDAY table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            r_id,
+            user_usid,
+            user_name,
+            destination,
+            trial_start_time,
+            trial_end_time,
+            day_number
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+            <if test="delFlag != null">
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time ${createTimeOperator} #{createTime}
+            </if>
+            <if test="createBy != null">
+                and create_by ${createByOperator} #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time ${updateTimeOperator} #{updateTime}
+            </if>
+            <if test="updateBy != null">
+                and update_by ${updateByOperator} #{updateBy}
+            </if>
+            <if test="rId != null">
+                and r_id ${rIdOperator} #{rId}
+            </if>
+            <if test="userUsid != null">
+                and user_usid ${userUsidOperator} #{userUsid}
+            </if>
+            <if test="userName != null">
+                and user_name ${userNameOperator} #{userName}
+            </if>
+            <if test="destination != null">
+                and destination ${destinationOperator} #{destination}
+            </if>
+            <if test="trialStartTime != null">
+                and trial_start_time ${trialStartTimeOperator} #{trialStartTime}
+            </if>
+            <if test="trialEndTime != null">
+                and trial_end_time ${trialEndTimeOperator} #{trialEndTime}
+            </if>
+            <if test="dayNumber != null">
+                and day_number ${dayNumberOperator} #{dayNumber}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.pc_budget_reimbursement.entity.PcTrialWorkdayEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SEQ_PC_TRIAL_WORKDAY.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into PC_TRIAL_WORKDAY(<include refid="Base_Column_List"/>)
+        values (#{id, jdbcType=VARCHAR}, #{delFlag, jdbcType=INTEGER}, #{createTime, jdbcType=VARCHAR},
+        #{createBy, jdbcType=VARCHAR}, #{updateTime, jdbcType=VARCHAR}, #{updateBy, jdbcType=VARCHAR},
+        #{rId, jdbcType=VARCHAR}, #{userUsid, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR},
+        #{destination, jdbcType=VARCHAR}, #{trialStartTime, jdbcType=VARCHAR}, #{trialEndTime, jdbcType=VARCHAR},
+        #{dayNumber, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_budget_reimbursement.entity.PcTrialWorkdayEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_TRIAL_WORKDAY.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PC_TRIAL_WORKDAY
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="rId != null">r_id,</if>
+            <if test="userUsid != null">user_usid,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="destination != null">destination,</if>
+            <if test="trialStartTime != null">trial_start_time,</if>
+            <if test="trialEndTime != null">trial_end_time,</if>
+            <if test="dayNumber != null">day_number,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="rId != null">#{rId, jdbcType=VARCHAR},</if>
+            <if test="userUsid != null">#{userUsid, jdbcType=VARCHAR},</if>
+            <if test="userName != null">#{userName, jdbcType=VARCHAR},</if>
+            <if test="destination != null">#{destination, jdbcType=VARCHAR},</if>
+            <if test="trialStartTime != null">#{trialStartTime, jdbcType=VARCHAR},</if>
+            <if test="trialEndTime != null">#{trialEndTime, jdbcType=VARCHAR},</if>
+            <if test="dayNumber != null">#{dayNumber, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_budget_reimbursement.entity.PcTrialWorkdayEO">
+        update PC_TRIAL_WORKDAY
+        set del_flag         = #{delFlag},
+            create_time      = #{createTime},
+            create_by        = #{createBy},
+            update_time      = #{updateTime},
+            update_by        = #{updateBy},
+            r_id             = #{rId},
+            user_usid        = #{userUsid},
+            user_name        = #{userName},
+            destination      = #{destination},
+            trial_start_time = #{trialStartTime},
+            trial_end_time   = #{trialEndTime},
+            day_number       = #{dayNumber}
+        where id = #{id}
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_budget_reimbursement.entity.PcTrialWorkdayEO">
+        update PC_TRIAL_WORKDAY
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="rId != null">
+                r_id = #{rId},
+            </if>
+            <if test="userUsid != null">
+                user_usid = #{userUsid},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="destination != null">
+                destination = #{destination},
+            </if>
+            <if test="trialStartTime != null">
+                trial_start_time = #{trialStartTime},
+            </if>
+            <if test="trialEndTime != null">
+                trial_end_time = #{trialEndTime},
+            </if>
+            <if test="dayNumber != null">
+                day_number = #{dayNumber},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 PC_TRIAL_WORKDAY -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_WORKDAY
+        where id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from PC_TRIAL_WORKDAY
+        where id = #{value}
+
+    </delete>
+
+    <!-- PC_TRIAL_WORKDAY 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_TRIAL_WORKDAY
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_TRIAL_WORKDAY列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_WORKDAY
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_WORKDAY
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <delete id="deleteByRid">
+        delete
+        from PC_TRIAL_WORKDAY
+        where R_ID = #{id}
+    </delete>
+
+    <select id="selectByRid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_WORKDAY
+        where R_ID = #{id} and DEL_FLAG = 0
+        order by TRIAL_START_TIME
+    </select>
+
+</mapper>

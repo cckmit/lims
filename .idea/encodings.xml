@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/lims-basedata/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-cost/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-ev-trial/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-login/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-main/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-pc-trial/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-personspace/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-questionnaire/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-report/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-resource/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-sample/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-supplier/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lims-sys/src/main/java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

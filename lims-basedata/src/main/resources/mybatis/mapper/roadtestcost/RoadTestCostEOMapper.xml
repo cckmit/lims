@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.roadtestcost.dao.RoadTestCostDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.roadtestcost.entity.RoadTestCostEo">
+        <id column="id" property="id"/>
+        <result column="TEST_ROAD_SITUATION" property="testRoadSituation"/>
+        <result column="CAR_TYPE" property="carType"/>
+        <result column="CONTENT" property="content"/>
+        <result column="COST" property="cost"/>
+        <result column="CAR_STATE" property="carState"/>
+        <result column="HAS_FUEL_COST" property="hasFuelCost"/>
+        <result column="FUEL_TYPE" property="fuelType"/>
+        <result column="HORSE_POWER" property="horsePower"/>
+        <result column="CONTRACT" property="contract"/>
+        <result column="CONTRACT_URL" property="contractUrl"/>
+    </resultMap>
+
+    <!-- BM_SEAL table all fields -->
+    <sql id="Base_Column_List">
+     id, TEST_ROAD_SITUATION, CAR_TYPE, CONTENT, COST,CAR_STATE,HAS_FUEL_COST,FUEL_TYPE,HORSE_POWER,CONTRACT,CONTRACT_URL
+  </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <choose>
+            <when test="searchPhrase!=null">
+                <foreach collection="searchPhrase" item="search">
+                    and (
+                    TEST_ROAD_SITUATION like '%${search}%' or
+                    CAR_TYPE like '%${search}%' or
+                    HORSE_POWER like '%${search}%' or
+                    FUEL_TYPE like '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+
+                <trim suffixOverrides=",">
+                    <if test="testRoadSituation != null">
+                        and TEST_ROAD_SITUATION like '%${testRoadSituation}%'
+                    </if>
+                    <if test="carType != null">
+                        and CAR_TYPE like '%${carType}%'
+                    </if>
+                    <if test="carState != null">
+                        and CAR_STATE like '%${carState}%'
+                    </if>
+                    <if test="hasFuelCost != null">
+                        and HAS_FUEL_COST like '%${hasFuelCost}%'
+                    </if>
+                    <if test="fuelType != null">
+                        and FUEL_TYPE like '%${fuelType}%'
+                    </if>
+                    <if test="horsePower != null">
+                        and HORSE_POWER like '%${horsePower}%'
+                    </if>
+                </trim>
+            </otherwise>
+        </choose>
+    </sql>
+
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.roadtestcost.entity.RoadTestCostEo">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            select sys_guid() from dual
+        </selectKey>
+        insert into BM_ROAD_TEST_COST
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="testRoadSituation != null">TEST_ROAD_SITUATION,</if>
+            <if test="carType != null">CAR_TYPE,</if>
+            <if test="horsePower != null">HORSE_POWER,</if>
+            <if test="content != null">CONTENT,</if>
+            <if test="cost != null">COST,</if>
+            <if test="carState != null">CAR_STATE,</if>
+            <if test="hasFuelCost != null">HAS_FUEL_COST,</if>
+            <if test="fuelType != null">FUEL_TYPE,</if>
+            <if test="contract != null">CONTRACT,</if>
+            <if test="contractUrl != null">CONTRACT_URL,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="testRoadSituation != null">#{testRoadSituation, jdbcType=VARCHAR},</if>
+            <if test="carType != null">#{carType, jdbcType=VARCHAR},</if>
+            <if test="horsePower != null">#{horsePower, jdbcType=VARCHAR},</if>
+            <if test="content != null">#{content, jdbcType=VARCHAR},</if>
+            <if test="cost != null">#{cost, jdbcType=VARCHAR},</if>
+            <if test="carState != null">#{carState, jdbcType=VARCHAR},</if>
+            <if test="hasFuelCost != null">#{hasFuelCost, jdbcType=VARCHAR},</if>
+            <if test="fuelType != null">#{fuelType, jdbcType=VARCHAR},</if>
+            <if test="contract != null">#{contract, jdbcType=VARCHAR},</if>
+            <if test="contractUrl != null">#{contractUrl, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.roadtestcost.entity.RoadTestCostEo">
+        update BM_ROAD_TEST_COST
+        <set>
+            <if test="testRoadSituation != null">
+                TEST_ROAD_SITUATION = #{testRoadSituation},
+            </if>
+            <if test="carType != null">
+                CAR_TYPE = #{carType},
+            </if>
+            <if test="content != null">
+                CONTENT = #{content},
+            </if>
+            <if test="cost != null">
+                COST = #{cost},
+            </if>
+            <if test="carState != null">
+                CAR_STATE = #{carState},
+            </if>
+            <if test="hasFuelCost != null">
+                HAS_FUEL_COST = #{hasFuelCost},
+            </if>
+            <if test="fuelType != null">
+                FUEL_TYPE = #{fuelType},
+            </if>
+            <if test="horsePower != null">
+                HORSE_POWER = #{horsePower},
+            </if>
+            <if test="contract != null">
+                CONTRACT = #{contract},
+            </if>
+            <if test="contractUrl != null">
+                CONTRACT_URL = #{contractUrl},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from BM_ROAD_TEST_COST
+     where id = #{value}
+  </delete>
+
+    <!-- BM_SEAL 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from BM_ROAD_TEST_COST
+        <include refid="Base_Where_Clause"/>
+    </select>
+    <!-- 查询BM_SEAL列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from BM_ROAD_TEST_COST
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.roadtestcost.entity.RoadTestCostEo">
+        select
+        <include refid="Base_Column_List"/>
+        from BM_ROAD_TEST_COST
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <select id="getPriceByHorsePowerAndCarTypeAndRoadLine" resultType="java.lang.String">
+        select cost
+        from BM_ROAD_TEST_COST
+        where CONTENT = #{horsePower} and CAR_TYPE = #{driveCarType} and TEST_ROAD_SITUATION = #{roadLine} and rownum = 1
+
+
+    </select>
+
+</mapper>

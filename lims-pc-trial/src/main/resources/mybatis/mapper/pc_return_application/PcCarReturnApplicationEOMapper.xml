@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_return_application.dao.PcCarReturnApplicationEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_return_application.entity.PcCarReturnApplicationEO" >
+    <id column="id" property="id" />
+    <result column="plan_code" property="planCode" />
+    <result column="test_km" property="testKm" />
+    <result column="test_line" property="testLine" />
+    <result column="car_type" property="carType" />
+    <result column="test_end_time" property="testEndTime" />
+    <result column="test_start_time" property="testStartTime" />
+    <result column="test_type" property="testType" />
+    <result column="test_area" property="testArea" />
+    <result column="insproject_type" property="insprojectType" />
+    <result column="plan_return_time" property="planReturnTime" />
+    <result column="car_status" property="carStatus" />
+    <result column="buy_time" property="buyTime" />
+    <result column="product_time" property="productTime" />
+    <result column="discharge_type" property="dischargeType" />
+    <result column="car_code" property="carCode" />
+    <result column="use_for" property="useFor" />
+    <result column="create_by_phone" property="createByPhone" />
+    <result column="create_by_orgid" property="createByOrgid" />
+    <result column="create_by_org" property="createByOrg" />
+    <result column="loan_type" property="loanType" />
+    <result column="pvorcv" property="pvorcv" />
+    <result column="status" property="status" />
+    <result column="engine_code" property="engineCode" />
+    <result column="brand_model" property="brandModel" />
+    <result column="return_type" property="returnType" />
+    <result column="return_time" property="returnTime" />
+    <result column="create_time" property="createTime" />
+    <result column="chassis_code" property="chassisCode" />
+    <result column="create_by_name" property="createByName" />
+    <result column="create_by" property="createBy" />
+    <result column="del_flag" property="delFlag" />
+    <result column="task_id" property="taskId" />
+    <result column="car_id" property="carId" />
+    <result column="beam_code_num" property="beamCodeNum" />
+    <result column="welding_spot_num" property="weldingSpotNum" />
+    <result column="technical_order_name" property="technicalOrderName" />
+    <result column="technical_order_id" property="technicalOrderId" />
+    <result column="change_parts_name" property="changePartsName" />
+    <result column="change_parts_id" property="changePartsId" />
+    <result column="appearance_state" property="appearanceState" />
+    <result column="with_tool" property="withTool" />
+    <result column="total_km" property="totalKm" />
+    <result property="returnCarCode" column="return_Car_Code" />
+    <result property="taskNumber" column="task_number" />
+    <result property="loanCarCode" column="loan_car_code" />
+    <result column="TASK_OR_PLAN" property="taskOrPlan" />
+  </resultMap>
+
+  <!-- PC_CAR_RETURN_APPLICATION table all fields -->
+  <sql id="Base_Column_List" >
+     plan_code, test_km, return_Car_Code, test_line, car_type, test_end_time,
+     test_start_time, test_type, test_area, insproject_type, plan_return_time,
+     car_status, buy_time, product_time, discharge_type, car_code, use_for,
+     create_by_phone, create_by_orgid, create_by_org, loan_type, pvorcv, status,
+     engine_code, brand_model, return_type, return_time, create_time, chassis_code,
+     create_by_name, create_by, del_flag, id, task_id, car_id, beam_code_num, welding_spot_num,
+     technical_order_name, technical_order_id, change_parts_name, change_parts_id,
+     appearance_state, with_tool, total_km,task_number, loan_car_code, TASK_OR_PLAN
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="planReturnTime1 != null" >
+        and plan_return_time &gt;= #{planReturnTime1}
+      </if>
+      <if test="planReturnTime2 != null" >
+        and plan_return_time &lt;= #{planReturnTime2}
+      </if>
+      <if test="createTime1 != null" >
+        and create_time &gt;= #{createTime1}
+      </if>
+      <if test="createTime2 != null" >
+        and create_time &lt;= #{createTime2}
+      </if>
+      <if test="chassisCode != null" >
+        and chassis_code ${chassisCodeOperator} #{chassisCode}
+      </if>
+      <if test="taskId != null" >
+        and task_id ${taskIdOperator} #{taskId}
+      </if>
+        <if test="taskNumber != null" >
+        and task_number ${taskNumberOperator} #{taskNumber}
+      </if>
+      <if test="taskOrPlan != null and taskOrPlan != ''">
+          AND TASK_OR_PLAN = #{taskOrPlan}
+      </if>
+    </trim>
+  </sql>
+
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_return_application.entity.PcCarReturnApplicationEO" >
+    <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SYS_GUID() FROM DUAL
+    </selectKey>
+        insert into PC_CAR_RETURN_APPLICATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="planCode != null" >plan_code,</if>
+                <if test="testKm != null" >test_km,</if>
+                <if test="testLine != null" >test_line,</if>
+                <if test="carType != null" >car_type,</if>
+                <if test="testEndTime != null" >test_end_time,</if>
+                <if test="testStartTime != null" >test_start_time,</if>
+                <if test="testType != null" >test_type,</if>
+                <if test="testArea != null" >test_area,</if>
+                <if test="insprojectType != null" >insproject_type,</if>
+                <if test="planReturnTime != null" >plan_return_time,</if>
+                <if test="carStatus != null" >car_status,</if>
+                <if test="buyTime != null" >buy_time,</if>
+                <if test="productTime != null" >product_time,</if>
+                <if test="dischargeType != null" >discharge_type,</if>
+                <if test="carCode != null" >car_code,</if>
+                <if test="useFor != null" >use_for,</if>
+                <if test="createByPhone != null" >create_by_phone,</if>
+                <if test="createByOrgid != null" >create_by_orgid,</if>
+                <if test="createByOrg != null" >create_by_org,</if>
+                <if test="loanType != null" >loan_type,</if>
+                <if test="pvorcv != null" >pvorcv,</if>
+                <if test="status != null" >status,</if>
+                <if test="engineCode != null" >engine_code,</if>
+                <if test="brandModel != null" >brand_model,</if>
+                <if test="returnType != null" >return_type,</if>
+                <if test="returnTime != null" >return_time,</if>
+                <if test="createTime != null" >create_time,</if>
+                <if test="chassisCode != null" >chassis_code,</if>
+                <if test="createByName != null" >create_by_name,</if>
+                <if test="createBy != null" >create_by,</if>
+                <if test="delFlag != null" >del_flag,</if>
+                <if test="id != null" >id,</if>
+                <if test="taskId != null" >task_id,</if>
+                <if test="carId != null" >car_id,</if>
+                <if test="beamCodeNum != null" >beam_code_num,</if>
+                <if test="weldingSpotNum != null" >welding_spot_num,</if>
+                <if test="technicalOrderName != null" >technical_order_name,</if>
+                <if test="technicalOrderId != null" >technical_order_id,</if>
+                <if test="changePartsName != null" >change_parts_name,</if>
+                <if test="changePartsId != null" >change_parts_id,</if>
+                <if test="appearanceState != null" >appearance_state,</if>
+                <if test="withTool != null" >with_tool,</if>
+                <if test="totalKm != null" >total_km,</if>
+                <if test="returnCarCode != null" >return_Car_Code,</if>
+                <if test="taskNumber != null" >task_number,</if>
+                <if test="loanCarCode != null" >loan_car_code,</if>
+                <if test="taskOrPlan != null">TASK_OR_PLAN,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="planCode != null" >#{planCode, jdbcType=VARCHAR},</if>
+                <if test="testKm != null" >#{testKm, jdbcType=VARCHAR},</if>
+                <if test="testLine != null" >#{testLine, jdbcType=VARCHAR},</if>
+                <if test="carType != null" >#{carType, jdbcType=VARCHAR},</if>
+                <if test="testEndTime != null" >#{testEndTime, jdbcType=VARCHAR},</if>
+                <if test="testStartTime != null" >#{testStartTime, jdbcType=VARCHAR},</if>
+                <if test="testType != null" >#{testType, jdbcType=VARCHAR},</if>
+                <if test="testArea != null" >#{testArea, jdbcType=VARCHAR},</if>
+                <if test="insprojectType != null" >#{insprojectType, jdbcType=VARCHAR},</if>
+                <if test="planReturnTime != null" >#{planReturnTime, jdbcType=VARCHAR},</if>
+                <if test="carStatus != null" >#{carStatus, jdbcType=VARCHAR},</if>
+                <if test="buyTime != null" >#{buyTime, jdbcType=VARCHAR},</if>
+                <if test="productTime != null" >#{productTime, jdbcType=VARCHAR},</if>
+                <if test="dischargeType != null" >#{dischargeType, jdbcType=VARCHAR},</if>
+                <if test="carCode != null" >#{carCode, jdbcType=VARCHAR},</if>
+                <if test="useFor != null" >#{useFor, jdbcType=VARCHAR},</if>
+                <if test="createByPhone != null" >#{createByPhone, jdbcType=VARCHAR},</if>
+                <if test="createByOrgid != null" >#{createByOrgid, jdbcType=VARCHAR},</if>
+                <if test="createByOrg != null" >#{createByOrg, jdbcType=VARCHAR},</if>
+                <if test="loanType != null" >#{loanType, jdbcType=VARCHAR},</if>
+                <if test="pvorcv != null" >#{pvorcv, jdbcType=VARCHAR},</if>
+                <if test="status != null" >#{status, jdbcType=VARCHAR},</if>
+                <if test="engineCode != null" >#{engineCode, jdbcType=VARCHAR},</if>
+                <if test="brandModel != null" >#{brandModel, jdbcType=VARCHAR},</if>
+                <if test="returnType != null" >#{returnType, jdbcType=VARCHAR},</if>
+                <if test="returnTime != null" >#{returnTime, jdbcType=VARCHAR},</if>
+                <if test="createTime != null" >#{createTime, jdbcType=VARCHAR},</if>
+                <if test="chassisCode != null" >#{chassisCode, jdbcType=VARCHAR},</if>
+                <if test="createByName != null" >#{createByName, jdbcType=VARCHAR},</if>
+                <if test="createBy != null" >#{createBy, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >#{delFlag, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="taskId != null" >#{taskId, jdbcType=VARCHAR},</if>
+                <if test="carId != null" >#{carId, jdbcType=VARCHAR},</if>
+                <if test="beamCodeNum != null" >#{beamCodeNum, jdbcType=VARCHAR},</if>
+                <if test="weldingSpotNum != null" >#{weldingSpotNum, jdbcType=VARCHAR},</if>
+                <if test="technicalOrderName != null" >#{technicalOrderName, jdbcType=VARCHAR},</if>
+                <if test="technicalOrderId != null" >#{technicalOrderId, jdbcType=VARCHAR},</if>
+                <if test="changePartsName != null" >#{changePartsName, jdbcType=VARCHAR},</if>
+                <if test="changePartsId != null" >#{changePartsId, jdbcType=VARCHAR},</if>
+                <if test="appearanceState != null" >#{appearanceState, jdbcType=VARCHAR},</if>
+                <if test="withTool != null" >#{withTool, jdbcType=VARCHAR},</if>
+                <if test="totalKm != null" >#{totalKm, jdbcType=VARCHAR},</if>
+                <if test="returnCarCode != null ">#{returnCarCode, jdbcType=VARCHAR},</if>
+                <if test="taskNumber != null ">#{taskNumber, jdbcType=VARCHAR},</if>
+                <if test="loanCarCode != null ">#{loanCarCode, jdbcType=VARCHAR},</if>
+                <if test="taskOrPlan != null">#{taskOrPlan,jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_return_application.entity.PcCarReturnApplicationEO" >
+    update PC_CAR_RETURN_APPLICATION
+    <set >
+      <if test="planCode != null" >
+        plan_code = #{planCode},
+      </if>
+      <if test="testKm != null" >
+        test_km = #{testKm},
+      </if>
+      <if test="testLine != null" >
+        test_line = #{testLine},
+      </if>
+      <if test="carType != null" >
+        car_type = #{carType},
+      </if>
+      <if test="testEndTime != null" >
+        test_end_time = #{testEndTime},
+      </if>
+      <if test="testStartTime != null" >
+        test_start_time = #{testStartTime},
+      </if>
+      <if test="testType != null" >
+        test_type = #{testType},
+      </if>
+      <if test="testArea != null" >
+        test_area = #{testArea},
+      </if>
+      <if test="insprojectType != null" >
+        insproject_type = #{insprojectType},
+      </if>
+      <if test="planReturnTime != null" >
+        plan_return_time = #{planReturnTime},
+      </if>
+      <if test="carStatus != null" >
+        car_status = #{carStatus},
+      </if>
+      <if test="buyTime != null" >
+        buy_time = #{buyTime},
+      </if>
+      <if test="productTime != null" >
+        product_time = #{productTime},
+      </if>
+      <if test="dischargeType != null" >
+        discharge_type = #{dischargeType},
+      </if>
+      <if test="carCode != null" >
+        car_code = #{carCode},
+      </if>
+      <if test="useFor != null" >
+        use_for = #{useFor},
+      </if>
+      <if test="createByPhone != null" >
+        create_by_phone = #{createByPhone},
+      </if>
+      <if test="createByOrgid != null" >
+        create_by_orgid = #{createByOrgid},
+      </if>
+      <if test="createByOrg != null" >
+        create_by_org = #{createByOrg},
+      </if>
+      <if test="loanType != null" >
+        loan_type = #{loanType},
+      </if>
+      <if test="pvorcv != null" >
+        pvorcv = #{pvorcv},
+      </if>
+      <if test="status != null" >
+        status = #{status},
+      </if>
+      <if test="engineCode != null" >
+        engine_code = #{engineCode},
+      </if>
+      <if test="brandModel != null" >
+        brand_model = #{brandModel},
+      </if>
+      <if test="returnType != null" >
+        return_type = #{returnType},
+      </if>
+      <if test="returnTime != null" >
+        return_time = #{returnTime},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="chassisCode != null" >
+        chassis_code = #{chassisCode},
+      </if>
+      <if test="createByName != null" >
+        create_by_name = #{createByName},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+      <if test="carId != null" >
+        car_id = #{carId},
+      </if>
+      <if test="beamCodeNum != null" >
+        beam_code_num = #{beamCodeNum},
+      </if>
+      <if test="weldingSpotNum != null" >
+        welding_spot_num = #{weldingSpotNum},
+      </if>
+      <if test="technicalOrderName != null" >
+        technical_order_name = #{technicalOrderName},
+      </if>
+      <if test="technicalOrderId != null" >
+        technical_order_id = #{technicalOrderId},
+      </if>
+      <if test="changePartsName != null" >
+        change_parts_name = #{changePartsName},
+      </if>
+      <if test="changePartsId != null" >
+        change_parts_id = #{changePartsId},
+      </if>
+      <if test="appearanceState != null" >
+        appearance_state = #{appearanceState},
+      </if>
+      <if test="withTool != null" >
+        with_tool = #{withTool},
+      </if>
+      <if test="totalKm != null" >
+        total_km = #{totalKm},
+      </if>
+        <if test="returnCarCode != null" >
+            return_Car_Code = #{returnCarCode},
+        </if>
+        <if test="loanCarCode != null" >
+            loan_car_code = #{loanCarCode},
+        </if>
+        <if test="taskOrPlan != null">
+	        TASK_OR_PLAN = #{taskOrPlan,jdbcType=VARCHAR},
+	    </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 PC_CAR_RETURN_APPLICATION -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from PC_CAR_RETURN_APPLICATION
+     where id = #{value}
+
+  </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_CAR_RETURN_APPLICATION
+     where id = #{value}
+  </delete>
+
+    <!--变更委托状态-->
+    <update id="changeStatus" parameterType="java.lang.String">
+        update PC_CAR_RETURN_APPLICATION
+        set status = #{status}
+        where id = #{id}
+    </update>
+
+  <!-- PC_CAR_RETURN_APPLICATION 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from PC_CAR_RETURN_APPLICATION
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询PC_CAR_RETURN_APPLICATION列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from PC_CAR_RETURN_APPLICATION
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from PC_CAR_RETURN_APPLICATION
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

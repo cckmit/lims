@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.adc</groupId>
+        <artifactId>lims</artifactId>
+        <version>2.2.0</version>
+    </parent>
+
+    <artifactId>lims-main</artifactId>
+    <packaging>jar</packaging>
+
+    <name>web</name>
+    <description>web project for Spring Boot</description>
+
+
+    <repositories>
+        <repository>
+            <id>adc</id>
+            <url>http://60.247.58.121:8182/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>snapshot</id>
+            <url>http://60.247.58.121:8182/nexus/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+		<dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-basedata</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+		
+
+		<dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-questionnaire</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+		<dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-ev-trial</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-report</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-pc-trial</artifactId>
+            <version>2.2.0</version>
+        </dependency>
+        
+		<dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-cost</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-personspace</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-resource</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>adc-da-swagger</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-sample</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>adc-da-form</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.adc</groupId>
+                    <artifactId>adc-da-sys</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+       <!--  <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-detail</artifactId>
+            <version>2.2.0</version>
+        </dependency> -->
+        <!--<dependency>-->
+            <!--<groupId>com.adc</groupId>-->
+            <!--<artifactId>lims-history</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-sys</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.adc</groupId>
+                    <artifactId>adc-da-swagger</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-login</artifactId>
+        </dependency>
+        <!-- 框架基础组件 -->
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>adc-da-base</artifactId>
+        </dependency>
+        <!-- 工具类组件 -->
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>adc-da-util</artifactId>
+        </dependency>
+ 
+
+        <!-- 移动登录组件，目前和登录是2选1 -->
+
+        <!--<dependency>-->
+        <!--<groupId>com.adc</groupId>-->
+        <!--<artifactId>adc-da-jwtLogin</artifactId>-->
+        <!--<version>2.0.0</version>-->
+        <!--</dependency>-->
+
+        <!--         以上是登录组件-->
+
+
+        <!-- 		<dependency> -->
+        <!-- 			<groupId>com.adc</groupId> -->
+        <!-- 			<artifactId>adc-da-jmetrics</artifactId> -->
+        <!-- 			<version>2.0.0</version> -->
+        <!-- 		</dependency> -->
+
+        <!-- 		<dependency> -->
+        <!-- 			<groupId>com.adc</groupId> -->
+        <!-- 			<artifactId>adc-da-threadpool</artifactId> -->
+        <!-- 			<version>2.0.0</version> -->
+        <!-- 		</dependency> -->
+
+        <!-- 		<dependency> -->
+        <!-- 			<groupId>com.adc</groupId> -->
+        <!-- 			<artifactId>adc-da-redis</artifactId> -->
+        <!-- 			<version>2.0.0</version> -->
+        <!-- 		</dependency> -->
+        <!-- 文件上传下载组件 -->
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>adc-da-file</artifactId>
+
+        </dependency>
+        <!-- 代码生成组件 -->
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>adc-da-gen</artifactId>
+            <version>2.3.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>lims-supplier</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <!-- Druid数据库连接池组件 -->
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>adc-da-druid</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- rabbitMQ -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <!-- jdk1.7支持2.4.6版本es客户端,jdk1.8支持6.0版本es客户端 -->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>2.4.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>6.0.0</version>
+        </dependency>
+        <!-- 6.0版本es需添加此依赖，解决依赖冲突 -->
+        <!-- 		<dependency> -->
+        <!-- 			<groupId>org.apache.logging.log4j</groupId> -->
+        <!-- 			<artifactId>log4j-core</artifactId> -->
+        <!-- 		</dependency> -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <!-- 如果要使用内嵌Jetty服务器，需排除tomcat依赖 -->
+            <!-- 			<exclusions> -->
+            <!-- 				<exclusion> -->
+            <!-- 					<groupId>org.springframework.boot</groupId> -->
+            <!-- 					<artifactId>spring-boot-starter-tomcat</artifactId> -->
+            <!-- 				</exclusion> -->
+            <!-- 			</exclusions> -->
+        </dependency>
+        <!-- SpringBoot内嵌的Jetty服务器 -->
+        <!-- 		<dependency> -->
+        <!-- 			<groupId>org.springframework.boot</groupId> -->
+        <!-- 			<artifactId>spring-boot-starter-jetty</artifactId> -->
+        <!-- 		</dependency> -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.javacsv</groupId>
+            <artifactId>javacsv</artifactId>
+            <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+
+        </dependency>
+        <dependency>
+            <groupId>com.mashape.unirest</groupId>
+            <artifactId>unirest-java</artifactId>
+        </dependency>
+        <!--SQL Server -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+        </dependency>
+        <!-- 支持oracle 12c的驱动 -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc7</artifactId>
+        </dependency>
+        <!-- 支持MySQL的驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-logging</artifactId>
+                    <groupId>commons-logging</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-beanutils</artifactId>
+                    <groupId>commons-beanutils</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>commons-collections</artifactId>
+                    <groupId>commons-collections</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adc</groupId>
+            <artifactId>adc-da-workflow</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.adc</groupId>
+                    <artifactId>adc-da-sys</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- <dependency> -->
+        <!-- <groupId>commons-lang</groupId> -->
+        <!-- <artifactId>commons-lang</artifactId> -->
+        <!-- </dependency> -->
+    </dependencies>
+    <build>
+        <plugins>
+
+
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- <configuration> -->
+                <!-- <executable>true</executable> -->
+                <!-- <fork>true</fork> -->
+                <!-- <addResources>true</addResources> -->
+
+                <!-- <includeSystemScope>true</includeSystemScope> -->
+                <!-- </configuration> -->
+
+                <!-- <executions> -->
+                <!-- <execution> -->
+                <!-- <goals> -->
+                <!-- <goal>repackage</goal> -->
+                <!-- </goals> -->
+                <!-- <configuration> -->
+                <!-- 非必填项，即在生成的jar包名称后面追加该分类名称 -->
+                <!-- <classifier>boot</classifier> -->
+                <!-- <mainClass>com.adc.StandardApplication</mainClass> -->
+                <!-- </configuration> -->
+                <!-- </execution> -->
+                <!-- </executions> -->
+            </plugin>
+
+        </plugins>
+    </build>
+
+</project>

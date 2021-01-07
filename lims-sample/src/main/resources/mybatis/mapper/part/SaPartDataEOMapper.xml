@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.part.dao.SaPartDataEODAO">
+
+    <resultMap id="parentMap" type="com.adc.da.part.entity.SaPartDataEO">
+        <!--@mbg.generated-->
+        <id column="ID" property="id"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+        <result column="UPDATE_BY" property="updateBy"/>
+        <result column="BM_PROJECT_ID" property="bmProjectId"/>
+        <result column="SEND_PART_USER_ID" property="sendPartUserId"/>
+        <result column="PART_NAME" property="partName"/>
+        <result column="PART_SAMPLE_NUMBER" property="partSampleNumber"/>
+        <result column="TRIAL_LOCATION" property="trialLocation"/>
+        <result column="PART_ENGINE_NO" property="partEngineNo"/>
+        <result column="PART_STAGE" property="partStage"/>
+        <result column="RECEIVED_USER_ID" property="receivedUserId"/>
+        <result column="PRODUCED_FACTORY" property="producedFactory"/>
+        <result column="PART_STATUS" property="partStatus"/>
+        <result column="RECEIVED_TIME" property="receivedTime"/>
+        <result column="PART_DEPOT_ID" property="partDepotId"/>
+        <result column="PART_SPACE_NUMBER" property="partSpaceNumber"/>
+        <result column="PART_LOCATION" property="partLocation"/>
+        <result column="PART_LOCATION_MANAGER_ID" property="partLocationManagerId"/>
+        <result column="ASSESS_ATTACHMENT_ID" property="assessAttachmentId"/>
+        <result column="RETURN_PART_ATTACHMENT_ID" property="returnPartAttachmentId"/>
+        <result column="RECEIVE_PART_ATTACHMENT_ID" property="receivePartAttachmentId"/>
+        <result column="WHETHER_RETURN" property="whetherReturn"/>
+        <result column="TRIAL_TYPE" property="trialType"/>
+        <result column="PART_SPACE_LOCATION" property="partSpaceLocation"/>
+        <result column="IN_SHELF" property="inShelf"/>
+        <result column="REMARKS" property="remarks"/>
+        <result column="REPORT_ASSESS_ATTACHMENT_ID" property="reportAssessAttachmentId"/>
+        <result column="STATUS" property="status"/>
+        <result column="SEND_PART_USER_NAME" property="sendPartUserName"/>
+        <result column="SEND_PART_USER_PHONE" property="sendPartUserPhone"/>
+        <result column="SEND_PART_USER_ORG" property="sendPartUserOrg"/>
+        <result column="RECEIVED_USER_NAME" property="receivedUserName"/>
+        <result column="PART_LOCATION_MANAGER_NAME" property="partLocationManagerName"/>
+        <result column="specification_Type" property="specificationType" />
+        <result column="SAMPLE_NO" property="sampleNO" />
+    </resultMap>
+    <resultMap id="BaseResultMap" type="com.adc.da.part.entity.SaPartDataEO" extends="parentMap">
+        <result column="GET_PART_USER_ID" property="getPartUserId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        ID, DEL_FLAG, CREATE_TIME, CREATE_BY, UPDATE_TIME, UPDATE_BY, BM_PROJECT_ID, SEND_PART_USER_ID,
+        PART_NAME, PART_SAMPLE_NUMBER, TRIAL_LOCATION, PART_ENGINE_NO, PART_STAGE, RECEIVED_USER_ID,
+        PRODUCED_FACTORY, PART_STATUS, RECEIVED_TIME, PART_DEPOT_ID, PART_SPACE_NUMBER, PART_LOCATION,
+        PART_LOCATION_MANAGER_ID, ASSESS_ATTACHMENT_ID, RETURN_PART_ATTACHMENT_ID, RECEIVE_PART_ATTACHMENT_ID,
+        WHETHER_RETURN, TRIAL_TYPE, PART_SPACE_LOCATION, GET_PART_USER_ID, IN_SHELF, REMARKS,
+        REPORT_ASSESS_ATTACHMENT_ID, "STATUS", SEND_PART_USER_NAME, SEND_PART_USER_PHONE,
+        SEND_PART_USER_ORG, RECEIVED_USER_NAME, PART_LOCATION_MANAGER_NAME, specification_Type, SAMPLE_NO
+    </sql>
+
+<!--    <sql id="getPageListFrom">
+        FROM SA_PART_DATA SCD
+                 LEFT JOIN (select SPD.ID,
+                                   WM_CONCAT(ETT.EV_NUMBER) EV_NUMBER
+                            from SA_PART_DATA SPD
+                                     left join EV_TRIALTASK_SAMPLE ETS on SPD.ID = ETS.SAMPLE_ID
+                                     left join EV_TRIAL_TASK ETT on ETS.TRIALTASK_ID = ETT.ID
+                            where SPD.DEL_FLAG = 0 group by SPD.ID) part on SCD.ID = part.ID
+                 LEFT JOIN BM_PROJECT BP ON SCD.BM_PROJECT_ID = BP.ID
+                 LEFT JOIN TS_USER TU ON SCD.SEND_PART_USER_ID = TU.USID
+                 LEFT JOIN TS_USER TU2 ON SCD.GET_PART_USER_ID = TU2.USID
+    </sql>-->
+    <sql id="getPageListFrom">
+        FROM SA_PART_DATA SCD
+                 LEFT JOIN (select SPD.ID,
+                                   regexp_replace((LISTAGG(PTT.TASK_CODE,',')  within GROUP(ORDER BY PTT.TASK_CODE)),'([^,]+)(,\1)+', '\1')  EV_NUMBER
+                            from SA_PART_DATA SPD
+                                     left join EV_TRIALTASK_SAMPLE ETS on SPD.ID = ETS.SAMPLE_ID
+                                     left join PC_TRIAL_TASK PTT on ETS.TRIALTASK_ID = PTT.ID
+                            where SPD.DEL_FLAG = 0 and PTT.TASK_STATUS !='8' and PTT.TASK_STATUS !='0'
+                            group by SPD.ID) part on SCD.ID = part.ID
+
+                 LEFT JOIN BM_PROJECT BP ON SCD.BM_PROJECT_ID = BP.ID
+                 LEFT JOIN TS_USER TU ON SCD.SEND_PART_USER_ID = TU.USID
+                 LEFT JOIN TS_USER TU2 ON SCD.GET_PART_USER_ID = TU2.USID
+    </sql>
+    <sql id="getPageListWhere">
+        WHERE SCD.DEL_FLAG = 0
+        <choose>
+            <when test="keyWords != null">
+                <foreach collection="keyWords" item="keyWord" separator=" " index="index">
+                    <!--AND (EV_NUMBER LIKE '%'||#{keyWord}||'%' OR SCD.PART_NAME LIKE '%'||#{keyWord}||'%'-->
+                    AND (SCD.TRIAL_TASKBOOK_NO LIKE '%'||#{keyWord}||'%' OR SCD.PART_NAME LIKE '%'||#{keyWord}||'%'
+                    OR
+                    SCD.PART_ENGINE_NO
+                    LIKE '%'||#{keyWord}||'%' OR SCD.PART_SAMPLE_NUMBER LIKE '%'||#{keyWord}||'%' OR
+                    SCD.PRODUCED_FACTORY
+                    LIKE '%'||#{keyWord}||'%' OR TU.USNAME LIKE '%'||#{keyWord}||'%' OR TU2.USNAME
+                    LIKE '%'||#{keyWord}||'%' OR SCD.IN_SHELF LIKE '%'||#{keyWord}||'%' OR
+                    SCD.PART_SPACE_LOCATION
+                    LIKE '%'||#{keyWord}||'%' OR SCD.CREATE_TIME LIKE '%'||#{keyWord}||'%' )
+                </foreach>
+            </when>
+            <otherwise>
+               <!-- <if test="trialApplyNO != null and trialApplyNO != ''">
+                    AND EV_NUMBER LIKE '%'||#{trialApplyNO}||'%'
+                </if>-->
+                <if test="trialApplyNO != null and trialApplyNO != ''">
+                    AND SCD.TRIAL_TASKBOOK_NO LIKE '%'||#{trialApplyNO}||'%'
+                </if>
+                <if test="partName != null and partName != ''">
+                    AND SCD.PART_NAME LIKE '%'||#{partName}||'%'
+                </if>
+                <if test="partEngineNo != null and partEngineNo != ''">
+                    AND SCD.PART_ENGINE_NO LIKE '%'||#{partEngineNo}||'%'
+                </if>
+                <if test="sampleNumber != null and sampleNumber != ''">
+                    AND SCD.PART_SAMPLE_NUMBER LIKE '%'||#{sampleNumber}||'%'
+                </if>
+                <if test="producedFactory != null and producedFactory != ''">
+                    AND SCD.PRODUCED_FACTORY LIKE '%'||#{producedFactory}||'%'
+                </if>
+                <if test="sendPartUserName != null and sendPartUserName != ''">
+                    AND TU.USNAME '%'||#{sendPartUserName}||'%'
+                </if>
+                <if test="getPartUserName != null and getPartUserName != ''">
+                    AND TU2.USNAME LIKE '%'||#{getPartUserName}||'%'
+                </if>
+                <if test="inShelf != null and inShelf != ''">
+                    AND SCD.IN_SHELF LIKE '%'||#{inShelf}||'%'
+                </if>
+                <if test="partSpaceLocation != null and partSpaceLocation != ''">
+                    AND SCD.PART_SPACE_LOCATION LIKE '%'||#{partSpaceLocation}||'%'
+                </if>
+                <if test="createTimeStart != null and createTimeStart != ''">
+                    AND SCD.CREATE_TIME >= #{createTimeStart}
+                </if>
+                <if test="createTimeEnd != null and createTimeEnd != ''">
+                    AND SCD.CREATE_TIME <![CDATA[<=]]> #{createTimeEnd}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <resultMap id="getPageList" type="com.adc.da.part.vo.SaPartDataListVO">
+        <id column="ID" property="id"/>
+        <result column="PART_NAME" property="partName"/>
+        <result column="IN_SHELF" property="inShelf"/>
+        <result column="PRODUCED_FACTORY" property="producedFactory"/>
+        <result column="PART_DEPOT_ID" property="partDepotId"/>
+        <result column="PART_SPACE_NUMBER" property="partSpaceNumber"/>
+        <result column="PART_SAMPLE_NUMBER" property="partSampleNumber"/>
+        <result column="PART_ENGINE_NO" property="partEngineNo"/>
+        <result column="GET_PART_USER_NAME" property="getPartUserName"/>
+        <result column="SEND_PART_USER_NAME" property="sendPartUserName"/>
+        <result column="part_space_location" property="partSpaceLocation"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="status" property="status"/>
+        <result property="partNO" column="SAMPLE_NO"/>
+        <result property="trialApplyNO" column="EV_NUMBER"/>
+        <result property="trialTaskBookNO" column="TRIAL_TASKBOOK_NO"/>
+        <collection property="saPartDataApplyVOList" resultMap="SaPartDataApplyVO"/>
+    </resultMap>
+    <resultMap id="SaPartDataApplyVO" type="com.adc.da.part.vo.SaPartDataApplyVO">
+        <result property="partNO" column="SAMPLE_NO"/>
+        <result property="trialApplyNO" column="EV_NUMBER"/>
+    </resultMap>
+
+    <sql id="ListColumn">
+            ID,
+            PART_ID,
+            PART_NAME,
+            IN_SHELF,
+            SAMPLE_NO,
+            PRODUCED_FACTORY,
+            PART_DEPOT_ID,
+            PART_SPACE_NUMBER,
+            PART_SAMPLE_NUMBER,
+            PART_ENGINE_NO,
+            BM_PROJECT_ID,
+            STATUS,
+            PRO_NAME,
+            EV_NUMBER,
+            SEND_PART_USER_ID,
+            SEND_PART_USER_NAME,
+            GET_PART_USER_ID,
+            GET_PART_USER_NAME,
+            part_space_location,
+            create_time,
+            TRIAL_TASKBOOK_NO,
+            create_by
+    </sql>
+
+    <sql id="getPageListColumn">
+            SCD.ID,
+            SCD.ID     AS PART_ID,
+            SCD.PART_NAME,
+            SCD.IN_SHELF,
+            SAMPLE_NO,
+            SCD.PRODUCED_FACTORY,
+            SCD.PART_DEPOT_ID,
+            SCD.PART_SPACE_NUMBER,
+            SCD.PART_SAMPLE_NUMBER,
+            SCD.PART_ENGINE_NO,
+            scd.BM_PROJECT_ID,
+            scd.CREATE_BY,
+            SCD.STATUS,
+            BP.PRO_NAME,
+            EV_NUMBER,
+            TU.USID    AS SEND_PART_USER_ID,
+            TU.USNAME  AS SEND_PART_USER_NAME,
+            TU2.USID   AS GET_PART_USER_ID,
+            TU2.USNAME AS GET_PART_USER_NAME,
+            scd.part_space_location,
+            scd.create_time,
+            SCD.TRIAL_TASKBOOK_NO
+    </sql>
+
+    <!-- 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.part.page.SaPartDataEOPage">
+        SELECT count(1)
+        <include refid="getPageListFrom"/>
+        <include refid="getPageListWhere"/>
+    </select>
+
+    <!-- 查询列表 -->
+    <select id="queryByPage" resultMap="getPageList" parameterType="com.adc.da.part.page.SaPartDataEOPage">
+        SELECT
+        <include refid="getPageListColumn"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="getPageListColumn"/>
+        <include refid="getPageListFrom"/>
+        <include refid="getPageListWhere"/>
+        ORDER BY scd.CREATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DATA
+        WHERE ID = #{id} AND DEL_FLAG = 0
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        <!--@mbg.generated-->
+        DELETE FROM SA_PART_DATA
+        WHERE ID = #{id}
+    </delete>
+
+    <insert id="insertSelective" parameterType="com.adc.da.part.entity.SaPartDataEO">
+        <!--@mbg.generated-->
+        INSERT INTO SA_PART_DATA
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="trialTaskBookNO != null" >TRIAL_TASKBOOK_NO,</if>
+            <if test="scrapNumber != null" >scrap_number,</if>
+            <if test="scrapDate != null" >scrap_date,</if>
+            <if test="settlementDate != null" >settlement_date,</if>
+            <if test="settlementNumber != null" >settlement_number,</if>
+            <if test="returnDate != null" >return_date,</if>
+            <if test="borrowDate != null" >borrow_date,</if>
+            <if test="borrowQuantity != null" >borrow_quantity,</if>
+            <if test="borrowerName != null" >borrower_name,</if>
+            <if test="borrowerId != null" >borrower_id,</if>
+            <if test="borrowNumbwe != null" >borrow_numbwe,</if>
+            <if test="sqeName != null" >sqe_name,</if>
+            <if test="sqeId != null" >sqe_id,</if>
+            <if test="testNumber != null" >test_number,</if>
+            <if test="actualArrivalQuantity != null" >actual_arrival_quantity,</if>
+            <if test="actualArrivalTime != null" >actual_arrival_time,</if>
+            <if test="produceAdminName != null" >produce_admin_name,</if>
+            <if test="produceAdmin != null" >produce_admin,</if>
+            <if test="dealOpinion != null" >deal_opinion,</if>
+            <if test="requestArrivalTime != null" >request_arrival_time,</if>
+            <if test="partType != null" >part_type,</if>
+            <if test="partDrawNumber != null" >part_draw_number,</if>
+            <if test="partPlanNumber != null" >part_plan_number,</if>
+            <if test="bmProjectName != null" >bm_project_name,</if>
+            <if test="createByName != null" >create_by_name,</if>
+            <if test="partLocationManagerName != null" >part_location_manager_name,</if>
+            <if test="receivedUserName != null" >received_user_name,</if>
+            <if test="sendPartUserOrg != null" >send_part_user_org,</if>
+            <if test="sendPartUserPhone != null" >send_part_user_phone,</if>
+            <if test="sendPartUserName != null" >send_part_user_name,</if>
+            <if test="status != null" >status,</if>
+            <if test="reportAssessAttachmentId != null" >report_assess_attachment_id,</if>
+            <if test="remarks != null" >remarks,</if>
+            <if test="inShelf != null" >in_shelf,</if>
+            <if test="getPartUserId != null" >get_part_user_id,</if>
+            <if test="partSpaceLocation != null" >part_space_location,</if>
+            <if test="trialType != null" >trial_type,</if>
+            <if test="whetherReturn != null" >whether_return,</if>
+            <if test="receivePartAttachmentId != null" >receive_part_attachment_id,</if>
+            <if test="returnPartAttachmentId != null" >return_part_attachment_id,</if>
+            <if test="assessAttachmentId != null" >assess_attachment_id,</if>
+            <if test="partLocationManagerId != null" >part_location_manager_id,</if>
+            <if test="partLocation != null" >part_location,</if>
+            <if test="partSpaceNumber != null" >part_space_number,</if>
+            <if test="partDepotId != null" >part_depot_id,</if>
+            <if test="receivedTime != null" >received_time,</if>
+            <if test="partStatus != null" >part_status,</if>
+            <if test="producedFactory != null" >produced_factory,</if>
+            <if test="receivedUserId != null" >received_user_id,</if>
+            <if test="partStage != null" >part_stage,</if>
+            <if test="partEngineNo != null" >part_engine_no,</if>
+            <if test="trialLocation != null" >trial_location,</if>
+            <if test="partSampleNumber != null" >part_sample_number,</if>
+            <if test="partName != null" >part_name,</if>
+            <if test="sendPartUserId != null" >send_part_user_id,</if>
+            <if test="bmProjectId != null" >bm_project_id,</if>
+            <if test="updateBy != null" >update_by,</if>
+            <if test="updateTime != null" >update_time,</if>
+            <if test="createBy != null" >create_by,</if>
+            <if test="createTime != null" >create_time,</if>
+            <if test="delFlag != null" >del_flag,</if>
+            <if test="id != null" >id,</if>
+            <if test="specificationType != null">specification_Type,</if>
+            <if test="sampleNO != null">SAMPLE_NO,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="trialTaskBookNO != null" >#{trialTaskBookNO, jdbcType=VARCHAR},</if>
+            <if test="scrapNumber != null" >#{scrapNumber, jdbcType=VARCHAR},</if>
+            <if test="scrapDate != null" >#{scrapDate, jdbcType=VARCHAR},</if>
+            <if test="settlementDate != null" >#{settlementDate, jdbcType=VARCHAR},</if>
+            <if test="settlementNumber != null" >#{settlementNumber, jdbcType=VARCHAR},</if>
+            <if test="returnDate != null" >#{returnDate, jdbcType=VARCHAR},</if>
+            <if test="borrowDate != null" >#{borrowDate, jdbcType=VARCHAR},</if>
+            <if test="borrowQuantity != null" >#{borrowQuantity, jdbcType=VARCHAR},</if>
+            <if test="borrowerName != null" >#{borrowerName, jdbcType=VARCHAR},</if>
+            <if test="borrowerId != null" >#{borrowerId, jdbcType=VARCHAR},</if>
+            <if test="borrowNumbwe != null" >#{borrowNumbwe, jdbcType=VARCHAR},</if>
+            <if test="sqeName != null" >#{sqeName, jdbcType=VARCHAR},</if>
+            <if test="sqeId != null" >#{sqeId, jdbcType=VARCHAR},</if>
+            <if test="testNumber != null" >#{testNumber, jdbcType=VARCHAR},</if>
+            <if test="actualArrivalQuantity != null" >#{actualArrivalQuantity, jdbcType=VARCHAR},</if>
+            <if test="actualArrivalTime != null" >#{actualArrivalTime, jdbcType=VARCHAR},</if>
+            <if test="produceAdminName != null" >#{produceAdminName, jdbcType=VARCHAR},</if>
+            <if test="produceAdmin != null" >#{produceAdmin, jdbcType=VARCHAR},</if>
+            <if test="dealOpinion != null" >#{dealOpinion, jdbcType=VARCHAR},</if>
+            <if test="requestArrivalTime != null" >#{requestArrivalTime, jdbcType=VARCHAR},</if>
+            <if test="partType != null" >#{partType, jdbcType=VARCHAR},</if>
+            <if test="partDrawNumber != null" >#{partDrawNumber, jdbcType=VARCHAR},</if>
+            <if test="partPlanNumber != null" >#{partPlanNumber, jdbcType=VARCHAR},</if>
+            <if test="bmProjectName != null" >#{bmProjectName, jdbcType=VARCHAR},</if>
+            <if test="createByName != null" >#{createByName, jdbcType=VARCHAR},</if>
+            <if test="partLocationManagerName != null" >#{partLocationManagerName, jdbcType=VARCHAR},</if>
+            <if test="receivedUserName != null" >#{receivedUserName, jdbcType=VARCHAR},</if>
+            <if test="sendPartUserOrg != null" >#{sendPartUserOrg, jdbcType=VARCHAR},</if>
+            <if test="sendPartUserPhone != null" >#{sendPartUserPhone, jdbcType=VARCHAR},</if>
+            <if test="sendPartUserName != null" >#{sendPartUserName, jdbcType=VARCHAR},</if>
+            <if test="status != null" >#{status, jdbcType=VARCHAR},</if>
+            <if test="reportAssessAttachmentId != null" >#{reportAssessAttachmentId, jdbcType=VARCHAR},</if>
+            <if test="remarks != null" >#{remarks, jdbcType=VARCHAR},</if>
+            <if test="inShelf != null" >#{inShelf, jdbcType=VARCHAR},</if>
+            <if test="getPartUserId != null" >#{getPartUserId, jdbcType=VARCHAR},</if>
+            <if test="partSpaceLocation != null" >#{partSpaceLocation, jdbcType=VARCHAR},</if>
+            <if test="trialType != null" >#{trialType, jdbcType=VARCHAR},</if>
+            <if test="whetherReturn != null" >#{whetherReturn, jdbcType=VARCHAR},</if>
+            <if test="receivePartAttachmentId != null" >#{receivePartAttachmentId, jdbcType=VARCHAR},</if>
+            <if test="returnPartAttachmentId != null" >#{returnPartAttachmentId, jdbcType=VARCHAR},</if>
+            <if test="assessAttachmentId != null" >#{assessAttachmentId, jdbcType=VARCHAR},</if>
+            <if test="partLocationManagerId != null" >#{partLocationManagerId, jdbcType=VARCHAR},</if>
+            <if test="partLocation != null" >#{partLocation, jdbcType=VARCHAR},</if>
+            <if test="partSpaceNumber != null" >#{partSpaceNumber, jdbcType=VARCHAR},</if>
+            <if test="partDepotId != null" >#{partDepotId, jdbcType=VARCHAR},</if>
+            <if test="receivedTime != null" >#{receivedTime, jdbcType=VARCHAR},</if>
+            <if test="partStatus != null" >#{partStatus, jdbcType=VARCHAR},</if>
+            <if test="producedFactory != null" >#{producedFactory, jdbcType=VARCHAR},</if>
+            <if test="receivedUserId != null" >#{receivedUserId, jdbcType=VARCHAR},</if>
+            <if test="partStage != null" >#{partStage, jdbcType=VARCHAR},</if>
+            <if test="partEngineNo != null" >#{partEngineNo, jdbcType=VARCHAR},</if>
+            <if test="trialLocation != null" >#{trialLocation, jdbcType=VARCHAR},</if>
+            <if test="partSampleNumber != null" >#{partSampleNumber, jdbcType=VARCHAR},</if>
+            <if test="partName != null" >#{partName, jdbcType=VARCHAR},</if>
+            <if test="sendPartUserId != null" >#{sendPartUserId, jdbcType=VARCHAR},</if>
+            <if test="bmProjectId != null" >#{bmProjectId, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null" >#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null" >#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null" >#{createBy, jdbcType=VARCHAR},</if>
+            <if test="createTime != null" >#{createTime, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null" >#{delFlag, jdbcType=INTEGER},</if>
+            <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+            <if test="specificationType != null">#{specificationType, jdbcType=VARCHAR},</if>
+            <if test="sampleNO != null">#{sampleNO, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.part.entity.SaPartDataEO">
+        <!--@mbg.generated-->
+        UPDATE SA_PART_DATA
+        <set>
+            <if test="delFlag != null">
+                DEL_FLAG = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                UPDATE_BY = #{updateBy},
+            </if>
+            <if test="bmProjectId != null">
+                BM_PROJECT_ID = #{bmProjectId},
+            </if>
+            <if test="sendPartUserId != null">
+                SEND_PART_USER_ID = #{sendPartUserId},
+            </if>
+            <if test="partName != null">
+                PART_NAME = #{partName},
+            </if>
+            <if test="partSampleNumber != null">
+                PART_SAMPLE_NUMBER = #{partSampleNumber},
+            </if>
+            <if test="trialLocation != null">
+                TRIAL_LOCATION = #{trialLocation},
+            </if>
+            <if test="partEngineNo != null">
+                PART_ENGINE_NO = #{partEngineNo},
+            </if>
+            <if test="partStage != null">
+                PART_STAGE = #{partStage},
+            </if>
+            <if test="receivedUserId != null">
+                RECEIVED_USER_ID = #{receivedUserId},
+            </if>
+            <if test="producedFactory != null">
+                PRODUCED_FACTORY = #{producedFactory},
+            </if>
+            <if test="partStatus != null">
+                PART_STATUS = #{partStatus},
+            </if>
+            <if test="receivedTime != null">
+                RECEIVED_TIME = #{receivedTime},
+            </if>
+            <if test="partDepotId != null">
+                PART_DEPOT_ID = #{partDepotId},
+            </if>
+            <if test="partSpaceNumber != null">
+                PART_SPACE_NUMBER = #{partSpaceNumber},
+            </if>
+            <if test="partLocation != null">
+                PART_LOCATION = #{partLocation},
+            </if>
+            <if test="partLocationManagerId != null">
+                PART_LOCATION_MANAGER_ID = #{partLocationManagerId},
+            </if>
+            <if test="assessAttachmentId != null">
+                ASSESS_ATTACHMENT_ID = #{assessAttachmentId},
+            </if>
+            <if test="returnPartAttachmentId != null">
+                RETURN_PART_ATTACHMENT_ID = #{returnPartAttachmentId},
+            </if>
+            <if test="receivePartAttachmentId != null">
+                RECEIVE_PART_ATTACHMENT_ID = #{receivePartAttachmentId},
+            </if>
+            <if test="whetherReturn != null">
+                WHETHER_RETURN = #{whetherReturn},
+            </if>
+            <if test="trialType != null">
+                TRIAL_TYPE = #{trialType},
+            </if>
+            <if test="partSpaceLocation != null">
+                PART_SPACE_LOCATION = #{partSpaceLocation},
+            </if>
+            <if test="getPartUserId != null">
+                GET_PART_USER_ID = #{getPartUserId},
+            </if>
+            <if test="inShelf != null">
+                IN_SHELF = #{inShelf},
+            </if>
+            <if test="remarks != null">
+                REMARKS = #{remarks},
+            </if>
+            <if test="reportAssessAttachmentId != null">
+                REPORT_ASSESS_ATTACHMENT_ID = #{reportAssessAttachmentId},
+            </if>
+            <if test="status != null">
+                "STATUS" = #{status},
+            </if>
+            <if test="sendPartUserName != null">
+                SEND_PART_USER_NAME = #{sendPartUserName},
+            </if>
+            <if test="sendPartUserPhone != null">
+                SEND_PART_USER_PHONE = #{sendPartUserPhone},
+            </if>
+            <if test="sendPartUserOrg != null">
+                SEND_PART_USER_ORG = #{sendPartUserOrg},
+            </if>
+            <if test="receivedUserName != null">
+                RECEIVED_USER_NAME = #{receivedUserName},
+            </if>
+            <if test="partLocationManagerName != null">
+                PART_LOCATION_MANAGER_NAME = #{partLocationManagerName},
+            </if>
+            <if test="trialTaskBookNO != null" >TRIAL_TASKBOOK_NO = #{trialTaskBookNO, jdbcType=VARCHAR},</if>
+            <if test="scrapNumber != null" >SCRAP_NUMBER = #{scrapNumber, jdbcType=VARCHAR},</if>
+            <if test="scrapDate != null" >SCRAP_DATE = #{scrapDate, jdbcType=VARCHAR},</if>
+            <if test="settlementDate != null" >SETTLEMENT_DATE = #{settlementDate, jdbcType=VARCHAR},</if>
+            <if test="settlementNumber != null" >SETTLEMENT_NUMBER = #{settlementNumber, jdbcType=VARCHAR},</if>
+            <if test="returnDate != null" >RETURN_DATE = #{returnDate, jdbcType=VARCHAR},</if>
+            <if test="borrowDate != null" >BORROW_DATE = #{borrowDate, jdbcType=VARCHAR},</if>
+            <if test="borrowQuantity != null" >BORROW_QUANTITY = #{borrowQuantity, jdbcType=VARCHAR},</if>
+            <if test="borrowerName != null" >BORROWER_NAME = #{borrowerName, jdbcType=VARCHAR},</if>
+            <if test="borrowerId != null" >BORROWER_ID = #{borrowerId, jdbcType=VARCHAR},</if>
+            <if test="borrowNumbwe != null" >BORROW_NUMBWE = #{borrowNumbwe, jdbcType=VARCHAR},</if>
+            <if test="sqeName != null" >SQE_NAME = #{sqeName, jdbcType=VARCHAR},</if>
+            <if test="sqeId != null" >SQE_ID = #{sqeId, jdbcType=VARCHAR},</if>
+            <if test="testNumber != null" >TEST_NUMBER = #{testNumber, jdbcType=VARCHAR},</if>
+            <if test="actualArrivalQuantity != null" >ACTUAL_ARRIVAL_QUANTITY = #{actualArrivalQuantity, jdbcType=VARCHAR},</if>
+            <if test="actualArrivalTime != null" >ACTUAL_ARRIVAL_TIME = #{actualArrivalTime, jdbcType=VARCHAR},</if>
+            <if test="produceAdminName != null" >PRODUCE_ADMIN_NAME = #{produceAdminName, jdbcType=VARCHAR},</if>
+            <if test="produceAdmin != null" >PRODUCE_ADMIN = #{produceAdmin, jdbcType=VARCHAR},</if>
+            <if test="dealOpinion != null" >DEAL_OPINION = #{dealOpinion, jdbcType=VARCHAR},</if>
+            <if test="requestArrivalTime != null" >REQUEST_ARRIVAL_TIME = #{requestArrivalTime, jdbcType=VARCHAR},</if>
+            <if test="partType != null" >PART_TYPE = #{partType, jdbcType=VARCHAR},</if>
+            <if test="partDrawNumber != null" >PART_DRAW_NUMBER = #{partDrawNumber, jdbcType=VARCHAR},</if>
+            <if test="partPlanNumber != null" >PART_PLAN_NUMBER = #{partPlanNumber, jdbcType=VARCHAR},</if>
+            <if test="specificationType != null">specification_Type = #{specificationType, jdbcType=VARCHAR},</if>
+            <if test="sampleNO != null">SAMPLE_NO = #{sampleNO, jdbcType=VARCHAR}</if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+
+    <resultMap id="saPartDataVOResultMap" type="com.adc.da.part.vo.SaPartDataVO" extends="parentMap">
+        <result column="PRO_NAME" property="bmProjectName"/>
+        <result column="OFFICE_PHONE" property="sendPartUserPhone"/>
+        <result column="SEND_PART_USER_NAME" property="sendPartUserName"/>
+        <result column="RECEIVED_USER_NAME" property="receivedUserName"/>
+        <result column="PART_LOCATION_MANAGER_NAME" property="partLocationManagerName"/>
+        <result property="partNO" column="SAMPLE_NO"/>
+        <result property="trialApplyNO" column="EV_NUMBER"/>
+        <!--分割线-->
+        <result column="PART_PLAN_NUMBER" property="partPlanNumber"/>
+        <result column="PART_DRAW_NUMBER" property="partDrawNumber"/>
+        <result column="PART_TYPE" property="partType"/>
+        <result column="REQUEST_ARRIVAL_TIME" property="requestArrivalTime"/>
+        <result column="DEAL_OPINION" property="dealOpinion"/>
+        <result column="PRODUCE_ADMIN" property="produceAdmin"/>
+        <result column="PRODUCE_ADMIN_NAME" property="produceAdminName"/>
+        <result column="ACTUAL_ARRIVAL_TIME" property="actualArrivalTime"/>
+        <result column="ACTUAL_ARRIVAL_QUANTITY" property="actualArrivalQuantity"/>
+        <result column="TEST_NUMBER" property="testNumber"/>
+        <result column="SQE_ID" property="sqeId"/>
+        <result column="SQE_NAME" property="sqeName"/>
+        <result column="BORROW_NUMBWE" property="borrowNumbwe"/>
+        <result column="BORROWER_ID" property="borrowerId"/>
+        <result column="BORROWER_NAME" property="borrowerName"/>
+        <result column="BORROW_QUANTITY" property="borrowQuantity"/>
+        <result column="BORROW_DATE" property="borrowDate"/>
+        <result column="RETURN_DATE" property="returnDate"/>
+        <result column="SETTLEMENT_NUMBER" property="settlementNumber"/>
+        <result column="SETTLEMENT_DATE" property="settlementDate"/>
+        <result column="SCRAP_DATE" property="scrapDate"/>
+        <result column="SCRAP_NUMBER" property="scrapNumber"/>
+        <result column="TRIAL_TASKBOOK_NO" property="trialTaskBookNO"/>
+        <result column="specification_Type" property="specificationType" />
+    </resultMap>
+
+    <sql id="getPartDataVO">
+        <!--@mbg.generated-->
+        SCD.ID, SCD.DEL_FLAG, SCD.CREATE_TIME, SCD.CREATE_BY, SCD.UPDATE_TIME, SCD.UPDATE_BY, BM_PROJECT_ID,
+        SEND_PART_USER_ID, STATUS,SCD.specification_Type,SCD.SAMPLE_NO AS partNO,
+        PART_NAME, PART_SAMPLE_NUMBER, TRIAL_LOCATION, PART_ENGINE_NO, PART_STAGE, RECEIVED_USER_ID,
+        PRODUCED_FACTORY, PART_STATUS, RECEIVED_TIME, PART_DEPOT_ID, PART_SPACE_NUMBER, PART_LOCATION,
+        PART_LOCATION_MANAGER_ID, ASSESS_ATTACHMENT_ID, RETURN_PART_ATTACHMENT_ID, RECEIVE_PART_ATTACHMENT_ID,
+        WHETHER_RETURN, TRIAL_TYPE, GET_PART_USER_ID, PART_SPACE_LOCATION, IN_SHELF, REPORT_ASSESS_ATTACHMENT_ID,
+        REMARKS, BP.PRO_NAME AS bmProjectName, part.EV_NUMBER, TU.USNAME as USER_NAME,
+        TU.OFFICE_PHONE, TU2.USNAME AS RECEIVED_USER_NAME, TU3.USNAME AS PART_LOCATION_MANAGER_NAME,
+        <!--分割线-->
+        SCD.PART_PLAN_NUMBER,SCD.PART_DRAW_NUMBER,SCD.PART_TYPE,SCD.REQUEST_ARRIVAL_TIME,SCD.DEAL_OPINION,
+        SCD.PRODUCE_ADMIN,SCD.PRODUCE_ADMIN_NAME,SCD.ACTUAL_ARRIVAL_TIME,SCD.ACTUAL_ARRIVAL_QUANTITY,SCD.TEST_NUMBER,
+        SCD.SQE_ID,SCD.SQE_NAME,SCD.BORROW_NUMBWE,SCD.BORROWER_ID,SCD.BORROWER_NAME,SCD.BORROW_QUANTITY,SCD.BORROW_DATE,
+        SCD.RETURN_DATE,SCD.SETTLEMENT_NUMBER,SCD.SETTLEMENT_DATE,SCD.SCRAP_DATE,SCD.SCRAP_NUMBER,SCD.TRIAL_TASKBOOK_NO
+    </sql>
+
+    <select id="getOne" resultMap="saPartDataVOResultMap">
+        SELECT
+        <include refid="getPartDataVO"/>
+        FROM SA_PART_DATA SCD
+            LEFT JOIN (select SPD.ID,
+                              WM_CONCAT(ETT.EV_NUMBER) EV_NUMBER
+                      from SA_PART_DATA SPD
+                      left join EV_TRIALTASK_SAMPLE ETS on SPD.ID = ETS.SAMPLE_ID
+                      left join EV_TRIAL_TASK ETT on ETS.TRIALTASK_ID = ETT.ID
+                      where SPD.DEL_FLAG = 0 group by SPD.ID) part on SCD.ID = part.ID
+        LEFT JOIN BM_PROJECT BP ON SCD.BM_PROJECT_ID = BP.ID
+        LEFT JOIN TS_USER TU ON SCD.SEND_PART_USER_ID = TU.USID
+        LEFT JOIN TS_USER TU2 ON SCD.RECEIVED_USER_ID = TU2.USID
+        LEFT JOIN TS_USER TU3 ON SCD.PART_LOCATION_MANAGER_ID = TU3.USID
+        WHERE SCD.DEL_FLAG =0 AND SCD.id = #{id}
+    </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DATA
+        WHERE DEL_FLAG = 0
+    </select>
+
+    <select id="selectByPartEngineNO" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_DATA
+        WHERE DEL_FLAG = 0 AND PART_ENGINE_NO = #{partEngineNO}
+    </select>
+
+    <select id="selectByPage" resultMap="getPageList">
+        SELECT
+        <include refid="ListColumn"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="getPageListColumn"/>
+        <include refid="getPageListFrom"/>
+        <include refid="getPageListWhere"/>
+        ORDER BY scd.CREATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryListForExcel" resultMap="saPartDataVOResultMap">
+        SELECT
+        <include refid="getPartDataVO"/>
+        FROM SA_PART_DATA SCD LEFT JOIN (select SPD.ID,
+                                                WM_CONCAT(ETT.EV_NUMBER) EV_NUMBER
+                                        from SA_PART_DATA SPD
+                                        left join EV_TRIALTASK_SAMPLE ETS on SPD.ID = ETS.SAMPLE_ID
+                                        left join EV_TRIAL_TASK ETT on ETS.TRIALTASK_ID = ETT.ID
+                                        where SPD.DEL_FLAG = 0 group by SPD.ID) part on SCD.ID = part.ID
+        LEFT JOIN BM_PROJECT BP ON SCD.BM_PROJECT_ID = BP.ID
+        LEFT JOIN TS_USER TU ON SCD.SEND_PART_USER_ID = TU.USID
+        LEFT JOIN TS_USER TU2 ON SCD.RECEIVED_USER_ID = TU2.USID
+        LEFT JOIN TS_USER TU3 ON SCD.PART_LOCATION_MANAGER_ID = TU3.USID
+        <include refid="getPageListWhere"/>
+        ORDER BY scd.CREATE_TIME DESC
+    </select>
+
+    <select id="barCode" resultType="com.adc.da.part.vo.SaPartsQRCodeVO">
+        SELECT
+        SPD.PART_NAME AS sampleName,
+        BP.PRO_NAME AS subordinateItems,
+        part.EV_NUMBER AS commissionNumber,
+        part.SAMPLE_NO AS partNumber,
+        part.INSPRO_NAME AS ccTestProject,
+        SPD.TRIAL_TASKBOOK_NO AS trialTaskBookNO
+        FROM SA_PART_DATA SPD LEFT JOIN BM_PROJECT BP ON SPD.BM_PROJECT_ID = BP.ID
+        LEFT JOIN (select SD.ID,
+                    WM_CONCAT(ETS.SAMPLE_NO) SAMPLE_NO,
+                    WM_CONCAT(ETT.EV_NUMBER) EV_NUMBER,
+                    WM_CONCAT(ETI.INSPRO_NAME) INSPRO_NAME
+                    from SA_PART_DATA SD
+                    left join EV_TRIALTASK_SAMPLE ETS on SD.ID = ETS.SAMPLE_ID
+                    left join EV_TRIAL_TASK ETT on ETS.TRIALTASK_ID = ETT.ID
+                    left join EV_TRIALTASK_INSPRO ETI on ETT.ID = ETI.TRIALTASK_ID
+                    where SD.DEL_FLAG = 0 group by SD.ID) part on SPD.ID = part.ID
+        LEFT JOIN SA_PART_SEQUENCE SPS ON SPD.ID = SPS.PART_ID
+        LEFT JOIN SA_PART_FLOW_LOG SPFL ON SPS.ID = SPFL.PART_SEQUENCE_ID
+        WHERE SPD.DEL_FLAG = 0 AND SPD.ID = #{id}
+        <if test="status ==2">
+            AND SPFL.OPERATION_CONTENT = '领样'
+        </if>
+        ORDER BY SPFL.CREATE_TIME desc
+    </select>
+
+    <select id="getOneByDepotId" resultMap="saPartDataVOResultMap">
+        SELECT
+        <include refid="getPartDataVO"/>
+        FROM SA_PART_DATA SCD LEFT JOIN (select SD.ID,
+                                        WM_CONCAT(ETS.SAMPLE_NO) SAMPLE_NO,
+                                        WM_CONCAT(ETT.EV_NUMBER) EV_NUMBER
+                                        from SA_PART_DATA SD
+                                        left join EV_TRIALTASK_SAMPLE ETS on SD.ID = ETS.SAMPLE_ID
+                                        left join EV_TRIAL_TASK ETT on ETS.TRIALTASK_ID = ETT.ID
+                                        where SD.DEL_FLAG = 0 group by SD.ID) part on SCD.ID = part.ID
+        LEFT JOIN BM_PROJECT BP ON SCD.BM_PROJECT_ID = BP.ID
+        LEFT JOIN TS_USER TU ON SCD.SEND_PART_USER_ID = TU.USID
+        LEFT JOIN TS_USER TU2 ON SCD.RECEIVED_USER_ID = TU2.USID
+        LEFT JOIN TS_USER TU3 ON SCD.PART_LOCATION_MANAGER_ID = TU3.USID
+        WHERE SCD.DEL_FLAG =0 AND SCD.PART_DEPOT_ID = #{depotId} AND SCD.PART_SPACE_NUMBER = #{layerNumber}
+    </select>
+
+    <update id="changeStatus" >
+        update SA_PART_DATA set status = #{status} where id = #{id}
+    </update>
+
+    <!-- 领料查询列表总数-->
+    <select id="getByCount" resultType="java.lang.Integer" parameterType="com.adc.da.part.page.SaPartDataEOPage">
+        SELECT count(1)
+        <include refid="getPageListFrom"/>
+        <include refid="getPageListWhere"/>
+        and SCD.PART_STAGE != '4'
+    </select>
+    <select id="getByPage" resultMap="getPageList">
+        SELECT
+        <include refid="ListColumn"/>
+        FROM
+        (SELECT tmp_tb.* , rownum rn FROM
+        (SELECT
+        <include refid="getPageListColumn"/>
+        <include refid="getPageListFrom"/>
+        <include refid="getPageListWhere"/>
+        and SCD.PART_STAGE != '4'
+        ORDER BY scd.CREATE_TIME DESC
+        ) tmp_tb WHERE rownum &lt;= ${pager.endIndex})
+        WHERE rn &gt;= ${pager.startIndex}
+    </select>
+</mapper>

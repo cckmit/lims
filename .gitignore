@@ -1,0 +1,14 @@
+# Project exclude paths
+/lims-basedata/target/
+/lims-cost/target/
+/lims-ev-trial/target/
+/lims-login/target/
+/lims-main/target/
+/lims-pc-trial/target/
+/lims-personspace/target/
+/lims-questionnaire/target/
+/lims-report/target/
+/lims-resource/target/
+/lims-sample/target/
+/lims-supplier/target/
+/lims-sys/target/

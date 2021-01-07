@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_parts_apply.dao.PcPartsApplyEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_parts_apply.entity.PcPartsApplyEO">
+        <id column="id" property="id"/>
+        <result column="picking_code" property="pickingCode"/>
+        <result column="tor_code" property="torCode"/>
+        <result column="apply_date" property="applyDate"/>
+        <result column="if_sup" property="ifSup"/>
+        <result column="apply_user_name" property="applyUserName"/>
+        <result column="apply_user_id" property="applyUserId"/>
+        <result column="send_user_id" property="sendUserId"/>
+        <result column="send_user_name" property="sendUserName"/>
+        <result column="receive_user_id" property="receiveUserId"/>
+        <result column="receive_user_name" property="receiveUserName"/>
+        <result column="use_for" property="useFor"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="remark" property="remark"/>
+        <result column="task_id" property="taskId"/>
+        <result column="status" property="status"/>
+        <result column="pvOrcv" property="pvOrcv"/>
+        <result column="receive_location" property="receiveLocation"/>
+        <result column="task_number" property="taskNumber"/>
+        <result column="TASK_OR_PLAN" property="taskOrPlan" />
+        <collection property="pcPartsApplySampleEOList" column="id"
+                    select="com.adc.da.pc_parts_apply.dao.PcPartsApplySampleEODao.queryByApplyId"/>
+    </resultMap>
+
+    <!-- PC_PARTS_APPLY table all fields -->
+    <sql id="Base_Column_List">
+     id, picking_code, tor_code, apply_date, if_sup, apply_user_name,
+     apply_user_id, send_user_id, send_user_name, receive_user_id,
+     receive_user_name, use_for, del_flag, remark, task_id,pvOrcv,
+     status,receive_location,task_number, TASK_OR_PLAN
+  </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+            <if test="pickingCode != null">
+                and picking_code like '%'||#{pickingCode}||'%'
+            </if>
+            <if test="torCode != null">
+                and tor_code like '%'||#{torCode}||'%'
+            </if>
+            <if test="applyDate1 != null">
+                and apply_date &gt;= #{applyDate1}
+            </if>
+            <if test="applyDate2 != null">
+                and apply_date &lt;= #{applyDate2}
+            </if>
+            <if test="ifSup != null">
+                and if_sup ${ifSupOperator} #{ifSup}
+            </if>
+            <if test="applyUserName != null">
+                and apply_user_name like '%'||#{applyUserName}||'%'
+            </if>
+            <if test="applyUserId != null">
+                and apply_user_id ${applyUserIdOperator} #{applyUserId}
+            </if>
+            <if test="sendUserId != null">
+                and send_user_id ${sendUserIdOperator} #{sendUserId}
+            </if>
+            <if test="sendUserName != null">
+                and send_user_name like '%'||#{sendUserName}||'%'
+            </if>
+            <if test="receiveUserId != null">
+                and receive_user_id ${receiveUserIdOperator} #{receiveUserId}
+            </if>
+            <if test="receiveUserName != null">
+                and receive_user_name like '%'||#{receiveUserName}||'%'
+            </if>
+            <if test="delFlag != null">
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+            <if test="taskId != null">
+                and task_id ${taskIdOperator} #{taskId}
+            </if>
+            <if test="receiveLocation != null">
+                and receive_location ${receiveLocationOperator} #{receiveLocation}
+            </if>
+            <if test="taskNumber != null">
+                and task_number ${taskNumberOperator} #{taskNumber}
+            </if>
+            <if test="taskOrPlan != null and taskOrPlan != ''">
+	            AND TASK_OR_PLAN = #{taskOrPlan}
+	        </if>
+	        <if test="taskId != null and taskId != ''">
+	            AND task_id = #{taskId}
+	        </if>
+        </trim>
+    </sql>
+
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_parts_apply.entity.PcPartsApplyEO">
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SYS_GUID() FROM DUAL
+        </selectKey>
+        insert into PC_PARTS_APPLY
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="pickingCode != null">picking_code,</if>
+            <if test="torCode != null">tor_code,</if>
+            <if test="applyDate != null">apply_date,</if>
+            <if test="ifSup != null">if_sup,</if>
+            <if test="applyUserName != null">apply_user_name,</if>
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="sendUserId != null">send_user_id,</if>
+            <if test="sendUserName != null">send_user_name,</if>
+            <if test="receiveUserId != null">receive_user_id,</if>
+            <if test="receiveUserName != null">receive_user_name,</if>
+            <if test="useFor != null">use_for,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="remark != null">remark,</if>
+            <if test="taskId != null">task_id,</if>
+            <if test="pvOrcv != null">pvOrcv,</if>
+            <if test="status != null">status,</if>
+            <if test="receiveLocation != null">receive_Location,</if>
+            <if test="taskNumber != null">task_number,</if>
+            <if test="taskOrPlan != null">TASK_OR_PLAN,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="pickingCode != null">#{pickingCode, jdbcType=VARCHAR},</if>
+            <if test="torCode != null">#{torCode, jdbcType=VARCHAR},</if>
+            <if test="applyDate != null">#{applyDate, jdbcType=VARCHAR},</if>
+            <if test="ifSup != null">#{ifSup, jdbcType=VARCHAR},</if>
+            <if test="applyUserName != null">#{applyUserName, jdbcType=VARCHAR},</if>
+            <if test="applyUserId != null">#{applyUserId, jdbcType=VARCHAR},</if>
+            <if test="sendUserId != null">#{sendUserId, jdbcType=VARCHAR},</if>
+            <if test="sendUserName != null">#{sendUserName, jdbcType=VARCHAR},</if>
+            <if test="receiveUserId != null">#{receiveUserId, jdbcType=VARCHAR},</if>
+            <if test="receiveUserName != null">#{receiveUserName, jdbcType=VARCHAR},</if>
+            <if test="useFor != null">#{useFor, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=VARCHAR},</if>
+            <if test="remark != null">#{remark, jdbcType=VARCHAR},</if>
+            <if test="taskId != null">#{taskId, jdbcType=VARCHAR},</if>
+            <if test="pvOrcv != null">#{pvOrcv,jdbcType=VARCHAR},</if>
+            <if test="status != null">#{status,jdbcType=VARCHAR},</if>
+            <if test="receiveLocation != null">#{receiveLocation,jdbcType=VARCHAR},</if>
+            <if test="taskNumber != null">#{taskNumber,jdbcType=VARCHAR},</if>
+            <if test="taskOrPlan != null">#{taskOrPlan,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_parts_apply.entity.PcPartsApplyEO">
+        update PC_PARTS_APPLY
+        <set>
+            <if test="pickingCode != null">
+                picking_code = #{pickingCode},
+            </if>
+            <if test="torCode != null">
+                tor_code = #{torCode},
+            </if>
+            <if test="applyDate != null">
+                apply_date = #{applyDate},
+            </if>
+            <if test="ifSup != null">
+                if_sup = #{ifSup},
+            </if>
+            <if test="applyUserName != null">
+                apply_user_name = #{applyUserName},
+            </if>
+            <if test="applyUserId != null">
+                apply_user_id = #{applyUserId},
+            </if>
+            <if test="sendUserId != null">
+                send_user_id = #{sendUserId},
+            </if>
+            <if test="sendUserName != null">
+                send_user_name = #{sendUserName},
+            </if>
+            <if test="receiveUserId != null">
+                receive_user_id = #{receiveUserId},
+            </if>
+            <if test="receiveUserName != null">
+                receive_user_name = #{receiveUserName},
+            </if>
+            <if test="useFor != null">
+                use_for = #{useFor},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="pvOrcv != null">
+                pvOrcv = #{pvOrcv},
+            </if>
+            <if test="receiveLocation != null">
+                receive_location = #{receiveLocation},
+            </if>
+            <if test="taskOrPlan != null">
+		        TASK_OR_PLAN = #{taskOrPlan,jdbcType=VARCHAR},
+		    </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 PC_PARTS_APPLY -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_PARTS_APPLY
+        where id = #{value}
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from PC_PARTS_APPLY
+     where id = #{value}
+  </delete>
+
+    <!--变更流程业务状态-->
+    <update id="changeStatus" parameterType="java.lang.String">
+        update PC_PARTS_APPLY set status = #{status}
+        where id = #{id}
+    </update>
+
+    <!-- PC_PARTS_APPLY 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_PARTS_APPLY
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_PARTS_APPLY列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_PARTS_APPLY
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_PARTS_APPLY
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <select id="queryByApplyNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select  <include refid="Base_Column_List"/>
+        from PC_PARTS_APPLY where picking_code = #{value}
+    </select>
+
+</mapper>

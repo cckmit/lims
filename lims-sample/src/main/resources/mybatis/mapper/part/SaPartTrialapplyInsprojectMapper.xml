@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.part.dao.SaPartTrialapplyInsprojectDAO">
+    <resultMap id="BaseResultMap" type="com.adc.da.part.entity.SaPartTrialapplyInsprojectEO">
+        <!--@mbg.generated-->
+        <id column="ID" property="id"/>
+        <result column="DEL_FLAG" property="delFlag"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="CREATE_BY" property="createBy"/>
+        <result column="PART_DATA_ID" property="partDataId"/>
+        <result column="PART_NO" property="partNo"/>
+        <result column="TRIAL_APPLY_ID" property="trialApplyId"/>
+        <result column="TRIAL_APPLY_NO" property="trialApplyNo"/>
+        <result column="INSPECT_PROJECT_ID" property="inspectProjectId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        ID, DEL_FLAG, CREATE_TIME, CREATE_BY, PART_DATA_ID, PART_NO, TRIAL_APPLY_ID, TRIAL_APPLY_NO,
+        INSPECT_PROJECT_ID
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM SA_PART_TRIALAPPLY_INSPROJECT
+        WHERE ID = #{id}
+    </select>
+    <insert id="insertSelective" parameterType="com.adc.da.part.entity.SaPartTrialapplyInsprojectEO">
+        <!--@mbg.generated-->
+        INSERT INTO SA_PART_TRIALAPPLY_INSPROJECT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                ID,
+            </if>
+            <if test="delFlag != null">
+                DEL_FLAG,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="createBy != null">
+                CREATE_BY,
+            </if>
+            <if test="partDataId != null">
+                PART_DATA_ID,
+            </if>
+            <if test="partNo != null">
+                PART_NO,
+            </if>
+            <if test="trialApplyId != null">
+                TRIAL_APPLY_ID,
+            </if>
+            <if test="trialApplyNo != null">
+                TRIAL_APPLY_NO,
+            </if>
+            <if test="inspectProjectId != null">
+                INSPECT_PROJECT_ID,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="createBy != null">
+                #{createBy},
+            </if>
+            <if test="partDataId != null">
+                #{partDataId},
+            </if>
+            <if test="partNo != null">
+                #{partNo},
+            </if>
+            <if test="trialApplyId != null">
+                #{trialApplyId},
+            </if>
+            <if test="trialApplyNo != null">
+                #{trialApplyNo},
+            </if>
+            <if test="inspectProjectId != null">
+                #{inspectProjectId},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.part.entity.SaPartTrialapplyInsprojectEO">
+        <!--@mbg.generated-->
+        UPDATE SA_PART_TRIALAPPLY_INSPROJECT
+        <set>
+            <if test="delFlag != null">
+                DEL_FLAG = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime},
+            </if>
+            <if test="createBy != null">
+                CREATE_BY = #{createBy},
+            </if>
+            <if test="partDataId != null">
+                PART_DATA_ID = #{partDataId},
+            </if>
+            <if test="partNo != null">
+                PART_NO = #{partNo},
+            </if>
+            <if test="trialApplyId != null">
+                TRIAL_APPLY_ID = #{trialApplyId},
+            </if>
+            <if test="trialApplyNo != null">
+                TRIAL_APPLY_NO = #{trialApplyNo},
+            </if>
+            <if test="inspectProjectId != null">
+                INSPECT_PROJECT_ID = #{inspectProjectId},
+            </if>
+        </set>
+        WHERE ID = #{id}
+    </update>
+    <update id="deteleByPartId">
+        UPDATE SA_PART_TRIALAPPLY_INSPROJECT
+        SET DEL_FLAG = 1
+        WHERE PART_DATA_ID = #{id}
+    </update>
+</mapper>

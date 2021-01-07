@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.persondoc.dao.PersondocEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.persondoc.entity.PersondocEO" >
+    <id column="id" property="id" />
+    <result column="create_by_id" property="createById" />
+    <result column="creat_time" property="creatTime" />
+    <result column="cc_extension" property="ccExtension" />
+    <result column="doctype_id" property="doctypeId" />
+    <result column="file_name" property="fileName" />
+    <result column="file_size" property="fileSize" />
+    <result column="attachmentid" property="attachmentid" />
+    <result column="del_flag" property="delFlag" />
+  </resultMap>
+
+  <!-- TP_PERSONDOC table all fields -->
+  <sql id="Base_Column_List" >
+     id, create_by_id, creat_time, cc_extension, doctype_id, file_name, file_size, attachmentid, del_flag
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1 and create_by_id = #{createById}
+      <if test="doctypeId != null" >
+          and doctype_id in (${doctypeId})
+      </if>
+      <choose>
+          <when test="searchPhrase!=null">
+              <foreach collection="searchPhrase" item="search">
+                  and (
+                  file_name like '%${search}%' or
+                  file_size like '%${search}%' or
+                  cc_extension like '%${search}%' or
+                  creat_time like '%${search}%'
+                  )
+              </foreach>
+          </when>
+      <otherwise>
+    <trim suffixOverrides="," >
+      <if test="creatTime1 != null" >
+        and creat_time &gt;= #{creatTime1}
+      </if>
+      <if test="creatTime2 != null" >
+        and creat_time &lt;= #{creatTime2}
+      </if>
+      <if test="ccExtension != null" >
+        and cc_extension like '%${ccExtension}%'
+      </if>
+      <if test="fileName != null" >
+        and file_name like '%${fileName}%'
+      </if>
+      <if test="fileSize1 != null" >
+        and (select replace(file_size,'KB','') file_size from dual) &gt;=   ${fileSize1}
+      </if>
+        <if test="fileSize2 != null" >
+            and  (select replace(file_size,'KB','') file_size from dual)  &lt;=   ${fileSize2}
+        </if>
+    </trim>
+      </otherwise>
+      </choose>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.persondoc.entity.PersondocEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_TP_PERSONDOC.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into TP_PERSONDOC(<include refid="Base_Column_List" />)
+    values (#{id, jdbcType=VARCHAR}, #{createById, jdbcType=VARCHAR}, #{creatTime, jdbcType=TIMESTAMP}, #{ccExtension, jdbcType=VARCHAR}, #{doctypeId, jdbcType=VARCHAR}, #{fileName, jdbcType=VARCHAR}, #{fileSize, jdbcType=VARCHAR}, #{attachmentid, jdbcType=VARCHAR}, #{delFlag, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.persondoc.entity.PersondocEO" >
+        <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        select sys_guid() from dual
+    </selectKey>
+        insert into TP_PERSONDOC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="id != null" >id,</if>
+                <if test="createById != null" >create_by_id,</if>
+                <if test="creatTime != null" >creat_time,</if>
+                <if test="ccExtension != null" >cc_extension,</if>
+                <if test="doctypeId != null" >doctype_id,</if>
+                <if test="fileName != null" >file_name,</if>
+                <if test="fileSize != null" >file_size,</if>
+                <if test="attachmentid != null" >attachmentid,</if>
+                <if test="delFlag != null" >del_flag,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="createById != null" >#{createById, jdbcType=VARCHAR},</if>
+                <if test="creatTime != null" >#{creatTime, jdbcType=VARCHAR},</if>
+                <if test="ccExtension != null" >#{ccExtension, jdbcType=VARCHAR},</if>
+                <if test="doctypeId != null" >#{doctypeId, jdbcType=VARCHAR},</if>
+                <if test="fileName != null" >#{fileName, jdbcType=VARCHAR},</if>
+                <if test="fileSize != null" >#{fileSize, jdbcType=VARCHAR},</if>
+                <if test="attachmentid != null" >#{attachmentid, jdbcType=VARCHAR},</if>
+                <if test="delFlag != null" >${delFlag},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.persondoc.entity.PersondocEO" >
+    update TP_PERSONDOC
+       set  create_by_id = #{createById},
+            creat_time = #{creatTime},
+            cc_extension = #{ccExtension},
+            doctype_id = #{doctypeId},
+            file_name = #{fileName},
+            file_size = #{fileSize},
+            attachmentid = #{attachmentid},
+            del_flag = #{delFlag}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.persondoc.entity.PersondocEO" >
+    update TP_PERSONDOC
+    <set >
+      <if test="createById != null" >
+        create_by_id = #{createById},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime},
+      </if>
+      <if test="ccExtension != null" >
+        cc_extension = #{ccExtension},
+      </if>
+      <if test="doctypeId != null" >
+        doctype_id = #{doctypeId},
+      </if>
+      <if test="fileName != null" >
+        file_name = #{fileName},
+      </if>
+      <if test="fileSize != null" >
+        file_size = #{fileSize},
+      </if>
+      <if test="attachmentid != null" >
+        attachmentid = #{attachmentid},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+  <!-- 根据id查询 TP_PERSONDOC -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from TP_PERSONDOC
+     where id = #{value}
+
+  </select>
+
+    <!--查询文档类型下是否有文档-->
+    <select id="queryDocByTypeId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select count(1) from TP_PERSONDOC where doctype_id = #{value}
+    </select>
+
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TP_PERSONDOC
+     where id = #{value}
+
+  </delete>
+
+  <!-- TP_PERSONDOC 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from TP_PERSONDOC
+    <include refid="Base_Where_Clause"/>
+      and del_flag = 0
+  </select>
+
+  <!-- 查询TP_PERSONDOC列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from TP_PERSONDOC
+			 <include refid="Base_Where_Clause"/>
+                and del_flag = 0
+                ORDER BY creat_time DESC
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from TP_PERSONDOC
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>

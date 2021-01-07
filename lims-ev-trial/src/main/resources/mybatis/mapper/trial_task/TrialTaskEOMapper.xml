@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.trial_task.dao.TrialTaskEODao">
+    <!-- Result Map -->
+    <resultMap id="BaseResultMap" type="com.adc.da.trial_task.entity.TrialTaskEO">
+        <!-- 主键 -->
+        <id column="ID" property="id"/>
+        <!-- 表属性 -->
+        <result column="DEL_FLAG" property="delFlag"/>
+        <result column="CREATE_TIME" property="createTime"></result>
+        <result column="CREATE_BY" property="createBy"></result>
+        <result column="UPDATE_TIME" property="updateTime"></result>
+        <result column="UPDATE_BY" property="updateBy"></result>
+        <result column="EV_NUMBER" property="evNumber"></result>
+        <result column="TASK_FILEID" property="taskFileid"></result>
+        <result column="FINISH_TIME" property="finishTime"></result>
+        <result column="TITLE" property="title"></result>
+        <result column="REASON" property="reason"></result>
+        <result column="ACCORDING" property="according"></result>
+        <result column="PURPOSE" property="purpose"></result>
+        <result column="ENGINE_MODEL" property="engineModel"></result>
+        <result column="ENGINE_DEVELOP_STAGE" property="engineDevelopStage"></result>
+        <result column="ENGINE_NUMBER" property="engineNumber"></result>
+        <result column="ECU_STATUS" property="ecuStatus"></result>
+        <result column="OPERATION_FILEID" property="operationFileid"></result>
+        <result column="CURRENT_WAIT_USERID" property="currentWaitUserid"></result>
+        <result column="CURRENT_WAIT_USERNAME" property="currentWaitUsername"></result>
+        <result column="TRIAL_STATUS" property="trialStatus"></result>
+        <result column="FINISHDATE_DELYDAYS" property="finishdateDelydays"></result>
+        <result column="REMARK" property="remark"></result>
+        <result column="DELYFLAG" property="delyFlag"></result>
+        <result column="TRIALREPORT_STATUS" property="trialReportStatus"></result>
+        <result column="EV_EMERGENCY" property="evEmergency"></result>
+        <result column="REQUIREMENT" property="requirement"></result>
+        <result column="PERSON_IDS" property="personIds"></result>
+    </resultMap>
+
+
+    <resultMap id="SearchResultMap" type="com.adc.da.trial_task.entity.TrialTaskEO">
+        <!-- 主键 -->
+        <id column="ID" property="id"/>
+        <result column="CREATE_BY" property="createBy"></result>
+        <result column="EV_NUMBER" property="evNumber"></result>
+        <result column="TITLE" property="title"></result>
+        <result column="PURPOSE" property="purpose"></result>
+        <result column="CURRENT_WAIT_USERID" property="currentWaitUserid"></result>
+        <result column="CURRENT_WAIT_USERNAME" property="currentWaitUsername"></result>
+        <result column="TRIAL_STATUS" property="trialStatus"></result>
+        <result column="DELYFLAG" property="delyFlag"></result>
+        <result column="FINISHDATE_DELYDAYS" property="finishdateDelydays"></result>
+        <result column="CREATEBY_NAME" property="createByName"></result>
+        <result column="ORG_NAME" property="createByDepartName"></result>
+        <result column="ORG_ID" property="createByDepartId"></result>
+        <result column="TRIALREPORT_STATUS" property="trialReportStatus"></result>
+        <result column="ACT_PROC_ID" property="actProcId"></result>
+        <result column="BASEBUS_ID" property="baseBusId"></result>
+        <result column="ENGINE_MODEL" property="engineModel"></result>
+        <result column="ENGINE_NUMBER" property="engineNumber"></result>
+    </resultMap>
+    
+    <resultMap id="evNumResult" type="java.lang.String" >
+	    <result column="EV_NUMBER" jdbcType="VARCHAR" property="evNumber" />
+	</resultMap>
+    
+
+    <!-- 【表名】 table all fields -->
+    <sql id="Base_Column_List">
+            ID,
+            DEL_FLAG,
+            CREATE_TIME,
+            CREATE_BY,
+            UPDATE_TIME,
+            UPDATE_BY,
+            EV_NUMBER,
+            TASK_FILEID,
+            FINISH_TIME,
+            TITLE,
+            REASON,
+            ACCORDING,
+            PURPOSE,
+            ENGINE_MODEL,
+            ENGINE_DEVELOP_STAGE,
+            ENGINE_NUMBER,
+            ECU_STATUS,
+            OPERATION_FILEID,
+            REMARK,
+            CURRENT_WAIT_USERID,
+            CURRENT_WAIT_USERNAME,
+            TRIAL_STATUS,
+            FINISHDATE_DELYDAYS,
+            DELYFLAG,
+            TRIALREPORT_STATUS,
+            EV_EMERGENCY,
+            REQUIREMENT,
+            PERSON_IDS
+    </sql>
+
+    <resultMap id="DetialResultMap" extends="BaseResultMap" type="com.adc.da.trial_task.entity.TrialTaskEO">
+        <collection property="trialtaskInsproEOList" ofType="com.adc.da.trial_task.entity.TrialtaskInsproEO">
+            <result column="INSPRO_ID" property="insproId"/>
+            <result column="INSPRO_STANDARD" property="insproStandard"/>
+            <result column="INSPRO_TRIALTASK_ID" property="trialtaskId"/>
+            <result column="INSPRO_NAME" property="insproName"/>
+            <result column="INSPRO_REMARK" property="remark"/>
+        </collection>
+        <collection property="trialtaskSampleEOList" ofType="com.adc.da.trial_task.entity.TrialtaskSampleEO">
+            <result column="SAMPLE_ID" property="sampleId"/>
+            <result column="SAMPLE_ENGINE_TYPE" property="sampleEngineType"/>
+            <result column="SAMPLE_PRODUCE_TIME" property="sampleProduceTime"/>
+            <result column="SAMPLE_NO" property="sampleNo"/>
+            <result column="SCAFFOLDING_ID" property="scaffoldingId"/>
+            <result column="SCAFFOLDING_NAME" property="scaffoldingName"/>
+            <result column="SAMPLE_TRIALTASK_ID" property="trialtaskId"/>
+            <result column="SAMPLE_REMARK" property="remark"/>
+        </collection>
+    </resultMap>
+
+    <!--新增试验任务 -->
+    <insert id="insertTrialTask" parameterType="com.adc.da.trial_task.entity.TrialTaskEO">
+        insert into EV_TRIAL_TASK
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id!=null">id,</if>
+            <if test="delFlag!=null">DEL_FLAG,</if>
+            <if test="createTime!=null">CREATE_TIME,</if>
+            <if test="createBy!=null">CREATE_BY,</if>
+            <if test="evNumber!=null">EV_NUMBER,</if>
+            <if test="taskFileid!=null">TASK_FILEID,</if>
+            <if test="finishTime!=null">FINISH_TIME,</if>
+            <if test="title!=null">TITLE,</if>
+            <if test="reason!=null">REASON,</if>
+            <if test="according!=null">ACCORDING,</if>
+            <if test="purpose!=null">PURPOSE,</if>
+            <if test="engineModel!=null">ENGINE_MODEL,</if>
+            <if test="engineDevelopStage!=null">ENGINE_DEVELOP_STAGE,</if>
+            <if test="engineNumber!=null">ENGINE_NUMBER,</if>
+            <if test="ecuStatus!=null">ECU_STATUS,</if>
+            <if test="operationFileid!=null">OPERATION_FILEID,</if>
+            <if test="currentWaitUserid!=null">CURRENT_WAIT_USERID,</if>
+            <if test="currentWaitUsername!=null">CURRENT_WAIT_USERNAME,</if>
+            <if test="trialStatus!=null">TRIAL_STATUS,</if>
+            <if test="finishdateDelydays!=null">FINISHDATE_DELYDAYS,</if>
+            <if test="remark!=null">REMARK,</if>
+            <if test="delyFlag!=null">DELYFLAG,</if>
+            <if test="trialReportStatus">TRIALREPORT_STATUS,</if>
+            <if test="evEmergency">EV_EMERGENCY,</if>
+            <if test="requirement">REQUIREMENT,</if>
+            <if test="personIds != null">PERSON_IDS,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id!=null">#{id},</if>
+            <if test="delFlag!=null">#{delFlag},</if>
+            <if test="createTime!=null">#{createTime},</if>
+            <if test="createBy!=null">#{createBy},</if>
+            <if test="evNumber!=null">#{evNumber},</if>
+            <if test="taskFileid!=null">#{taskFileid},</if>
+            <if test="finishTime!=null">#{finishTime},</if>
+            <if test="title!=null">#{title},</if>
+            <if test="reason!=null">#{reason},</if>
+            <if test="according!=null">#{according},</if>
+            <if test="purpose!=null">#{purpose},</if>
+            <if test="engineModel!=null">#{engineModel},</if>
+            <if test="engineDevelopStage!=null">#{engineDevelopStage},</if>
+            <if test="engineNumber!=null">#{engineNumber},</if>
+            <if test="ecuStatus!=null">#{ecuStatus},</if>
+            <if test="operationFileid!=null">#{operationFileid},</if>
+            <if test="currentWaitUserid!=null">#{currentWaitUserid},</if>
+            <if test="currentWaitUsername!=null">#{currentWaitUsername},</if>
+            <if test="trialStatus!=null">#{trialStatus},</if>
+            <if test="finishdateDelydays!=null">#{finishdateDelydays},</if>
+            <if test="remark!=null">#{remark},</if>
+            <if test="delyFlag!=null">#{delyFlag},</if>
+            <if test="trialReportStatus!=null">#{trialReportStatus},</if>
+            <if test="evEmergency!=null">#{evEmergency},</if>
+            <if test="requirement!=null">#{requirement},</if>
+            <if test="personIds != null">#{personIds},</if>
+        </trim>
+    </insert>
+    <!--修改试验任务 -->
+    <update id="updateTrialTask" parameterType="com.adc.da.trial_task.entity.TrialTaskEO">
+        update EV_TRIAL_TASK
+        <set>
+            <if test="delFlag!=null">DEL_FLAG = #{delFlag},</if>
+            <if test="updateTime!=null">UPDATE_TIME = #{updateTime},</if>
+            <if test="updateBy!=null">UPDATE_BY = #{updateBy},</if>
+            <if test="evNumber!=null">EV_NUMBER = #{evNumber},</if>
+            <if test="taskFileid!=null">TASK_FILEID = #{taskFileid},</if>
+            <if test="finishTime!=null">FINISH_TIME = #{finishTime},</if>
+            <if test="title!=null">TITLE = #{title},</if>
+            <if test="reason!=null">REASON = #{reason},</if>
+            <if test="according!=null">ACCORDING = #{according},</if>
+            <if test="purpose!=null">PURPOSE = #{purpose},</if>
+            <if test="engineModel!=null">ENGINE_MODEL = #{engineModel},</if>
+            <if test="engineDevelopStage!=null">ENGINE_DEVELOP_STAGE = #{engineDevelopStage},</if>
+            <if test="engineNumber!=null">ENGINE_NUMBER = #{engineNumber},</if>
+            <if test="ecuStatus!=null">ECU_STATUS = #{ecuStatus},</if>
+            <if test="operationFileid!=null">OPERATION_FILEID = #{operationFileid},</if>
+            <if test="currentWaitUserid!=null">CURRENT_WAIT_USERID = #{currentWaitUserid},</if>
+            <if test="currentWaitUsername!=null">CURRENT_WAIT_USERNAME = #{currentWaitUsername},</if>
+            <if test="trialStatus!=null">TRIAL_STATUS = #{trialStatus},</if>
+            <if test="finishdateDelydays!=null">FINISHDATE_DELYDAYS = #{finishdateDelydays},</if>
+            <if test="remark!=null">REMARK = #{remark},</if>
+            <if test="delyFlag!=null">DELYFLAG = #{delyFlag},</if>
+            <if test="trialReportStatus!=null">TRIALREPORT_STATUS = #{trialReportStatus},</if>
+            <if test="evEmergency!=null">EV_EMERGENCY = #{evEmergency},</if>
+            <if test="requirement!=null">REQUIREMENT = #{requirement},</if>
+            <if test="personIds!=null">PERSON_IDS = #{personIds},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--逻辑删除试验任务信息-->
+    <update id="tombstoneTrialTask" parameterType="java.lang.String">
+        update EV_TRIAL_TASK
+        set DEL_FLAG = 1
+        where ID = #{id}
+    </update>
+
+    <!--物理删除试验任务信息-->
+    <delete id="actualDeleteTrialTask" parameterType="java.lang.String">
+        delete
+        from EV_TRIAL_TASK
+        where ID = #{id}
+    </delete>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="DetialResultMap">
+        SELECT EV_TRIAL_TASK.ID,
+               EV_TRIAL_TASK.DEL_FLAG,
+               EV_TRIAL_TASK.CREATE_TIME,
+               EV_TRIAL_TASK.CREATE_BY,
+               EV_TRIAL_TASK.UPDATE_TIME,
+               EV_TRIAL_TASK.UPDATE_BY,
+               EV_NUMBER,
+               TASK_FILEID,
+               FINISH_TIME,
+               TITLE,
+               REASON,
+               ACCORDING,
+               PURPOSE,
+               ENGINE_MODEL,
+               ENGINE_DEVELOP_STAGE,
+               ENGINE_NUMBER,
+               ECU_STATUS,
+               OPERATION_FILEID,
+               CURRENT_WAIT_USERID,
+               CURRENT_WAIT_USERNAME,
+               TRIAL_STATUS,
+               FINISHDATE_DELYDAYS,
+               DELYFLAG,
+               TRIALREPORT_STATUS,
+               EV_EMERGENCY,
+               REQUIREMENT,
+               EV_TRIALTASK_INSPRO.INSPRO_STANDARD,
+               EV_TRIALTASK_INSPRO.INSPRO_NAME,
+               EV_TRIALTASK_INSPRO.INSPRO_ID,
+               EV_TRIALTASK_INSPRO.REMARK       AS INSPRO_REMARK,
+               EV_TRIALTASK_INSPRO.TRIALTASK_ID AS INSPRO_TRIALTASK_ID,
+               EV_TRIALTASK_SAMPLE.SAMPLE_ENGINE_TYPE,
+               EV_TRIALTASK_SAMPLE.SAMPLE_NO,
+               EV_TRIALTASK_SAMPLE.SAMPLE_ID,
+               EV_TRIALTASK_SAMPLE.SAMPLE_PRODUCE_TIME,
+               EV_TRIALTASK_SAMPLE.SCAFFOLDING_ID,
+               EV_TRIALTASK_SAMPLE.SCAFFOLDING_NAME,
+               EV_TRIALTASK_SAMPLE.REMARK       AS SAMPLE_REMARK,
+               EV_TRIALTASK_SAMPLE.TRIALTASK_ID AS SAMPLE_TRIALTASK_ID
+        FROM EV_TRIAL_TASK
+                 LEFT JOIN EV_TRIALTASK_INSPRO ON EV_TRIALTASK_INSPRO.TRIALTASK_ID = EV_TRIAL_TASK.ID
+                 LEFT JOIN EV_TRIALTASK_SAMPLE ON EV_TRIALTASK_SAMPLE.TRIALTASK_ID = EV_TRIAL_TASK.ID
+        WHERE EV_TRIAL_TASK.ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectEVNo" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT COUNT(EV_NUMBER)
+        FROM EV_TRIAL_TASK
+        WHERE DEL_FLAG != 1
+          AND EV_NUMBER = #{evNumber}
+    </select>
+    
+    <select id="checkNo" resultMap="evNumResult">
+        SELECT 
+        	EV_NUMBER
+        FROM EV_TRIAL_TASK
+        WHERE DEL_FLAG != 1
+        <if test="id != null and id != ''">
+            AND ID != #{id,jdbcType=VARCHAR}
+        </if>
+    </select>
+    
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        WHERE EV_TRIAL_TASK.DEL_FLAG != 1
+        <if test="createBy != null and createBy != ''">
+            AND EV_TRIAL_TASK.CREATE_BY = #{createBy}
+        </if>
+        <if test="createByIds != null">
+            AND EV_TRIAL_TASK.CREATE_BY IN
+            <foreach collection="createByIds" item="createById" index="index" open="(" close=")" separator=",">
+                #{createById}
+            </foreach>
+        </if>
+        <choose>
+            <when test="searchPhrase != null">
+                <foreach collection="searchPhrase" item="search">
+                    AND (
+                    EV_TRIAL_TASK.EV_NUMBER LIKE '%${search}%'
+                    OR EV_TRIAL_TASK.TITLE LIKE '%${search}%'
+                    OR EV_TRIAL_TASK.PURPOSE LIKE '%${search}%'
+                    OR EV_TRIAL_TASK.TRIAL_STATUS LIKE '%${search}%'
+                    OR EV_TRIAL_TASK.CURRENT_WAIT_USERNAME LIKE '%${search}%'
+                    OR TS_USER.USNAME LIKE '%${search}%'
+                    OR TS_ORG.ORG_NAME LIKE '%${search}%'
+                    OR EV_TRIAL_TASK.FINISHDATE_DELYDAYS LIKE '%${search}%'
+                    )
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="evNumber != null and evNumber != ''">
+                    AND EV_TRIAL_TASK.EV_NUMBER LIKE '%${evNumber}%'
+                </if>
+                <if test="title != null and title != ''">
+                    AND EV_TRIAL_TASK.TITLE LIKE '%${title}%'
+                </if>
+                <if test="purpose != null and purpose != ''">
+                    AND EV_TRIAL_TASK.PURPOSE LIKE '%${purpose}%'
+                </if>
+                <if test="trialStatus != null and trialStatus != ''">
+                    AND EV_TRIAL_TASK.TRIAL_STATUS = #{trialStatus}
+                </if>
+                <if test="currentWaitUsername != null and currentWaitUsername != ''">
+                    AND EV_TRIAL_TASK.CURRENT_WAIT_USERNAME LIKE '%${currentWaitUsername}%'
+                </if>
+                <if test="createByName != null and createByName != ''">
+                    AND TS_USER.USNAME LIKE '%${createByName}%'
+                </if>
+                <if test="createByDepartName != null and createByDepartName != ''">
+                    AND TS_ORG.ORG_NAME LIKE '%${createByDepartName}%'
+                </if>
+                <if test="finishdateDelydays != null and finishdateDelydays != ''">
+                    AND EV_TRIAL_TASK.FINISHDATE_DELYDAYS = #{finishdateDelydays}
+                </if>
+                <if test="delyFlag != null and delyFlag != ''">
+                    AND EV_TRIAL_TASK.DELYFLAG = #{delyFlag}
+                </if>
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 试验任务 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from EV_TRIAL_TASK
+        LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_TASK.CREATE_BY
+        LEFT JOIN TR_USER_ORG ON TR_USER_ORG.USER_ID = EV_TRIAL_TASK.CREATE_BY
+        LEFT JOIN TS_ORG ON TS_ORG."ID" = TR_USER_ORG.ORG_ID
+        LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = EV_TRIAL_TASK.ID
+        LEFT JOIN ACT_HI_PROCINST ON TS_BASEBUS.ID = ACT_HI_PROCINST.BUSINESS_KEY_
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询试验任务列表 -->
+    <select id="queryByPage" resultMap="SearchResultMap" parameterType="com.adc.da.base.page.BasePage">
+        SELECT *
+        FROM
+        (select tmp_tb.* , rownum rn from
+        (SELECT
+        EV_TRIAL_TASK."ID",
+        EV_TRIAL_TASK.EV_NUMBER,
+        EV_TRIAL_TASK.TITLE,
+        EV_TRIAL_TASK.PURPOSE,
+        EV_TRIAL_TASK.FINISHDATE_DELYDAYS,
+        EV_TRIAL_TASK.TRIAL_STATUS,
+        EV_TRIAL_TASK.CURRENT_WAIT_USERNAME,
+        EV_TRIAL_TASK.CURRENT_WAIT_USERID,
+        EV_TRIAL_TASK.CREATE_BY,
+        EV_TRIAL_TASK.DELYFLAG,
+        EV_TRIAL_TASK.TRIALREPORT_STATUS,
+        TS_USER.USNAME AS CREATEBY_NAME,
+        TS_ORG.ORG_NAME AS ORG_NAME,
+        TS_ORG.ID AS ORG_ID,
+        ACT_HI_PROCINST.PROC_INST_ID_ AS ACT_PROC_ID,
+        ACT_HI_PROCINST.BUSINESS_KEY_ AS BASEBUS_ID,
+        EV_TRIAL_TASK.ENGINE_MODEL,
+        EV_TRIAL_TASK.ENGINE_NUMBER
+        FROM
+        EV_TRIAL_TASK
+        LEFT JOIN TS_USER ON TS_USER.USID = EV_TRIAL_TASK.CREATE_BY
+        LEFT JOIN TR_USER_ORG ON TR_USER_ORG.USER_ID = EV_TRIAL_TASK.CREATE_BY
+        LEFT JOIN TS_ORG ON TS_ORG."ID" = TR_USER_ORG.ORG_ID
+        LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = EV_TRIAL_TASK.ID
+        LEFT JOIN ACT_HI_PROCINST ON TS_BASEBUS.ID = ACT_HI_PROCINST.BUSINESS_KEY_
+        <include refid="Base_Where_Clause"/>
+        ORDER BY EV_TRIAL_TASK.FINISHDATE_DELYDAYS DESC,
+        EV_TRIAL_TASK.CREATE_TIME DESC
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="findAllList" resultMap="BaseResultMap">
+        select *
+        from EV_TRIAL_TASK
+        where TRIAL_STATUS != 8
+    </select>
+
+    <!-- 发动机试验任务-点击“+”查询 -->
+    <select id="queryTrialProject" resultType="com.adc.da.trial_task.vo.TrialtaskInsProjectVO">
+        SELECT E.ID,
+               BIP.PRO_NAME      AS proName,
+               BIP.PRO_CODE      AS proCode,
+               org.ORG_NAME      AS chargeLaboratory,
+               E.INSPRO_STANDARD AS insproStandard,
+               TU.USNAME         AS createName,
+               ETT.CREATE_TIME   AS createTime,
+               ETT.FINISH_TIME   AS finishDate
+        FROM EV_TRIALTASK_INSPRO E
+                 LEFT JOIN BM_INSPECT_PROJECT BIP ON E.INSPRO_ID = BIP.ID
+                 LEFT JOIN EV_TRIAL_TASK ETT ON ETT.ID = E.TRIALTASK_ID
+                 left join (select ETT.id,
+                                   WM_CONCAT(T.ORG_NAME) org_name
+                            from EV_TRIAL_TASK ETT
+                                     left join EV_TRIALTASK_SAMPLE ETS on ETT.ID = ETS.TRIALTASK_ID
+                                     left join TS_ORG T on ETS.SCAFFOLDING_ID = T.ID
+                            where ETT.DEL_FLAG = 0
+                            group by ETT.ID) org on org.ID = ETT.ID
+                 LEFT JOIN TS_USER TU ON ETT.CREATE_BY = TU.USID
+        WHERE ETT.ID = #{id}
+          AND BIP.DEL_FLAG = 0
+    </select>
+
+    <select id="selectActProcIdById" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT ACT_HI_PROCINST.PROC_INST_ID_ AS ACT_PROC_ID
+        FROM EV_TRIAL_TASK
+                 LEFT JOIN TS_BASEBUS ON TS_BASEBUS.BUSINESS_ID = EV_TRIAL_TASK.ID
+                 LEFT JOIN ACT_HI_PROCINST ON TS_BASEBUS.ID = ACT_HI_PROCINST.BUSINESS_KEY_
+        WHERE EV_TRIAL_TASK.ID = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateTrialTaskStatus">
+        update EV_TRIAL_TASK
+        set TRIAL_STATUS = #{i}
+        where ID = #{trialtaskId}
+    </update>
+
+</mapper>

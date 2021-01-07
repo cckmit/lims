@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_budget_reimbursement.dao.PcTrialProductEODao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.adc.da.pc_budget_reimbursement.entity.PcTrialProductEO">
+        <id column="id" property="id"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="create_time" property="createTime"/>
+        <result column="create_by" property="createBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="r_id" property="rId"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="start_point" property="startPoint"/>
+        <result column="end_point" property="endPoint"/>
+        <result column="depart_odometer" property="departOdometer"/>
+        <result column="underpan_no" property="underpanNo"/>
+        <result column="accommodation_cost" property="accommodationCost"/>
+        <result column="accommodation_apply" property="accommodationApply"/>
+        <result column="accommodation_total" property="accommodationTotal"/>
+        <result column="accommodation_day_nmber" property="accommodationDayNmber"/>
+        <result column="high_speed_cost" property="highSpeedCost"/>
+        <result column="high_speed_apply" property="highSpeedApply"/>
+        <result column="high_speed_total" property="highSpeedTotal"/>
+        <result column="pass_way_cost" property="passWayCost"/>
+        <result column="pass_way_apply" property="passWayApply"/>
+        <result column="pass_way_total" property="passWayTotal"/>
+        <result column="refuel_cost" property="refuelCost"/>
+        <result column="refuel_apply" property="refuelApply"/>
+        <result column="refuel_total" property="refuelTotal"/>
+        <result column="charge_cost" property="chargeCost"/>
+        <result column="charge_apply" property="chargeApply"/>
+        <result column="charge_total" property="chargeTotal"/>
+        <result column="air_entrapping_cost" property="airEntrappingCost"/>
+        <result column="air_entrapping_apply" property="airEntrappingApply"/>
+        <result column="air_entrapping_total" property="airEntrappingTotal"/>
+        <result column="maintain_cost" property="maintainCost"/>
+        <result column="maintain_apply" property="maintainApply"/>
+        <result column="maintain_total" property="maintainTotal"/>
+        <result column="upkeep_cost" property="upkeepCost"/>
+        <result column="upkeep_apply" property="upkeepApply"/>
+        <result column="upkeep_total" property="upkeepTotal"/>
+        <result column="park_cost" property="parkCost"/>
+        <result column="park_apply" property="parkApply"/>
+        <result column="park_total" property="parkTotal"/>
+        <result column="express_cost" property="expressCost"/>
+        <result column="express_apply" property="expressApply"/>
+        <result column="express_total" property="expressTotal"/>
+        <result column="hire_cost" property="hireCost"/>
+        <result column="hire_apply" property="hireApply"/>
+        <result column="hire_total" property="hireTotal"/>
+        <result column="pc_other_cost" property="pcOtherCost"/>
+        <result column="subtotal" property="subtotal"/>
+        <result column="poll_nmber" property="pollNmber"/>
+        <result column="status" property="status"/>
+        <result column="pc_other_apply" property="pcOtherApply"/>
+        <result column="pc_other_total" property="pcOtherTotal"/>
+    </resultMap>
+
+    <!-- PC_TRIAL_PRODUCT table all fields -->
+    <sql id="Base_Column_List">
+            id,
+            del_flag,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            r_id,
+            start_time,
+            end_time,
+            start_point,
+            end_point,
+            depart_odometer,
+            underpan_no,
+            accommodation_cost,
+            accommodation_apply,
+            accommodation_total,
+            accommodation_day_nmber,
+            high_speed_cost,
+            high_speed_apply,
+            high_speed_total,
+            pass_way_cost,
+            pass_way_apply,
+            pass_way_total,
+            refuel_cost,
+            refuel_apply,
+            refuel_total,
+            charge_cost,
+            charge_apply,
+            charge_total,
+            air_entrapping_cost,
+            air_entrapping_apply,
+            air_entrapping_total,
+            maintain_cost,
+            maintain_apply,
+            maintain_total,
+            upkeep_cost,
+            upkeep_apply,
+            upkeep_total,
+            park_cost,
+            park_apply,
+            park_total,
+            express_cost,
+            express_apply,
+            express_total,
+            hire_cost,
+            hire_apply,
+            hire_total,
+            pc_other_cost,
+            subtotal,
+            poll_nmber,
+            status,
+            pc_other_apply,
+            pc_other_total
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="Base_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                and id ${idOperator} #{id}
+            </if>
+            <if test="delFlag != null">
+                and del_flag ${delFlagOperator} #{delFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time ${createTimeOperator} #{createTime}
+            </if>
+            <if test="createBy != null">
+                and create_by ${createByOperator} #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time ${updateTimeOperator} #{updateTime}
+            </if>
+            <if test="updateBy != null">
+                and update_by ${updateByOperator} #{updateBy}
+            </if>
+            <if test="rId != null">
+                and r_id ${rIdOperator} #{rId}
+            </if>
+            <if test="startTime != null">
+                and start_time ${startTimeOperator} #{startTime}
+            </if>
+            <if test="endTime != null">
+                and end_time ${endTimeOperator} #{endTime}
+            </if>
+            <if test="startPoint != null">
+                and start_point ${startPointOperator} #{startPoint}
+            </if>
+            <if test="endPoint != null">
+                and end_point ${endPointOperator} #{endPoint}
+            </if>
+            <if test="departOdometer != null">
+                and depart_odometer ${departOdometerOperator} #{departOdometer}
+            </if>
+            <if test="underpanNo != null">
+                and underpan_no ${underpanNoOperator} #{underpanNo}
+            </if>
+            <if test="accommodationCost != null">
+                and accommodation_cost ${accommodationCostOperator} #{accommodationCost}
+            </if>
+            <if test="accommodationApply != null">
+                and accommodation_apply ${accommodationApplyOperator} #{accommodationApply}
+            </if>
+            <if test="accommodationTotal != null">
+                and accommodation_total ${accommodationTotalOperator} #{accommodationTotal}
+            </if>
+            <if test="accommodationDayNmber != null">
+                and accommodation_day_nmber ${accommodationDayNmberOperator} #{accommodationDayNmber}
+            </if>
+            <if test="highSpeedCost != null">
+                and high_speed_cost ${highSpeedCostOperator} #{highSpeedCost}
+            </if>
+            <if test="highSpeedApply != null">
+                and high_speed_apply ${highSpeedApplyOperator} #{highSpeedApply}
+            </if>
+            <if test="highSpeedTotal != null">
+                and high_speed_total ${highSpeedTotalOperator} #{highSpeedTotal}
+            </if>
+            <if test="passWayCost != null">
+                and pass_way_cost ${passWayCostOperator} #{passWayCost}
+            </if>
+            <if test="passWayApply != null">
+                and pass_way_apply ${passWayApplyOperator} #{passWayApply}
+            </if>
+            <if test="passWayTotal != null">
+                and pass_way_total ${passWayTotalOperator} #{passWayTotal}
+            </if>
+            <if test="refuelCost != null">
+                and refuel_cost ${refuelCostOperator} #{refuelCost}
+            </if>
+            <if test="refuelApply != null">
+                and refuel_apply ${refuelApplyOperator} #{refuelApply}
+            </if>
+            <if test="refuelTotal != null">
+                and refuel_total ${refuelTotalOperator} #{refuelTotal}
+            </if>
+            <if test="chargeCost != null">
+                and charge_cost ${chargeCostOperator} #{chargeCost}
+            </if>
+            <if test="chargeApply != null">
+                and charge_apply ${chargeApplyOperator} #{chargeApply}
+            </if>
+            <if test="chargeTotal != null">
+                and charge_total ${chargeTotalOperator} #{chargeTotal}
+            </if>
+            <if test="airEntrappingCost != null">
+                and air_entrapping_cost ${airEntrappingCostOperator} #{airEntrappingCost}
+            </if>
+            <if test="airEntrappingApply != null">
+                and air_entrapping_apply ${airEntrappingApplyOperator} #{airEntrappingApply}
+            </if>
+            <if test="airEntrappingTotal != null">
+                and air_entrapping_total ${airEntrappingTotalOperator} #{airEntrappingTotal}
+            </if>
+            <if test="maintainCost != null">
+                and maintain_cost ${maintainCostOperator} #{maintainCost}
+            </if>
+            <if test="maintainApply != null">
+                and maintain_apply ${maintainApplyOperator} #{maintainApply}
+            </if>
+            <if test="maintainTotal != null">
+                and maintain_total ${maintainTotalOperator} #{maintainTotal}
+            </if>
+            <if test="upkeepCost != null">
+                and upkeep_cost ${upkeepCostOperator} #{upkeepCost}
+            </if>
+            <if test="upkeepApply != null">
+                and upkeep_apply ${upkeepApplyOperator} #{upkeepApply}
+            </if>
+            <if test="upkeepTotal != null">
+                and upkeep_total ${upkeepTotalOperator} #{upkeepTotal}
+            </if>
+            <if test="parkCost != null">
+                and park_cost ${parkCostOperator} #{parkCost}
+            </if>
+            <if test="parkApply != null">
+                and park_apply ${parkApplyOperator} #{parkApply}
+            </if>
+            <if test="parkTotal != null">
+                and park_total ${parkTotalOperator} #{parkTotal}
+            </if>
+            <if test="expressCost != null">
+                and express_cost ${expressCostOperator} #{expressCost}
+            </if>
+            <if test="expressApply != null">
+                and express_apply ${expressApplyOperator} #{expressApply}
+            </if>
+            <if test="expressTotal != null">
+                and express_total ${expressTotalOperator} #{expressTotal}
+            </if>
+            <if test="hireCost != null">
+                and hire_cost ${hireCostOperator} #{hireCost}
+            </if>
+            <if test="hireApply != null">
+                and hire_apply ${hireApplyOperator} #{hireApply}
+            </if>
+            <if test="hireTotal != null">
+                and hire_total ${hireTotalOperator} #{hireTotal}
+            </if>
+            <if test="pcOtherCost != null">
+                and pc_other_cost ${pcOtherCostOperator} #{pcOtherCost}
+            </if>
+            <if test="subtotal != null">
+                and subtotal ${subtotalOperator} #{subtotal}
+            </if>
+            <if test="pollNmber != null">
+                and poll_nmber ${pollNmberOperator} #{pollNmber}
+            </if>
+            <if test="status != null">
+                and status ${statusOperator} #{status}
+            </if>
+            <if test="pcOtherApply != null">
+                and pc_other_apply ${pcOtherApplyOperator} #{pcOtherApply}
+            </if>
+            <if test="pcOtherTotal != null">
+                and pc_other_total ${pcOtherTotalOperator} #{pcOtherTotal}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.adc.da.pc_budget_reimbursement.entity.PcTrialProductEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+            SELECT SEQ_PC_TRIAL_PRODUCT.NEXTVAL FROM DUAL
+        </selectKey> -->
+        insert into PC_TRIAL_PRODUCT(<include refid="Base_Column_List"/>)
+        values (#{id, jdbcType=VARCHAR}, #{delFlag, jdbcType=INTEGER}, #{createTime, jdbcType=VARCHAR},
+        #{createBy, jdbcType=VARCHAR}, #{updateTime, jdbcType=VARCHAR}, #{updateBy, jdbcType=VARCHAR},
+        #{rId, jdbcType=VARCHAR}, #{startTime, jdbcType=VARCHAR}, #{endTime, jdbcType=VARCHAR},
+        #{startPoint, jdbcType=VARCHAR}, #{endPoint, jdbcType=VARCHAR}, #{departOdometer, jdbcType=VARCHAR},
+        #{underpanNo, jdbcType=VARCHAR}, #{accommodationCost, jdbcType=VARCHAR},
+        #{accommodationApply, jdbcType=VARCHAR}, #{accommodationTotal, jdbcType=VARCHAR},
+        #{accommodationDayNmber, jdbcType=VARCHAR}, #{highSpeedCost, jdbcType=VARCHAR},
+        #{highSpeedApply, jdbcType=VARCHAR}, #{highSpeedTotal, jdbcType=VARCHAR}, #{passWayCost, jdbcType=VARCHAR},
+        #{passWayApply, jdbcType=VARCHAR}, #{passWayTotal, jdbcType=VARCHAR}, #{refuelCost, jdbcType=VARCHAR},
+        #{refuelApply, jdbcType=VARCHAR}, #{refuelTotal, jdbcType=VARCHAR}, #{chargeCost, jdbcType=VARCHAR},
+        #{chargeApply, jdbcType=VARCHAR}, #{chargeTotal, jdbcType=VARCHAR}, #{airEntrappingCost, jdbcType=VARCHAR},
+        #{airEntrappingApply, jdbcType=VARCHAR}, #{airEntrappingTotal, jdbcType=VARCHAR},
+        #{maintainCost, jdbcType=VARCHAR}, #{maintainApply, jdbcType=VARCHAR}, #{maintainTotal, jdbcType=VARCHAR},
+        #{upkeepCost, jdbcType=VARCHAR}, #{upkeepApply, jdbcType=VARCHAR}, #{upkeepTotal, jdbcType=VARCHAR},
+        #{parkCost, jdbcType=VARCHAR}, #{parkApply, jdbcType=VARCHAR}, #{parkTotal, jdbcType=VARCHAR},
+        #{expressCost, jdbcType=VARCHAR}, #{expressApply, jdbcType=VARCHAR}, #{expressTotal, jdbcType=VARCHAR},
+        #{hireCost, jdbcType=VARCHAR}, #{hireApply, jdbcType=VARCHAR}, #{hireTotal, jdbcType=VARCHAR},
+        #{pcOtherCost, jdbcType=VARCHAR}, #{subtotal, jdbcType=VARCHAR}, #{pollNmber, jdbcType=VARCHAR},
+        #{status, jdbcType=VARCHAR}, #{pcOtherApply, jdbcType=VARCHAR}, #{pcOtherTotal, jdbcType=VARCHAR})
+    </insert>
+
+    <!-- 动态插入记录 主键是序列 -->
+    <insert id="insertSelective" parameterType="com.adc.da.pc_budget_reimbursement.entity.PcTrialProductEO">
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_PC_TRIAL_PRODUCT.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into PC_TRIAL_PRODUCT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="rId != null">r_id,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="endTime != null">end_time,</if>
+            <if test="startPoint != null">start_point,</if>
+            <if test="endPoint != null">end_point,</if>
+            <if test="departOdometer != null">depart_odometer,</if>
+            <if test="underpanNo != null">underpan_no,</if>
+            <if test="accommodationCost != null">accommodation_cost,</if>
+            <if test="accommodationApply != null">accommodation_apply,</if>
+            <if test="accommodationTotal != null">accommodation_total,</if>
+            <if test="accommodationDayNmber != null">accommodation_day_nmber,</if>
+            <if test="highSpeedCost != null">high_speed_cost,</if>
+            <if test="highSpeedApply != null">high_speed_apply,</if>
+            <if test="highSpeedTotal != null">high_speed_total,</if>
+            <if test="passWayCost != null">pass_way_cost,</if>
+            <if test="passWayApply != null">pass_way_apply,</if>
+            <if test="passWayTotal != null">pass_way_total,</if>
+            <if test="refuelCost != null">refuel_cost,</if>
+            <if test="refuelApply != null">refuel_apply,</if>
+            <if test="refuelTotal != null">refuel_total,</if>
+            <if test="chargeCost != null">charge_cost,</if>
+            <if test="chargeApply != null">charge_apply,</if>
+            <if test="chargeTotal != null">charge_total,</if>
+            <if test="airEntrappingCost != null">air_entrapping_cost,</if>
+            <if test="airEntrappingApply != null">air_entrapping_apply,</if>
+            <if test="airEntrappingTotal != null">air_entrapping_total,</if>
+            <if test="maintainCost != null">maintain_cost,</if>
+            <if test="maintainApply != null">maintain_apply,</if>
+            <if test="maintainTotal != null">maintain_total,</if>
+            <if test="upkeepCost != null">upkeep_cost,</if>
+            <if test="upkeepApply != null">upkeep_apply,</if>
+            <if test="upkeepTotal != null">upkeep_total,</if>
+            <if test="parkCost != null">park_cost,</if>
+            <if test="parkApply != null">park_apply,</if>
+            <if test="parkTotal != null">park_total,</if>
+            <if test="expressCost != null">express_cost,</if>
+            <if test="expressApply != null">express_apply,</if>
+            <if test="expressTotal != null">express_total,</if>
+            <if test="hireCost != null">hire_cost,</if>
+            <if test="hireApply != null">hire_apply,</if>
+            <if test="hireTotal != null">hire_total,</if>
+            <if test="pcOtherCost != null">pc_other_cost,</if>
+            <if test="subtotal != null">subtotal,</if>
+            <if test="pollNmber != null">poll_nmber,</if>
+            <if test="status != null">status,</if>
+            <if test="pcOtherApply != null">pc_other_apply,</if>
+            <if test="pcOtherTotal != null">pc_other_total,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id, jdbcType=VARCHAR},</if>
+            <if test="delFlag != null">#{delFlag, jdbcType=INTEGER},</if>
+            <if test="createTime != null">#{createTime, jdbcType=VARCHAR},</if>
+            <if test="createBy != null">#{createBy, jdbcType=VARCHAR},</if>
+            <if test="updateTime != null">#{updateTime, jdbcType=VARCHAR},</if>
+            <if test="updateBy != null">#{updateBy, jdbcType=VARCHAR},</if>
+            <if test="rId != null">#{rId, jdbcType=VARCHAR},</if>
+            <if test="startTime != null">#{startTime, jdbcType=VARCHAR},</if>
+            <if test="endTime != null">#{endTime, jdbcType=VARCHAR},</if>
+            <if test="startPoint != null">#{startPoint, jdbcType=VARCHAR},</if>
+            <if test="endPoint != null">#{endPoint, jdbcType=VARCHAR},</if>
+            <if test="departOdometer != null">#{departOdometer, jdbcType=VARCHAR},</if>
+            <if test="underpanNo != null">#{underpanNo, jdbcType=VARCHAR},</if>
+            <if test="accommodationCost != null">#{accommodationCost, jdbcType=VARCHAR},</if>
+            <if test="accommodationApply != null">#{accommodationApply, jdbcType=VARCHAR},</if>
+            <if test="accommodationTotal != null">#{accommodationTotal, jdbcType=VARCHAR},</if>
+            <if test="accommodationDayNmber != null">#{accommodationDayNmber, jdbcType=VARCHAR},</if>
+            <if test="highSpeedCost != null">#{highSpeedCost, jdbcType=VARCHAR},</if>
+            <if test="highSpeedApply != null">#{highSpeedApply, jdbcType=VARCHAR},</if>
+            <if test="highSpeedTotal != null">#{highSpeedTotal, jdbcType=VARCHAR},</if>
+            <if test="passWayCost != null">#{passWayCost, jdbcType=VARCHAR},</if>
+            <if test="passWayApply != null">#{passWayApply, jdbcType=VARCHAR},</if>
+            <if test="passWayTotal != null">#{passWayTotal, jdbcType=VARCHAR},</if>
+            <if test="refuelCost != null">#{refuelCost, jdbcType=VARCHAR},</if>
+            <if test="refuelApply != null">#{refuelApply, jdbcType=VARCHAR},</if>
+            <if test="refuelTotal != null">#{refuelTotal, jdbcType=VARCHAR},</if>
+            <if test="chargeCost != null">#{chargeCost, jdbcType=VARCHAR},</if>
+            <if test="chargeApply != null">#{chargeApply, jdbcType=VARCHAR},</if>
+            <if test="chargeTotal != null">#{chargeTotal, jdbcType=VARCHAR},</if>
+            <if test="airEntrappingCost != null">#{airEntrappingCost, jdbcType=VARCHAR},</if>
+            <if test="airEntrappingApply != null">#{airEntrappingApply, jdbcType=VARCHAR},</if>
+            <if test="airEntrappingTotal != null">#{airEntrappingTotal, jdbcType=VARCHAR},</if>
+            <if test="maintainCost != null">#{maintainCost, jdbcType=VARCHAR},</if>
+            <if test="maintainApply != null">#{maintainApply, jdbcType=VARCHAR},</if>
+            <if test="maintainTotal != null">#{maintainTotal, jdbcType=VARCHAR},</if>
+            <if test="upkeepCost != null">#{upkeepCost, jdbcType=VARCHAR},</if>
+            <if test="upkeepApply != null">#{upkeepApply, jdbcType=VARCHAR},</if>
+            <if test="upkeepTotal != null">#{upkeepTotal, jdbcType=VARCHAR},</if>
+            <if test="parkCost != null">#{parkCost, jdbcType=VARCHAR},</if>
+            <if test="parkApply != null">#{parkApply, jdbcType=VARCHAR},</if>
+            <if test="parkTotal != null">#{parkTotal, jdbcType=VARCHAR},</if>
+            <if test="expressCost != null">#{expressCost, jdbcType=VARCHAR},</if>
+            <if test="expressApply != null">#{expressApply, jdbcType=VARCHAR},</if>
+            <if test="expressTotal != null">#{expressTotal, jdbcType=VARCHAR},</if>
+            <if test="hireCost != null">#{hireCost, jdbcType=VARCHAR},</if>
+            <if test="hireApply != null">#{hireApply, jdbcType=VARCHAR},</if>
+            <if test="hireTotal != null">#{hireTotal, jdbcType=VARCHAR},</if>
+            <if test="pcOtherCost != null">#{pcOtherCost, jdbcType=VARCHAR},</if>
+            <if test="subtotal != null">#{subtotal, jdbcType=VARCHAR},</if>
+            <if test="pollNmber != null">#{pollNmber, jdbcType=VARCHAR},</if>
+            <if test="status != null">#{status, jdbcType=VARCHAR},</if>
+            <if test="pcOtherApply != null">#{pcOtherApply, jdbcType=VARCHAR},</if>
+            <if test="pcOtherTotal != null">#{pcOtherTotal, jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+
+    <!-- 根据pk，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_budget_reimbursement.entity.PcTrialProductEO">
+        update PC_TRIAL_PRODUCT
+        set del_flag                = #{delFlag},
+            create_time             = #{createTime},
+            create_by               = #{createBy},
+            update_time             = #{updateTime},
+            update_by               = #{updateBy},
+            r_id                    = #{rId},
+            start_time              = #{startTime},
+            end_time                = #{endTime},
+            start_point             = #{startPoint},
+            end_point               = #{endPoint},
+            depart_odometer         = #{departOdometer},
+            underpan_no             = #{underpanNo},
+            accommodation_cost      = #{accommodationCost},
+            accommodation_apply     = #{accommodationApply},
+            accommodation_total     = #{accommodationTotal},
+            accommodation_day_nmber = #{accommodationDayNmber},
+            high_speed_cost         = #{highSpeedCost},
+            high_speed_apply        = #{highSpeedApply},
+            high_speed_total        = #{highSpeedTotal},
+            pass_way_cost           = #{passWayCost},
+            pass_way_apply          = #{passWayApply},
+            pass_way_total          = #{passWayTotal},
+            refuel_cost             = #{refuelCost},
+            refuel_apply            = #{refuelApply},
+            refuel_total            = #{refuelTotal},
+            charge_cost             = #{chargeCost},
+            charge_apply            = #{chargeApply},
+            charge_total            = #{chargeTotal},
+            air_entrapping_cost     = #{airEntrappingCost},
+            air_entrapping_apply    = #{airEntrappingApply},
+            air_entrapping_total    = #{airEntrappingTotal},
+            maintain_cost           = #{maintainCost},
+            maintain_apply          = #{maintainApply},
+            maintain_total          = #{maintainTotal},
+            upkeep_cost             = #{upkeepCost},
+            upkeep_apply            = #{upkeepApply},
+            upkeep_total            = #{upkeepTotal},
+            park_cost               = #{parkCost},
+            park_apply              = #{parkApply},
+            park_total              = #{parkTotal},
+            express_cost            = #{expressCost},
+            express_apply           = #{expressApply},
+            express_total           = #{expressTotal},
+            hire_cost               = #{hireCost},
+            hire_apply              = #{hireApply},
+            hire_total              = #{hireTotal},
+            pc_other_cost           = #{pcOtherCost},
+            subtotal                = #{subtotal},
+            poll_nmber              = #{pollNmber},
+            status                  = #{status},
+            pc_other_apply          = #{pcOtherApply},
+            pc_other_total          = #{pcOtherTotal}
+        where id = #{id}
+    </update>
+
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_budget_reimbursement.entity.PcTrialProductEO">
+        update PC_TRIAL_PRODUCT
+        <set>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="rId != null">
+                r_id = #{rId},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="startPoint != null">
+                start_point = #{startPoint},
+            </if>
+            <if test="endPoint != null">
+                end_point = #{endPoint},
+            </if>
+            <if test="departOdometer != null">
+                depart_odometer = #{departOdometer},
+            </if>
+            <if test="underpanNo != null">
+                underpan_no = #{underpanNo},
+            </if>
+            <if test="accommodationCost != null">
+                accommodation_cost = #{accommodationCost},
+            </if>
+            <if test="accommodationApply != null">
+                accommodation_apply = #{accommodationApply},
+            </if>
+            <if test="accommodationTotal != null">
+                accommodation_total = #{accommodationTotal},
+            </if>
+            <if test="accommodationDayNmber != null">
+                accommodation_day_nmber = #{accommodationDayNmber},
+            </if>
+            <if test="highSpeedCost != null">
+                high_speed_cost = #{highSpeedCost},
+            </if>
+            <if test="highSpeedApply != null">
+                high_speed_apply = #{highSpeedApply},
+            </if>
+            <if test="highSpeedTotal != null">
+                high_speed_total = #{highSpeedTotal},
+            </if>
+            <if test="passWayCost != null">
+                pass_way_cost = #{passWayCost},
+            </if>
+            <if test="passWayApply != null">
+                pass_way_apply = #{passWayApply},
+            </if>
+            <if test="passWayTotal != null">
+                pass_way_total = #{passWayTotal},
+            </if>
+            <if test="refuelCost != null">
+                refuel_cost = #{refuelCost},
+            </if>
+            <if test="refuelApply != null">
+                refuel_apply = #{refuelApply},
+            </if>
+            <if test="refuelTotal != null">
+                refuel_total = #{refuelTotal},
+            </if>
+            <if test="chargeCost != null">
+                charge_cost = #{chargeCost},
+            </if>
+            <if test="chargeApply != null">
+                charge_apply = #{chargeApply},
+            </if>
+            <if test="chargeTotal != null">
+                charge_total = #{chargeTotal},
+            </if>
+            <if test="airEntrappingCost != null">
+                air_entrapping_cost = #{airEntrappingCost},
+            </if>
+            <if test="airEntrappingApply != null">
+                air_entrapping_apply = #{airEntrappingApply},
+            </if>
+            <if test="airEntrappingTotal != null">
+                air_entrapping_total = #{airEntrappingTotal},
+            </if>
+            <if test="maintainCost != null">
+                maintain_cost = #{maintainCost},
+            </if>
+            <if test="maintainApply != null">
+                maintain_apply = #{maintainApply},
+            </if>
+            <if test="maintainTotal != null">
+                maintain_total = #{maintainTotal},
+            </if>
+            <if test="upkeepCost != null">
+                upkeep_cost = #{upkeepCost},
+            </if>
+            <if test="upkeepApply != null">
+                upkeep_apply = #{upkeepApply},
+            </if>
+            <if test="upkeepTotal != null">
+                upkeep_total = #{upkeepTotal},
+            </if>
+            <if test="parkCost != null">
+                park_cost = #{parkCost},
+            </if>
+            <if test="parkApply != null">
+                park_apply = #{parkApply},
+            </if>
+            <if test="parkTotal != null">
+                park_total = #{parkTotal},
+            </if>
+            <if test="expressCost != null">
+                express_cost = #{expressCost},
+            </if>
+            <if test="expressApply != null">
+                express_apply = #{expressApply},
+            </if>
+            <if test="expressTotal != null">
+                express_total = #{expressTotal},
+            </if>
+            <if test="hireCost != null">
+                hire_cost = #{hireCost},
+            </if>
+            <if test="hireApply != null">
+                hire_apply = #{hireApply},
+            </if>
+            <if test="hireTotal != null">
+                hire_total = #{hireTotal},
+            </if>
+            <if test="pcOtherCost != null">
+                pc_other_cost = #{pcOtherCost},
+            </if>
+            <if test="subtotal != null">
+                subtotal = #{subtotal},
+            </if>
+            <if test="pollNmber != null">
+                poll_nmber = #{pollNmber},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="pcOtherApply != null">
+                pc_other_apply = #{pcOtherApply},
+            </if>
+            <if test="pcOtherTotal != null">
+                pc_other_total = #{pcOtherTotal},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 根据id查询 PC_TRIAL_PRODUCT -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_PRODUCT
+        where id = #{value}
+
+    </select>
+
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from PC_TRIAL_PRODUCT
+        where id = #{value}
+
+    </delete>
+
+    <!-- PC_TRIAL_PRODUCT 列表总数-->
+    <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+        select count(1) from PC_TRIAL_PRODUCT
+        <include refid="Base_Where_Clause"/>
+    </select>
+
+    <!-- 查询PC_TRIAL_PRODUCT列表 -->
+    <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        (select tmp_tb.* , rownum rn from
+        (select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_PRODUCT
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+        ) tmp_tb where rownum &lt;= ${pager.endIndex})
+        where rn &gt;= ${pager.startIndex}
+    </select>
+
+    <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_PRODUCT
+        <include refid="Base_Where_Clause"/>
+        <if test="pager.orderCondition != null and pager.orderCondition != ''">
+            ${pager.orderCondition}
+        </if>
+    </select>
+
+    <delete id="deleteByRid">
+        delete
+        from PC_TRIAL_PRODUCT
+        where R_ID = #{id}
+    </delete>
+
+    <select id="selectByRid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from PC_TRIAL_PRODUCT PTP
+        where PTP.R_ID = #{id} and PTP.DEL_FLAG = 0
+        order by START_TIME
+    </select>
+
+</mapper>

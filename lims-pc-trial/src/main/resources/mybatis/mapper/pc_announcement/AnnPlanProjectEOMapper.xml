@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.adc.da.pc_announcement.dao.AnnPlanProjectEODao" >
+  <!-- Result Map-->
+  <resultMap id="BaseResultMap" type="com.adc.da.pc_announcement.entity.AnnPlanProjectEO" >
+    <id column="id" property="id" />
+    <result column="pj_sj_bz_qtfy" property="pjSjBzQtfy" />
+    <result column="pj_sj_qt_qtfy" property="pjSjQtQtfy" />
+    <result column="pj_sj_wblsh" property="pjSjWblsh" />
+    <result column="pj_sj_wblso" property="pjSjWblso" />
+    <result column="pj_sj_kdf" property="pjSjKdf" />
+    <result column="pj_sj_tcf" property="pjSjTcf" />
+    <result column="pj_sj_zxf" property="pjSjZxf" />
+    <result column="pj_sj_wxf" property="pjSjWxf" />
+    <result column="pj_sj_cdf" property="pjSjCdf" />
+    <result column="pj_sj_jqf" property="pjSjJqf" />
+    <result column="pj_sj_jyf" property="pjSjJyf" />
+    <result column="pj_sj_bz2" property="pjSjBz2" />
+    <result column="pj_sj_qt2" property="pjSjQt2" />
+    <result column="pj_sj_bz1" property="pjSjBz1" />
+    <result column="pj_sj_qt1" property="pjSjQt1" />
+    <result column="pj_sj_syjsfz" property="pjSjSyjsfz" />
+    <result column="pj_sj_syzbjd" property="pjSjSyzbjd" />
+    <result column="pj_sj_ckrzxm" property="pjSjCkrzxm" />
+    <result column="pj_sj_yyclaq" property="pjSjYyclaq" />
+    <result column="pj_sj_yyclrl" property="pjSjYyclrl" />
+    <result column="pj_sj_wtsy" property="pjSjWtsy" />
+    <result column="pj_sj_rzmdxm" property="pjSjRzmdxm" />
+    <result column="pj_sj_3Csbf" property="pjSj3csbf" />
+    <result column="pj_sj_jtbyh" property="pjSjJtbyh" />
+    <result column="pj_sj_3Cfy" property="pjSj3cfy" />
+    <result column="pj_sj_hbfy" property="pjSjHbfy" />
+    <result column="pj_sj_xnyfy" property="pjSjXnyfy" />
+    <result column="pj_sj_zycdfy" property="pjSjZycdfy" />
+    <result column="pj_sj_tjb" property="pjSjTjb" />
+    <result column="pj_sj_qjsyfy" property="pjSjQjsyfy" />
+    <result column="pj_sj_dxsyfy" property="pjSjDxsyfy" />
+    <result column="pj_sj_syfy" property="pjSjSyfy" />
+    <result column="pj_ys_bz_qtfy" property="pjYsBzQtfy" />
+    <result column="pj_ys_qt_qtfy" property="pjYsQtQtfy" />
+    <result column="pj_ys_wblsh" property="pjYsWblsh" />
+    <result column="pj_ys_wblso" property="pjYsWblso" />
+    <result column="pj_ys_kdf" property="pjYsKdf" />
+    <result column="pj_ys_tcf" property="pjYsTcf" />
+    <result column="pj_ys_zxf" property="pjYsZxf" />
+    <result column="pj_ys_wxf" property="pjYsWxf" />
+    <result column="pj_ys_cdf" property="pjYsCdf" />
+    <result column="pj_ys_jqf" property="pjYsJqf" />
+    <result column="pj_ys_jyf" property="pjYsJyf" />
+    <result column="pj_ys_bz2" property="pjYsBz2" />
+    <result column="pj_ys_qt2" property="pjYsQt2" />
+    <result column="pj_ys_bz1" property="pjYsBz1" />
+    <result column="pj_ys_qt1" property="pjYsQt1" />
+    <result column="pj_ys_syjsfz" property="pjYsSyjsfz" />
+    <result column="pj_ys_syzbjd" property="pjYsSyzbjd" />
+    <result column="pj_ys_ckrzxm" property="pjYsCkrzxm" />
+    <result column="pj_ys_yyclaq" property="pjYsYyclaq" />
+    <result column="pj_ys_yyclrl" property="pjYsYyclrl" />
+    <result column="pj_ys_wtsy" property="pjYsWtsy" />
+    <result column="pj_ys_rzmdxm" property="pjYsRzmdxm" />
+    <result column="pj_ys_3Csbf" property="pjYs3csbf" />
+    <result column="pj_ys_jtbyh" property="pjYsJtbyh" />
+    <result column="pj_ys_3Cfy" property="pjYs3cfy" />
+    <result column="pj_ys_hbfy" property="pjYsHbfy" />
+    <result column="pj_ys_xnyfy" property="pjYsXnyfy" />
+    <result column="pj_ys_zycdfy" property="pjYsZycdfy" />
+    <result column="pj_ys_tjb" property="pjYsTjb" />
+    <result column="pj_ys_qjsyfy" property="pjYsQjsyfy" />
+    <result column="pj_ys_dxsyfy" property="pjYsDxsyfy" />
+    <result column="pj_ys_syfy" property="pjYsSyfy" />
+    <result column="pj_remakes" property="pjRemakes" />
+    <result column="pj_report_name" property="pjReportName" />
+    <result column="pj_report_id" property="pjReportId" />
+    <result column="pj_supplier" property="pjSupplier" />
+    <result column="pj_status" property="pjStatus" />
+    <result column="pj_param_time_actual" property="pjParamTimeActual" />
+    <result column="pj_param_time_plan" property="pjParamTimePlan" />
+    <result column="pj_car_time_actual" property="pjCarTimeActual" />
+    <result column="pj_car_time_plan" property="pjCarTimePlan" />
+    <result column="pj_ann_batch" property="pjAnnBatch" />
+    <result column="pj_engineer_name" property="pjEngineerName" />
+    <result column="pj_engineer_id" property="pjEngineerId" />
+    <result column="pj_approval_form" property="pjApprovalForm" />
+    <result column="pj_task_source" property="pjTaskSource" />
+    <result column="pj_type" property="pjType" />
+    <result column="pj_model" property="pjModel" />
+    <result column="plan_id" property="planId" />
+    <result column="pj_task_explain" property="pjTaskExplain" />
+    <result column="sum_actual_cost" property="sumActualCost" />
+  </resultMap>
+
+  <!-- ANN_PLAN_PROJECT table all fields -->
+  <sql id="Base_Column_List" >
+     pj_sj_bz_qtfy, pj_sj_qt_qtfy, pj_sj_wblsh, pj_sj_wblso, pj_sj_kdf, pj_sj_tcf, pj_sj_zxf, pj_sj_wxf, pj_sj_cdf, pj_sj_jqf, pj_sj_jyf, pj_sj_bz2, pj_sj_qt2, pj_sj_bz1, pj_sj_qt1, pj_sj_syjsfz, pj_sj_syzbjd, 
+     pj_sj_ckrzxm, pj_sj_yyclaq, pj_sj_yyclrl, pj_sj_wtsy, pj_sj_rzmdxm, pj_sj_3Csbf, pj_sj_jtbyh, pj_sj_3Cfy, pj_sj_hbfy, pj_sj_xnyfy, pj_sj_zycdfy, pj_sj_tjb, pj_sj_qjsyfy, pj_sj_dxsyfy, pj_sj_syfy, 
+     pj_ys_bz_qtfy, pj_ys_qt_qtfy, pj_ys_wblsh, pj_ys_wblso, pj_ys_kdf, pj_ys_tcf, pj_ys_zxf, pj_ys_wxf, pj_ys_cdf, pj_ys_jqf, pj_ys_jyf, pj_ys_bz2, pj_ys_qt2, pj_ys_bz1, pj_ys_qt1, pj_ys_syjsfz, pj_ys_syzbjd, 
+     pj_ys_ckrzxm, pj_ys_yyclaq, pj_ys_yyclrl, pj_ys_wtsy, pj_ys_rzmdxm, pj_ys_3Csbf, pj_ys_jtbyh, pj_ys_3Cfy, pj_ys_hbfy, pj_ys_xnyfy, pj_ys_zycdfy, pj_ys_tjb, pj_ys_qjsyfy, pj_ys_dxsyfy, pj_ys_syfy, pj_remakes, 
+     pj_report_name, pj_report_id, pj_supplier, pj_status, pj_param_time_actual, pj_param_time_plan, pj_car_time_actual, pj_car_time_plan, pj_ann_batch, pj_engineer_name, pj_engineer_id, pj_approval_form, 
+     pj_task_source, pj_type, pj_model, plan_id, id, pj_task_explain, sum_actual_cost
+  </sql>
+
+  <!-- 查询条件 -->
+  <sql id="Base_Where_Clause">
+    where 1=1
+    <trim suffixOverrides="," >
+      <if test="pjSjBzQtfy != null" >
+        and pj_sj_bz_qtfy ${pjSjBzQtfyOperator} #{pjSjBzQtfy}
+      </if>
+      <if test="pjSjQtQtfy != null" >
+        and pj_sj_qt_qtfy ${pjSjQtQtfyOperator} #{pjSjQtQtfy}
+      </if>
+      <if test="pjSjWblsh != null" >
+        and pj_sj_wblsh ${pjSjWblshOperator} #{pjSjWblsh}
+      </if>
+      <if test="pjSjWblso != null" >
+        and pj_sj_wblso ${pjSjWblsoOperator} #{pjSjWblso}
+      </if>
+      <if test="pjSjKdf != null" >
+        and pj_sj_kdf ${pjSjKdfOperator} #{pjSjKdf}
+      </if>
+      <if test="pjSjTcf != null" >
+        and pj_sj_tcf ${pjSjTcfOperator} #{pjSjTcf}
+      </if>
+      <if test="pjSjZxf != null" >
+        and pj_sj_zxf ${pjSjZxfOperator} #{pjSjZxf}
+      </if>
+      <if test="pjSjWxf != null" >
+        and pj_sj_wxf ${pjSjWxfOperator} #{pjSjWxf}
+      </if>
+      <if test="pjSjCdf != null" >
+        and pj_sj_cdf ${pjSjCdfOperator} #{pjSjCdf}
+      </if>
+      <if test="pjSjJqf != null" >
+        and pj_sj_jqf ${pjSjJqfOperator} #{pjSjJqf}
+      </if>
+      <if test="pjSjJyf != null" >
+        and pj_sj_jyf ${pjSjJyfOperator} #{pjSjJyf}
+      </if>
+      <if test="pjSjBz2 != null" >
+        and pj_sj_bz2 ${pjSjBz2Operator} #{pjSjBz2}
+      </if>
+      <if test="pjSjQt2 != null" >
+        and pj_sj_qt2 ${pjSjQt2Operator} #{pjSjQt2}
+      </if>
+      <if test="pjSjBz1 != null" >
+        and pj_sj_bz1 ${pjSjBz1Operator} #{pjSjBz1}
+      </if>
+      <if test="pjSjQt1 != null" >
+        and pj_sj_qt1 ${pjSjQt1Operator} #{pjSjQt1}
+      </if>
+      <if test="pjSjSyjsfz != null" >
+        and pj_sj_syjsfz ${pjSjSyjsfzOperator} #{pjSjSyjsfz}
+      </if>
+      <if test="pjSjSyzbjd != null" >
+        and pj_sj_syzbjd ${pjSjSyzbjdOperator} #{pjSjSyzbjd}
+      </if>
+      <if test="pjSjCkrzxm != null" >
+        and pj_sj_ckrzxm ${pjSjCkrzxmOperator} #{pjSjCkrzxm}
+      </if>
+      <if test="pjSjYyclaq != null" >
+        and pj_sj_yyclaq ${pjSjYyclaqOperator} #{pjSjYyclaq}
+      </if>
+      <if test="pjSjYyclrl != null" >
+        and pj_sj_yyclrl ${pjSjYyclrlOperator} #{pjSjYyclrl}
+      </if>
+      <if test="pjSjWtsy != null" >
+        and pj_sj_wtsy ${pjSjWtsyOperator} #{pjSjWtsy}
+      </if>
+      <if test="pjSjRzmdxm != null" >
+        and pj_sj_rzmdxm ${pjSjRzmdxmOperator} #{pjSjRzmdxm}
+      </if>
+      <if test="pjSj3csbf != null" >
+        and pj_sj_3Csbf ${pjSj3csbfOperator} #{pjSj3csbf}
+      </if>
+      <if test="pjSjJtbyh != null" >
+        and pj_sj_jtbyh ${pjSjJtbyhOperator} #{pjSjJtbyh}
+      </if>
+      <if test="pjSj3cfy != null" >
+        and pj_sj_3Cfy ${pjSj3cfyOperator} #{pjSj3cfy}
+      </if>
+      <if test="pjSjHbfy != null" >
+        and pj_sj_hbfy ${pjSjHbfyOperator} #{pjSjHbfy}
+      </if>
+      <if test="pjSjXnyfy != null" >
+        and pj_sj_xnyfy ${pjSjXnyfyOperator} #{pjSjXnyfy}
+      </if>
+      <if test="pjSjZycdfy != null" >
+        and pj_sj_zycdfy ${pjSjZycdfyOperator} #{pjSjZycdfy}
+      </if>
+      <if test="pjSjTjb != null" >
+        and pj_sj_tjb ${pjSjTjbOperator} #{pjSjTjb}
+      </if>
+      <if test="pjSjQjsyfy != null" >
+        and pj_sj_qjsyfy ${pjSjQjsyfyOperator} #{pjSjQjsyfy}
+      </if>
+      <if test="pjSjDxsyfy != null" >
+        and pj_sj_dxsyfy ${pjSjDxsyfyOperator} #{pjSjDxsyfy}
+      </if>
+      <if test="pjSjSyfy != null" >
+        and pj_sj_syfy ${pjSjSyfyOperator} #{pjSjSyfy}
+      </if>
+      <if test="pjYsBzQtfy != null" >
+        and pj_ys_bz_qtfy ${pjYsBzQtfyOperator} #{pjYsBzQtfy}
+      </if>
+      <if test="pjYsQtQtfy != null" >
+        and pj_ys_qt_qtfy ${pjYsQtQtfyOperator} #{pjYsQtQtfy}
+      </if>
+      <if test="pjYsWblsh != null" >
+        and pj_ys_wblsh ${pjYsWblshOperator} #{pjYsWblsh}
+      </if>
+      <if test="pjYsWblso != null" >
+        and pj_ys_wblso ${pjYsWblsoOperator} #{pjYsWblso}
+      </if>
+      <if test="pjYsKdf != null" >
+        and pj_ys_kdf ${pjYsKdfOperator} #{pjYsKdf}
+      </if>
+      <if test="pjYsTcf != null" >
+        and pj_ys_tcf ${pjYsTcfOperator} #{pjYsTcf}
+      </if>
+      <if test="pjYsZxf != null" >
+        and pj_ys_zxf ${pjYsZxfOperator} #{pjYsZxf}
+      </if>
+      <if test="pjYsWxf != null" >
+        and pj_ys_wxf ${pjYsWxfOperator} #{pjYsWxf}
+      </if>
+      <if test="pjYsCdf != null" >
+        and pj_ys_cdf ${pjYsCdfOperator} #{pjYsCdf}
+      </if>
+      <if test="pjYsJqf != null" >
+        and pj_ys_jqf ${pjYsJqfOperator} #{pjYsJqf}
+      </if>
+      <if test="pjYsJyf != null" >
+        and pj_ys_jyf ${pjYsJyfOperator} #{pjYsJyf}
+      </if>
+      <if test="pjYsBz2 != null" >
+        and pj_ys_bz2 ${pjYsBz2Operator} #{pjYsBz2}
+      </if>
+      <if test="pjYsQt2 != null" >
+        and pj_ys_qt2 ${pjYsQt2Operator} #{pjYsQt2}
+      </if>
+      <if test="pjYsBz1 != null" >
+        and pj_ys_bz1 ${pjYsBz1Operator} #{pjYsBz1}
+      </if>
+      <if test="pjYsQt1 != null" >
+        and pj_ys_qt1 ${pjYsQt1Operator} #{pjYsQt1}
+      </if>
+      <if test="pjYsSyjsfz != null" >
+        and pj_ys_syjsfz ${pjYsSyjsfzOperator} #{pjYsSyjsfz}
+      </if>
+      <if test="pjYsSyzbjd != null" >
+        and pj_ys_syzbjd ${pjYsSyzbjdOperator} #{pjYsSyzbjd}
+      </if>
+      <if test="pjYsCkrzxm != null" >
+        and pj_ys_ckrzxm ${pjYsCkrzxmOperator} #{pjYsCkrzxm}
+      </if>
+      <if test="pjYsYyclaq != null" >
+        and pj_ys_yyclaq ${pjYsYyclaqOperator} #{pjYsYyclaq}
+      </if>
+      <if test="pjYsYyclrl != null" >
+        and pj_ys_yyclrl ${pjYsYyclrlOperator} #{pjYsYyclrl}
+      </if>
+      <if test="pjYsWtsy != null" >
+        and pj_ys_wtsy ${pjYsWtsyOperator} #{pjYsWtsy}
+      </if>
+      <if test="pjYsRzmdxm != null" >
+        and pj_ys_rzmdxm ${pjYsRzmdxmOperator} #{pjYsRzmdxm}
+      </if>
+      <if test="pjYs3csbf != null" >
+        and pj_ys_3Csbf ${pjYs3csbfOperator} #{pjYs3csbf}
+      </if>
+      <if test="pjYsJtbyh != null" >
+        and pj_ys_jtbyh ${pjYsJtbyhOperator} #{pjYsJtbyh}
+      </if>
+      <if test="pjYs3cfy != null" >
+        and pj_ys_3Cfy ${pjYs3cfyOperator} #{pjYs3cfy}
+      </if>
+      <if test="pjYsHbfy != null" >
+        and pj_ys_hbfy ${pjYsHbfyOperator} #{pjYsHbfy}
+      </if>
+      <if test="pjYsXnyfy != null" >
+        and pj_ys_xnyfy ${pjYsXnyfyOperator} #{pjYsXnyfy}
+      </if>
+      <if test="pjYsZycdfy != null" >
+        and pj_ys_zycdfy ${pjYsZycdfyOperator} #{pjYsZycdfy}
+      </if>
+      <if test="pjYsTjb != null" >
+        and pj_ys_tjb ${pjYsTjbOperator} #{pjYsTjb}
+      </if>
+      <if test="pjYsQjsyfy != null" >
+        and pj_ys_qjsyfy ${pjYsQjsyfyOperator} #{pjYsQjsyfy}
+      </if>
+      <if test="pjYsDxsyfy != null" >
+        and pj_ys_dxsyfy ${pjYsDxsyfyOperator} #{pjYsDxsyfy}
+      </if>
+      <if test="pjYsSyfy != null" >
+        and pj_ys_syfy ${pjYsSyfyOperator} #{pjYsSyfy}
+      </if>
+      <if test="pjRemakes != null" >
+        and pj_remakes ${pjRemakesOperator} #{pjRemakes}
+      </if>
+      <if test="pjReportName != null" >
+        and pj_report_name ${pjReportNameOperator} #{pjReportName}
+      </if>
+      <if test="pjReportId != null" >
+        and pj_report_id ${pjReportIdOperator} #{pjReportId}
+      </if>
+      <if test="pjSupplier != null" >
+        and pj_supplier ${pjSupplierOperator} #{pjSupplier}
+      </if>
+      <if test="pjStatus != null" >
+        and pj_status ${pjStatusOperator} #{pjStatus}
+      </if>
+      <if test="pjParamTimeActual != null" >
+        and pj_param_time_actual ${pjParamTimeActualOperator} #{pjParamTimeActual}
+      </if>
+      <if test="pjParamTimePlan != null" >
+        and pj_param_time_plan ${pjParamTimePlanOperator} #{pjParamTimePlan}
+      </if>
+      <if test="pjCarTimeActual != null" >
+        and pj_car_time_actual ${pjCarTimeActualOperator} #{pjCarTimeActual}
+      </if>
+      <if test="pjCarTimePlan != null" >
+        and pj_car_time_plan ${pjCarTimePlanOperator} #{pjCarTimePlan}
+      </if>
+      <if test="pjAnnBatch != null" >
+        and pj_ann_batch ${pjAnnBatchOperator} #{pjAnnBatch}
+      </if>
+      <if test="pjEngineerName != null" >
+        and pj_engineer_name ${pjEngineerNameOperator} #{pjEngineerName}
+      </if>
+      <if test="pjEngineerId != null" >
+        and pj_engineer_id ${pjEngineerIdOperator} #{pjEngineerId}
+      </if>
+      <if test="pjApprovalForm != null" >
+        and pj_approval_form ${pjApprovalFormOperator} #{pjApprovalForm}
+      </if>
+      <if test="pjTaskSource != null" >
+        and pj_task_source ${pjTaskSourceOperator} #{pjTaskSource}
+      </if>
+      <if test="pjType != null" >
+        and pj_type ${pjTypeOperator} #{pjType}
+      </if>
+      <if test="pjModel != null" >
+        and pj_model ${pjModelOperator} #{pjModel}
+      </if>
+      <if test="planId != null" >
+        and plan_id ${planIdOperator} #{planId}
+      </if>
+      <if test="id != null" >
+        and id ${idOperator} #{id}
+      </if>
+      <if test="sumActualCost != null" >
+        and sum_actual_cost ${sumActualCostOperator} #{sumActualCost}
+      </if>
+    </trim>
+  </sql>
+
+  <!-- 插入记录 -->
+  <insert id="insert" parameterType="com.adc.da.pc_announcement.entity.AnnPlanProjectEO" >
+    <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_ANN_PLAN_PROJECT.NEXTVAL FROM DUAL
+    </selectKey> -->
+    insert into ANN_PLAN_PROJECT(<include refid="Base_Column_List" />)
+    values (#{pjSjBzQtfy, jdbcType=VARCHAR}, #{pjSjQtQtfy, jdbcType=VARCHAR}, #{pjSjWblsh, jdbcType=VARCHAR}, #{pjSjWblso, jdbcType=VARCHAR}, #{pjSjKdf, jdbcType=VARCHAR}, #{pjSjTcf, jdbcType=VARCHAR}, #{pjSjZxf, jdbcType=VARCHAR}, #{pjSjWxf, jdbcType=VARCHAR}, #{pjSjCdf, jdbcType=VARCHAR}, #{pjSjJqf, jdbcType=VARCHAR}, #{pjSjJyf, jdbcType=VARCHAR}, #{pjSjBz2, jdbcType=VARCHAR}, #{pjSjQt2, jdbcType=VARCHAR}, #{pjSjBz1, jdbcType=VARCHAR}, #{pjSjQt1, jdbcType=VARCHAR}, #{pjSjSyjsfz, jdbcType=VARCHAR}, #{pjSjSyzbjd, jdbcType=VARCHAR}, #{pjSjCkrzxm, jdbcType=VARCHAR}, #{pjSjYyclaq, jdbcType=VARCHAR}, #{pjSjYyclrl, jdbcType=VARCHAR}, #{pjSjWtsy, jdbcType=VARCHAR}, #{pjSjRzmdxm, jdbcType=VARCHAR}, #{pjSj3csbf, jdbcType=VARCHAR}, #{pjSjJtbyh, jdbcType=VARCHAR}, #{pjSj3cfy, jdbcType=VARCHAR}, #{pjSjHbfy, jdbcType=VARCHAR}, #{pjSjXnyfy, jdbcType=VARCHAR}, #{pjSjZycdfy, jdbcType=VARCHAR}, #{pjSjTjb, jdbcType=VARCHAR}, #{pjSjQjsyfy, jdbcType=VARCHAR}, #{pjSjDxsyfy, jdbcType=VARCHAR}, #{pjSjSyfy, jdbcType=VARCHAR}, #{pjYsBzQtfy, jdbcType=VARCHAR}, #{pjYsQtQtfy, jdbcType=VARCHAR}, #{pjYsWblsh, jdbcType=VARCHAR}, #{pjYsWblso, jdbcType=VARCHAR}, #{pjYsKdf, jdbcType=VARCHAR}, #{pjYsTcf, jdbcType=VARCHAR}, #{pjYsZxf, jdbcType=VARCHAR}, #{pjYsWxf, jdbcType=VARCHAR}, #{pjYsCdf, jdbcType=VARCHAR}, #{pjYsJqf, jdbcType=VARCHAR}, #{pjYsJyf, jdbcType=VARCHAR}, #{pjYsBz2, jdbcType=VARCHAR}, #{pjYsQt2, jdbcType=VARCHAR}, #{pjYsBz1, jdbcType=VARCHAR}, #{pjYsQt1, jdbcType=VARCHAR}, #{pjYsSyjsfz, jdbcType=VARCHAR}, #{pjYsSyzbjd, jdbcType=VARCHAR}, #{pjYsCkrzxm, jdbcType=VARCHAR}, #{pjYsYyclaq, jdbcType=VARCHAR}, #{pjYsYyclrl, jdbcType=VARCHAR}, #{pjYsWtsy, jdbcType=VARCHAR}, #{pjYsRzmdxm, jdbcType=VARCHAR}, #{pjYs3csbf, jdbcType=VARCHAR}, #{pjYsJtbyh, jdbcType=VARCHAR}, #{pjYs3cfy, jdbcType=VARCHAR}, #{pjYsHbfy, jdbcType=VARCHAR}, #{pjYsXnyfy, jdbcType=VARCHAR}, #{pjYsZycdfy, jdbcType=VARCHAR}, #{pjYsTjb, jdbcType=VARCHAR}, #{pjYsQjsyfy, jdbcType=VARCHAR}, #{pjYsDxsyfy, jdbcType=VARCHAR}, #{pjYsSyfy, jdbcType=VARCHAR}, #{pjRemakes, jdbcType=VARCHAR}, #{pjReportName, jdbcType=VARCHAR}, #{pjReportId, jdbcType=VARCHAR}, #{pjSupplier, jdbcType=VARCHAR}, #{pjStatus, jdbcType=VARCHAR}, #{pjParamTimeActual, jdbcType=VARCHAR}, #{pjParamTimePlan, jdbcType=VARCHAR}, #{pjCarTimeActual, jdbcType=VARCHAR}, #{pjCarTimePlan, jdbcType=VARCHAR}, #{pjAnnBatch, jdbcType=VARCHAR}, #{pjEngineerName, jdbcType=VARCHAR}, #{pjEngineerId, jdbcType=VARCHAR}, #{pjApprovalForm, jdbcType=VARCHAR}, #{pjTaskSource, jdbcType=VARCHAR}, #{pjType, jdbcType=VARCHAR}, #{pjModel, jdbcType=VARCHAR}, #{planId, jdbcType=VARCHAR}, #{id, jdbcType=VARCHAR}, #{sumActualCost, jdbcType=VARCHAR})
+  </insert>
+
+  <!-- 动态插入记录 主键是序列 -->
+  <insert id="insertSelective" parameterType="com.adc.da.pc_announcement.entity.AnnPlanProjectEO" >
+        <!-- <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+        SELECT SEQ_ANN_PLAN_PROJECT.NEXTVAL FROM DUAL
+    </selectKey> -->
+        insert into ANN_PLAN_PROJECT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+                <if test="pjSjBzQtfy != null" >pj_sj_bz_qtfy,</if>
+                <if test="pjSjQtQtfy != null" >pj_sj_qt_qtfy,</if>
+                <if test="pjSjWblsh != null" >pj_sj_wblsh,</if>
+                <if test="pjSjWblso != null" >pj_sj_wblso,</if>
+                <if test="pjSjKdf != null" >pj_sj_kdf,</if>
+                <if test="pjSjTcf != null" >pj_sj_tcf,</if>
+                <if test="pjSjZxf != null" >pj_sj_zxf,</if>
+                <if test="pjSjWxf != null" >pj_sj_wxf,</if>
+                <if test="pjSjCdf != null" >pj_sj_cdf,</if>
+                <if test="pjSjJqf != null" >pj_sj_jqf,</if>
+                <if test="pjSjJyf != null" >pj_sj_jyf,</if>
+                <if test="pjSjBz2 != null" >pj_sj_bz2,</if>
+                <if test="pjSjQt2 != null" >pj_sj_qt2,</if>
+                <if test="pjSjBz1 != null" >pj_sj_bz1,</if>
+                <if test="pjSjQt1 != null" >pj_sj_qt1,</if>
+                <if test="pjSjSyjsfz != null" >pj_sj_syjsfz,</if>
+                <if test="pjSjSyzbjd != null" >pj_sj_syzbjd,</if>
+                <if test="pjSjCkrzxm != null" >pj_sj_ckrzxm,</if>
+                <if test="pjSjYyclaq != null" >pj_sj_yyclaq,</if>
+                <if test="pjSjYyclrl != null" >pj_sj_yyclrl,</if>
+                <if test="pjSjWtsy != null" >pj_sj_wtsy,</if>
+                <if test="pjSjRzmdxm != null" >pj_sj_rzmdxm,</if>
+                <if test="pjSj3csbf != null" >pj_sj_3Csbf,</if>
+                <if test="pjSjJtbyh != null" >pj_sj_jtbyh,</if>
+                <if test="pjSj3cfy != null" >pj_sj_3Cfy,</if>
+                <if test="pjSjHbfy != null" >pj_sj_hbfy,</if>
+                <if test="pjSjXnyfy != null" >pj_sj_xnyfy,</if>
+                <if test="pjSjZycdfy != null" >pj_sj_zycdfy,</if>
+                <if test="pjSjTjb != null" >pj_sj_tjb,</if>
+                <if test="pjSjQjsyfy != null" >pj_sj_qjsyfy,</if>
+                <if test="pjSjDxsyfy != null" >pj_sj_dxsyfy,</if>
+                <if test="pjSjSyfy != null" >pj_sj_syfy,</if>
+                <if test="pjYsBzQtfy != null" >pj_ys_bz_qtfy,</if>
+                <if test="pjYsQtQtfy != null" >pj_ys_qt_qtfy,</if>
+                <if test="pjYsWblsh != null" >pj_ys_wblsh,</if>
+                <if test="pjYsWblso != null" >pj_ys_wblso,</if>
+                <if test="pjYsKdf != null" >pj_ys_kdf,</if>
+                <if test="pjYsTcf != null" >pj_ys_tcf,</if>
+                <if test="pjYsZxf != null" >pj_ys_zxf,</if>
+                <if test="pjYsWxf != null" >pj_ys_wxf,</if>
+                <if test="pjYsCdf != null" >pj_ys_cdf,</if>
+                <if test="pjYsJqf != null" >pj_ys_jqf,</if>
+                <if test="pjYsJyf != null" >pj_ys_jyf,</if>
+                <if test="pjYsBz2 != null" >pj_ys_bz2,</if>
+                <if test="pjYsQt2 != null" >pj_ys_qt2,</if>
+                <if test="pjYsBz1 != null" >pj_ys_bz1,</if>
+                <if test="pjYsQt1 != null" >pj_ys_qt1,</if>
+                <if test="pjYsSyjsfz != null" >pj_ys_syjsfz,</if>
+                <if test="pjYsSyzbjd != null" >pj_ys_syzbjd,</if>
+                <if test="pjYsCkrzxm != null" >pj_ys_ckrzxm,</if>
+                <if test="pjYsYyclaq != null" >pj_ys_yyclaq,</if>
+                <if test="pjYsYyclrl != null" >pj_ys_yyclrl,</if>
+                <if test="pjYsWtsy != null" >pj_ys_wtsy,</if>
+                <if test="pjYsRzmdxm != null" >pj_ys_rzmdxm,</if>
+                <if test="pjYs3csbf != null" >pj_ys_3Csbf,</if>
+                <if test="pjYsJtbyh != null" >pj_ys_jtbyh,</if>
+                <if test="pjYs3cfy != null" >pj_ys_3Cfy,</if>
+                <if test="pjYsHbfy != null" >pj_ys_hbfy,</if>
+                <if test="pjYsXnyfy != null" >pj_ys_xnyfy,</if>
+                <if test="pjYsZycdfy != null" >pj_ys_zycdfy,</if>
+                <if test="pjYsTjb != null" >pj_ys_tjb,</if>
+                <if test="pjYsQjsyfy != null" >pj_ys_qjsyfy,</if>
+                <if test="pjYsDxsyfy != null" >pj_ys_dxsyfy,</if>
+                <if test="pjYsSyfy != null" >pj_ys_syfy,</if>
+                <if test="pjRemakes != null" >pj_remakes,</if>
+                <if test="pjReportName != null" >pj_report_name,</if>
+                <if test="pjReportId != null" >pj_report_id,</if>
+                <if test="pjSupplier != null" >pj_supplier,</if>
+                <if test="pjStatus != null" >pj_status,</if>
+                <if test="pjParamTimeActual != null" >pj_param_time_actual,</if>
+                <if test="pjParamTimePlan != null" >pj_param_time_plan,</if>
+                <if test="pjCarTimeActual != null" >pj_car_time_actual,</if>
+                <if test="pjCarTimePlan != null" >pj_car_time_plan,</if>
+                <if test="pjAnnBatch != null" >pj_ann_batch,</if>
+                <if test="pjEngineerName != null" >pj_engineer_name,</if>
+                <if test="pjEngineerId != null" >pj_engineer_id,</if>
+                <if test="pjApprovalForm != null" >pj_approval_form,</if>
+                <if test="pjTaskSource != null" >pj_task_source,</if>
+                <if test="pjType != null" >pj_type,</if>
+                <if test="pjModel != null" >pj_model,</if>
+                <if test="planId != null" >plan_id,</if>
+                <if test="id != null" >id,</if>
+                <if test="pjTaskExplain != null" >pj_task_explain,</if>
+                <if test="sumActualCost != null" >sum_actual_cost,</if>
+            </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+                <if test="pjSjBzQtfy != null" >#{pjSjBzQtfy, jdbcType=VARCHAR},</if>
+                <if test="pjSjQtQtfy != null" >#{pjSjQtQtfy, jdbcType=VARCHAR},</if>
+                <if test="pjSjWblsh != null" >#{pjSjWblsh, jdbcType=VARCHAR},</if>
+                <if test="pjSjWblso != null" >#{pjSjWblso, jdbcType=VARCHAR},</if>
+                <if test="pjSjKdf != null" >#{pjSjKdf, jdbcType=VARCHAR},</if>
+                <if test="pjSjTcf != null" >#{pjSjTcf, jdbcType=VARCHAR},</if>
+                <if test="pjSjZxf != null" >#{pjSjZxf, jdbcType=VARCHAR},</if>
+                <if test="pjSjWxf != null" >#{pjSjWxf, jdbcType=VARCHAR},</if>
+                <if test="pjSjCdf != null" >#{pjSjCdf, jdbcType=VARCHAR},</if>
+                <if test="pjSjJqf != null" >#{pjSjJqf, jdbcType=VARCHAR},</if>
+                <if test="pjSjJyf != null" >#{pjSjJyf, jdbcType=VARCHAR},</if>
+                <if test="pjSjBz2 != null" >#{pjSjBz2, jdbcType=VARCHAR},</if>
+                <if test="pjSjQt2 != null" >#{pjSjQt2, jdbcType=VARCHAR},</if>
+                <if test="pjSjBz1 != null" >#{pjSjBz1, jdbcType=VARCHAR},</if>
+                <if test="pjSjQt1 != null" >#{pjSjQt1, jdbcType=VARCHAR},</if>
+                <if test="pjSjSyjsfz != null" >#{pjSjSyjsfz, jdbcType=VARCHAR},</if>
+                <if test="pjSjSyzbjd != null" >#{pjSjSyzbjd, jdbcType=VARCHAR},</if>
+                <if test="pjSjCkrzxm != null" >#{pjSjCkrzxm, jdbcType=VARCHAR},</if>
+                <if test="pjSjYyclaq != null" >#{pjSjYyclaq, jdbcType=VARCHAR},</if>
+                <if test="pjSjYyclrl != null" >#{pjSjYyclrl, jdbcType=VARCHAR},</if>
+                <if test="pjSjWtsy != null" >#{pjSjWtsy, jdbcType=VARCHAR},</if>
+                <if test="pjSjRzmdxm != null" >#{pjSjRzmdxm, jdbcType=VARCHAR},</if>
+                <if test="pjSj3csbf != null" >#{pjSj3csbf, jdbcType=VARCHAR},</if>
+                <if test="pjSjJtbyh != null" >#{pjSjJtbyh, jdbcType=VARCHAR},</if>
+                <if test="pjSj3cfy != null" >#{pjSj3cfy, jdbcType=VARCHAR},</if>
+                <if test="pjSjHbfy != null" >#{pjSjHbfy, jdbcType=VARCHAR},</if>
+                <if test="pjSjXnyfy != null" >#{pjSjXnyfy, jdbcType=VARCHAR},</if>
+                <if test="pjSjZycdfy != null" >#{pjSjZycdfy, jdbcType=VARCHAR},</if>
+                <if test="pjSjTjb != null" >#{pjSjTjb, jdbcType=VARCHAR},</if>
+                <if test="pjSjQjsyfy != null" >#{pjSjQjsyfy, jdbcType=VARCHAR},</if>
+                <if test="pjSjDxsyfy != null" >#{pjSjDxsyfy, jdbcType=VARCHAR},</if>
+                <if test="pjSjSyfy != null" >#{pjSjSyfy, jdbcType=VARCHAR},</if>
+                <if test="pjYsBzQtfy != null" >#{pjYsBzQtfy, jdbcType=VARCHAR},</if>
+                <if test="pjYsQtQtfy != null" >#{pjYsQtQtfy, jdbcType=VARCHAR},</if>
+                <if test="pjYsWblsh != null" >#{pjYsWblsh, jdbcType=VARCHAR},</if>
+                <if test="pjYsWblso != null" >#{pjYsWblso, jdbcType=VARCHAR},</if>
+                <if test="pjYsKdf != null" >#{pjYsKdf, jdbcType=VARCHAR},</if>
+                <if test="pjYsTcf != null" >#{pjYsTcf, jdbcType=VARCHAR},</if>
+                <if test="pjYsZxf != null" >#{pjYsZxf, jdbcType=VARCHAR},</if>
+                <if test="pjYsWxf != null" >#{pjYsWxf, jdbcType=VARCHAR},</if>
+                <if test="pjYsCdf != null" >#{pjYsCdf, jdbcType=VARCHAR},</if>
+                <if test="pjYsJqf != null" >#{pjYsJqf, jdbcType=VARCHAR},</if>
+                <if test="pjYsJyf != null" >#{pjYsJyf, jdbcType=VARCHAR},</if>
+                <if test="pjYsBz2 != null" >#{pjYsBz2, jdbcType=VARCHAR},</if>
+                <if test="pjYsQt2 != null" >#{pjYsQt2, jdbcType=VARCHAR},</if>
+                <if test="pjYsBz1 != null" >#{pjYsBz1, jdbcType=VARCHAR},</if>
+                <if test="pjYsQt1 != null" >#{pjYsQt1, jdbcType=VARCHAR},</if>
+                <if test="pjYsSyjsfz != null" >#{pjYsSyjsfz, jdbcType=VARCHAR},</if>
+                <if test="pjYsSyzbjd != null" >#{pjYsSyzbjd, jdbcType=VARCHAR},</if>
+                <if test="pjYsCkrzxm != null" >#{pjYsCkrzxm, jdbcType=VARCHAR},</if>
+                <if test="pjYsYyclaq != null" >#{pjYsYyclaq, jdbcType=VARCHAR},</if>
+                <if test="pjYsYyclrl != null" >#{pjYsYyclrl, jdbcType=VARCHAR},</if>
+                <if test="pjYsWtsy != null" >#{pjYsWtsy, jdbcType=VARCHAR},</if>
+                <if test="pjYsRzmdxm != null" >#{pjYsRzmdxm, jdbcType=VARCHAR},</if>
+                <if test="pjYs3csbf != null" >#{pjYs3csbf, jdbcType=VARCHAR},</if>
+                <if test="pjYsJtbyh != null" >#{pjYsJtbyh, jdbcType=VARCHAR},</if>
+                <if test="pjYs3cfy != null" >#{pjYs3cfy, jdbcType=VARCHAR},</if>
+                <if test="pjYsHbfy != null" >#{pjYsHbfy, jdbcType=VARCHAR},</if>
+                <if test="pjYsXnyfy != null" >#{pjYsXnyfy, jdbcType=VARCHAR},</if>
+                <if test="pjYsZycdfy != null" >#{pjYsZycdfy, jdbcType=VARCHAR},</if>
+                <if test="pjYsTjb != null" >#{pjYsTjb, jdbcType=VARCHAR},</if>
+                <if test="pjYsQjsyfy != null" >#{pjYsQjsyfy, jdbcType=VARCHAR},</if>
+                <if test="pjYsDxsyfy != null" >#{pjYsDxsyfy, jdbcType=VARCHAR},</if>
+                <if test="pjYsSyfy != null" >#{pjYsSyfy, jdbcType=VARCHAR},</if>
+                <if test="pjRemakes != null" >#{pjRemakes, jdbcType=VARCHAR},</if>
+                <if test="pjReportName != null" >#{pjReportName, jdbcType=VARCHAR},</if>
+                <if test="pjReportId != null" >#{pjReportId, jdbcType=VARCHAR},</if>
+                <if test="pjSupplier != null" >#{pjSupplier, jdbcType=VARCHAR},</if>
+                <if test="pjStatus != null" >#{pjStatus, jdbcType=VARCHAR},</if>
+                <if test="pjParamTimeActual != null" >#{pjParamTimeActual, jdbcType=VARCHAR},</if>
+                <if test="pjParamTimePlan != null" >#{pjParamTimePlan, jdbcType=VARCHAR},</if>
+                <if test="pjCarTimeActual != null" >#{pjCarTimeActual, jdbcType=VARCHAR},</if>
+                <if test="pjCarTimePlan != null" >#{pjCarTimePlan, jdbcType=VARCHAR},</if>
+                <if test="pjAnnBatch != null" >#{pjAnnBatch, jdbcType=VARCHAR},</if>
+                <if test="pjEngineerName != null" >#{pjEngineerName, jdbcType=VARCHAR},</if>
+                <if test="pjEngineerId != null" >#{pjEngineerId, jdbcType=VARCHAR},</if>
+                <if test="pjApprovalForm != null" >#{pjApprovalForm, jdbcType=VARCHAR},</if>
+                <if test="pjTaskSource != null" >#{pjTaskSource, jdbcType=VARCHAR},</if>
+                <if test="pjType != null" >#{pjType, jdbcType=VARCHAR},</if>
+                <if test="pjModel != null" >#{pjModel, jdbcType=VARCHAR},</if>
+                <if test="planId != null" >#{planId, jdbcType=VARCHAR},</if>
+                <if test="id != null" >#{id, jdbcType=VARCHAR},</if>
+                <if test="pjTaskExplain != null" >#{pjTaskExplain, jdbcType=VARCHAR},</if>
+                <if test="sumActualCost != null" >#{sumActualCost, jdbcType=VARCHAR},</if>
+            </trim>
+  </insert>
+
+  <!-- 根据pk，修改记录-->
+  <update id="updateByPrimaryKey" parameterType="com.adc.da.pc_announcement.entity.AnnPlanProjectEO" >
+    update ANN_PLAN_PROJECT
+       set  pj_sj_bz_qtfy = #{pjSjBzQtfy},
+            pj_sj_qt_qtfy = #{pjSjQtQtfy},
+            pj_sj_wblsh = #{pjSjWblsh},
+            pj_sj_wblso = #{pjSjWblso},
+            pj_sj_kdf = #{pjSjKdf},
+            pj_sj_tcf = #{pjSjTcf},
+            pj_sj_zxf = #{pjSjZxf},
+            pj_sj_wxf = #{pjSjWxf},
+            pj_sj_cdf = #{pjSjCdf},
+            pj_sj_jqf = #{pjSjJqf},
+            pj_sj_jyf = #{pjSjJyf},
+            pj_sj_bz2 = #{pjSjBz2},
+            pj_sj_qt2 = #{pjSjQt2},
+            pj_sj_bz1 = #{pjSjBz1},
+            pj_sj_qt1 = #{pjSjQt1},
+            pj_sj_syjsfz = #{pjSjSyjsfz},
+            pj_sj_syzbjd = #{pjSjSyzbjd},
+            pj_sj_ckrzxm = #{pjSjCkrzxm},
+            pj_sj_yyclaq = #{pjSjYyclaq},
+            pj_sj_yyclrl = #{pjSjYyclrl},
+            pj_sj_wtsy = #{pjSjWtsy},
+            pj_sj_rzmdxm = #{pjSjRzmdxm},
+            pj_sj_3Csbf = #{pjSj3csbf},
+            pj_sj_jtbyh = #{pjSjJtbyh},
+            pj_sj_3Cfy = #{pjSj3cfy},
+            pj_sj_hbfy = #{pjSjHbfy},
+            pj_sj_xnyfy = #{pjSjXnyfy},
+            pj_sj_zycdfy = #{pjSjZycdfy},
+            pj_sj_tjb = #{pjSjTjb},
+            pj_sj_qjsyfy = #{pjSjQjsyfy},
+            pj_sj_dxsyfy = #{pjSjDxsyfy},
+            pj_sj_syfy = #{pjSjSyfy},
+            pj_ys_bz_qtfy = #{pjYsBzQtfy},
+            pj_ys_qt_qtfy = #{pjYsQtQtfy},
+            pj_ys_wblsh = #{pjYsWblsh},
+            pj_ys_wblso = #{pjYsWblso},
+            pj_ys_kdf = #{pjYsKdf},
+            pj_ys_tcf = #{pjYsTcf},
+            pj_ys_zxf = #{pjYsZxf},
+            pj_ys_wxf = #{pjYsWxf},
+            pj_ys_cdf = #{pjYsCdf},
+            pj_ys_jqf = #{pjYsJqf},
+            pj_ys_jyf = #{pjYsJyf},
+            pj_ys_bz2 = #{pjYsBz2},
+            pj_ys_qt2 = #{pjYsQt2},
+            pj_ys_bz1 = #{pjYsBz1},
+            pj_ys_qt1 = #{pjYsQt1},
+            pj_ys_syjsfz = #{pjYsSyjsfz},
+            pj_ys_syzbjd = #{pjYsSyzbjd},
+            pj_ys_ckrzxm = #{pjYsCkrzxm},
+            pj_ys_yyclaq = #{pjYsYyclaq},
+            pj_ys_yyclrl = #{pjYsYyclrl},
+            pj_ys_wtsy = #{pjYsWtsy},
+            pj_ys_rzmdxm = #{pjYsRzmdxm},
+            pj_ys_3Csbf = #{pjYs3csbf},
+            pj_ys_jtbyh = #{pjYsJtbyh},
+            pj_ys_3Cfy = #{pjYs3cfy},
+            pj_ys_hbfy = #{pjYsHbfy},
+            pj_ys_xnyfy = #{pjYsXnyfy},
+            pj_ys_zycdfy = #{pjYsZycdfy},
+            pj_ys_tjb = #{pjYsTjb},
+            pj_ys_qjsyfy = #{pjYsQjsyfy},
+            pj_ys_dxsyfy = #{pjYsDxsyfy},
+            pj_ys_syfy = #{pjYsSyfy},
+            pj_remakes = #{pjRemakes},
+            pj_report_name = #{pjReportName},
+            pj_report_id = #{pjReportId},
+            pj_supplier = #{pjSupplier},
+            pj_status = #{pjStatus},
+            pj_param_time_actual = #{pjParamTimeActual},
+            pj_param_time_plan = #{pjParamTimePlan},
+            pj_car_time_actual = #{pjCarTimeActual},
+            pj_car_time_plan = #{pjCarTimePlan},
+            pj_ann_batch = #{pjAnnBatch},
+            pj_engineer_name = #{pjEngineerName},
+            pj_engineer_id = #{pjEngineerId},
+            pj_approval_form = #{pjApprovalForm},
+            pj_task_source = #{pjTaskSource},
+            pj_type = #{pjType},
+            pj_model = #{pjModel},
+            plan_id = #{planId},
+            pj_task_explain = #{pjTaskExplain},
+            sum_actual_cost = #{sumActualCost}
+     where  id = #{id}
+  </update>
+
+  <!-- 修改记录，只修改只不为空的字段 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.adc.da.pc_announcement.entity.AnnPlanProjectEO" >
+    update ANN_PLAN_PROJECT
+    <set >
+      <if test='pjSjBzQtfy != null and pjSjBzQtfy!=""' >
+        pj_sj_bz_qtfy = #{pjSjBzQtfy},
+      </if>
+      <if test='pjSjQtQtfy != null and pjSjQtQtfy!=""' >
+        pj_sj_qt_qtfy = #{pjSjQtQtfy},
+      </if>
+      <if test='pjSjWblsh != null and pjSjWblsh!=""' >
+        pj_sj_wblsh = #{pjSjWblsh},
+      </if>
+      <if test='pjSjWblso != null and pjSjWblso!=""' >
+        pj_sj_wblso = #{pjSjWblso},
+      </if>
+      <if test='pjSjKdf != null and pjSjKdf!=""' >
+        pj_sj_kdf = #{pjSjKdf},
+      </if>
+      <if test='pjSjTcf != null and pjSjTcf!=""' >
+        pj_sj_tcf = #{pjSjTcf},
+      </if>
+      <if test='pjSjZxf != null and pjSjZxf!=""' >
+        pj_sj_zxf = #{pjSjZxf},
+      </if>
+      <if test='pjSjWxf != null and pjSjWxf!=""' >
+        pj_sj_wxf = #{pjSjWxf},
+      </if>
+      <if test='pjSjCdf != null and pjSjCdf!=""' >
+        pj_sj_cdf = #{pjSjCdf},
+      </if>
+      <if test='pjSjJqf != null and pjSjJqf!=""' >
+        pj_sj_jqf = #{pjSjJqf},
+      </if>
+      <if test='pjSjJyf != null and pjSjJyf!=""' >
+        pj_sj_jyf = #{pjSjJyf},
+      </if>
+      <if test='pjSjBz2 != null and pjSjBz2!=""' >
+        pj_sj_bz2 = #{pjSjBz2},
+      </if>
+      <if test='pjSjQt2 != null and pjSjQt2!=""' >
+        pj_sj_qt2 = #{pjSjQt2},
+      </if>
+      <if test='pjSjBz1 != null and pjSjBz1!=""' >
+        pj_sj_bz1 = #{pjSjBz1},
+      </if>
+      <if test='pjSjQt1 != null and pjSjQt1!=""' >
+        pj_sj_qt1 = #{pjSjQt1},
+      </if>
+      <if test='pjSjSyjsfz != null and pjSjSyjsfz!=""' >
+        pj_sj_syjsfz = #{pjSjSyjsfz},
+      </if>
+      <if test='pjSjSyzbjd != null and pjSjSyzbjd!=""' >
+        pj_sj_syzbjd = #{pjSjSyzbjd},
+      </if>
+      <if test='pjSjCkrzxm != null and pjSjCkrzxm!=""' >
+        pj_sj_ckrzxm = #{pjSjCkrzxm},
+      </if>
+      <if test='pjSjYyclaq != null and pjSjYyclaq!=""' >
+        pj_sj_yyclaq = #{pjSjYyclaq},
+      </if>
+      <if test='pjSjYyclrl != null and pjSjYyclrl!=""' >
+        pj_sj_yyclrl = #{pjSjYyclrl},
+      </if>
+      <if test='pjSjWtsy != null and pjSjWtsy!=""' >
+        pj_sj_wtsy = #{pjSjWtsy},
+      </if>
+      <if test='pjSjRzmdxm != null and pjSjRzmdxm!=""' >
+        pj_sj_rzmdxm = #{pjSjRzmdxm},
+      </if>
+      <if test='pjSj3csbf != null and pjSj3csbf!=""' >
+        pj_sj_3Csbf = #{pjSj3csbf},
+      </if>
+      <if test='pjSjJtbyh != null and pjSjJtbyh!=""' >
+        pj_sj_jtbyh = #{pjSjJtbyh},
+      </if>
+      <if test='pjSj3cfy != null and pjSj3cfy!=""' >
+        pj_sj_3Cfy = #{pjSj3cfy},
+      </if>
+      <if test='pjSjHbfy != null and pjSjHbfy!=""' >
+        pj_sj_hbfy = #{pjSjHbfy},
+      </if>
+      <if test='pjSjXnyfy != null and pjSjXnyfy!=""' >
+        pj_sj_xnyfy = #{pjSjXnyfy},
+      </if>
+      <if test='pjSjZycdfy != null and pjSjZycdfy!=""' >
+        pj_sj_zycdfy = #{pjSjZycdfy},
+      </if>
+      <if test='pjSjTjb != null and pjSjTjb!=""' >
+        pj_sj_tjb = #{pjSjTjb},
+      </if>
+      <if test='pjSjQjsyfy != null and pjSjQjsyfy!=""' >
+        pj_sj_qjsyfy = #{pjSjQjsyfy},
+      </if>
+      <if test='pjSjDxsyfy != null and pjSjDxsyfy!=""' >
+        pj_sj_dxsyfy = #{pjSjDxsyfy},
+      </if>
+      <if test='pjSjSyfy != null and pjSjSyfy!=""' >
+        pj_sj_syfy = #{pjSjSyfy},
+      </if>
+      <if test='pjYsBzQtfy != null and pjYsBzQtfy!=""' >
+        pj_ys_bz_qtfy = #{pjYsBzQtfy},
+      </if>
+      <if test='pjYsQtQtfy != null and pjYsQtQtfy!=""' >
+        pj_ys_qt_qtfy = #{pjYsQtQtfy},
+      </if>
+      <if test='pjYsWblsh != null and pjYsWblsh!=""' >
+        pj_ys_wblsh = #{pjYsWblsh},
+      </if>
+      <if test='pjYsWblso != null and pjYsWblso!=""'>
+        pj_ys_wblso = #{pjYsWblso},
+      </if>
+      <if test='pjYsKdf != null and pjYsKdf!=""' >
+        pj_ys_kdf = #{pjYsKdf},
+      </if>
+      <if test='pjYsTcf != null and pjYsTcf!=""' >
+        pj_ys_tcf = #{pjYsTcf},
+      </if>
+      <if test='pjYsZxf != null and pjYsZxf!=""' >
+        pj_ys_zxf = #{pjYsZxf},
+      </if>
+      <if test='pjYsWxf != null and pjYsWxf!=""' >
+        pj_ys_wxf = #{pjYsWxf},
+      </if>
+      <if test='pjYsCdf != null and pjYsCdf!=""' >
+        pj_ys_cdf = #{pjYsCdf},
+      </if>
+      <if test='pjYsJqf != null and pjYsJqf!=""' >
+        pj_ys_jqf = #{pjYsJqf},
+      </if>
+      <if test='pjYsJyf != null and pjYsJyf!=""' >
+        pj_ys_jyf = #{pjYsJyf},
+      </if>
+      <if test='pjYsBz2 != null and pjYsBz2!=""' >
+        pj_ys_bz2 = #{pjYsBz2},
+      </if>
+      <if test='pjYsQt2 != null and pjYsQt2!=""' >
+        pj_ys_qt2 = #{pjYsQt2},
+      </if>
+      <if test='pjYsBz1 != null and pjYsBz1!=""' >
+        pj_ys_bz1 = #{pjYsBz1},
+      </if>
+      <if test='pjYsQt1 != null and pjYsQt1!=""' >
+        pj_ys_qt1 = #{pjYsQt1},
+      </if>
+      <if test='pjYsSyjsfz != null and pjYsSyjsfz!=""' >
+        pj_ys_syjsfz = #{pjYsSyjsfz},
+      </if>
+      <if test='pjYsSyzbjd != null and pjYsSyzbjd!=""' >
+        pj_ys_syzbjd = #{pjYsSyzbjd},
+      </if>
+      <if test='pjYsCkrzxm != null and pjYsCkrzxm!=""' >
+        pj_ys_ckrzxm = #{pjYsCkrzxm},
+      </if>
+      <if test='pjYsYyclaq != null and pjYsYyclaq!=""' >
+        pj_ys_yyclaq = #{pjYsYyclaq},
+      </if>
+      <if test='pjYsYyclrl != null and pjYsYyclrl!=""' >
+        pj_ys_yyclrl = #{pjYsYyclrl},
+      </if>
+      <if test='pjYsWtsy != null and pjYsWtsy!=""' >
+        pj_ys_wtsy = #{pjYsWtsy},
+      </if>
+      <if test='pjYsRzmdxm != null and pjYsRzmdxm!=""' >
+        pj_ys_rzmdxm = #{pjYsRzmdxm},
+      </if>
+      <if test='pjYs3csbf != null and pjYs3csbf!=""' >
+        pj_ys_3Csbf = #{pjYs3csbf},
+      </if>
+      <if test='pjYsJtbyh != null and pjYsJtbyh!=""' >
+        pj_ys_jtbyh = #{pjYsJtbyh},
+      </if>
+      <if test='pjYs3cfy != null and pjYs3cfy!=""' >
+        pj_ys_3Cfy = #{pjYs3cfy},
+      </if>
+      <if test='pjYsHbfy != null and pjYsHbfy!=""' >
+        pj_ys_hbfy = #{pjYsHbfy},
+      </if>
+      <if test='pjYsXnyfy != null and pjYsXnyfy!=""' >
+        pj_ys_xnyfy = #{pjYsXnyfy},
+      </if>
+      <if test='pjYsZycdfy != null and pjYsZycdfy!=""' >
+        pj_ys_zycdfy = #{pjYsZycdfy},
+      </if>
+      <if test='pjYsTjb != null and pjYsTjb!="" '>
+        pj_ys_tjb = #{pjYsTjb},
+      </if>
+      <if test='pjYsQjsyfy != null and pjYsQjsyfy!=""' >
+        pj_ys_qjsyfy = #{pjYsQjsyfy},
+      </if>
+      <if test='pjYsDxsyfy != null and pjYsDxsyfy!=""' >
+        pj_ys_dxsyfy = #{pjYsDxsyfy},
+      </if>
+      <if test='pjYsSyfy != null and pjYsSyfy!=""' >
+        pj_ys_syfy = #{pjYsSyfy},
+      </if>
+      <if test='pjRemakes != null and pjRemakes!=""' >
+        pj_remakes = #{pjRemakes},
+      </if>
+      <if test='pjReportName != null and pjReportName!=""' >
+        pj_report_name = #{pjReportName},
+      </if>
+      <if test='pjReportId != null and pjReportId!=""' >
+        pj_report_id = #{pjReportId},
+      </if>
+      <if test='pjSupplier != null and pjSupplier!=""' >
+        pj_supplier = #{pjSupplier},
+      </if>
+      <if test='pjStatus != null and pjStatus!=""' >
+        pj_status = #{pjStatus},
+      </if>
+      <if test='pjParamTimeActual != null and pjParamTimeActual!="" '>
+        pj_param_time_actual = #{pjParamTimeActual},
+      </if>
+      <if test='pjParamTimePlan != null and pjParamTimePlan!="" '>
+        pj_param_time_plan = #{pjParamTimePlan},
+      </if>
+      <if test='pjCarTimeActual != null and pjCarTimeActual!="" '>
+        pj_car_time_actual = #{pjCarTimeActual},
+      </if>
+      <if test='pjCarTimePlan != null and pjCarTimePlan!=""' >
+        pj_car_time_plan = #{pjCarTimePlan},
+      </if>
+      <if test='pjAnnBatch != null and pjAnnBatch!=""' >
+        pj_ann_batch = #{pjAnnBatch},
+      </if>
+      <if test='pjEngineerName != null and pjEngineerName!="" '>
+        pj_engineer_name = #{pjEngineerName},
+      </if>
+      <if test='pjEngineerId != null and pjEngineerId!=""' >
+        pj_engineer_id = #{pjEngineerId},
+      </if>
+      <if test='pjApprovalForm != null and pjApprovalForm!=""' >
+        pj_approval_form = #{pjApprovalForm},
+      </if>
+      <if test='pjTaskSource != null and pjTaskSource!="" ' >
+        pj_task_source = #{pjTaskSource},
+      </if>
+      <if test='pjType != null and pjType!="" '>
+        pj_type = #{pjType},
+      </if>
+      <if test='pjModel != null and pjModel !="" '>
+        pj_model = #{pjModel},
+      </if>
+      <if test='planId != null and planId!=""' >
+        plan_id = #{planId},
+      </if>
+      <if test='pjTaskExplain != null and pjTaskExplain != "" ' >
+        pj_task_explain = #{pjTaskExplain},
+      </if>
+      <if test='sumActualCost != null and sumActualCost != "" ' >
+        sum_actual_cost = #{sumActualCost},
+      </if>
+    </set>
+     where id = #{id}
+  </update>
+
+    <!-- 根据Planid查询 ANN_PLAN_PROJECT -->
+    <select id="selectListByPlanID" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List" />
+        from ANN_PLAN_PROJECT
+        where Plan_id = #{planID,jdbcType=VARCHAR}
+
+    </select>
+    <!-- 根据Planid以及工程师ID查询 ANN_PLAN_PROJECT -->
+    <select id="getEngineerAnnPlanProjectList" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List" />
+        from ANN_PLAN_PROJECT
+        where Plan_id = #{planId,jdbcType=VARCHAR}
+        and pj_engineer_id = #{engineerId,jdbcType=VARCHAR}
+    </select>
+    <!-- 根据Planid查询 所以关联的申报项目Id -->
+    <select id="getIDListByPlanId" resultType="java.lang.String" parameterType="java.lang.String">
+        select id
+        from ANN_PLAN_PROJECT
+        where Plan_id = #{planID,jdbcType=VARCHAR}
+    </select>
+    <!-- 根据供应商ID查出供应商名称 -->
+    <select id="getSupplierNameByID" resultType="java.lang.String" parameterType="java.lang.String">
+        select sup_name
+        from SUP_ABILITY
+        where id = #{supplierID,jdbcType=VARCHAR}
+    </select>
+    <!--根据申报项目的id数组，来删除对应的项目-->
+    <delete id="delByIdList" >
+        delete from ANN_PLAN_PROJECT
+        WHERE id IN
+        <foreach  item="ids" collection="param1" open="(" close=")" separator="," >
+            #{ids,jdbcType=VARCHAR}
+        </foreach>
+    </delete>
+  <!-- 根据id查询 ANN_PLAN_PROJECT -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> 
+      from ANN_PLAN_PROJECT
+     where id = #{value}
+
+  </select>
+  <!-- 删除记录 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ANN_PLAN_PROJECT
+     where id = #{value}
+
+  </delete>
+
+  <!-- ANN_PLAN_PROJECT 列表总数-->
+  <select id="queryByCount" resultType="java.lang.Integer" parameterType="com.adc.da.base.page.BasePage">
+    select count(1) from ANN_PLAN_PROJECT
+    <include refid="Base_Where_Clause"/>
+  </select>
+
+  <!-- 查询ANN_PLAN_PROJECT列表 -->
+  <select id="queryByPage" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+	select <include refid="Base_Column_List" /> from
+		(select tmp_tb.* , rownum rn from
+			(select <include refid="Base_Column_List" /> from ANN_PLAN_PROJECT
+			 <include refid="Base_Where_Clause"/>
+			 <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+			 	${pager.orderCondition}
+			 </if>
+			) tmp_tb where rownum &lt;= ${pager.endIndex})
+			where rn &gt;= ${pager.startIndex}
+  </select>
+
+  <select id="queryByList" resultMap="BaseResultMap" parameterType="com.adc.da.base.page.BasePage">
+    select <include refid="Base_Column_List"/> from ANN_PLAN_PROJECT
+    <include refid="Base_Where_Clause"/>
+    <if test="pager.orderCondition != null and pager.orderCondition != ''" >
+       ${pager.orderCondition}
+    </if>
+  </select>
+
+</mapper>
